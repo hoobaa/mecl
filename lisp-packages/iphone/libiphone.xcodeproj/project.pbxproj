@@ -1,0 +1,185 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXFileReference section */
+		1AB16FC156F745DBC5C05EAC /* libiphone.gyp */ = {isa = PBXFileReference; lastKnownFileType = text; path = libiphone.gyp; sourceTree = "<group>"; };
+		1EF18D791771922800BC9B83 /* lisp_registry.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = lisp_registry.c; sourceTree = "<group>"; };
+		1EF18D7A1771922800BC9B83 /* lisp_registry.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = lisp_registry.h; sourceTree = "<group>"; };
+		1EF18D7B1771922800BC9B83 /* LispGLKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LispGLKViewController.h; sourceTree = "<group>"; };
+		1EF18D7C1771922800BC9B83 /* LispGLKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LispGLKViewController.m; sourceTree = "<group>"; };
+		1EF18D7D1771922800BC9B83 /* UIButtonCB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIButtonCB.h; sourceTree = "<group>"; };
+		1EF18D7E1771922800BC9B83 /* UIButtonCB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIButtonCB.m; sourceTree = "<group>"; };
+		48D7CC2ED462F1BE40A6E0FA /* common_ecl.gypi */ = {isa = PBXFileReference; lastKnownFileType = text; name = common_ecl.gypi; path = ../../utils/gyp_includes/common_ecl.gypi; sourceTree = "<group>"; };
+		F8DE431530FF3DD4D0DCFC64 /* common.gypi */ = {isa = PBXFileReference; lastKnownFileType = text; name = common.gypi; path = ../../utils/gyp_includes/common.gypi; sourceTree = "<group>"; };
+		F9C06C99875FECBDA37ACDB1 /* libiphone.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiphone.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CF2F637D46F919CAD16C3FEF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2C25121C76506F591B3BDB8E /* Build */ = {
+			isa = PBXGroup;
+			children = (
+				F8DE431530FF3DD4D0DCFC64 /* common.gypi */,
+				48D7CC2ED462F1BE40A6E0FA /* common_ecl.gypi */,
+				1AB16FC156F745DBC5C05EAC /* libiphone.gyp */,
+			);
+			name = Build;
+			sourceTree = "<group>";
+		};
+		D8845E7D39D31F4D9C8645D9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F9C06C99875FECBDA37ACDB1 /* libiphone.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E2065198398F9215C42F9892 = {
+			isa = PBXGroup;
+			children = (
+				FDB5E677AC4120E4A072ABDA /* Source */,
+				D8845E7D39D31F4D9C8645D9 /* Products */,
+				2C25121C76506F591B3BDB8E /* Build */,
+			);
+			sourceTree = "<group>";
+		};
+		FDB5E677AC4120E4A072ABDA /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				1EF18D791771922800BC9B83 /* lisp_registry.c */,
+				1EF18D7A1771922800BC9B83 /* lisp_registry.h */,
+				1EF18D7B1771922800BC9B83 /* LispGLKViewController.h */,
+				1EF18D7C1771922800BC9B83 /* LispGLKViewController.m */,
+				1EF18D7D1771922800BC9B83 /* UIButtonCB.h */,
+				1EF18D7E1771922800BC9B83 /* UIButtonCB.m */,
+			);
+			name = Source;
+			path = libiphone;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DF9EFCE07E9B268B2E0F33E0 /* All */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28C3167069FAA72F52D8866E /* Build configuration list for PBXNativeTarget "All" */;
+			buildPhases = (
+				810C7D6AE835CF35F010979E /* Sources */,
+				CF2F637D46F919CAD16C3FEF /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = All;
+			productName = iphone;
+			productReference = F9C06C99875FECBDA37ACDB1 /* libiphone.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EC562C635786471BD6097C51 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+			};
+			buildConfigurationList = 8CB9E02A48B016124C77BF57 /* Build configuration list for PBXProject "libiphone" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E2065198398F9215C42F9892;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DF9EFCE07E9B268B2E0F33E0 /* All */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		810C7D6AE835CF35F010979E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		07D54D0A486D76F4228EA042 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INTERMEDIATE_DIR = "$(PROJECT_DERIVED_FILE_DIR)/$(CONFIGURATION)";
+				SHARED_INTERMEDIATE_DIR = "$(SYMROOT)/DerivedSources/$(CONFIGURATION)";
+			};
+			name = Default;
+		};
+		671829198AFCB4937DB4F54A /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_UNIVERSAL_IPHONE_OS)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				EXECUTABLE_PREFIX = lib;
+				GCC_CW_ASM_SYNTAX = NO;
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_PASCAL_STRINGS = NO;
+				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
+				GCC_OBJC_CALL_CXX_CDTORS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_THREADSAFE_STATICS = NO;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				HEADER_SEARCH_PATHS = "../../local-install/iPhoneUniversal/include";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				PRODUCT_NAME = iphone;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				USE_HEADERMAP = NO;
+			};
+			name = Default;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		28C3167069FAA72F52D8866E /* Build configuration list for PBXNativeTarget "All" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				671829198AFCB4937DB4F54A /* Default */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Default;
+		};
+		8CB9E02A48B016124C77BF57 /* Build configuration list for PBXProject "libiphone" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				07D54D0A486D76F4228EA042 /* Default */,
+			);
+			defaultConfigurationIsVisible = 1;
+			defaultConfigurationName = Default;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EC562C635786471BD6097C51 /* Project object */;
+}

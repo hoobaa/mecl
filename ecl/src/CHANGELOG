@@ -1,0 +1,68 @@
+ECL 12.12.1:
+============
+
+* Visible changes:
+
+ - delete-file, rename-file, chdir, mkdir and chmod now signal file-errors
+
+ - Upgraded ASDF and incorporated ASDF-BUNDLE instead of ASDF-ECL
+
+ - SYS:FUNCTION-LAMBDA-LIST works again with macros and special operators
+
+ - Link in ecl-help to avoid problems in standalone programs that need
+   DOCUMENTATION
+
+ - ECL now generates properly indented and more readable C code, with less
+   labels and more standard constructs.
+
+* Bugs fixed:
+
+ - Improvements in the performance of the new multiprocessing library.
+
+ - Fixes in the queue for POSIX signals, which caused repeated Ctrl-C to get
+   lost.
+
+ - Fixed typos that affected support for long long and unsigned long long.
+
+ - The code in ecl_import_current_thread() did not follow the GC API.
+
+ - The version of COMPILE-FILE in the bytecodes compiler did not support
+   :EXTERNAL-FORMAT keyword
+
+ - The compiled version of DOTIMES evaluated the output form in the wrong
+   context
+
+ - ecl_import_current_thread() did not bind *current-process*
+
+ - Changed the algorithm for computing whether a function is a closure or not,
+   and which type of C closure it needs.
+
+ - '. returned SI:|.| while this is an internal way to construct lists
+
+* Metaobject protocol:
+
+ - ECL fully supports the MOP.
+
+ - Completely changed ECL's class bootstrapping protocol, which is now simpler
+   and more effective, .allowing us to have all classes from the very
+   beginning.
+
+ - All accessors are redefined as generic functions after bootstrapping ECL.
+
+ - Standard class accessors are now optimized. This is possible because they
+   rely on slot-value, which as per the MOP cannot be redefined or wrapped
+   around without introducing new metaclasses.
+
+ - ECL's compiler no longer inlines the accessors to metaobject slots, allowing
+   for redefinition.
+
+ - (SETF SLOT-VALUE) did not always return the assigned value
+
+ - SLOT-BOUNDP returned extra values in error conditions
+
+ - SLOT-VALUE-USING-CLASS did not invoke SLOT-UNBOUND
+
+;;; Local Variables: ***
+;;; mode:text ***
+;;; fill-column:79 ***
+;;; End: ***

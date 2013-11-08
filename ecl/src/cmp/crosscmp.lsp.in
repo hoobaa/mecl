@@ -1,0 +1,67 @@
+;;;;  -*- Mode: Lisp; Syntax: Common-Lisp; Package: C -*-
+;;;;
+;;;;  Copyright (c) 2011, Sylvain Ageneau
+;;;;
+;;;;    This program is free software; you can redistribute it and/or
+;;;;    modify it under the terms of the GNU Library General Public
+;;;;    License as published by the Free Software Foundation; either
+;;;;    version 2 of the License, or (at your option) any later version.
+;;;;
+;;;;    See file '../Copyright' for full details.
+
+;;;; CROSSCMP -- Cross compiler
+
+(in-package cross-cmp)
+
+(setf (gethash  "@host@" cross-compilers)
+      (make-instance 'cross-compiler
+       :features @LSP_FEATURES@
+       :sys-pathname-translation '(("**;*.*.*" "@ecldir\@/**/*.*"))
+       :cmpinclude "<ecl/ecl-cmp.h>"
+       :cc "@ECL_CC@"
+       :ld "@ECL_CC@"
+       :ranlib "@RANLIB@"
+       :ar "@AR@"
+       :cc-flags "@CPPFLAGS@ @CFLAGS@ @ECL_CFLAGS@"
+       :cc-optimize #-msvc "-O2"
+       #+msvc "@CFLAGS_OPTIMIZE@"
+		     
+       :ld-format #-msvc "~A -o ~S -L~S ~{~S ~} ~@[~S~]~{ '~A'~} ~A"
+       #+msvc "~A -Fe~S~* ~{~S ~} ~@[~S~]~{ '~A'~} ~A"
+      
+       :cc-format (cond ((member :msvc *features*)
+                         "~A -I. \"-I~A\" ~A ~:[~*~;~A~] -w -c \"~A\" -o \"~A\"~{ '~A'~}")
+                        ((member :nacl *features*) ;; pnacl-clang doesn't support -w
+                         "~A -I. \"-I~A\" ~A ~:[~*~;~A~] -c \"~A\" -o \"~A\"~{ '~A'~}")
+                        (t
+                         "~A -I. \"-I~A\" ~A ~:[~*~;~A~] -w -c \"~A\" -o \"~A\"~{ '~A'~}"))
+		      
+       :ld-flags (if (member :dlopen *features*)
+                     "@LDFLAGS@ -L@libdir\@ -lecl @CORE_LIBS@ @FASL_LIBS@ @LIBS@"
+                   (if (member :mscv *features*)
+                       "@LDFLAGS@ -L@libdir\@ -lecl @FASL_LIBS@ @LIBS@"
+                     #+msvc "@LDFLAGS@ ecl.lib @CLIBS@" user-ld-flags))
+		      
+       :ld-shared-flags #-msvc "@SHARED_LDFLAGS@ @LDFLAGS@ -L@libdir\@ -lecl @FASL_LIBS@ @LIBS@"
+       #+msvc "@SHARED_LDFLAGS@ @LDFLAGS@ ecl.lib @CLIBS@"
+
+       :ld-bundle-flags #-msvc "@BUNDLE_LDFLAGS@ @LDFLAGS@ -L@libdir\@ -lecl @FASL_LIBS@ @LIBS@"
+       #+msvc "@BUNDLE_LDFLAGS@ @LDFLAGS@ ecl.lib @CLIBS@"
+		      
+       :shared-library-prefix "@SHAREDPREFIX@"
+       :shared-library-extension "@SHAREDEXT@"
+       :shared-library-format "@SHAREDPREFIX@~a.@SHAREDEXT@"
+       :static-library-prefix "@LIBPREFIX@"
+       :static-library-extension "@LIBEXT@"
+       :static-library-format "@LIBPREFIX@~a.@LIBEXT@"
+       :object-file-extension "@OBJEXT@"
+       :executable-file-format "~a@EXEEXT@"
+		      
+       :ecl-include-directory "@includedir\@"
+       :ecl-library-directory "@libdir\@"
+		      
+       :ld-rpath (let ((x "@ECL_LDRPATH@"))
+                   (and (plusp (length x))
+                        (format nil x ecl-library-directory)))
+       :user-cc-flags nil
+       :user-ld-flags nil))

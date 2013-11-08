@@ -1,0 +1,25 @@
+This project contains the needed patches to run ECL on android.
+
+The included Makefile will download and patch ECL (git is needed).
+See INSTALL for details.
+
+You'll need the android SDK + NDK to compile / run this project
+
+The included "HelloEcl" android application demonstrates how to
+start/run an in-process ECL from an android app using JNI. It loads
+the file "init.lisp" and displays a Toast notification. It also starts
+a swank server on port 4005 (on the emulator use "adb forward tcp:4005 
+tcp:4005" to be able to connect to it from slime). The first run will
+be slow because swank needs to be byte-compiled. To get more 
+information on what ECL is doing you might want to enable stdout/stderr
+redirection:
+
+adb shell stop
+adb shell setprop log.redirect-stdio true
+adb shell start
+
+The cross-compiled ecl binary can also be run as a standalone
+executable (just "adb push" it to a directory on the emulator and use
+"adb shell" to execute it.
+
+Sylvain Ageneau <ageneau@gmail.com>
