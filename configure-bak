@@ -40,6 +40,9 @@ case $platform in
 	# export LDFLAGS="-m64 -g -O2"
 	;;
     host64)
+        export CC="gcc-mc-4.8"
+	export CFLAGS="-m64 -g -O2"
+	export LDFLAGS="-m64 -g -O2"
 	;;
     android)
 	. $PROJECT_ROOT/platforms/android/config.sh $platform || exit 1
@@ -94,17 +97,7 @@ case $project in
         		--enable-boehm=included \
 			--with-dffi=no"
 		;;
-            
-	    hostnothreads)
-		export ABI=32
-		config_opts="\
-			--with-gmp-prefix=$PROJECT_INSTALL_DIR \
-			--enable-threads=no \
-			--disable-longdouble \
-        		--enable-boehm=included \
-			--with-dffi=no"
-		;;
-            
+
 	    host64)
 		config_opts="\
 			--with-gmp-prefix=$PROJECT_INSTALL_DIR \
@@ -113,24 +106,6 @@ case $project in
 			--with-dffi=included"
 		;;
             
-	    host64nothreads)
-		config_opts="\
-			--with-gmp-prefix=$PROJECT_INSTALL_DIR \
-			--enable-threads=no \
-			--disable-longdouble \
-			--enable-boehm=system \
-			--with-dffi=included"
-		;;
-            
-	    host64nodl)
-		config_opts="\
-			--with-gmp-prefix=$PROJECT_INSTALL_DIR \
-			--enable-threads=yes \
-			--enable-boehm=system \
-			--with-dffi=no \
-			--with-cmp=builtin \
-    			--disable-shared"
-		;;
 	esac	
 	;;
     
@@ -141,10 +116,9 @@ case $project in
 		--disable-shared"
         
 	case $platform in
-	    host|hostnothreads)
+	    host)
 		# export ABI=64
                 export ABI=32
-                
 		config_opts="\
 			--with-pic \
 			${base_config_opts}"
@@ -156,6 +130,7 @@ case $project in
 		fi
 		;;
 	    host64*)
+                export ABI=64
 		config_opts="\
 			--with-pic \
 			${base_config_opts}"

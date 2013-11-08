@@ -22,9 +22,6 @@ TARGETS_BDWGC:=$(TARGETS:=.bdwgc)
 
 UNAME:=$(shell uname)
 
-# CC=gcc-mp-4.8 ./configure ecl $(@:.ecl=)
-TMPCC=
-
 all: $(TARGETS_ECL) $(TARGETS_GMP) $(TARGETS_ATOMIC) $(TARGETS_GMP)
 
 update: update-modules patch-ecl patch-mpir patch-atomic patch-bdwgc patch-cffi copy-slime
@@ -62,7 +59,7 @@ android: android.ecl
 
 ios: iPhoneOS-armv7s.ecl iPhoneOS-armv7.ecl iPhoneSimulator.ecl
 
-iPhoneUniversal.ecl: ios
+ios-univ: ios
 	-rm -rf $(ECL_INSTALL_ROOT_DIR)/iPhoneUniversal
 	./bin/iphone_universal $(ECL_INSTALL_ROOT_DIR)
 	touch $@

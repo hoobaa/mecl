@@ -3978,7 +3978,7 @@ echo "include_mpn(\`alpha/default.m4')" >> $gmp_tmpconfigm4i
     cyclecounter_size=1
     ;;
 
-  arm*-*-*){
+  arm*-*-*)
     path="arm"
     gcc_cflags="$gcc_cflags $fomit_frame_pointer"
     gcc_testlist="gcc-arm-umodsi"
@@ -5161,7 +5161,7 @@ if test "$gmp_prog_cc_works" = yes; then
 int __attribute__((noinline))
 foo(int i)
 {
-  int *p; //  = __builtin_malloc (4 * sizeof(int));
+  int *p = __builtin_malloc (4 * sizeof(int));
   *p = 0;
   p[i] = 1;
   return *p;
@@ -6195,7 +6195,6 @@ done
 # 2.50 the only thing AC_PROG_CC really adds is a check for "cl" (Microsoft
 # C on MS-DOS systems).
 #
-echo FUCK $path , $found_compiler
 if test $found_compiler = no && test -n "$path"; then
   as_fn_error $? "could not find a working compiler, see config.log for details" "$LINENO" 5
 fi
