@@ -1,3 +1,8 @@
+This project is modified ecl-android.
+
+
+
+
 This project contains the needed patches to run ECL on android.
 
 The included Makefile will download and patch ECL (git is needed).
