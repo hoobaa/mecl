@@ -5,18 +5,39 @@ sdk_ver=$(xcodebuild -version -sdk ${sdk} SDKVersion)
 echo "using SDK version: ${sdk_ver}"
 
 export force_cross_compiling=yes
+export cross_compiling=yes
+
 host=armv7-apple-darwin
 target=armv7-apple-darwin
 # host=iPhoneOS-armv7
 # target=iPhoneOS-armv7
 export SDKROOT=$(xcodebuild -version -sdk ${sdk} Path)
-#export CC=$(xcodebuild -sdk ${sdk} -find clang)
-export CC=$(xcodebuild -sdk ${sdk} -find gcc)
-export CXX="$CC"
+export SDK_DIR=$(xcodebuild -version -sdk ${sdk} Path)
+export ARC=armv7
+# export CC=$(xcodebuild -sdk ${sdk} -find clang)
+
+# export CXX="$CC"
 export CPP=$(xcodebuild -sdk ${sdk} -find cpp)
+# export CPP=$(xcodebuild -sdk ${sdk} -find cpp)
+export CC=$(xcodebuild -sdk ${sdk} -find clang)
+# export CC=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/clang
+# export CXX=$(xcodebuild -sdk ${sdk} -find clang++)
+# export AS=$(xcodebuild -sdk ${sdk} -find as)
+export AS=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/as
+
+# export LD=$(xcodebuild -sdk ${sdk} -find ld)
+export LD=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/ld
 export AR=$(xcodebuild -sdk ${sdk} -find ar)
-export STRIP=$(xcodebuild -sdk ${sdk} -find strip)
 export RANLIB=$(xcodebuild -sdk ${sdk} -find ranlib)
+
 export NM=$(xcodebuild -sdk ${sdk} -find nm)
-export CFLAGS="-g -arch armv7 -isysroot $SDKROOT -DAPPLE -DIPHONE"
-export LDFLAGS="-arch armv7 -isysroot $SDKROOT"
+export STRIP=$(xcodebuild -sdk ${sdk} -find strip)
+
+# export CPPFLAGS=" -E -arch $ARC -isysroot $SDKROOT -D__arm__"
+# export CPPFLAGS="-g -arch $ARC -isysroot $SDKROOT -DAPPLE -DIPHONE -D__arm__ -E "
+# export CFLAGS="-g -arch $ARC -isysroot $SDKROOT -DAPPLE -DIPHONE -D__arm__"
+export CFLAGS=" -arch $ARC -isysroot $SDKROOT -DAPPLE -DIPHONE -D__arm__"
+# export CFLAGS="-arch $ARC -isysroot $SDKROOT -DAPPLE "
+# export CXXFLAGS="-g -arch $ARC -isysroot $SDKROOT -DAPPLE -DIPHONE -D__arm__"
+# export LDFLAGS="-arch $ARC -isysroot $SDKROOT"
+export LDFLAGS="  -arch $ARC -isysroot $SDKROOT"

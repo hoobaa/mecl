@@ -190,6 +190,9 @@ case $project in
 			--enable-handle-fork=no \
 			--enable-threads=posix"
 		;;
+            *)
+                config_opts=" --enable-shared=NO "
+                ;;
 	esac
 	;;
     *)
@@ -202,7 +205,7 @@ if [ ! -f ${srcdir}/configure ] ; then
     (cd ${srcdir} && ./autogen.sh)
 fi
 
-
+env | sort > env.a
 echo FUCKCONFIG: cd ${builddir}
 echo FUCKCONFIG: ${srcdir}/configure --srcdir=${srcdir} --prefix=$PROJECT_INSTALL_DIR --target=${host} --host=${host} ${config_opts}
 

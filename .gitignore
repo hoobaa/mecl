@@ -16,3 +16,4 @@ local-install/
 build/
 example-android/
 example-iOS/
+/.trash

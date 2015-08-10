@@ -1,0 +1,36 @@
+#!/bin/sh
+set -e
+
+# android : http://d.hatena.ne.jp/tmash06/20110501/1304247426
+# ios     : http://onmessage.ws/wordpress/?p=802
+
+export ARC=${1:-armv7}
+
+if [ $ARC != "armv7" -a $ARC != "arm64" ]; then
+    echo "not support architecture $ARC";
+    exit 1;
+fi
+
+PLATFORM_DIR="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform"
+SDK_DIR="${PLATFORM_DIR}/Developer/SDKs/iPhoneOS8.4.sdk/"
+TOOLCHAINS_BINDIR="${PLATFORM_DIR}/Developer/usr/bin"
+
+export CC=clang
+# export CXX=clang++
+export AR=${TOOLCHAINS_BINDIR}/ar
+export AS=${TOOLCHAINS_BINDIR}/as
+export LD=${TOOLCHAINS_BINDIR}/ld
+export RANLIB=${TOOLCHAINS_BINDIR}/ranlib
+
+export CFLAGS="-arch ${ARC} -isysroot ${SDK_DIR} "
+# export CXXFLAGS="-arch ${ARC} -isysroot ${SDK_DIR} ${CXXFLAGS}"
+export LDFLAGS=""
+
+PWD=`pwd`
+PREFIX="${PWD}/local_iPhoneOS_${ARC}"
+
+env |sort > env.log
+
+./configure --srcdir=/Users/strobolights/dev/mecl/libatomic_ops --prefix=/Users/strobolights/dev/mecl/local-install/iPhoneOS-armv7 --target=armv7-apple-darwin --host=armv7-apple-darwin --enable-gmpcompat --disable-shared
+
+make
