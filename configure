@@ -1,7 +1,6 @@
 #!/bin/bash
 
-usage()
-{
+usage() {
     echo "Usage: `basename $0` project platform"
     echo ""
     echo " project     -- one of: ecl, mpir, libatomic_ops, bdwgc, libatomic_ops"
@@ -33,24 +32,25 @@ fi
 
 case $platform in
     host)
-	export CFLAGS="-m32 -g -O2"
-	export LDFLAGS="-m32 -g -O2"
-	# export CFLAGS="-m64 -g -O2"
-	# export LDFLAGS="-m64 -g -O2"
-	;;
+        export CFLAGS="-m32 -g -O2"
+        export LDFLAGS="-m32 -g -O2"
+        ;;
     host64)
-	;;
+        export CFLAGS="-m64 -g -O2"
+        export LDFLAGS="-m64 -g -O2"
+        ;;
     android)
-	. $PROJECT_ROOT/platforms/android/config.sh $platform || exit 1
-	CFLAGS="$CFLAGS -g -O2 -DANDROID -DPLATFORM_ANDROID"
-	;;
-    iPhoneOS-armv7s|iPhoneOS-armv7|iPhoneSimulator)
-	. $PROJECT_ROOT/platforms/$platform/config.sh || exit 1
-	# CFLAGS="$CFLAGS -g -O2"
-	;;
+        . $PROJECT_ROOT/platforms/android/config.sh $platform || exit 1
+        CFLAGS="$CFLAGS -g -O2 -DANDROID -DPLATFORM_ANDROID"
+        ;;
+    # iPhoneOS-armv7s|iPhoneOS-armv7|iPhoneSimulator)
+    iPhoneOS-armv7|iPhoneOS-arm64)
+        . $PROJECT_ROOT/platforms/$platform/config.sh || exit 1
+        CFLAGS="$CFLAGS -O2"
+        ;;
     *)
-	usage; exit 1
-	;;
+        usage; exit 1
+        ;;
 esac
 
 export CFLAGS
@@ -58,145 +58,145 @@ ecl_to_run=$ECL_INSTALL_ROOT_DIR/${cross_compiler_platform}/bin/ecl
 
 case $project in
     ecl)
-	srcdir=$PROJECT_ROOT/ecl/src
-	CFLAGS="$CFLAGS -I$PROJECT_INSTALL_DIR/include"
+        srcdir=$PROJECT_ROOT/ecl/src
+        CFLAGS="$CFLAGS -I$PROJECT_INSTALL_DIR/include"
         
-	case $platform in
-	    *)
-		export LIBS="$LIBS -L$PROJECT_INSTALL_DIR/lib -lgc -latomic_ops"
-		;;
-	esac
+        case $platform in
+            *)
+                export LIBS="$LIBS -L$PROJECT_INSTALL_DIR/lib -lgc -latomic_ops"
+                ;;
+        esac
         
-	case $platform in
-	    android|androidx86|iPhoneOS-armv7s|iPhoneOS-armv7|iPhoneSimulator)
-		(cat $template_config; echo "ECL_TO_RUN=$ecl_to_run") > $builddir/cross_config
-		config_opts="\
-			--with-cross-config=$builddir/cross_config \
-			--with-gmp-prefix=$PROJECT_INSTALL_DIR \
-			--enable-threads=yes \
-			--disable-longdouble \
-			--enable-boehm=system \
-			--with-dffi=no \
-			--with-cmp=no \
-			--with-asdf=builtin \
-			--with-bytecmp=builtin \
-			--with-serve-event=yes \
-			--disable-shared"
-		;;
+        case $platform in
+            android|androidx86|iPhoneOS-armv7s|iPhoneOS-armv7|iPhoneSimulator)
+                (cat $template_config; echo "ECL_TO_RUN=$ecl_to_run") > $builddir/cross_config
+                config_opts="\
+                        --with-cross-config=$builddir/cross_config \
+                        --with-gmp-prefix=$PROJECT_INSTALL_DIR \
+                        --enable-threads=yes \
+                        --disable-longdouble \
+                        --enable-boehm=system \
+                        --with-dffi=no \
+                        --with-cmp=no \
+                        --with-asdf=builtin \
+                        --with-bytecmp=builtin \
+                        --with-serve-event=yes \
+                        --disable-shared"
+                ;;
             
-	    host)
-		export ABI=64
-		config_opts="\
-			--with-gmp-prefix=$PROJECT_INSTALL_DIR \
-			--enable-threads=yes \
-			--disable-longdouble \
-        		--enable-boehm=included \
-			--with-dffi=no"
-		;;
+            host)
+                export ABI=64
+                config_opts="\
+                        --with-gmp-prefix=$PROJECT_INSTALL_DIR \
+                        --enable-threads=yes \
+                        --disable-longdouble \
+                        --enable-boehm=included \
+                        --with-dffi=no"
+                ;;
             
-	    hostnothreads)
-		export ABI=32
-		config_opts="\
-			--with-gmp-prefix=$PROJECT_INSTALL_DIR \
-			--enable-threads=no \
-			--disable-longdouble \
-        		--enable-boehm=included \
-			--with-dffi=no"
-		;;
+            hostnothreads)
+                export ABI=32
+                config_opts="\
+                        --with-gmp-prefix=$PROJECT_INSTALL_DIR \
+                        --enable-threads=no \
+                        --disable-longdouble \
+                        --enable-boehm=included \
+                        --with-dffi=no"
+                ;;
             
-	    host64)
-		config_opts="\
-			--with-gmp-prefix=$PROJECT_INSTALL_DIR \
-			--enable-threads=yes \
-			--enable-boehm=system \
-			--with-dffi=included"
-		;;
+            host64)
+                config_opts="\
+                        --with-gmp-prefix=$PROJECT_INSTALL_DIR \
+                        --enable-threads=yes \
+                        --enable-boehm=system \
+                        --with-dffi=included"
+                ;;
             
-	    host64nothreads)
-		config_opts="\
-			--with-gmp-prefix=$PROJECT_INSTALL_DIR \
-			--enable-threads=no \
-			--disable-longdouble \
-			--enable-boehm=system \
-			--with-dffi=included"
-		;;
+            host64nothreads)
+                config_opts="\
+                        --with-gmp-prefix=$PROJECT_INSTALL_DIR \
+                        --enable-threads=no \
+                        --disable-longdouble \
+                        --enable-boehm=system \
+                        --with-dffi=included"
+                ;;
             
-	    host64nodl)
-		config_opts="\
-			--with-gmp-prefix=$PROJECT_INSTALL_DIR \
-			--enable-threads=yes \
-			--enable-boehm=system \
-			--with-dffi=no \
-			--with-cmp=builtin \
-    			--disable-shared"
-		;;
-	esac	
-	;;
+            host64nodl)
+                config_opts="\
+                        --with-gmp-prefix=$PROJECT_INSTALL_DIR \
+                        --enable-threads=yes \
+                        --enable-boehm=system \
+                        --with-dffi=no \
+                        --with-cmp=builtin \
+                            --disable-shared"
+                ;;
+        esac        
+        ;;
     
     mpir)
-	srcdir=$PROJECT_ROOT/mpir
-	base_config_opts="\
-		--enable-gmpcompat \
-		--disable-shared"
+        srcdir=$PROJECT_ROOT/mpir
+        base_config_opts="\
+                --enable-gmpcompat \
+                --disable-shared"
         
-	case $platform in
-	    host|hostnothreads)
-		# export ABI=64
+        case $platform in
+            host|hostnothreads)
+                # export ABI=64
                 export ABI=32
                 
-		config_opts="\
-			--with-pic \
-			${base_config_opts}"
+                config_opts="\
+                        --with-pic \
+                        ${base_config_opts}"
                 
                 ## fuck you by strobolights :(
-		# MPIR-2.5.1: must use applenopic on sandybridge
-		if [[ "${host_platform}" = *"-apple-darwin"* ]]; then
-		    host=core2-apple-darwin
-		fi
-		;;
-	    host64*)
-		config_opts="\
-			--with-pic \
-			${base_config_opts}"
-		;;
-	    *)
-		config_opts="${base_config_opts}"
-		;;
-	esac
-	;;
+                # MPIR-2.5.1: must use applenopic on sandybridge
+                if [[ "${host_platform}" = *"-apple-darwin"* ]]; then
+                    host=core2-apple-darwin
+                fi
+                ;;
+            host64*)
+                config_opts="\
+                        --with-pic \
+                        ${base_config_opts}"
+                ;;
+            *)
+                config_opts="${base_config_opts}"
+                ;;
+        esac
+        ;;
     
     libatomic_ops)
-	config_opts="--disable-shared"
-	srcdir=$PROJECT_ROOT/libatomic_ops
-	;;
+        config_opts="--disable-shared"
+        srcdir=$PROJECT_ROOT/libatomic_ops
+        ;;
     
     bdwgc)
-	srcdir=$PROJECT_ROOT/bdwgc
-	case $platform in
-	    host)
-		export CFLAGS="$CFLAGS -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -fPIC -D_THREAD_SAFE"
-		config_opts="\
-			--disable-shared \
-			--enable-large-config \
-			--enable-handle-fork=no \
-			--enable-threads=posix"
-		;;
-	    android*)
-		export CFLAGS="$CFLAGS -DUSE_GET_STACKBASE_FOR_MAIN -DIGNORE_DYNAMIC_LOADING -DGC_LINUX_THREADS -D_REENTRANT"
-		config_opts="\
-			--disable-shared \
-			--enable-large-config \
-			--enable-handle-fork=no \
-			--enable-threads=posix"
-		;;
+        srcdir=$PROJECT_ROOT/bdwgc
+        case $platform in
+            host)
+                export CFLAGS="$CFLAGS -D_GNU_SOURCE -D_FILE_OFFSET_BITS=64 -fPIC -D_THREAD_SAFE"
+                config_opts="\
+                        --disable-shared \
+                        --enable-large-config \
+                        --enable-handle-fork=no \
+                        --enable-threads=posix"
+                ;;
+            android*)
+                export CFLAGS="$CFLAGS -DUSE_GET_STACKBASE_FOR_MAIN -DIGNORE_DYNAMIC_LOADING -DGC_LINUX_THREADS -D_REENTRANT"
+                config_opts="\
+                        --disable-shared \
+                        --enable-large-config \
+                        --enable-handle-fork=no \
+                        --enable-threads=posix"
+                ;;
             *)
                 config_opts=" --enable-shared=NO "
                 ;;
-	esac
-	;;
+        esac
+        ;;
     *)
-	usage; exit 1
-	;;
+        usage; exit 1
+        ;;
 esac
 
 if [ ! -f ${srcdir}/configure ] ; then

@@ -64,7 +64,7 @@ ios-univ: ios
 	./bin/iphone_universal $(ECL_INSTALL_ROOT_DIR)
 	touch $@
 
-iPhoneOS-armv7s.ecl iPhoneOS-armv7.ecl android.ecl iPhoneSimulator.ecl: host.ecl
+# iPhoneOS-armv7s.ecl iPhoneOS-armv7.ecl android.ecl iPhoneSimulator.ecl: host.ecl
 
 %.ecl: %.gmp %.bdwgc
 	-rm -rf build/$(@:.ecl=)/ecl
