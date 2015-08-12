@@ -1,1 +1,0 @@
-../mpn/generic/xnor_n.c

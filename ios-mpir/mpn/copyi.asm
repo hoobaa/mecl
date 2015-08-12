@@ -1,1 +1,0 @@
-../mpn/arm/copyi.asm

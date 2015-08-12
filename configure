@@ -68,7 +68,7 @@ case $project in
         esac
         
         case $platform in
-            android|androidx86|iPhoneOS-armv7s|iPhoneOS-armv7|iPhoneSimulator)
+            android|androidx86|iPhoneOS-armv7|iPhoneOS-arm64)
                 (cat $template_config; echo "ECL_TO_RUN=$ecl_to_run") > $builddir/cross_config
                 config_opts="\
                         --with-cross-config=$builddir/cross_config \

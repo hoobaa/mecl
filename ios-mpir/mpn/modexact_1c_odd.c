@@ -1,1 +1,0 @@
-../mpn/generic/modexact_1c_odd.c

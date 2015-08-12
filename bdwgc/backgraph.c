@@ -86,8 +86,11 @@ static back_edges *avail_back_edges = 0;
 static back_edges * new_back_edges(void)
 {
   if (0 == back_edge_space) {
-    back_edge_space = (back_edges *)
-                        GET_MEM(MAX_BACK_EDGE_STRUCTS*sizeof(back_edges));
+    back_edge_space = (back_edges *)GET_MEM(
+                        ROUNDUP_PAGESIZE_IF_MMAP(MAX_BACK_EDGE_STRUCTS
+                                                  * sizeof(back_edges)));
+    if (NULL == back_edge_space)
+      ABORT("Insufficient memory for back edges");
     GC_add_to_our_memory((ptr_t)back_edge_space,
                          MAX_BACK_EDGE_STRUCTS*sizeof(back_edges));
   }
@@ -127,7 +130,9 @@ static void push_in_progress(ptr_t p)
 {
   if (n_in_progress >= in_progress_size) {
     if (in_progress_size == 0) {
-      in_progress_size = INITIAL_IN_PROGRESS;
+      in_progress_size = ROUNDUP_PAGESIZE_IF_MMAP(INITIAL_IN_PROGRESS
+                                                        * sizeof(ptr_t))
+                                / sizeof(ptr_t);
       in_progress_space = (ptr_t *)GET_MEM(in_progress_size * sizeof(ptr_t));
       GC_add_to_our_memory((ptr_t)in_progress_space,
                            in_progress_size * sizeof(ptr_t));
@@ -138,8 +143,9 @@ static void push_in_progress(ptr_t p)
                                 GET_MEM(in_progress_size * sizeof(ptr_t));
       GC_add_to_our_memory((ptr_t)new_in_progress_space,
                            in_progress_size * sizeof(ptr_t));
-      BCOPY(in_progress_space, new_in_progress_space,
-            n_in_progress * sizeof(ptr_t));
+      if (new_in_progress_space != NULL)
+        BCOPY(in_progress_space, new_in_progress_space,
+              n_in_progress * sizeof(ptr_t));
       in_progress_space = new_in_progress_space;
       /* FIXME: This just drops the old space.  */
     }
@@ -172,7 +178,7 @@ GC_INLINE void pop_in_progress(ptr_t p GC_ATTR_UNUSED)
 /* Execute s once for each predecessor q of p in the points-to graph.   */
 /* s should be a bracketed statement.  We declare q.                    */
 #define FOR_EACH_PRED(q, p, s) \
-  { \
+  do { \
     ptr_t q = GET_OH_BG_PTR(p); \
     if (!((word)q & FLAG_MANY)) { \
       if (q && !((word)q & 1)) s \
@@ -191,7 +197,7 @@ GC_INLINE void pop_in_progress(ptr_t p GC_ATTR_UNUSED)
           q = be_ -> edges[local_]; s \
       } \
     } \
-  }
+  } while (0)
 
 /* Ensure that p has a back_edges structure associated with it. */
 static void ensure_struct(ptr_t p)

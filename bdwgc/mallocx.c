@@ -42,30 +42,40 @@
 void ** const GC_objfreelist_ptr = GC_objfreelist;
 void ** const GC_aobjfreelist_ptr = GC_aobjfreelist;
 void ** const GC_uobjfreelist_ptr = GC_uobjfreelist;
-# ifdef ATOMIC_UNCOLLECTABLE
+# ifdef GC_ATOMIC_UNCOLLECTABLE
     void ** const GC_auobjfreelist_ptr = GC_auobjfreelist;
 # endif
 
+GC_API int GC_CALL GC_get_kind_and_size(const void * p, size_t * psize)
+{
+    hdr * hhdr = HDR(p);
 
-STATIC void * GC_generic_or_special_malloc(size_t lb, int knd)
+    if (psize != NULL) {
+        *psize = hhdr -> hb_sz;
+    }
+    return hhdr -> hb_obj_kind;
+}
+
+GC_API GC_ATTR_MALLOC void * GC_CALL GC_generic_or_special_malloc(size_t lb,
+                                                                  int knd)
 {
     switch(knd) {
 #     ifdef STUBBORN_ALLOC
         case STUBBORN:
-            return(GC_malloc_stubborn((size_t)lb));
+            return GC_malloc_stubborn(lb);
 #     endif
         case PTRFREE:
-            return(GC_malloc_atomic((size_t)lb));
+            return GC_malloc_atomic(lb);
         case NORMAL:
-            return(GC_malloc((size_t)lb));
+            return GC_malloc(lb);
         case UNCOLLECTABLE:
-            return(GC_malloc_uncollectable((size_t)lb));
-#       ifdef ATOMIC_UNCOLLECTABLE
+            return GC_malloc_uncollectable(lb);
+#       ifdef GC_ATOMIC_UNCOLLECTABLE
           case AUNCOLLECTABLE:
-            return(GC_malloc_atomic_uncollectable((size_t)lb));
-#       endif /* ATOMIC_UNCOLLECTABLE */
+            return GC_malloc_atomic_uncollectable(lb);
+#       endif
         default:
-            return(GC_generic_malloc(lb,knd));
+            return GC_generic_malloc(lb, knd);
     }
 }
 
@@ -100,8 +110,8 @@ GC_API void * GC_CALL GC_realloc(void * p, size_t lb)
 #         ifdef MARK_BIT_PER_OBJ
             GC_ASSERT(hhdr -> hb_inv_sz == LARGE_INV_SZ);
 #         else
-            GC_ASSERT(hhdr -> hb_large_block &&
-                      hhdr -> hb_map[ANY_INDEX] == 1);
+            GC_ASSERT((hhdr -> hb_flags & LARGE_BLOCK) != 0
+                        && hhdr -> hb_map[ANY_INDEX] == 1);
 #         endif
           if (IS_UNCOLLECTABLE(obj_kind)) GC_non_gc_bytes += (sz - orig_sz);
           /* Extra area is already cleared by GC_alloc_large_and_clear. */
@@ -134,8 +144,7 @@ GC_API void * GC_CALL GC_realloc(void * p, size_t lb)
         }
     } else {
         /* grow */
-          void * result =
-                GC_generic_or_special_malloc((word)lb, obj_kind);
+          void * result = GC_generic_or_special_malloc((word)lb, obj_kind);
 
           if (result == 0) return(0);
           BCOPY(p, result, sz);
@@ -153,14 +162,15 @@ GC_API void * GC_CALL GC_realloc(void * p, size_t lb)
 # ifdef REDIRECT_REALLOC
 
 /* As with malloc, avoid two levels of extra calls here.        */
-
 # define GC_debug_realloc_replacement(p, lb) \
-        GC_debug_realloc(p, lb, GC_DBG_RA "unknown", 0)
+        GC_debug_realloc(p, lb, GC_DBG_EXTRAS)
 
-void * realloc(void * p, size_t lb)
-  {
-    return(REDIRECT_REALLOC(p, lb));
-  }
+# if !defined(REDIRECT_MALLOC_IN_HEADER)
+    void * realloc(void * p, size_t lb)
+    {
+      return(REDIRECT_REALLOC(p, lb));
+    }
+# endif
 
 # undef GC_debug_realloc_replacement
 # endif /* REDIRECT_REALLOC */
@@ -168,7 +178,8 @@ void * realloc(void * p, size_t lb)
 /* Allocate memory such that only pointers to near the          */
 /* beginning of the object are considered.                      */
 /* We avoid holding allocation lock while we clear the memory.  */
-GC_API void * GC_CALL GC_generic_malloc_ignore_off_page(size_t lb, int k)
+GC_API GC_ATTR_MALLOC void * GC_CALL
+    GC_generic_malloc_ignore_off_page(size_t lb, int k)
 {
     void *result;
     size_t lg;
@@ -178,7 +189,7 @@ GC_API void * GC_CALL GC_generic_malloc_ignore_off_page(size_t lb, int k)
     DCL_LOCK_STATE;
 
     if (SMALL_OBJ(lb))
-        return(GC_generic_malloc((word)lb, k));
+        return GC_generic_malloc(lb, k);
     lg = ROUNDED_UP_GRANULES(lb);
     lb_rounded = GRANULES_TO_BYTES(lg);
     if (lb_rounded < lb)
@@ -219,14 +230,15 @@ GC_API void * GC_CALL GC_generic_malloc_ignore_off_page(size_t lb, int k)
     }
 }
 
-GC_API void * GC_CALL GC_malloc_ignore_off_page(size_t lb)
+GC_API GC_ATTR_MALLOC void * GC_CALL GC_malloc_ignore_off_page(size_t lb)
 {
-    return((void *)GC_generic_malloc_ignore_off_page(lb, NORMAL));
+    return GC_generic_malloc_ignore_off_page(lb, NORMAL);
 }
 
-GC_API void * GC_CALL GC_malloc_atomic_ignore_off_page(size_t lb)
+GC_API GC_ATTR_MALLOC void * GC_CALL
+    GC_malloc_atomic_ignore_off_page(size_t lb)
 {
-    return((void *)GC_generic_malloc_ignore_off_page(lb, PTRFREE));
+    return GC_generic_malloc_ignore_off_page(lb, PTRFREE);
 }
 
 /* Increment GC_bytes_allocd from code that doesn't have direct access  */
@@ -278,6 +290,7 @@ GC_API void GC_CALL GC_generic_malloc_many(size_t lb, int k, void **result)
     size_t lg;      /* Length in granules.  */
     signed_word my_bytes_allocd = 0;
     struct obj_kind * ok = &(GC_obj_kinds[k]);
+    struct hblk ** rlh;
     DCL_LOCK_STATE;
 
     GC_ASSERT(lb != 0 && (lb & (GRANULE_BYTES-1)) == 0);
@@ -304,8 +317,8 @@ GC_API void GC_CALL GC_generic_malloc_many(size_t lb, int k, void **result)
       }
     /* First see if we can reclaim a page of objects waiting to be */
     /* reclaimed.                                                  */
-    {
-        struct hblk ** rlh = ok -> ok_reclaim_list;
+    rlh = ok -> ok_reclaim_list;
+    if (rlh != NULL) {
         struct hblk * hbp;
         hdr * hhdr;
 
@@ -367,8 +380,8 @@ GC_API void GC_CALL GC_generic_malloc_many(size_t lb, int k, void **result)
                 GC_release_mark_lock();
                 LOCK();
                 /* GC lock is needed for reclaim list access.   We      */
-                /* must decrement fl_builder_count before reaquiring GC */
-                /* lock.  Hopefully this path is rare.                  */
+                /* must decrement fl_builder_count before reacquiring   */
+                /* the lock.  Hopefully this path is rare.              */
               }
 #           endif
         }
@@ -434,11 +447,11 @@ GC_API void GC_CALL GC_generic_malloc_many(size_t lb, int k, void **result)
 
 /* Note that the "atomic" version of this would be unsafe, since the    */
 /* links would not be seen by the collector.                            */
-GC_API void * GC_CALL GC_malloc_many(size_t lb)
+GC_API GC_ATTR_MALLOC void * GC_CALL GC_malloc_many(size_t lb)
 {
     void *result;
-    GC_generic_malloc_many((lb + EXTRA_BYTES + GRANULE_BYTES-1)
-                           & ~(GRANULE_BYTES-1),
+
+    GC_generic_malloc_many(ROUNDUP_GRANULE_SIZE(lb + EXTRA_BYTES),
                            NORMAL, &result);
     return result;
 }
@@ -447,7 +460,7 @@ GC_API void * GC_CALL GC_malloc_many(size_t lb)
 /* Debug version is tricky and currently missing.       */
 #include <limits.h>
 
-GC_API void * GC_CALL GC_memalign(size_t align, size_t lb)
+GC_API GC_ATTR_MALLOC void * GC_CALL GC_memalign(size_t align, size_t lb)
 {
     size_t new_lb;
     size_t offset;
@@ -465,7 +478,7 @@ GC_API void * GC_CALL GC_memalign(size_t align, size_t lb)
     /* is a multiple of align.  That would be correct up to HBLKSIZE.      */
     new_lb = lb + align - 1;
     result = GC_malloc(new_lb);
-            /* It is ok not to check result for NULL as in that case    */
+            /* It is OK not to check result for NULL as in that case    */
             /* GC_memalign returns NULL too since (0 + 0 % align) is 0. */
     offset = (word)result % align;
     if (offset != 0) {
@@ -480,7 +493,7 @@ GC_API void * GC_CALL GC_memalign(size_t align, size_t lb)
     return result;
 }
 
-/* This one exists largerly to redirect posix_memalign for leaks finding. */
+/* This one exists largely to redirect posix_memalign for leaks finding. */
 GC_API int GC_CALL GC_posix_memalign(void **memptr, size_t align, size_t lb)
 {
   /* Check alignment properly.  */
@@ -502,28 +515,27 @@ GC_API int GC_CALL GC_posix_memalign(void **memptr, size_t align, size_t lb)
   return 0;
 }
 
-#ifdef ATOMIC_UNCOLLECTABLE
-  /* Allocate lb bytes of pointerfree, untraced, uncollectable data     */
+#ifdef GC_ATOMIC_UNCOLLECTABLE
+  /* Allocate lb bytes of pointer-free, untraced, uncollectible data    */
   /* This is normally roughly equivalent to the system malloc.          */
   /* But it may be useful if malloc is redefined.                       */
-  GC_API void * GC_CALL GC_malloc_atomic_uncollectable(size_t lb)
+  GC_API GC_ATTR_MALLOC void * GC_CALL
+        GC_malloc_atomic_uncollectable(size_t lb)
   {
     void *op;
-    void **opp;
     size_t lg;
     DCL_LOCK_STATE;
 
-    if( SMALL_OBJ(lb) ) {
+    if (SMALL_OBJ(lb)) {
         GC_DBG_COLLECT_AT_MALLOC(lb);
         if (EXTRA_BYTES != 0 && lb != 0) lb--;
                   /* We don't need the extra byte, since this won't be  */
                   /* collected anyway.                                  */
         lg = GC_size_map[lb];
-        opp = &(GC_auobjfreelist[lg]);
         LOCK();
-        op = *opp;
-        if (EXPECT(0 != op, TRUE)) {
-            *opp = obj_link(op);
+        op = GC_auobjfreelist[lg];
+        if (EXPECT(op != 0, TRUE)) {
+            GC_auobjfreelist[lg] = obj_link(op);
             obj_link(op) = 0;
             GC_bytes_allocd += GRANULES_TO_BYTES(lg);
             /* Mark bit was already set while object was on free list. */
@@ -554,11 +566,11 @@ GC_API int GC_CALL GC_posix_memalign(void **memptr, size_t align, size_t lb)
         return((void *) op);
     }
   }
-#endif /* ATOMIC_UNCOLLECTABLE */
+#endif /* GC_ATOMIC_UNCOLLECTABLE */
 
 /* provide a version of strdup() that uses the collector to allocate the
    copy of the string */
-GC_API char * GC_CALL GC_strdup(const char *s)
+GC_API GC_ATTR_MALLOC char * GC_CALL GC_strdup(const char *s)
 {
   char *copy;
   size_t lb;
@@ -574,7 +586,7 @@ GC_API char * GC_CALL GC_strdup(const char *s)
   return copy;
 }
 
-GC_API char * GC_CALL GC_strndup(const char *str, size_t size)
+GC_API GC_ATTR_MALLOC char * GC_CALL GC_strndup(const char *str, size_t size)
 {
   char *copy;
   size_t len = strlen(str); /* str is expected to be non-NULL  */
@@ -595,7 +607,7 @@ GC_API char * GC_CALL GC_strndup(const char *str, size_t size)
 #ifdef GC_REQUIRE_WCSDUP
 # include <wchar.h> /* for wcslen() */
 
-  GC_API wchar_t * GC_CALL GC_wcsdup(const wchar_t *str)
+  GC_API GC_ATTR_MALLOC wchar_t * GC_CALL GC_wcsdup(const wchar_t *str)
   {
     size_t lb = (wcslen(str) + 1) * sizeof(wchar_t);
     wchar_t *copy = GC_malloc_atomic(lb);

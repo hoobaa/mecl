@@ -80,20 +80,54 @@ STATIC GC_has_static_roots_func GC_has_static_roots = 0;
 #   define ELFSIZE ARCH_ELFSIZE
 #endif
 
+#if defined(OPENBSD)
+# include <sys/param.h>
+# if OpenBSD >= 200519
+#   define HAVE_DL_ITERATE_PHDR
+# endif
+#endif /* OPENBSD */
+
 #if defined(SCO_ELF) || defined(DGUX) || defined(HURD) \
     || (defined(__ELF__) && (defined(LINUX) || defined(FREEBSD) \
                              || defined(NETBSD) || defined(OPENBSD)))
 # include <stddef.h>
 # if !defined(OPENBSD) && !defined(PLATFORM_ANDROID)
-    /* FIXME: Why we exclude it for OpenBSD? */
+    /* OpenBSD does not have elf.h file; link.h below is sufficient.    */
     /* Exclude Android because linker.h below includes its own version. */
 #   include <elf.h>
 # endif
 # ifdef PLATFORM_ANDROID
-    /* The header file is in "bionic/linker" folder of Android sources. */
     /* If you don't need the "dynamic loading" feature, you may build   */
     /* the collector with -D IGNORE_DYNAMIC_LOADING.                    */
-#   include <linker.h>
+#   ifdef BIONIC_ELFDATA_REDEF_BUG
+      /* Workaround a problem in Bionic (as of Android 4.2) which has   */
+      /* mismatching ELF_DATA definitions in sys/exec_elf.h and         */
+      /* asm/elf.h included from linker.h file (similar to EM_ALPHA).   */
+#     include <asm/elf.h>
+#     include <linux/elf-em.h>
+#     undef ELF_DATA
+#     undef EM_ALPHA
+#   endif
+#   include <link.h>
+#   if !defined(GC_DONT_DEFINE_LINK_MAP)
+      /* link_map and r_debug should be defined explicitly,             */
+      /* as only bionic/linker/linker.h defines them but the header     */
+      /* itself is a C++ one starting from Android 4.3.                 */
+      struct link_map {
+        uintptr_t l_addr;
+        char* l_name;
+        uintptr_t l_ld;
+        struct link_map* l_next;
+        struct link_map* l_prev;
+      };
+      struct r_debug {
+        int32_t r_version;
+        struct link_map* r_map;
+        void (*r_brk)(void);
+        int32_t r_state;
+        uintptr_t r_ldbase;
+      };
+#   endif
 # else
 #   include <link.h>
 # endif
@@ -319,7 +353,7 @@ STATIC word GC_register_map_entries(char *maps)
               /* away pointers in pieces of the stack segment that we   */
               /* don't scan.  We work around this                       */
               /* by treating anything allocated by libpthread as        */
-              /* uncollectable, as we do in some other cases.           */
+              /* uncollectible, as we do in some other cases.           */
               /* A specifically identified problem is that              */
               /* thread stacks contain pointers to dynamic thread       */
               /* vectors, which may be reused due to thread caching.    */
@@ -383,16 +417,21 @@ GC_INNER GC_bool GC_register_main_static_data(void)
 #else /* !USE_PROC_FOR_LIBRARIES */
 
 /* The following is the preferred way to walk dynamic libraries */
-/* For glibc 2.2.4+.  Unfortunately, it doesn't work for older  */
+/* for glibc 2.2.4+.  Unfortunately, it doesn't work for older  */
 /* versions.  Thanks to Jakub Jelinek for most of the code.     */
 
-#if (defined(LINUX) || defined (__GLIBC__)) /* Are others OK here, too? */ \
-     && (__GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 2) \
-         || (__GLIBC__ == 2 && __GLIBC_MINOR__ == 2 && defined(DT_CONFIG)))
+#if __GLIBC__ > 2 || (__GLIBC__ == 2 && __GLIBC_MINOR__ > 2) \
+    || (__GLIBC__ == 2 && __GLIBC_MINOR__ == 2 && defined(DT_CONFIG)) \
+    || defined(PLATFORM_ANDROID) /* Are others OK here, too? */
 /* We have the header files for a glibc that includes dl_iterate_phdr.  */
 /* It may still not be available in the library on the target system.   */
 /* Thus we also treat it as a weak symbol.                              */
 # define HAVE_DL_ITERATE_PHDR
+# ifdef PLATFORM_ANDROID
+    /* Android headers might have no such definition for some targets.  */
+    int dl_iterate_phdr(int (*cb)(struct dl_phdr_info *, size_t, void *),
+                        void *data);
+# endif
 # pragma weak dl_iterate_phdr
 #endif
 
@@ -648,8 +687,15 @@ GC_FirstDLOpenedLinkMap(void)
     if( cachedResult == 0 ) {
 #     if defined(NETBSD) && defined(RTLD_DI_LINKMAP)
         struct link_map *lm = NULL;
-        if (!dlinfo(RTLD_SELF, RTLD_DI_LINKMAP, &lm))
-            cachedResult = lm;
+        if (!dlinfo(RTLD_SELF, RTLD_DI_LINKMAP, &lm) && lm != NULL) {
+            /* Now lm points link_map object of libgc.  Since it    */
+            /* might not be the first dynamically linked object,    */
+            /* try to find it (object next to the main object).     */
+            while (lm->l_prev != NULL) {
+                lm = lm->l_prev;
+            }
+            cachedResult = lm->l_next;
+        }
 #     else
         int tag;
         for( dp = _DYNAMIC; (tag = dp->d_tag) != 0; dp++ ) {
@@ -1095,7 +1141,7 @@ GC_INNER void GC_register_dynamic_libraries(void)
       /* Get info about next shared library */
         status = shl_get(index, &shl_desc);
 
-      /* Check if this is the end of the list or if some error occured */
+      /* Check if this is the end of the list or if some error occurred */
         if (status != 0) {
 #        ifdef GC_HPUX_THREADS
            /* I've seen errno values of 0.  The man page is not clear   */

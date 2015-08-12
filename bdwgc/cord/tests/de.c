@@ -116,19 +116,21 @@ void invalidate_map(int i)
 
 /* Reduce the number of map entries to save space for huge files. */
 /* This also affects maps in histories.                           */
-void prune_map()
+void prune_map(void)
 {
     line_map map = current_map;
     int start_line = map -> line;
 
     current_map_size = 0;
-    for(; map != 0; map = map -> previous) {
+    do {
         current_map_size++;
         if (map -> line < start_line - LINES && map -> previous != 0) {
             map -> previous = map -> previous -> previous;
         }
-    }
+        map = map -> previous;
+    } while (map != 0);
 }
+
 /* Add mapping entry */
 void add_map(int line, size_t pos)
 {
@@ -206,7 +208,9 @@ void replace_line(int i, CORD s)
 {
     register int c;
     CORD_pos p;
-    size_t len = CORD_len(s);
+#   if !defined(MACINTOSH)
+        size_t len = CORD_len(s);
+#   endif
 
     if (screen == 0 || LINES > screen_size) {
         screen_size = LINES;
@@ -215,7 +219,7 @@ void replace_line(int i, CORD s)
 #   if !defined(MACINTOSH)
         /* A gross workaround for an apparent curses bug: */
         if (i == LINES-1 && len == COLS) {
-            s = CORD_substr(s, 0, CORD_len(s) - 1);
+            s = CORD_substr(s, 0, len - 1);
         }
 #   endif
     if (CORD_cmp(screen[i], s) != 0) {
@@ -290,7 +294,7 @@ int dis_granularity;
 
 /* Update dis_line, dis_col, and dis_pos to make cursor visible.        */
 /* Assumes line, col, dis_line, dis_pos are in bounds.                  */
-void normalize_display()
+void normalize_display(void)
 {
     int old_line = dis_line;
     int old_col = dis_col;
@@ -328,7 +332,7 @@ void fix_cursor(void)
 
 /* Make sure line, col, and dis_pos are somewhere inside file.  */
 /* Recompute file_pos.  Assumes dis_pos is accurate or past eof */
-void fix_pos()
+void fix_pos(void)
 {
     int my_col = col;
 

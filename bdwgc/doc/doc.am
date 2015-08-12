@@ -14,7 +14,7 @@
 #
 dist_pkgdata_DATA = \
         AUTHORS \
-        README \
+        README.md \
         doc/README.DGUX386 \
         doc/README.Mac \
         doc/README.OS2 \
@@ -24,7 +24,6 @@ dist_pkgdata_DATA = \
         doc/README.cmake \
         doc/README.cords \
         doc/README.darwin \
-        doc/README.dj \
         doc/README.environment \
         doc/README.ews4800 \
         doc/README.hp \
@@ -37,7 +36,6 @@ dist_pkgdata_DATA = \
         doc/README.uts \
         doc/README.win32 \
         doc/README.win64 \
-        doc/barrett_diagram \
         doc/debugging.html \
         doc/finalization.html \
         doc/gc.man \

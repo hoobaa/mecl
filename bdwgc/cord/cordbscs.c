@@ -570,7 +570,7 @@ int CORD_riter(CORD x, CORD_iter_fn f1, void * client_data)
  * The following functions are concerned with balancing cords.
  * Strategy:
  * Scan the cord from left to right, keeping the cord scanned so far
- * as a forest of balanced trees of exponentialy decreasing length.
+ * as a forest of balanced trees of exponentially decreasing length.
  * When a new subtree needs to be added to the forest, we concatenate all
  * shorter ones to the new tree in the appropriate order, and then insert
  * the result into the forest.
@@ -598,7 +598,7 @@ typedef ForestElement Forest [ MAX_DEPTH ];
                         /* of the forest in order of DECREASING */
                         /* indices.                             */
 
-void CORD_init_min_len()
+void CORD_init_min_len(void)
 {
     register int i;
     register size_t last, previous, current;

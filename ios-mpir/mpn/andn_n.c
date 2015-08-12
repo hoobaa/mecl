@@ -1,1 +1,0 @@
-../mpn/generic/andn_n.c

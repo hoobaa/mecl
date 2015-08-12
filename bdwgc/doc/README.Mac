@@ -92,7 +92,7 @@ o C/C++ language
 o PPC Processor
   - Struct Alignment: PowerPC
   - uncheck "Store Static Data in TOC" -- important!
-    I don't think the others matter, I use full optimization and its ok
+    I don't think the others matter, I use full optimization and it is OK
 o PPC Linker
   - Factory Settings (SYM file with full paths, faster linking, dead-strip
     static init, Main: __start)
@@ -120,7 +120,7 @@ o IR Optimizer
   - enable: Optimize Space, Optimize Speed
     I suppose the others would work too, but haven't tried...
 o 68K Linker
-  - Factory Settings (New Style MacsBug,SYM file with full paths,
+  - Factory Settings (New Style MacsBug, SYM file with full paths,
     A6 Frames, fast link, Merge compiler glue into segment 1,
     dead-strip static init)
 
@@ -161,7 +161,7 @@ of every source file. I used these:
   #define ALL_INTERIOR_POINTERS // follows interior pointers.
 //#define DONT_ADD_BYTE_AT_END  // disables the padding if defined.
 //#define SMALL_CONFIG          // whether to use a smaller heap.
-  #define ATOMIC_UNCOLLECTABLE  // GC_malloc_atomic_uncollectable()
+  #define GC_ATOMIC_UNCOLLECTABLE // GC_malloc_atomic_uncollectable()
 
   // define either or none as per personal preference
   //   used in malloc.c
@@ -261,7 +261,7 @@ same as for test.c
 
 For convenience I used one test-project with several targets so that all
 test apps are build at once. Two for each library to test: test.c and
-gc_app.cc. When I was satisfied that the libraries were ok. I put the
+gc_app.cc. When I was satisfied that the libraries were OK. I put the
 libraries + gc.h + the c++ interface-file in a folder that I then put into
 the MSL hierarchy so that I don't have to alter access-paths in projects
 that use the GC.

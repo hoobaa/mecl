@@ -1,1 +1,0 @@
-../mpn/arm/sub_n.asm

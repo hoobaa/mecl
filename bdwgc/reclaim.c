@@ -57,7 +57,6 @@ GC_INLINE void GC_add_leaked(ptr_t leaked)
 #  endif
 
     GC_have_errors = TRUE;
-    /* FIXME: Prevent adding an object while printing leaked ones.      */
     if (GC_n_leaked < MAX_LEAKED) {
       GC_leaked[GC_n_leaked++] = leaked;
       /* Make sure it's not reclaimed this cycle */
@@ -71,7 +70,8 @@ GC_INNER void GC_print_all_errors(void)
 {
     static GC_bool printing_errors = FALSE;
     GC_bool have_errors;
-    unsigned i;
+    unsigned i, n_leaked;
+    ptr_t leaked[MAX_LEAKED];
     DCL_LOCK_STATE;
 
     LOCK();
@@ -81,6 +81,11 @@ GC_INNER void GC_print_all_errors(void)
     }
     have_errors = GC_have_errors;
     printing_errors = TRUE;
+    n_leaked = GC_n_leaked;
+    GC_ASSERT(n_leaked <= MAX_LEAKED);
+    BCOPY(GC_leaked, leaked, n_leaked * sizeof(ptr_t));
+    GC_n_leaked = 0;
+    BZERO(GC_leaked, n_leaked * sizeof(ptr_t));
     UNLOCK();
 
     if (GC_debugging_started) {
@@ -89,17 +94,15 @@ GC_INNER void GC_print_all_errors(void)
       have_errors = FALSE;
     }
 
-    if (GC_n_leaked > 0) {
-        GC_err_printf("Found %u leaked objects:\n", GC_n_leaked);
+    if (n_leaked > 0) {
+        GC_err_printf("Found %u leaked objects:\n", n_leaked);
         have_errors = TRUE;
     }
-    for (i = 0; i < GC_n_leaked; ++i) {
-        ptr_t p = GC_leaked[i];
+    for (i = 0; i < n_leaked; i++) {
+        ptr_t p = leaked[i];
         GC_print_heap_obj(p);
         GC_free(p);
-        GC_leaked[i] = 0;
     }
-    GC_n_leaked = 0;
 
     if (have_errors
 #       ifndef GC_ABORT_ON_LEAK
@@ -109,7 +112,9 @@ GC_INNER void GC_print_all_errors(void)
       ABORT("Leaked or smashed objects encountered");
     }
 
+    LOCK();
     printing_errors = FALSE;
+    UNLOCK();
 }
 
 
@@ -767,3 +772,46 @@ GC_INNER GC_bool GC_reclaim_all(GC_stop_func stop_func, GC_bool ignore_old)
     }
   }
 #endif /* !EAGER_SWEEP && ENABLE_DISCLAIM */
+
+struct enumerate_reachable_s {
+  GC_reachable_object_proc proc;
+  void *client_data;
+};
+
+STATIC void GC_do_enumerate_reachable_objects(struct hblk *hbp, word ped)
+{
+  struct hblkhdr *hhdr = HDR(hbp);
+  size_t sz = hhdr -> hb_sz;
+  size_t bit_no;
+  char *p, *plim;
+
+  if (GC_block_empty(hhdr)) {
+    return;
+  }
+
+  p = hbp->hb_body;
+  if (sz > MAXOBJBYTES) { /* one big object */
+    plim = p;
+  } else {
+    plim = hbp->hb_body + HBLKSIZE - sz;
+  }
+  /* Go through all words in block. */
+  for (bit_no = 0; p <= plim; bit_no += MARK_BIT_OFFSET(sz), p += sz) {
+    if (mark_bit_from_hdr(hhdr, bit_no)) {
+      ((struct enumerate_reachable_s *)ped)->proc(p, sz,
+                        ((struct enumerate_reachable_s *)ped)->client_data);
+    }
+  }
+}
+
+GC_API void GC_CALL GC_enumerate_reachable_objects_inner(
+                                                GC_reachable_object_proc proc,
+                                                void *client_data)
+{
+  struct enumerate_reachable_s ed;
+
+  GC_ASSERT(I_HOLD_LOCK());
+  ed.proc = proc;
+  ed.client_data = client_data;
+  GC_apply_to_all_blocks(GC_do_enumerate_reachable_objects, (word)&ed);
+}

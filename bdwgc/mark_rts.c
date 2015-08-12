@@ -246,8 +246,8 @@ void GC_add_roots_inner(ptr_t b, ptr_t e, GC_bool tmp)
     }
 
 #   ifdef DEBUG_ADD_DEL_ROOTS
-      GC_log_printf("Adding data root section %d: %p .. %p\n",
-                    n_root_sets, b, e);
+      GC_log_printf("Adding data root section %d: %p .. %p%s\n",
+                    n_root_sets, b, e, tmp ? " (temporary)" : "");
 #   endif
     GC_static_roots[n_root_sets].r_start = (ptr_t)b;
     GC_static_roots[n_root_sets].r_end = (ptr_t)e;
@@ -284,8 +284,9 @@ GC_API void GC_CALL GC_clear_roots(void)
 STATIC void GC_remove_root_at_pos(int i)
 {
 #   ifdef DEBUG_ADD_DEL_ROOTS
-      GC_log_printf("Remove data root section %d: %p .. %p\n",
-                    i, GC_static_roots[i].r_start, GC_static_roots[i].r_end);
+      GC_log_printf("Remove data root section at %d: %p .. %p%s\n",
+                    i, GC_static_roots[i].r_start, GC_static_roots[i].r_end,
+                    GC_static_roots[i].r_tmp ? " (temporary)" : "");
 #   endif
     GC_root_size -= (GC_static_roots[i].r_end - GC_static_roots[i].r_start);
     GC_static_roots[i].r_start = GC_static_roots[n_root_sets-1].r_start;
@@ -750,7 +751,7 @@ STATIC void GC_push_regs_and_stack(ptr_t cold_gc_frame)
  * A zero value indicates that it's OK to miss some
  * register values.
  */
-GC_INNER void GC_push_roots(GC_bool all, ptr_t cold_gc_frame)
+GC_INNER void GC_push_roots(GC_bool all, ptr_t cold_gc_frame GC_ATTR_UNUSED)
 {
     int i;
     unsigned kind;
@@ -809,7 +810,9 @@ GC_INNER void GC_push_roots(GC_bool all, ptr_t cold_gc_frame)
      * This is usually done by saving the current context on the
      * stack, and then just tracing from the stack.
      */
-      GC_push_regs_and_stack(cold_gc_frame);
+#    ifndef STACK_NOT_SCANNED
+       GC_push_regs_and_stack(cold_gc_frame);
+#    endif
 
     if (GC_push_other_roots != 0) (*GC_push_other_roots)();
         /* In the threads case, this also pushes thread stacks. */

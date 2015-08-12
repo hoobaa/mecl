@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 1991-1994 by Xerox Corporation.  All rights reserved.
- * opyright (c) 1999-2000 by Hewlett-Packard Company.  All rights reserved.
+ * Copyright (c) 1999-2000 by Hewlett-Packard Company.  All rights reserved.
  *
  * THIS MATERIAL IS PROVIDED AS IS, WITH ABSOLUTELY NO WARRANTY EXPRESSED
  * OR IMPLIED.  ANY USE IS AT YOUR OWN RISK.
@@ -110,7 +110,7 @@ STATIC void GC_push_typed_structures_proc(void)
 /* starting index.                                              */
 /* Returns -1 on failure.                                       */
 /* Caller does not hold allocation lock.                        */
-STATIC signed_word GC_add_ext_descriptor(const GC_word * bm, word nbits)
+STATIC signed_word GC_add_ext_descriptor(const word * bm, word nbits)
 {
     size_t nwords = divWORDSZ(nbits + WORDSZ-1);
     signed_word result;
@@ -581,10 +581,10 @@ GC_API GC_descr GC_CALL GC_make_descriptor(const GC_word * bm, size_t len)
     }
 }
 
-GC_API void * GC_CALL GC_malloc_explicitly_typed(size_t lb, GC_descr d)
+GC_API GC_ATTR_MALLOC void * GC_CALL GC_malloc_explicitly_typed(size_t lb,
+                                                                GC_descr d)
 {
     ptr_t op;
-    ptr_t * opp;
     size_t lg;
     DCL_LOCK_STATE;
 
@@ -592,16 +592,15 @@ GC_API void * GC_CALL GC_malloc_explicitly_typed(size_t lb, GC_descr d)
     if(SMALL_OBJ(lb)) {
         GC_DBG_COLLECT_AT_MALLOC(lb);
         lg = GC_size_map[lb];
-        opp = &(GC_eobjfreelist[lg]);
         LOCK();
-        op = *opp;
+        op = GC_eobjfreelist[lg];
         if (EXPECT(0 == op, FALSE)) {
             UNLOCK();
             op = (ptr_t)GENERAL_MALLOC((word)lb, GC_explicit_kind);
             if (0 == op) return 0;
             lg = GC_size_map[lb];       /* May have been uninitialized. */
         } else {
-            *opp = obj_link(op);
+            GC_eobjfreelist[lg] = obj_link(op);
             obj_link(op) = 0;
             GC_bytes_allocd += GRANULES_TO_BYTES(lg);
             UNLOCK();
@@ -617,28 +616,26 @@ GC_API void * GC_CALL GC_malloc_explicitly_typed(size_t lb, GC_descr d)
    return((void *) op);
 }
 
-GC_API void * GC_CALL GC_malloc_explicitly_typed_ignore_off_page(size_t lb,
-                                                                 GC_descr d)
+GC_API GC_ATTR_MALLOC void * GC_CALL
+    GC_malloc_explicitly_typed_ignore_off_page(size_t lb, GC_descr d)
 {
     ptr_t op;
-    ptr_t * opp;
     size_t lg;
     DCL_LOCK_STATE;
 
     lb += TYPD_EXTRA_BYTES;
-    if( SMALL_OBJ(lb) ) {
+    if (SMALL_OBJ(lb)) {
         GC_DBG_COLLECT_AT_MALLOC(lb);
         lg = GC_size_map[lb];
-        opp = &(GC_eobjfreelist[lg]);
         LOCK();
-        op = *opp;
+        op = GC_eobjfreelist[lg];
         if (EXPECT(0 == op, FALSE)) {
             UNLOCK();
             op = (ptr_t)GENERAL_MALLOC_IOP(lb, GC_explicit_kind);
             if (0 == op) return 0;
             lg = GC_size_map[lb];       /* May have been uninitialized. */
         } else {
-            *opp = obj_link(op);
+            GC_eobjfreelist[lg] = obj_link(op);
             obj_link(op) = 0;
             GC_bytes_allocd += GRANULES_TO_BYTES(lg);
             UNLOCK();
@@ -654,11 +651,10 @@ GC_API void * GC_CALL GC_malloc_explicitly_typed_ignore_off_page(size_t lb,
    return((void *) op);
 }
 
-GC_API void * GC_CALL GC_calloc_explicitly_typed(size_t n, size_t lb,
-                                                 GC_descr d)
+GC_API GC_ATTR_MALLOC void * GC_CALL GC_calloc_explicitly_typed(size_t n,
+                                                        size_t lb, GC_descr d)
 {
     ptr_t op;
-    ptr_t * opp;
     size_t lg;
     GC_descr simple_descr;
     complex_descriptor *complex_descr;
@@ -682,16 +678,15 @@ GC_API void * GC_CALL GC_calloc_explicitly_typed(size_t n, size_t lb,
     }
     if( SMALL_OBJ(lb) ) {
         lg = GC_size_map[lb];
-        opp = &(GC_arobjfreelist[lg]);
         LOCK();
-        op = *opp;
+        op = GC_arobjfreelist[lg];
         if (EXPECT(0 == op, FALSE)) {
             UNLOCK();
             op = (ptr_t)GENERAL_MALLOC((word)lb, GC_array_kind);
             if (0 == op) return(0);
             lg = GC_size_map[lb];       /* May have been uninitialized. */
         } else {
-            *opp = obj_link(op);
+            GC_arobjfreelist[lg] = obj_link(op);
             obj_link(op) = 0;
             GC_bytes_allocd += GRANULES_TO_BYTES(lg);
             UNLOCK();

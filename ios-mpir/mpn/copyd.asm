@@ -1,1 +1,0 @@
-../mpn/arm/copyd.asm

@@ -12,16 +12,15 @@
 dnl Process this file with autoconf to produce configure.
 
 # Initialization
-AC_INIT(gc,7.3alpha3,gc@linux.hpl.hp.com)
-    ## version must conform to [0-9]+[.][0-9]+(alpha[0-9]+)?
+AC_INIT(gc,7.5.0,bdwgc@lists.opendylan.org)
+    ## version must conform to [0-9]+[.][0-9]+[.][0-9]+
 AC_CONFIG_SRCDIR(gcj_mlc.c)
 AC_CONFIG_MACRO_DIR([m4])
 AC_CANONICAL_TARGET
 AC_PREREQ(2.61)
-AC_REVISION($Revision: 1.69 $)
 GC_SET_VERSION
-AM_INIT_AUTOMAKE([foreign dist-bzip2 nostdinc])
-AC_CONFIG_HEADER([include/config.h])
+AM_INIT_AUTOMAKE([foreign dist-bzip2 nostdinc subdir-objects])
+AC_CONFIG_HEADERS([include/config.h])
 AM_MAINTAINER_MODE
 
 AC_SUBST(PACKAGE)
@@ -29,10 +28,11 @@ AC_SUBST(GC_VERSION)
 
 AM_PROG_CC_C_O
 AC_PROG_CXX
-
 AM_PROG_AS
-
 AC_PROG_INSTALL
+LT_INIT
+# Note: If Autoconf reports that LIBTOOL (or AC_ENABLE_SHARED, or
+# AC_PROG_LIBTOOL) is undefined, Libtool installation should be checked.
 
 # Special CFLAGS to use when building
 gc_cflags=""
@@ -126,7 +126,7 @@ AC_ARG_ENABLE(cplusplus,
 dnl Features which may be selected in the following thread-detection switch.
 AH_TEMPLATE([PARALLEL_MARK], [Define to enable parallel marking.])
 AH_TEMPLATE([THREAD_LOCAL_ALLOC],
-            [Define to enable thread-local allocation optimisation.])
+            [Define to enable thread-local allocation optimization.])
 AH_TEMPLATE([USE_COMPILER_TLS],
             [Define to use of compiler-support for thread-local variables.])
 
@@ -145,7 +145,8 @@ AH_TEMPLATE([GC_OPENBSD_THREADS],   [Define to support OpenBSD pthreads.])
 AH_TEMPLATE([GC_OSF1_THREADS],      [Define to support Tru64 pthreads.])
 AH_TEMPLATE([GC_SOLARIS_THREADS],   [Define to support Solaris pthreads.])
 AH_TEMPLATE([GC_WIN32_THREADS],     [Define to support Win32 threads.])
-AH_TEMPLATE([GC_WIN32_PTHREADS],    [Define to support win32-pthreads.])
+AH_TEMPLATE([GC_WIN32_PTHREADS],
+                [Define to support pthreads-win32 or winpthreads.])
 AH_TEMPLATE([GC_RTEMS_PTHREADS],    [Define to support rtems-pthreads.])
 
 dnl System header feature requests.
@@ -177,7 +178,7 @@ case "$THREADS" in
     AC_CHECK_LIB(pthread, pthread_self, THREADDLLIBS="-lpthread",,)
     case "$host" in
      x86-*-linux* | ia64-*-linux* | i586-*-linux* | i686-*-linux* \
-     | x86_64-*-linux* | alpha-*-linux* | sparc*-*-linux* | *nacl*)
+     | x86_64-*-linux* | alpha-*-linux* | powerpc*-*-linux* | sparc*-*-linux*)
         AC_DEFINE(GC_LINUX_THREADS)
         AC_DEFINE(_REENTRANT)
         if test "${enable_parallel_mark}" != no; then
@@ -213,12 +214,12 @@ case "$THREADS" in
      *-*-openbsd*)
         AC_DEFINE(GC_OPENBSD_THREADS)
         THREADDLLIBS=-pthread
-        INCLUDES="$INCLUDES -pthread"
+        AM_CFLAGS="$AM_CFLAGS -pthread"
         ;;
      *-*-freebsd*)
         AC_MSG_WARN("FreeBSD does not yet fully support threads with Boehm GC.")
         AC_DEFINE(GC_FREEBSD_THREADS)
-        INCLUDES="$INCLUDES -pthread"
+        AM_CFLAGS="$AM_CFLAGS -pthread"
         if test "${enable_parallel_mark}" = yes; then
           AC_DEFINE(PARALLEL_MARK)
         fi
@@ -226,7 +227,7 @@ case "$THREADS" in
         ;;
      *-*-kfreebsd*-gnu)
         AC_DEFINE(GC_FREEBSD_THREADS)
-        INCLUDES="$INCLUDES -pthread"
+        AM_CFLAGS="$AM_CFLAGS -pthread"
         THREADDLLIBS=-pthread
         AC_DEFINE(_REENTRANT)
         if test "${enable_parallel_mark}" = yes; then
@@ -275,7 +276,7 @@ case "$THREADS" in
         ;;
      *-*-mingw*)
         AC_DEFINE(GC_WIN32_PTHREADS)
-        # Using win32-pthreads
+        # Using pthreads-win32 (or other non-Cygwin pthreads) library.
         if test "${enable_parallel_mark}" != no; then
           AC_DEFINE(PARALLEL_MARK)
         fi
@@ -302,7 +303,7 @@ case "$THREADS" in
           # May want to enable it in other cases, too.
           # Measurements have not yet been done.
         fi
-        INCLUDES="$INCLUDES -pthread"
+        AM_CFLAGS="$AM_CFLAGS -pthread"
         THREADDLLIBS="-lpthread -lrt"
         ;;
       *)
@@ -310,9 +311,8 @@ case "$THREADS" in
         ;;
     esac
     case "$host" in
-     sparc*-*-solaris*)
+      sparc*-*-solaris*)
         if test "$GCC" != yes; then
-          CFLAGS="-O $CFLAGS"
           need_atomic_ops_asm=true
         fi
         ;;
@@ -352,7 +352,7 @@ case "$THREADS" in
     AC_DEFINE([DGUX_THREADS], 1,
               [Define to enable support for DB/UX threads.])
     # Enable _POSIX4A_DRAFT10_SOURCE with flag -pthread
-    INCLUDES="-pthread $INCLUDES"
+    AM_CFLAGS="-pthread $AM_CFLAGS"
     ;;
  aix)
     THREADS=posix
@@ -378,9 +378,17 @@ AM_CONDITIONAL(PTHREADS, test x$THREADS = xposix)
 AM_CONDITIONAL(DARWIN_THREADS, test x$darwin_threads = xtrue)
 AM_CONDITIONAL(WIN32_THREADS, test x$win32_threads = xtrue)
 
+compiler_suncc=no
 case "$host" in
    powerpc-*-darwin*)
       powerpc_darwin=true
+      ;;
+   *-*-solaris*)
+      if test "$GCC" != yes; then
+        # Solaris SunCC
+        compiler_suncc=yes
+        CFLAGS="-O $CFLAGS"
+      fi
       ;;
    *-*-wince*)
       if test "$enable_gc_debug" != "no"; then
@@ -409,11 +417,15 @@ AC_TRY_COMPILE([],[
  #endif
 ], [compiler_xlc=yes], [compiler_xlc=no])
 AC_MSG_RESULT($compiler_xlc)
-AM_CONDITIONAL(COMPILER_XLC,test $compiler_xlc = yes)
 if test $compiler_xlc = yes -a "$powerpc_darwin" = true; then
   # the darwin stack-frame-walking code is completely broken on xlc
   AC_DEFINE([DARWIN_DONT_PARSE_STACK], 1, [See doc/README.macros.])
 fi
+
+# XLC neither requires nor tolerates the unnecessary assembler goop.
+# Similar for the Sun C compiler.
+AM_CONDITIONAL([ASM_WITH_CPP_UNSUPPORTED],
+    [test $compiler_xlc = yes -o $compiler_suncc = yes])
 
 if test "$GCC" = yes; then
   # Disable aliasing optimization unless forced to.
@@ -486,7 +498,6 @@ TARGET_ECOS="$with_ecos"
 
 addobjs=
 addlibs=
-CXXINCLUDES=
 CXXLIBS=
 
 case "$TARGET_ECOS" in
@@ -494,7 +505,7 @@ case "$TARGET_ECOS" in
       ;;
    *)
       AC_DEFINE([ECOS], 1, [Define to enable eCos target support.])
-      CXXINCLUDES="-I${TARGET_ECOS}/include"
+      AM_CPPFLAGS="-I${TARGET_ECOS}/include $AM_CPPFLAGS"
       addobjs="$addobjs ecos.lo"
       ;;
 esac
@@ -519,9 +530,8 @@ if test "$GCC" = yes; then
 fi
 
 AC_SUBST(CXX)
-
-AC_SUBST(INCLUDES)
-AC_SUBST(CXXINCLUDES)
+AC_SUBST(AM_CFLAGS)
+AC_SUBST(AM_CPPFLAGS)
 AC_SUBST(CXXLIBS)
 
 # Configuration of shared libraries
@@ -580,21 +590,21 @@ case "$host" in
     dnl performance under Irix.
     ;;
  sparc-*-netbsd*)
-    machdep="src/sparc_netbsd_mach_dep.lo"
+    machdep="sparc_netbsd_mach_dep.lo"
     ;;
- sparc*-*-linux* | sparc*-*-openbsd* | sparc64-*-netbsd*)
-    machdep="src/sparc_mach_dep.lo"
+ sparc*-*-linux* | sparc*-*-openbsd* | sparc64-*-freebsd* | sparc64-*-netbsd*)
+    machdep="sparc_mach_dep.lo"
     ;;
  sparc-sun-solaris2.3)
-    machdep="src/sparc_mach_dep.lo"
+    machdep="sparc_mach_dep.lo"
     AC_DEFINE(SUNOS53_SHARED_LIB, 1,
               [Define to work around a Solaris 5.3 bug (see dyn_load.c).])
     ;;
  sparc*-sun-solaris2*)
-    machdep="src/sparc_mach_dep.lo"
+    machdep="sparc_mach_dep.lo"
     ;;
  ia64-*-*)
-    machdep="src/ia64_save_regs_in_stack.lo"
+    machdep="ia64_save_regs_in_stack.lo"
     ;;
 esac
 AC_MSG_RESULT($machdep)
@@ -670,6 +680,16 @@ if test x"$enable_gcj_support" != xno; then
     AC_DEFINE(GC_GCJ_SUPPORT, 1, [Define to include support for gcj.])
 fi
 
+dnl Interaction with other programs that might use signals.
+AC_ARG_ENABLE(sigrt-signals,
+    [AC_HELP_STRING([--enable-sigrt-signals],
+        [Force GC to use SIGRTMIN-based signals for thread suspend/resume])])
+if test x"${enable_sigrt_signals}" = xyes; then
+    AC_DEFINE([GC_USESIGRT_SIGNALS], 1,
+              [Force the GC to use signals based on SIGRTMIN+k.])
+fi
+
+
 dnl Debugging
 dnl ---------
 
@@ -717,6 +737,20 @@ AC_ARG_ENABLE(gc-debug,
 AM_CONDITIONAL([MAKE_BACK_GRAPH], [test x"$enable_gc_debug" = xyes])
 AM_CONDITIONAL([KEEP_BACK_PTRS], [test x"$keep_back_ptrs" = xtrue])
 
+# Check for dladdr (used for debugging).
+AC_MSG_CHECKING(for dladdr)
+have_dladdr=no
+AC_TRY_COMPILE([
+#define _GNU_SOURCE 1
+#include <dlfcn.h>], [{
+    Dl_info info;
+    (void)dladdr("", &info);
+}], [ have_dladdr=yes ])
+AC_MSG_RESULT($have_dladdr)
+if test x"$have_dladdr" = xyes; then
+  AC_DEFINE([HAVE_DLADDR], 1, [Define to use 'dladdr' function.])
+fi
+
 # Check for AViiON Machines running DGUX
 ac_is_dgux=no
 AC_CHECK_HEADER(sys/dg_sys_info.h,
@@ -746,7 +780,7 @@ AC_ARG_ENABLE(atomic-uncollectable,
     [AC_HELP_STRING([--disable-atomic-uncollectible],
         [Disable support for atomic uncollectible allocation.])])
 if test x"$enable_atomic_uncollectible" != x"no"; then
-    AC_DEFINE(ATOMIC_UNCOLLECTABLE, 1,
+    AC_DEFINE([GC_ATOMIC_UNCOLLECTABLE], 1,
         [Define to enable atomic uncollectible allocation.])
 fi
 
@@ -854,6 +888,13 @@ fi
 
 AM_CONDITIONAL(USE_LIBDIR, test -z "$with_cross_host")
 
+AC_ARG_ENABLE(werror, [--enable-werror Pass -Werror to the C compiler],
+              werror_flag=$enableval, werror_flag=no)
+if test x$werror_flag = xyes; then
+    WERROR_CFLAGS="-Werror"
+fi
+AC_SUBST([WERROR_CFLAGS])
+
 AC_ARG_ENABLE(single-obj-compilation,
    [AC_HELP_STRING([--enable-single-obj-compilation],
                    [Compile all library .c files into single .o])],
@@ -872,11 +913,16 @@ AC_ARG_WITH([libatomic-ops],
 
 # Check for an external libatomic_ops if the answer was yes or check.  If not
 # found, fail on yes, and convert check to no.
+# Note: "syntax error near unexpected token ATOMIC_OPS" reported by configure
+# means Autotools pkg.m4 file was not found during aclocal.m4 generation.
+missing_libatomic_ops=false
 AS_IF([test x"$with_libatomic_ops" != xno],
   [ PKG_CHECK_MODULES([ATOMIC_OPS], [atomic_ops], [],
+                      [ missing_libatomic_ops=true ]) ])
+AS_IF([test x$missing_libatomic_ops = xtrue ],
       [ AS_IF([test x"$with_libatomic_ops" != xcheck],
-              [AC_MSG_ERROR([A external libatomic_ops was not found.])])
-        with_libatomic_ops=no ]) ])
+              [ AC_MSG_ERROR([An external libatomic_ops was not found]) ])
+        with_libatomic_ops=no ])
 
 # If we have neither an external or an internal version, offer a useful hint
 # and exit.

@@ -78,7 +78,7 @@ typedef struct {
     /* We're careful never to overwrite a value with lsb 0.     */
 #   if ALIGNMENT == 1
       /* Fudge back pointer to be even. */
-#     define HIDE_BACK_PTR(p) GC_HIDE_POINTER(~1 & (GC_word)(p))
+#     define HIDE_BACK_PTR(p) GC_HIDE_POINTER(~1 & (word)(p))
 #   else
 #     define HIDE_BACK_PTR(p) GC_HIDE_POINTER(p)
 #   endif
@@ -112,7 +112,7 @@ typedef struct {
 #else
   /* Add space for END_FLAG, but use any extra space that was already   */
   /* added to catch off-the-end pointers.                               */
-  /* For uncollectable objects, the extra byte is not added.            */
+  /* For uncollectible objects, the extra byte is not added.            */
 # define UNCOLLECTABLE_DEBUG_BYTES (sizeof (oh) + sizeof (word))
 # define DEBUG_BYTES (UNCOLLECTABLE_DEBUG_BYTES - EXTRA_BYTES)
 #endif

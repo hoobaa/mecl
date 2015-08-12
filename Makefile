@@ -57,12 +57,12 @@ copy-slime:
 
 android: android.ecl
 
-ios: iPhoneOS-armv7s.ecl iPhoneOS-armv7.ecl iPhoneSimulator.ecl
+# ios: iPhoneOS-armv7s.ecl iPhoneOS-armv7.ecl iPhoneSimulator.ecl
 
-ios-univ: ios
-	-rm -rf $(ECL_INSTALL_ROOT_DIR)/iPhoneUniversal
-	./bin/iphone_universal $(ECL_INSTALL_ROOT_DIR)
-	touch $@
+# ios-univ: ios
+# 	-rm -rf $(ECL_INSTALL_ROOT_DIR)/iPhoneUniversal
+# 	./bin/iphone_universal $(ECL_INSTALL_ROOT_DIR)
+# 	touch $@
 
 # iPhoneOS-armv7s.ecl iPhoneOS-armv7.ecl android.ecl iPhoneSimulator.ecl: host.ecl
 

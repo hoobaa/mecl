@@ -10,7 +10,7 @@ export ARC=aarch64
 export ARC2=arm64
 
 PLATFORM_DIR="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform"
-SDK_DIR="${PLATFORM_DIR}/Developer/SDKs/iPhoneOS8.4.sdk/"
+N_SDK_DIR="${PLATFORM_DIR}/Developer/SDKs/iPhoneOS8.4.sdk/"
 TOOLCHAINS_BINDIR="${PLATFORM_DIR}/Developer/usr/bin"
 
 sdk=iphoneos
@@ -21,7 +21,7 @@ export AS=$(xcodebuild -sdk ${sdk} -find as)
 export LD=$(xcodebuild -sdk ${sdk} -find ld)
 export RANLIB=$(xcodebuild -sdk ${sdk} -find ranlib)
 
-export CFLAGS="-arch ${ARC2} -isysroot ${SDK_DIR} -DAPPLE"
+export CFLAGS="-arch ${ARC2} -isysroot ${N_SDK_DIR} -DAPPLE"
 export LDFLAGS=""
 
 PWD=`pwd`
@@ -29,6 +29,8 @@ PREFIX="${PWD}/local_iPhoneOS_${ARC2}"
 
 env |sort > env.log
 
-./configure --srcdir=/Users/strobolights/dev/mecl/ios64-libatomic_ops --prefix=/Users/strobolights/dev/mecl/local-install/iPhoneOS-${ARC2} --target=${ARC}-apple-darwin --host=${ARC}-apple-darwin --enable-gmpcompat --disable-shared
+./configure --srcdir=/Users/strobolights/dev/mecl/libatomic_ops --prefix=/Users/strobolights/dev/mecl/local-install/iPhoneOS-${ARC2} --target=${ARC}-apple-darwin --host=${ARC}-apple-darwin --enable-gmpcompat --disable-shared
+
+# ./configure --srcdir=/Users/strobolights/dev/mecl/libatomic_ops --prefix=/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64 --target=aarch64-apple-darwin --host=aarch64-apple-darwin --disable-shared --build=x86_64-apple-darwin
 
 make

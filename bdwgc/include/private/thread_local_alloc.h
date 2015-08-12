@@ -37,19 +37,28 @@
     && !defined(USE_CUSTOM_SPECIFIC)
 # if defined(MSWIN32) || defined(MSWINCE) || defined(CYGWIN32)
 #   if defined(CYGWIN32) && (__GNUC__ >= 4)
-#     define USE_COMPILER_TLS
+#     if defined(__clang__)
+        /* As of Cygwin clang3.1, thread-local storage is unsupported.  */
+#       define USE_PTHREAD_SPECIFIC
+#     else
+#       define USE_COMPILER_TLS
+#     endif
 #   elif defined(__GNUC__) || defined(MSWINCE)
 #     define USE_WIN32_SPECIFIC
 #   else
 #     define USE_WIN32_COMPILER_TLS
 #   endif /* !GNU */
-# elif defined(LINUX) && !defined(ARM32) && !defined(AVR32) \
-       && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >=3))
+# elif (defined(LINUX) && !defined(ARM32) && !defined(AVR32) \
+         && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3)) \
+         && !(defined(__clang__) && defined(PLATFORM_ANDROID))) \
+       || (defined(PLATFORM_ANDROID) && defined(ARM32) \
+            && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6)))
+          /* As of Android NDK r8e, Clang cannot find __tls_get_addr.   */
 #   define USE_COMPILER_TLS
 # elif defined(GC_DGUX386_THREADS) || defined(GC_OSF1_THREADS) \
        || defined(GC_AIX_THREADS) || defined(GC_DARWIN_THREADS) \
        || defined(GC_FREEBSD_THREADS) || defined(GC_NETBSD_THREADS) \
-       || defined(GC_RTEMS_PTHREADS)
+       || defined(GC_LINUX_THREADS) || defined(GC_RTEMS_PTHREADS)
 #   define USE_PTHREAD_SPECIFIC
 # elif defined(GC_HPUX_THREADS)
 #   ifdef __GNUC__

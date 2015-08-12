@@ -30,8 +30,8 @@ void (GC_CALLBACK *GC_same_obj_print_proc) (void *, void *)
 /* Check that p and q point to the same object.  Call           */
 /* *GC_same_obj_print_proc if they don't.                       */
 /* Returns the first argument.  (Return value may be hard       */
-/* to use,due to typing issues.  But if we had a suitable       */
-/* preprocessor ...)                                            */
+/* to use due to typing issues.  But if we had a suitable       */
+/* preprocessor...)                                             */
 /* Succeeds if neither p nor q points to the heap.              */
 /* We assume this is performance critical.  (It shouldn't       */
 /* be called by production code, but this can easily make       */
@@ -183,7 +183,7 @@ void (GC_CALLBACK *GC_is_visible_print_proc)(void * p) =
 /* in hard cases.  (This is intended for debugging use with             */
 /* untyped allocations.  The idea is that it should be possible, though */
 /* slow, to add such a call to all indirect pointer stores.)            */
-/* Currently useless for multithreaded worlds.                          */
+/* Currently useless for the multi-threaded worlds.                     */
 GC_API void * GC_CALL GC_is_visible(void *p)
 {
     hdr *hhdr;

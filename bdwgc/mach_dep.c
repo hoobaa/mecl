@@ -103,9 +103,16 @@
 # define HAVE_PUSH_REGS
 #else  /* No asm implementation */
 
-# if defined(M68K) && defined(AMIGA)
+# ifdef STACK_NOT_SCANNED
+    void GC_push_regs(void)
+    {
+      /* empty */
+    }
+#   define HAVE_PUSH_REGS
+
+# elif defined(M68K) && defined(AMIGA)
     /* This function is not static because it could also be             */
-    /* errorneously defined in .S file, so this error would be caught   */
+    /* erroneously defined in .S file, so this error would be caught    */
     /* by the linker.                                                   */
     void GC_push_regs(void)
     {

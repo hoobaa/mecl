@@ -86,6 +86,12 @@ typedef struct GC_Thread_Rep {
 
     ptr_t stack_end;            /* Cold end of the stack (except for    */
                                 /* main thread).                        */
+    ptr_t altstack;             /* The start of the alt-stack if there  */
+                                /* is one, NULL otherwise.              */
+    word altstack_size;         /* The size of the alt-stack if exists. */
+    ptr_t stack;                /* The start and size of the normal     */
+                                /* stack (set by GC_register_altstack). */
+    word stack_size;
 #   if defined(GC_DARWIN_THREADS) && !defined(DARWIN_DONT_PARSE_STACK)
       ptr_t topOfStack;         /* Result of GC_FindTopOfStack(0);      */
                                 /* valid only if the thread is blocked; */
@@ -136,10 +142,17 @@ GC_EXTERN GC_bool GC_in_thread_creation;
   GC_INNER void GC_unblock_gc_signals(void);
 #endif
 
-GC_INNER GC_thread GC_start_rtn_prepare_thread(void *(**pstart)(void *),
+#ifdef GC_PTHREAD_START_STANDALONE
+# define GC_INNER_PTHRSTART /* empty */
+#else
+# define GC_INNER_PTHRSTART GC_INNER
+#endif
+
+GC_INNER_PTHRSTART GC_thread GC_start_rtn_prepare_thread(
+                                        void *(**pstart)(void *),
                                         void **pstart_arg,
                                         struct GC_stack_base *sb, void *arg);
-GC_INNER void GC_thread_exit_proc(void *);
+GC_INNER_PTHRSTART void GC_thread_exit_proc(void *);
 
 #endif /* GC_PTHREADS && !GC_WIN32_THREADS */
 

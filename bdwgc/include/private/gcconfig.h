@@ -55,6 +55,19 @@
 #   define LINUX
 # endif
 
+/* And one for QNX: */
+# if defined(__QNX__)
+#    define I386
+#    define OS_TYPE "QNX"
+#    define SA_RESTART 0
+#    define HEURISTIC1
+     extern char etext[];
+#    define DATASTART ((ptr_t)(etext))
+     extern int _end[];
+#    define DATAEND (_end)
+#    define mach_type_known
+# endif
+
 /* And one for NetBSD: */
 # if defined(__NetBSD__)
 #    define NETBSD
@@ -74,6 +87,7 @@
 /* And one for Darwin: */
 # if defined(macosx) || (defined(__APPLE__) && defined(__MACH__))
 #   define DARWIN
+#   include <TargetConditionals.h>
 # endif
 
 /* Determine the machine type: */
@@ -82,11 +96,18 @@
 #    define I386
 #    define mach_type_known
 # endif
+# if defined(__aarch64__)
+#    define AARCH64
+#    if !defined(LINUX) && !defined(DARWIN) && !defined(FREEBSD)
+#      define NOSYS
+#      define mach_type_known
+#    endif
+# endif
 # if defined(__arm) || defined(__arm__) || defined(__thumb__)
 #    define ARM32
-#    if !defined(LINUX) && !defined(NETBSD) && !defined(OPENBSD) \
-        && !defined(DARWIN) && !defined(_WIN32) && !defined(__CEGCC__) \
-        && !defined(SYMBIAN)
+#    if !defined(LINUX) && !defined(NETBSD) && !defined(FREEBSD) \
+        && !defined(OPENBSD) && !defined(DARWIN) \
+        && !defined(_WIN32) && !defined(__CEGCC__) && !defined(SYMBIAN)
 #      define NOSYS
 #      define mach_type_known
 #    endif
@@ -159,6 +180,10 @@
 #    if defined(__NetBSD__) && defined(__MIPSEL__)
 #      undef ULTRIX
 #    endif
+#    define mach_type_known
+# endif
+# if defined(__or1k__)
+#    define OR1K        /* OpenRISC/or1k */
 #    define mach_type_known
 # endif
 # if defined(DGUX) && (defined(i386) || defined(__i386__))
@@ -263,6 +288,10 @@
 #    define IA64
 #    define mach_type_known
 # endif
+# if defined(LINUX) && defined(__aarch64__)
+#    define AARCH64
+#    define mach_type_known
+# endif
 # if defined(LINUX) && (defined(__arm) || defined(__arm__))
 #    define ARM32
 #    define mach_type_known
@@ -296,10 +325,6 @@
 # endif
 # if defined(LINUX) && defined(__m32r__)
 #    define M32R
-#    define mach_type_known
-# endif
-# if defined(FREEBSD) && (defined(powerpc) || defined(__powerpc__))
-#    define POWERPC
 #    define mach_type_known
 # endif
 # if defined(__alpha) || defined(__alpha__)
@@ -347,7 +372,9 @@
 #   elif defined(__arm__)
 #    define ARM32
 #    define mach_type_known
-#    define DARWIN_DONT_PARSE_STACK
+#   elif defined(__aarch64__)
+#    define AARCH64
+#    define mach_type_known
 #   endif
 # endif
 # if defined(__rtems__) && (defined(i386) || defined(__i386__))
@@ -370,14 +397,6 @@
 #   define OPENBSD
 #   define mach_type_known
 # endif
-# if defined(FREEBSD) && (defined(i386) || defined(__i386__))
-#   define I386
-#   define mach_type_known
-# endif
-# if defined(FREEBSD) && defined(__x86_64__)
-#   define X86_64
-#   define mach_type_known
-# endif
 # if defined(__NetBSD__) && (defined(i386) || defined(__i386__))
 #   define I386
 #   define mach_type_known
@@ -386,9 +405,29 @@
 #    define X86_64
 #    define mach_type_known
 # endif
+# if defined(FREEBSD) && (defined(i386) || defined(__i386__))
+#   define I386
+#   define mach_type_known
+# endif
+# if defined(FREEBSD) && (defined(__amd64__) || defined(__x86_64__))
+#   define X86_64
+#   define mach_type_known
+# endif
 # if defined(FREEBSD) && defined(__sparc__)
-#    define SPARC
-#    define mach_type_known
+#   define SPARC
+#   define mach_type_known
+# endif
+# if defined(FREEBSD) && (defined(powerpc) || defined(__powerpc__))
+#   define POWERPC
+#   define mach_type_known
+# endif
+# if defined(FREEBSD) && defined(__arm__)
+#   define ARM32
+#   define mach_type_known
+# endif
+# if defined(FREEBSD) && defined(__aarch64__)
+#   define AARCH64
+#   define mach_type_known
 # endif
 # if defined(bsdi) && (defined(i386) || defined(__i386__))
 #    define I386
@@ -449,7 +488,11 @@
 #   define mach_type_known
 # endif
 # if defined(__CYGWIN32__) || defined(__CYGWIN__)
-#   define I386
+#   if defined(__LP64__)
+#     define X86_64
+#   else
+#     define I386
+#   endif
 #   define CYGWIN32
 #   define mach_type_known
 # endif
@@ -522,6 +565,11 @@
 #   define mach_type_known
 # endif
 
+# if defined(__EMSCRIPTEN__)
+#   define I386
+#   define mach_type_known
+# endif
+
 /* Feel free to add more clauses here */
 
 /* Or manually define the machine type here.  A machine type is         */
@@ -539,7 +587,7 @@
                     /*             I386       ==> Intel 386             */
                     /*              (SEQUENT, OS2, SCO, LINUX, NETBSD,  */
                     /*               FREEBSD, THREE86BSD, MSWIN32,      */
-                    /*               BSDI,SOLARIS, NEXT, other variants)        */
+                    /*               BSDI, SOLARIS, NEXT and others)    */
                     /*             NS32K      ==> Encore Multimax       */
                     /*             MIPS       ==> R2000 through R14K    */
                     /*                  (many variants)                 */
@@ -557,6 +605,7 @@
                     /*                  running Amdahl UTS4             */
                     /*             S390       ==> 390-like machine      */
                     /*                  running LINUX                   */
+                    /*             AARCH64    ==> ARM AArch64           */
                     /*             ARM32      ==> Intel StrongARM       */
                     /*             IA64       ==> Intel IPF             */
                     /*                            (e.g. Itanium)        */
@@ -684,7 +733,7 @@
  * defined GC_register_dynamic_libraries() for the architecture.
  *
  * An architecture may define PREFETCH(x) to preload the cache with *x.
- * This defaults to a no-op.
+ * This defaults to GCC built-in operation (or a no-op for other compilers).
  *
  * PREFETCH_FOR_WRITE(x) is used if *x is about to be written.
  *
@@ -701,6 +750,7 @@
 # if defined(__GNUC__) && ((__GNUC__ >= 3) \
                            || (__GNUC__ == 2 && __GNUC_MINOR__ >= 8)) \
      && !defined(__INTEL_COMPILER) && !defined(__PATHCC__) \
+     && !defined(__FUJITSU) /* for FX10 system */ \
      && !(defined(POWERPC) && defined(DARWIN)) /* for MacOS X 10.3.9 */ \
      && !defined(RTEMS) \
      && !defined(__clang__) /* since no-op in clang (3.0) */
@@ -714,6 +764,15 @@
 #   define ALIGNMENT 4
 #   define DATASTART NULL
 #   define DATAEND NULL
+# endif
+
+# ifdef __EMSCRIPTEN__
+#   define OS_TYPE "EMSCRIPTEN"
+#   define CPP_WORDSZ 32
+#   define ALIGNMENT 4
+#   define DATASTART NULL
+#   define DATAEND NULL
+#   define STACK_NOT_SCANNED
 # endif
 
 # define STACK_GRAN 0x1000000
@@ -827,7 +886,14 @@
 #     define OS_TYPE "LINUX"
       /* HEURISTIC1 has been reliably reported to fail for a 32-bit     */
       /* executable on a 64 bit kernel.                                 */
-#     define LINUX_STACKBOTTOM
+#     if defined(__bg__)
+        /* The Linux Compute Node Kernel (used on BlueGene systems)     */
+        /* does not support LINUX_STACKBOTTOM way.                      */
+#       define HEURISTIC2
+#       define NO_PTHREAD_GETATTR_NP
+#     else
+#       define LINUX_STACKBOTTOM
+#     endif
 #     define DYNAMIC_LOADING
 #     define SEARCH_FOR_DATA_START
       extern int _end[];
@@ -873,9 +939,7 @@
 #   ifdef OPENBSD
 #     define OS_TYPE "OPENBSD"
 #     define ALIGNMENT 4
-#     ifdef GC_OPENBSD_THREADS
-#      define UTHREAD_SP_OFFSET 268
-#     else
+#     ifndef GC_OPENBSD_THREADS
 #       include <sys/param.h>
 #       include <uvm/uvm_extern.h>
 #       define STACKBOTTOM ((ptr_t) USRSTACK)
@@ -907,9 +971,8 @@
 #           define DYNAMIC_LOADING
 #       endif
         extern char etext[];
-        ptr_t GC_FreeBSDGetDataStart(size_t, ptr_t);
 #       define DATASTART GC_FreeBSDGetDataStart(0x1000, (ptr_t)etext)
-#       define DATASTART_IS_FUNC
+#       define DATASTART_USES_BSDGETDATASTART
 #   endif
 #   ifdef NETBSD
 #     define ALIGNMENT 4
@@ -1061,7 +1124,7 @@
 #     ifdef __ELF__
 #       define DYNAMIC_LOADING
 #     else
-          Linux Sparc/a.out not supported
+#       error --> Linux SPARC a.out not supported
 #     endif
       extern int _end[];
       extern int _etext[];
@@ -1078,9 +1141,7 @@
 #   endif
 #   ifdef OPENBSD
 #     define OS_TYPE "OPENBSD"
-#     ifdef GC_OPENBSD_THREADS
-#      define UTHREAD_SP_OFFSET 232
-#     else
+#     ifndef GC_OPENBSD_THREADS
 #       include <sys/param.h>
 #       include <uvm/uvm_extern.h>
 #       define STACKBOTTOM ((ptr_t) USRSTACK)
@@ -1233,6 +1294,7 @@
 #      undef STACK_GRAN
 #      define STACK_GRAN 0x10000
 #      define HEURISTIC1
+#      define NO_PTHREAD_GETATTR_NP
 #      define GETPAGESIZE() 65536
 #      ifndef MAX_NACL_GC_THREADS
 #        define MAX_NACL_GC_THREADS 1024
@@ -1242,15 +1304,6 @@
 #   ifdef LINUX
 #       define OS_TYPE "LINUX"
 #       define LINUX_STACKBOTTOM
-#       if 0
-#         define HEURISTIC1
-#         undef STACK_GRAN
-#         define STACK_GRAN 0x10000000
-          /* STACKBOTTOM is usually 0xc0000000, but this changes with   */
-          /* different kernel configurations.  In particular, systems   */
-          /* with 2GB physical memory will usually move the user        */
-          /* address space limit, and hence initial SP to 0x80000000.   */
-#       endif
 #       if !defined(GC_LINUX_THREADS) || !defined(REDIRECT_MALLOC)
 #           define MPROTECT_VDB
 #       else
@@ -1295,8 +1348,6 @@
 #            define DATASTART ((ptr_t)((((word) (etext)) + 0xfff) & ~0xfff))
 #       endif
 #       ifdef USE_I686_PREFETCH
-          /* FIXME: Thus should use __builtin_prefetch, but we'll leave that */
-          /* for the next rtelease.                                          */
 #         define PREFETCH(x) \
             __asm__ __volatile__ ("prefetchnta %0" : : "m"(*(char *)(x)))
             /* Empirically prefetcht0 is much more effective at reducing     */
@@ -1308,13 +1359,19 @@
             /* impact on performance, at least for a PIII/500.               */
 #           define PREFETCH_FOR_WRITE(x) \
               __asm__ __volatile__ ("prefetcht0 %0" : : "m"(*(char *)(x)))
+#         else
+#           define NO_PREFETCH_FOR_WRITE
 #         endif
-#       endif
-#       ifdef USE_3DNOW_PREFETCH
+#       elif defined(USE_3DNOW_PREFETCH)
 #         define PREFETCH(x) \
             __asm__ __volatile__ ("prefetch %0" : : "m"(*(char *)(x)))
 #         define PREFETCH_FOR_WRITE(x) \
             __asm__ __volatile__ ("prefetchw %0" : : "m"(*(char *)(x)))
+#       endif
+#       if defined(__GLIBC__)
+          /* Workaround lock elision implementation for some glibc.     */
+#         define GLIBC_2_19_TSX_BUG
+#         include <gnu/libc-version.h> /* for gnu_get_libc_version() */
 #       endif
 #   endif
 #   ifdef CYGWIN32
@@ -1360,9 +1417,7 @@
 #   endif
 #   ifdef OPENBSD
 #       define OS_TYPE "OPENBSD"
-#       ifdef GC_OPENBSD_THREADS
-#         define UTHREAD_SP_OFFSET 176
-#       else
+#       ifndef GC_OPENBSD_THREADS
 #         include <sys/param.h>
 #         include <uvm/uvm_extern.h>
 #         define STACKBOTTOM ((ptr_t) USRSTACK)
@@ -1393,9 +1448,8 @@
 #           define DYNAMIC_LOADING
 #       endif
         extern char etext[];
-        char * GC_FreeBSDGetDataStart(size_t, ptr_t);
 #       define DATASTART GC_FreeBSDGetDataStart(0x1000, (ptr_t)etext)
-#       define DATASTART_IS_FUNC
+#       define DATASTART_USES_BSDGETDATASTART
 #   endif
 #   ifdef NETBSD
 #       define OS_TYPE "NETBSD"
@@ -1464,7 +1518,9 @@
 #   ifdef DARWIN
 #     define OS_TYPE "DARWIN"
 #     define DARWIN_DONT_PARSE_STACK
-#     define DYNAMIC_LOADING
+#     ifndef GC_DONT_REGISTER_MAIN_STATIC_DATA
+#       define DYNAMIC_LOADING
+#     endif
       /* XXX: see get_end(3), get_etext() and get_end() should not be used. */
       /* These aren't used when dyld support is enabled (it is by default). */
 #     define DATASTART ((ptr_t) get_etext())
@@ -1480,6 +1536,10 @@
       /* There seems to be some issues with trylock hanging on darwin.  */
       /* This should be looked into some more.                          */
 #     define NO_PTHREAD_TRYLOCK
+#     if TARGET_OS_IPHONE && !defined(NO_DYLD_BIND_FULLY_IMAGE)
+        /* iPhone/iPad simulator */
+#       define NO_DYLD_BIND_FULLY_IMAGE
+#     endif
 #   endif /* DARWIN */
 # endif
 
@@ -1597,9 +1657,7 @@
 #  ifdef OPENBSD
 #    define OS_TYPE "OPENBSD"
 #    define ALIGNMENT 4
-#    ifdef GC_OPENBSD_THREADS
-#      define UTHREAD_SP_OFFSET 808
-#    else
+#     ifndef GC_OPENBSD_THREADS
 #      include <sys/param.h>
 #      include <uvm/uvm_extern.h>
 #      define STACKBOTTOM ((ptr_t) USRSTACK)
@@ -1619,6 +1677,24 @@
 #    define DATAEND ((ptr_t)(environ - 0x10))
 #    define STACKBOTTOM ((ptr_t) 0x4fffffff)
 #   endif
+# endif
+
+# ifdef OR1K
+#   define CPP_WORDSZ 32
+#   define MACH_TYPE "OR1K"
+#   ifdef LINUX
+#     define OS_TYPE "LINUX"
+#     define DYNAMIC_LOADING
+      extern int _end[];
+#     define DATAEND (ptr_t)(_end)
+      extern int __data_start[];
+#     define DATASTART ((ptr_t)(__data_start))
+#     define ALIGNMENT 4
+#     ifndef HBLKSIZE
+#       define HBLKSIZE 4096
+#     endif
+#     define LINUX_STACKBOTTOM
+#   endif /* Linux */
 # endif
 
 # ifdef HP_PA
@@ -1659,10 +1735,10 @@
 #     include <unistd.h>
 #     define GETPAGESIZE() sysconf(_SC_PAGE_SIZE)
 #     ifndef __GNUC__
-#       define PREFETCH(x)  { \
+#       define PREFETCH(x)  do { \
                               register long addr = (long)(x); \
                               (void) _asm ("LDW", 0, 0, addr, 0); \
-                            }
+                            } while (0)
 #     endif
 #   endif /* HPUX */
 #   ifdef LINUX
@@ -1675,9 +1751,7 @@
 #   endif /* LINUX */
 #  ifdef OPENBSD
 #     define OS_TYPE "OPENBSD"
-#     ifdef GC_OPENBSD_THREADS
-#       define UTHREAD_SP_OFFSET 520
-#     else
+#     ifndef GC_OPENBSD_THREADS
 #       include <sys/param.h>
 #       include <uvm/uvm_extern.h>
 #       define STACKBOTTOM ((ptr_t) USRSTACK)
@@ -1707,9 +1781,7 @@
 #   ifdef OPENBSD
 #       define OS_TYPE "OPENBSD"
 #       define ELF_CLASS ELFCLASS64
-#       ifdef GC_OPENBSD_THREADS
-#         define UTHREAD_SP_OFFSET 816
-#       else
+#       ifndef GC_OPENBSD_THREADS
 #         include <sys/param.h>
 #         include <uvm/uvm_extern.h>
 #         define STACKBOTTOM ((ptr_t) USRSTACK)
@@ -1828,11 +1900,7 @@
         /* This does not work on NUE:                           */
 #       define LINUX_STACKBOTTOM
         /* We also need the base address of the register stack  */
-        /* backing store.  This is computed in                  */
-        /* GC_linux_register_stack_base based on the following  */
-        /* constants:                                           */
-#       define BACKING_STORE_ALIGNMENT 0x100000
-#       define BACKING_STORE_DISPLACEMENT 0x80000000
+        /* backing store.                                       */
         extern ptr_t GC_register_stackbottom;
 #       define BACKING_STORE_BASE GC_register_stackbottom
 #       define SEARCH_FOR_DATA_START
@@ -1857,13 +1925,21 @@
               __asm__ ("        stf.spill       [%0]=f0": : "r"((void *)(x)))
 #         else
 #           include <ia64intrin.h>
-#           define PREFETCH(x) \
-              __lfetch(__lfhint_none, (x))
-#           define PREFETCH_FOR_WRITE(x) \
-              __lfetch(__lfhint_nta,  (x))
-#           define CLEAR_DOUBLE(x) \
-              __stf_spill((void *)(x), 0)
+#           define PREFETCH(x) __lfetch(__lfhint_none, (x))
+#           define PREFETCH_FOR_WRITE(x) __lfetch(__lfhint_nta, (x))
+#           define CLEAR_DOUBLE(x) __stf_spill((void *)(x), 0)
 #         endif /* __INTEL_COMPILER */
+#       endif
+#   endif
+#   ifdef CYGWIN32
+#       define OS_TYPE "CYGWIN32"
+#       define DATASTART ((ptr_t)GC_DATASTART)  /* From gc.h */
+#       define DATAEND   ((ptr_t)GC_DATAEND)
+#       undef STACK_GRAN
+#       define STACK_GRAN 0x10000
+#       ifdef USE_MMAP
+#         define NEED_FIND_LIMIT
+#         define USE_MMAP_ANON
 #       endif
 #   endif
 #   ifdef MSWIN32
@@ -1932,12 +2008,79 @@
 #       define OS_TYPE "LINUX"
 #       define LINUX_STACKBOTTOM
 #       define DYNAMIC_LOADING
-        extern int __data_start[];
+        extern int __data_start[] __attribute__((__weak__));
 #       define DATASTART ((ptr_t)(__data_start))
-    extern int _end[];
-#   define DATAEND (ptr_t)(_end)
-#   define CACHE_LINE_SIZE 256
-#   define GETPAGESIZE() 4096
+        extern int _end[] __attribute__((__weak__));
+#       define DATAEND (ptr_t)(_end)
+#       define CACHE_LINE_SIZE 256
+#       define GETPAGESIZE() 4096
+#   endif
+# endif
+
+# ifdef AARCH64
+#   define MACH_TYPE "AARCH64"
+#   ifdef __ILP32__
+#     define CPP_WORDSZ 32
+#     define ALIGNMENT 4
+#   else
+#     define CPP_WORDSZ 64
+#     define ALIGNMENT 8
+#   endif
+#   ifndef HBLKSIZE
+#     define HBLKSIZE 4096
+#   endif
+#   ifdef LINUX
+#     define OS_TYPE "LINUX"
+#     define LINUX_STACKBOTTOM
+#     define DYNAMIC_LOADING
+      extern int __data_start[];
+#     define DATASTART ((ptr_t)__data_start)
+      extern char _end[];
+#     define DATAEND ((ptr_t)(&_end))
+#   endif
+#   ifdef DARWIN
+      /* iOS */
+#     define OS_TYPE "DARWIN"
+#     define DARWIN_DONT_PARSE_STACK
+#     ifndef GC_DONT_REGISTER_MAIN_STATIC_DATA
+#       define DYNAMIC_LOADING
+#     endif
+#     define DATASTART ((ptr_t) get_etext())
+#     define DATAEND   ((ptr_t) get_end())
+#     define STACKBOTTOM ((ptr_t) 0x16fdfffff)
+#     ifndef USE_MMAP
+#       define USE_MMAP
+#     endif
+#     define USE_MMAP_ANON
+#     define MPROTECT_VDB
+#     include <unistd.h>
+#     define GETPAGESIZE() getpagesize()
+      /* FIXME: There seems to be some issues with trylock hanging on   */
+      /* darwin. This should be looked into some more.                  */
+#     define NO_PTHREAD_TRYLOCK
+#     if TARGET_OS_IPHONE && !defined(NO_DYLD_BIND_FULLY_IMAGE)
+#       define NO_DYLD_BIND_FULLY_IMAGE
+#     endif
+#   endif
+#   ifdef FREEBSD
+#     define OS_TYPE "FREEBSD"
+#     ifndef GC_FREEBSD_THREADS
+#       define MPROTECT_VDB
+#     endif
+#     define FREEBSD_STACKBOTTOM
+#     ifdef __ELF__
+#       define DYNAMIC_LOADING
+#     endif
+      extern char etext[];
+#     define DATASTART GC_FreeBSDGetDataStart(0x1000, (ptr_t)etext)
+#     define DATASTART_USES_BSDGETDATASTART
+#   endif
+#   ifdef NOSYS
+      /* __data_start is usually defined in the target linker script.   */
+      extern int __data_start[];
+#     define DATASTART ((ptr_t)__data_start)
+      extern void *__stack_base__;
+#     define STACKBOTTOM ((ptr_t)__stack_base__)
 #   endif
 # endif
 
@@ -1991,9 +2134,26 @@
 #     define OS_TYPE "MSWINCE"
 #     define DATAEND /* not needed */
 #   endif
+#   ifdef FREEBSD
+      /* FreeBSD/arm */
+#     define OS_TYPE "FREEBSD"
+#     ifndef GC_FREEBSD_THREADS
+#       define MPROTECT_VDB
+#     endif
+#     define SIG_SUSPEND SIGUSR1
+#     define SIG_THR_RESTART SIGUSR2
+#     define FREEBSD_STACKBOTTOM
+#     ifdef __ELF__
+#       define DYNAMIC_LOADING
+#     endif
+      extern char etext[];
+#     define DATASTART GC_FreeBSDGetDataStart(0x1000, (ptr_t)etext)
+#     define DATASTART_USES_BSDGETDATASTART
+#   endif
 #   ifdef DARWIN
-      /* iPhone */
+      /* iOS */
 #     define OS_TYPE "DARWIN"
+#     define DARWIN_DONT_PARSE_STACK
 #     ifndef GC_DONT_REGISTER_MAIN_STATIC_DATA
 #       define DYNAMIC_LOADING
 #     endif
@@ -2010,16 +2170,14 @@
       /* FIXME: There seems to be some issues with trylock hanging on   */
       /* darwin. This should be looked into some more.                  */
 #     define NO_PTHREAD_TRYLOCK
-#     ifndef NO_DYLD_BIND_FULLY_IMAGE
+#     if TARGET_OS_IPHONE && !defined(NO_DYLD_BIND_FULLY_IMAGE)
 #       define NO_DYLD_BIND_FULLY_IMAGE
 #     endif
 #   endif
 #   ifdef OPENBSD
 #     define ALIGNMENT 4
 #     define OS_TYPE "OPENBSD"
-#     ifdef GC_OPENBSD_THREADS
-#       define UTHREAD_SP_OFFSET 176
-#     else
+#     ifndef GC_OPENBSD_THREADS
 #       include <sys/param.h>
 #       include <uvm/uvm_extern.h>
 #       define STACKBOTTOM ((ptr_t) USRSTACK)
@@ -2076,9 +2234,7 @@
 #   endif
 #   ifdef OPENBSD
 #      define OS_TYPE "OPENBSD"
-#      ifdef GC_OPENBSD_THREADS
-#        define UTHREAD_SP_OFFSET 332
-#      else
+#      ifndef GC_OPENBSD_THREADS
 #        include <sys/param.h>
 #        include <uvm/uvm_extern.h>
 #        define STACKBOTTOM ((ptr_t) USRSTACK)
@@ -2142,9 +2298,7 @@
 #   ifdef OPENBSD
 #       define OS_TYPE "OPENBSD"
 #       define ELF_CLASS ELFCLASS64
-#       ifdef GC_OPENBSD_THREADS
-#         define UTHREAD_SP_OFFSET 400
-#       else
+#       ifndef GC_OPENBSD_THREADS
 #         include <sys/param.h>
 #         include <uvm/uvm_extern.h>
 #         define STACKBOTTOM ((ptr_t) USRSTACK)
@@ -2179,22 +2333,25 @@
              extern int etext[];
 #            define DATASTART ((ptr_t)((((word) (etext)) + 0xfff) & ~0xfff))
 #       endif
-#       if defined(__GNUC__) && __GNUC__ >= 3
-#           define PREFETCH(x) __builtin_prefetch((x), 0, 0)
-#           define PREFETCH_FOR_WRITE(x) __builtin_prefetch((x), 1)
-#       endif
-#       if defined(__GLIBC__)
+#       if defined(__GLIBC__) && !defined(__UCLIBC__)
           /* At present, there's a bug in GLibc getcontext() on         */
           /* Linux/x64 (it clears FPU exception mask).  We define this  */
           /* macro to workaround it.                                    */
           /* FIXME: This seems to be fixed in GLibc v2.14.              */
 #         define GETCONTEXT_FPU_EXCMASK_BUG
 #       endif
+#       if defined(__GLIBC__)
+          /* Workaround lock elision implementation for some glibc.     */
+#         define GLIBC_2_19_TSX_BUG
+#         include <gnu/libc-version.h> /* for gnu_get_libc_version() */
+#       endif
 #   endif
 #   ifdef DARWIN
 #     define OS_TYPE "DARWIN"
 #     define DARWIN_DONT_PARSE_STACK
-#     define DYNAMIC_LOADING
+#     ifndef GC_DONT_REGISTER_MAIN_STATIC_DATA
+#       define DYNAMIC_LOADING
+#     endif
       /* XXX: see get_end(3), get_etext() and get_end() should not be used. */
       /* These aren't used when dyld support is enabled (it is by default)  */
 #     define DATASTART ((ptr_t) get_etext())
@@ -2210,6 +2367,10 @@
       /* There seems to be some issues with trylock hanging on darwin.  */
       /* This should be looked into some more.                          */
 #     define NO_PTHREAD_TRYLOCK
+#     if TARGET_OS_IPHONE && !defined(NO_DYLD_BIND_FULLY_IMAGE)
+        /* iPhone/iPad simulator */
+#       define NO_DYLD_BIND_FULLY_IMAGE
+#     endif
 #   endif
 #   ifdef FREEBSD
 #       define OS_TYPE "FREEBSD"
@@ -2231,9 +2392,8 @@
 #           define DYNAMIC_LOADING
 #       endif
         extern char etext[];
-        ptr_t GC_FreeBSDGetDataStart(size_t, ptr_t);
 #       define DATASTART GC_FreeBSDGetDataStart(0x1000, (ptr_t)etext)
-#       define DATASTART_IS_FUNC
+#       define DATASTART_USES_BSDGETDATASTART
 #   endif
 #   ifdef NETBSD
 #       define OS_TYPE "NETBSD"
@@ -2330,6 +2490,11 @@
 #       error --> unknown Hexagon OS configuration
 #   endif
 # endif
+
+#if defined(__GLIBC__) && !defined(DONT_USE_LIBC_PRIVATES)
+  /* Use glibc's stack-end marker. */
+# define USE_LIBC_PRIVATES
+#endif
 
 #if defined(LINUX_STACKBOTTOM) && defined(NO_PROC_STAT) \
     && !defined(USE_LIBC_PRIVATES)
@@ -2435,6 +2600,11 @@
 # define SUNOS5SIGS
 #endif
 
+#ifdef DATASTART_USES_BSDGETDATASTART
+  GC_INNER ptr_t GC_FreeBSDGetDataStart(size_t, ptr_t);
+# define DATASTART_IS_FUNC
+#endif
+
 #if !defined(GC_EXPLICIT_SIGNALS_UNBLOCK) && defined(SUNOS5SIGS) \
     && !defined(GC_NO_PTHREAD_SIGMASK)
 # define GC_EXPLICIT_SIGNALS_UNBLOCK
@@ -2444,6 +2614,15 @@
 # define SIGRTMIN 33
 # define SIGRTMAX 63
 #endif
+
+#ifdef GC_OPENBSD_THREADS
+# include <sys/param.h>
+  /* Prior to 5.2 release, OpenBSD had user threads and required        */
+  /* special handling.                                                  */
+# if OpenBSD < 201211
+#   define GC_OPENBSD_UTHREADS 1
+# endif
+#endif /* GC_OPENBSD_THREADS */
 
 #if defined(SVR4) || defined(LINUX) || defined(IRIX5) || defined(HPUX) \
     || defined(OPENBSD) || defined(NETBSD) || defined(FREEBSD) \
@@ -2492,6 +2671,11 @@
 # undef USE_MMAP
 #endif
 
+#if defined(LINUX) || defined(FREEBSD) || defined(SOLARIS) || defined(IRIX5) \
+    || ((defined(USE_MMAP) || defined(USE_MUNMAP)) && !defined(USE_WINALLOC))
+# define MMAP_SUPPORTED
+#endif
+
 #if defined(GC_DISABLE_INCREMENTAL) || defined(MANUAL_VDB)
 # undef GWW_VDB
 # undef MPROTECT_VDB
@@ -2535,7 +2719,8 @@
 
 #if ((defined(UNIX_LIKE) && (defined(DARWIN) || defined(HURD) \
                              || defined(OPENBSD) || defined(ARM32) \
-                             || defined(MIPS) || defined(AVR32))) \
+                             || defined(MIPS) || defined(AVR32) \
+                             || defined(OR1K))) \
      || (defined(LINUX) && (defined(SPARC) || defined(M68K))) \
      || ((defined(RTEMS) || defined(PLATFORM_ANDROID)) && defined(I386))) \
     && !defined(NO_GETCONTEXT)
@@ -2543,13 +2728,19 @@
 #endif
 
 #ifndef PREFETCH
-# define PREFETCH(x)
-# define NO_PREFETCH
+# if defined(__GNUC__) && __GNUC__ >= 3 && !defined(NO_PREFETCH)
+#   define PREFETCH(x) __builtin_prefetch((x), 0, 0)
+# else
+#   define PREFETCH(x) (void)0
+# endif
 #endif
 
 #ifndef PREFETCH_FOR_WRITE
-# define PREFETCH_FOR_WRITE(x)
-# define NO_PREFETCH_FOR_WRITE
+# if defined(__GNUC__) && __GNUC__ >= 3 && !defined(NO_PREFETCH_FOR_WRITE)
+#   define PREFETCH_FOR_WRITE(x) __builtin_prefetch((x), 1)
+# else
+#   define PREFETCH_FOR_WRITE(x) (void)0
+# endif
 #endif
 
 #ifndef CACHE_LINE_SIZE
@@ -2761,6 +2952,13 @@
 # define NEED_CALLINFO
 #endif
 
+#if (defined(FREEBSD) || (defined(DARWIN) && !defined(_POSIX_C_SOURCE)) \
+        || (defined(SOLARIS) && (!defined(_XOPEN_SOURCE) \
+                                 || defined(__EXTENSIONS__))) \
+        || defined(LINUX)) && !defined(HAVE_DLADDR)
+# define HAVE_DLADDR
+#endif
+
 #if defined(MAKE_BACK_GRAPH) && !defined(DBG_HDRS_ALL)
 # define DBG_HDRS_ALL
 #endif
@@ -2770,7 +2968,7 @@
 #endif
 
 #if defined(POINTER_SHIFT) && !defined(POINTER_MASK)
-# define POINTER_MASK ((GC_word)(-1))
+# define POINTER_MASK ((word)(-1))
 #endif
 
 #if !defined(FIXUP_POINTER) && defined(POINTER_MASK)
@@ -2800,7 +2998,8 @@
 # error "One of STACK_GROWS_UP and STACK_GROWS_DOWN should be defd."
 #endif
 
-#if defined(REDIRECT_MALLOC) && defined(THREADS) && !defined(LINUX)
+#if defined(REDIRECT_MALLOC) && defined(THREADS) && !defined(LINUX) \
+     && !defined(REDIRECT_MALLOC_IN_HEADER)
 # error "REDIRECT_MALLOC with THREADS works at most on Linux."
 #endif
 
@@ -2815,8 +3014,8 @@
         /* REDIRECT_MALLOC macro defined.                               */
         /* GET_MEM() returns a HLKSIZE aligned chunk.                   */
         /* 0 is taken to mean failure.                                  */
-        /* In the case os USE_MMAP, the argument must also be a         */
-        /* physical page size.                                          */
+        /* In case of MMAP_SUPPORTED, the argument must also be         */
+        /* a multiple of a physical page size.                          */
         /* GET_MEM is currently not assumed to retrieve 0 filled space, */
         /* though we should perhaps take advantage of the case in which */
         /* does.                                                        */
@@ -2853,12 +3052,12 @@
     ptr_t GC_wince_get_mem(GC_word bytes);
 #   define GET_MEM(bytes) (struct hblk *)GC_wince_get_mem(bytes)
 # elif defined(AMIGA) && defined(GC_AMIGA_FASTALLOC)
-    void *GC_amiga_get_mem(size_t size);
+    void *GC_amiga_get_mem(size_t bytes);
 #   define GET_MEM(bytes) HBLKPTR((size_t) \
                           GC_amiga_get_mem((size_t)(bytes) + GC_page_size) \
                           + GC_page_size-1)
 # elif defined(SN_TARGET_PS3)
-    void *ps3_get_mem(size_t size);
+    void *ps3_get_mem(size_t bytes);
 #   define GET_MEM(bytes) (struct hblk*)ps3_get_mem(bytes)
 # else
     ptr_t GC_unix_get_mem(GC_word bytes);

@@ -1,1 +1,0 @@
-../mpn/generic/divexact_byfobm1.c
