@@ -32,6 +32,8 @@
   typedef __m128 double_ptr_storage;
 #elif defined(_WIN32) && !defined(__GNUC__)
   typedef unsigned __int64 double_ptr_storage;
+#elif defined(__aarch64__)
+  typedef unsigned __int128 double_ptr_storage;
 #else
   typedef unsigned long long double_ptr_storage;
 #endif
@@ -48,6 +50,11 @@ typedef union {
         /* to a structure or array/vector).                             */
 } AO_double_t;
 #define AO_HAVE_double_t
+
+/* Dummy declaration as a compile-time assertion for AO_double_t size.  */
+struct AO_double_t_size_static_assert {
+    char dummy[sizeof(AO_double_t) == 2 * sizeof(AO_t) ? 1 : -1];
+};
 
 #define AO_DOUBLE_T_INITIALIZER { { (AO_t)0, (AO_t)0 } }
 

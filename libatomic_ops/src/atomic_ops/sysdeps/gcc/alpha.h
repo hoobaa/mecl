@@ -15,7 +15,8 @@
  *
  */
 
-#include "../atomic_load_store.h"
+#include "../loadstore/atomic_load.h"
+#include "../loadstore/atomic_store.h"
 
 #include "../test_and_set_t_is_ao_t.h"
 
@@ -56,7 +57,7 @@ AO_compare_and_swap(volatile AO_t *addr,
                      "       stq_c %0,%1\n"
                      "       beq %0,1b\n"
                      "2:\n"
-                     :"=&r" (temp), "=m" (*addr), "=&r" (was_equal)
+                     : "=&r" (temp), "+m" (*addr), "=&r" (was_equal)
                      : "r" (new_val), "Ir" (old)
                      :"memory");
   return (int)was_equal;

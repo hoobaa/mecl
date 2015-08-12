@@ -19,12 +19,17 @@
  * modified is included with the above copyright notice.
  *
  */
-#include "../read_ordered.h"
+
 #include "../test_and_set_t_is_ao_t.h" /* Probably suboptimal */
 
 #if __TARGET_ARCH_ARM < 6
 Dont use with ARM instruction sets lower than v6
 #else
+
+#define AO_ACCESS_CHECK_ALIGNED
+#define AO_ACCESS_short_CHECK_ALIGNED
+#define AO_ACCESS_int_CHECK_ALIGNED
+#include "../all_atomic_only_load.h"
 
 #include "../standard_ao_double_t.h"
 
@@ -50,17 +55,11 @@ AO_nop_full(void)
     __asm {
             mcr p15,0,dest,c7,c10,5
             };
+# else
+    AO_compiler_barrier();
 # endif
 }
 #define AO_HAVE_nop_full
-
-AO_INLINE AO_t
-AO_load(const volatile AO_t *addr)
-{
-        /* Cast away the volatile in case it adds fence semantics */
-        return (*(const AO_t *)addr);
-}
-#define AO_HAVE_load
 
 /* NEC LE-IT: atomic "store" - according to ARM documentation this is
  * the only safe way to set variables also used in LL/SC environment.
@@ -115,7 +114,6 @@ __asm {
 }
 #define AO_HAVE_test_and_set
 
-/* NEC LE-IT: fetch and add for ARMv6 */
 AO_INLINE AO_t
 AO_fetch_and_add(volatile AO_t *p, AO_t incr)
 {
@@ -135,7 +133,6 @@ __asm {
 }
 #define AO_HAVE_fetch_and_add
 
-/* NEC LE-IT: fetch and add1 for ARMv6 */
 AO_INLINE AO_t
 AO_fetch_and_add1(volatile AO_t *p)
 {
@@ -155,7 +152,6 @@ __asm {
 }
 #define AO_HAVE_fetch_and_add1
 
-/* NEC LE-IT: fetch and sub for ARMv6 */
 AO_INLINE AO_t
 AO_fetch_and_sub1(volatile AO_t *p)
 {
@@ -176,7 +172,6 @@ __asm {
 #define AO_HAVE_fetch_and_sub1
 #endif /* !AO_PREFER_GENERALIZED */
 
-/* NEC LE-IT: compare and swap */
 #ifndef AO_GENERALIZE_ASM_BOOL_CAS
   /* Returns nonzero if the comparison succeeded.       */
   AO_INLINE int
@@ -225,14 +220,24 @@ __asm__ {
 /* helper functions for the Realview compiler: LDREXD is not usable
  * with inline assembler, so use the "embedded" assembler as
  * suggested by ARM Dev. support (June 2008). */
-__asm inline double_ptr_storage load_ex(volatile AO_double_t *addr) {
+__asm inline double_ptr_storage AO_load_ex(const volatile AO_double_t *addr) {
         LDREXD r0,r1,[r0]
 }
 
-__asm inline int store_ex(AO_t val1, AO_t val2, volatile AO_double_t *addr) {
+__asm inline int AO_store_ex(AO_t val1, AO_t val2, volatile AO_double_t *addr) {
         STREXD r3,r0,r1,[r2]
         MOV    r0,r3
 }
+
+AO_INLINE AO_double_t
+AO_double_load(const volatile AO_double_t *addr)
+{
+  AO_double_t result;
+
+  result.AO_whole = AO_load_ex(addr);
+  return result;
+}
+#define AO_HAVE_double_load
 
 AO_INLINE int
 AO_compare_double_and_swap_double(volatile AO_double_t *addr,
@@ -245,9 +250,9 @@ AO_compare_double_and_swap_double(volatile AO_double_t *addr,
         int result;
 
         while(1) {
-                tmp = load_ex(addr);
+                tmp = AO_load_ex(addr);
                 if(tmp != old_val)      return 0;
-                result = store_ex(new_val1, new_val2, addr);
+                result = AO_store_ex(new_val1, new_val2, addr);
                 if(!result)     return 1;
         }
 }

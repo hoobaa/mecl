@@ -1,5 +1,5 @@
 # Process this file with autoconf to produce a configure script.
-AC_INIT([libatomic_ops],[7.3alpha3],gc@linux.hpl.hp.com)
+AC_INIT([libatomic_ops],[7.5.0],bdwgc@lists.opendylan.org)
 
 AC_PREREQ(2.61)
 AC_CANONICAL_TARGET([])
@@ -8,7 +8,7 @@ AC_CONFIG_MACRO_DIR([m4])
 AM_INIT_AUTOMAKE([foreign dist-bzip2 nostdinc])
 AM_MAINTAINER_MODE
 
-AC_CONFIG_HEADER(src/config.h)
+AC_CONFIG_HEADERS([src/config.h])
 
 # Checks for programs.
 AM_PROG_CC_C_O
@@ -56,6 +56,12 @@ if test "$GCC" = yes; then
   AC_MSG_RESULT($ac_cv_cc_wextra)
   AS_IF([test "$ac_cv_cc_wextra" = yes], [WEXTRA="-Wextra"], [WEXTRA="-W"])
   CFLAGS="-Wall $WEXTRA $CFLAGS"
+
+  AC_ARG_ENABLE(werror, [AC_HELP_STRING([--enable-werror],
+                            [Pass -Werror to the C compiler])])
+  if test "$enable_werror" = yes; then
+    CFLAGS="-Werror $CFLAGS"
+  fi
 else
   case "$host" in
     *-*-hpux*)
@@ -138,26 +144,38 @@ AH_TEMPLATE([AO_WEAK_DOUBLE_CAS_EMULATION],
         [Emulate double-width CAS via pthread locking in case of no hardware \
          support (only gcc/x86_64, the emulation is unsafe)])
 
-THREADDLLIBS=
-have_pthreads=true
-## Libraries needed to support threads.
-AC_CHECK_LIB(pthread, pthread_self, THREADDLLIBS="-lpthread",,)
 AC_DEFINE(_REENTRANT, 1, [Required define if using POSIX threads.])
-case "$host" in
+
+# Libraries needed to support threads (if any).
+have_pthreads=false
+AC_CHECK_LIB(pthread, pthread_self, have_pthreads=true)
+if test x$have_pthreads = xtrue; then
+  THREADDLLIBS=-lpthread
+  case "$host" in
     *-*-netbsd*)
+      # Indicates the use of pthreads.
       AC_DEFINE(_PTHREADS)
       ;;
     *-*-openbsd* | *-*-kfreebsd*-gnu | *-*-dgux*)
       THREADDLLIBS=-pthread
       ;;
     *-*-cygwin* | *-*-darwin*)
+      # Cygwin does not have a real libpthread, so Libtool cannot link
+      # against it.
       THREADDLLIBS=
       ;;
     *-*-mingw*)
+      # Use Win32 threads for tests anyway.
       THREADDLLIBS=
+      # Skip test_atomic_pthreads.
       have_pthreads=false
       ;;
-esac
+  esac
+else
+  AC_DEFINE([AO_NO_PTHREADS], 1, [No pthreads library available])
+  # Assume VxWorks or Win32.
+  THREADDLLIBS=
+fi
 AC_SUBST(THREADDLLIBS)
 
 AM_CONDITIONAL(HAVE_PTHREAD_H, test x$have_pthreads = xtrue)

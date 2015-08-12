@@ -266,6 +266,10 @@
      || defined(__powerpc64__) || defined(__ppc64__)
 #   include "atomic_ops/sysdeps/gcc/powerpc.h"
 # endif /* __powerpc__ */
+# if defined(__aarch64__)
+#   include "atomic_ops/sysdeps/gcc/aarch64.h"
+#   define AO_CAN_EMUL_CAS
+# endif /* __aarch64__ */
 # if defined(__arm__)
 #   include "atomic_ops/sysdeps/gcc/arm.h"
 #   define AO_CAN_EMUL_CAS
@@ -386,6 +390,12 @@
 /* In fact, we observe that this converges after a small fixed number   */
 /* of iterations, usually one.                                          */
 #include "atomic_ops/generalize.h"
+
+#if !defined(AO_GENERALIZE_TWICE) \
+    && defined(AO_HAVE_compare_double_and_swap_double) \
+    && (!defined(AO_HAVE_double_load) || !defined(AO_HAVE_double_store))
+# define AO_GENERALIZE_TWICE
+#endif
 
 #ifdef AO_T_IS_INT
   /* Included after the first generalization pass.      */

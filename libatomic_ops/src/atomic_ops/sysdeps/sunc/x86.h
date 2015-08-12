@@ -20,15 +20,6 @@
 
 #include "../all_aligned_atomic_load_store.h"
 
-/* Real X86 implementations, except for some old 32-bit WinChips,       */
-/* appear to enforce ordering between memory operations, EXCEPT that    */
-/* a later read can pass earlier writes, presumably due to the visible  */
-/* presence of store buffers.                                           */
-/* We ignore both the WinChips and the fact that the official specs     */
-/* seem to be much weaker (and arguably too weak to be usable).         */
-
-#include "../ordered_except_wr.h"
-
 #include "../test_and_set_t_is_char.h"
 
 #if !defined(AO_USE_PENTIUM4_INSTRS) && !defined(__i386)
@@ -60,8 +51,9 @@
   {
     AO_t result;
 
-    __asm__ __volatile__ ("lock; xadd %0, %1" :
-                        "=r" (result), "=m" (*p) : "0" (incr) /* , "m" (*p) */
+    __asm__ __volatile__ ("lock; xadd %0, %1"
+                        : "=r" (result), "+m" (*p)
+                        : "0" (incr)
                         : "memory");
     return result;
   }
@@ -73,8 +65,9 @@ AO_char_fetch_and_add_full (volatile unsigned char *p, unsigned char incr)
 {
   unsigned char result;
 
-  __asm__ __volatile__ ("lock; xaddb %0, %1" :
-                        "=q" (result), "=m" (*p) : "0" (incr) /* , "m" (*p) */
+  __asm__ __volatile__ ("lock; xaddb %0, %1"
+                        : "=q" (result), "+m" (*p)
+                        : "0" (incr)
                         : "memory");
   return result;
 }
@@ -85,8 +78,9 @@ AO_short_fetch_and_add_full (volatile unsigned short *p, unsigned short incr)
 {
   unsigned short result;
 
-  __asm__ __volatile__ ("lock; xaddw %0, %1" :
-                        "=r" (result), "=m" (*p) : "0" (incr) /* , "m" (*p) */
+  __asm__ __volatile__ ("lock; xaddw %0, %1"
+                        : "=r" (result), "+m" (*p)
+                        : "0" (incr)
                         : "memory");
   return result;
 }
@@ -97,8 +91,9 @@ AO_short_fetch_and_add_full (volatile unsigned short *p, unsigned short incr)
   AO_INLINE void
   AO_and_full (volatile AO_t *p, AO_t value)
   {
-    __asm__ __volatile__ ("lock; and %1, %0" :
-                        "=m" (*p) : "r" (value) /* , "m" (*p) */
+    __asm__ __volatile__ ("lock; and %1, %0"
+                        : "+m" (*p)
+                        : "r" (value)
                         : "memory");
   }
 # define AO_HAVE_and_full
@@ -106,8 +101,9 @@ AO_short_fetch_and_add_full (volatile unsigned short *p, unsigned short incr)
   AO_INLINE void
   AO_or_full (volatile AO_t *p, AO_t value)
   {
-    __asm__ __volatile__ ("lock; or %1, %0" :
-                        "=m" (*p) : "r" (value) /* , "m" (*p) */
+    __asm__ __volatile__ ("lock; or %1, %0"
+                        : "+m" (*p)
+                        : "r" (value)
                         : "memory");
   }
 # define AO_HAVE_or_full
@@ -115,8 +111,9 @@ AO_short_fetch_and_add_full (volatile unsigned short *p, unsigned short incr)
   AO_INLINE void
   AO_xor_full (volatile AO_t *p, AO_t value)
   {
-    __asm__ __volatile__ ("lock; xor %1, %0" :
-                        "=m" (*p) : "r" (value) /* , "m" (*p) */
+    __asm__ __volatile__ ("lock; xor %1, %0"
+                        : "+m" (*p)
+                        : "r" (value)
                         : "memory");
   }
 # define AO_HAVE_xor_full
@@ -128,8 +125,8 @@ AO_test_and_set_full (volatile AO_TS_t *addr)
   AO_TS_t oldval;
   /* Note: the "xchg" instruction does not need a "lock" prefix */
   __asm__ __volatile__ ("xchg %b0, %1"
-                        : "=q"(oldval), "=m"(*addr)
-                        : "0"(0xff) /* , "m"(*addr) */
+                        : "=q" (oldval), "+m" (*addr)
+                        : "0" (0xff)
                         : "memory");
   return (AO_TS_VAL_t)oldval;
 }
@@ -142,8 +139,8 @@ AO_test_and_set_full (volatile AO_TS_t *addr)
   {
     char result;
     __asm__ __volatile__ ("lock; cmpxchg %2, %0; setz %1"
-                        : "=m"(*addr), "=a"(result)
-                        : "r" (new_val), "a"(old)
+                        : "+m" (*addr), "=a" (result)
+                        : "r" (new_val), "a" (old)
                         : "memory");
     return (int) result;
   }
@@ -155,9 +152,9 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
                                AO_t new_val)
 {
   AO_t fetched_val;
-  __asm__ __volatile__ ("lock; cmpxchg %1, %2"
-                        : "=a" (fetched_val)
-                        : "r" (new_val), "m" (*addr), "0" (old_val)
+  __asm__ __volatile__ ("lock; cmpxchg %2, %0"
+                        : "+m" (*addr), "=a" (fetched_val)
+                        : "r" (new_val), "a" (old_val)
                         : "memory");
   return fetched_val;
 }
@@ -167,6 +164,11 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
 
 # ifndef AO_NO_CMPXCHG8B
 #   include "../standard_ao_double_t.h"
+
+    /* Reading or writing a quadword aligned on a 64-bit boundary is    */
+    /* always carried out atomically (requires at least a Pentium).     */
+#   define AO_ACCESS_double_CHECK_ALIGNED
+#   include "../loadstore/double_atomic_load_store.h"
 
     /* Returns nonzero if the comparison succeeded.     */
     /* Really requires at least a Pentium.              */
@@ -178,8 +180,8 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
       char result;
 
       __asm__ __volatile__ ("lock; cmpxchg8b %0; setz %1"
-                        : "=m" (*addr), "=a" (result)
-                        : /* "m" (*addr), */ "d" (old_val2), "a" (old_val1),
+                        : "+m" (*addr), "=a" (result)
+                        : "d" (old_val2), "a" (old_val1),
                           "c" (new_val2), "b" (new_val1)
                         : "memory");
       return (int) result;
@@ -197,8 +199,8 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
     unsigned int result;
 
     __asm__ __volatile__ ("lock; xaddl %0, %1"
-                        : "=r" (result), "=m" (*p)
-                        : "0" (incr) /* , "m" (*p) */
+                        : "=r" (result), "+m" (*p)
+                        : "0" (incr)
                         : "memory");
     return result;
   }
@@ -216,8 +218,8 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
     {
       char result;
       __asm__ __volatile__ ("lock; cmpxchg16b %0; setz %1"
-                        : "=m"(*addr), "=a"(result)
-                        : /* "m" (*addr), */ "d" (old_val2), "a" (old_val1),
+                        : "+m" (*addr), "=a" (result)
+                        : "d" (old_val2), "a" (old_val1),
                           "c" (new_val2), "b" (new_val1)
                         : "memory");
       return (int) result;
@@ -226,3 +228,11 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
 # endif /* !AO_CMPXCHG16B_AVAILABLE */
 
 #endif /* x64 */
+
+/* Real X86 implementations, except for some old 32-bit WinChips,       */
+/* appear to enforce ordering between memory operations, EXCEPT that    */
+/* a later read can pass earlier writes, presumably due to the visible  */
+/* presence of store buffers.                                           */
+/* We ignore both the WinChips and the fact that the official specs     */
+/* seem to be much weaker (and arguably too weak to be usable).         */
+#include "../ordered_except_wr.h"

@@ -13,7 +13,6 @@ usage()
 project=$1
 platform=$2
 
-
 PROJECT_ROOT=$(cd $(dirname ${0}) && pwd -P)
 
 ECL_INSTALL_ROOT_DIR=$PROJECT_ROOT/local-install
@@ -47,7 +46,7 @@ case $platform in
 	;;
     iPhoneOS-armv7s|iPhoneOS-armv7|iPhoneSimulator)
 	. $PROJECT_ROOT/platforms/$platform/config.sh || exit 1
-	CFLAGS="$CFLAGS -g -O2"
+	# CFLAGS="$CFLAGS -g -O2"
 	;;
     *)
 	usage; exit 1
@@ -205,12 +204,18 @@ if [ ! -f ${srcdir}/configure ] ; then
     (cd ${srcdir} && ./autogen.sh)
 fi
 
-env | sort > env.a
+env | sort > env.log
+echo ---------------
+echo $CFLAGS
+echo $LDFLAGS
+echo ---------------
 echo FUCKCONFIG: cd ${builddir}
-echo FUCKCONFIG: ${srcdir}/configure --srcdir=${srcdir} --prefix=$PROJECT_INSTALL_DIR --target=${host} --host=${host} ${config_opts}
+echo FUCKCONFIG: ${srcdir}/configure --srcdir=${srcdir} --prefix=$PROJECT_INSTALL_DIR --target=${host} --host=${host} ${config_opts} --build=x86_64-apple-darwin
+
+# exec bash
 
 cd ${builddir}
-${srcdir}/configure --srcdir=${srcdir} --prefix=$PROJECT_INSTALL_DIR --target=${host} --host=${host} ${config_opts}
+${srcdir}/configure --srcdir=${srcdir} --prefix=$PROJECT_INSTALL_DIR --target=${host} --host=${host} ${config_opts} --build=x86_64-apple-darwin
 
 if [[ $? == 0 ]]; then
     echo "$project configured in ${builddir}."

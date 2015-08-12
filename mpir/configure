@@ -9574,6 +9574,7 @@ $as_echo_n "checking build system compiler $HOST_CC... " >&6; }
 # remove anything that might look like compiler output to our "||" expression
 rm -f conftest* a.out b.out a.exe a_out.exe
 cat >conftest.c <<EOF
+// #include <stdlib.h>
 int
 main ()
 {
@@ -9601,39 +9602,61 @@ else
 fi
 
 else
+  FUCKI=0
   for i in "$CC" "$CC $CFLAGS $CPPFLAGS" cc gcc c89 c99; do
+      FUCKI=$((FUCKI+1))
+      echo FUCKI:$FUCKI $i >&5
+      echo FUCKFUCK------------------------------------------------- >&5
+      env >&5
+      echo FUCKFUCK------------------------------------------------- >&5
     { $as_echo "$as_me:${as_lineno-$LINENO}: checking build system compiler $i" >&5
-$as_echo_n "checking build system compiler $i... " >&6; }
-# remove anything that might look like compiler output to our "||" expression
-rm -f conftest* a.out b.out a.exe a_out.exe
-cat >conftest.c <<EOF
+      $as_echo_n "checking build system compiler $i... " >&6; }
+      # remove anything that might look like compiler output to our "||" expression
+      rm -f conftest* a.out b.out a.exe a_out.exe
+      cat >conftest.c <<EOF
+// #include <stdlib.h>
 int
 main ()
 {
   exit(0);
 }
 EOF
-gmp_compile="$i conftest.c"
-cc_for_build_works=no
-if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$gmp_compile\""; } >&5
-  (eval $gmp_compile) 2>&5
-  ac_status=$?
-  $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
-  test $ac_status = 0; }; then
-  if (./a.out || ./b.out || ./a.exe || ./a_out.exe || ./conftest) >&5 2>&1; then
-    cc_for_build_works=yes
-  fi
-fi
-rm -f conftest* a.out b.out a.exe a_out.exe
-{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $cc_for_build_works" >&5
-$as_echo "$cc_for_build_works" >&6; }
-if test "$cc_for_build_works" = yes; then
-  CC_FOR_BUILD=$i
-       break
-else
-  :
-fi
-
+      gmp_compile="$i conftest.c"
+      cc_for_build_works=no
+      
+      echo FUCKFUCK------------------------------ >&5
+      echo "\"\$as_me\":${as_lineno-$LINENO}: \"$gmp_compile\""; >&5
+      echo FUCKFUCK============================== >&5
+      
+      if { { eval echo "\"\$as_me\":${as_lineno-$LINENO}: \"$gmp_compile\""; } >&5
+        (eval $gmp_compile) 2>&5
+        echo FUCKFUCK------------------------------ >&5
+        cp conftest.c /tmp/conftest.c.$FUCKI
+        echo $gmp_compile >&5
+        echo FUCKFUCK============================== >&5
+        ac_status=$?
+        $as_echo "$as_me:${as_lineno-$LINENO}: \$? = $ac_status" >&5
+        test $ac_status = 0; }; then
+        echo FUCKFUCK============================== >&5
+        if test -f a.out ; then
+            echo a.out !! >&5
+            cp -p a.out /tmp/a.out.$FUCKI
+        fi
+        echo FUCKFUCK============================== >&5
+        if (./a.out || ./b.out || ./a.exe || ./a_out.exe || ./conftest) >&5 2>&1; then
+          cc_for_build_works=yes
+        fi
+      fi
+      rm -rf conftest.dSYM
+      rm -f conftest* a.out b.out a.exe a_out.exe
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: $cc_for_build_works" >&5
+        $as_echo "$cc_for_build_works" >&6; }
+      if test "$cc_for_build_works" = yes; then
+        CC_FOR_BUILD=$i
+             break
+      else
+        :
+      fi
   done
   if test -z "$CC_FOR_BUILD"; then
     as_fn_error $? "Cannot find a build system compiler" "$LINENO" 5

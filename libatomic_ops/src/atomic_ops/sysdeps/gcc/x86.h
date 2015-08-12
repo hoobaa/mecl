@@ -23,19 +23,10 @@
 
 #include "../all_aligned_atomic_load_store.h"
 
-/* Real X86 implementations, except for some old 32-bit WinChips,       */
-/* appear to enforce ordering between memory operations, EXCEPT that    */
-/* a later read can pass earlier writes, presumably due to the visible  */
-/* presence of store buffers.                                           */
-/* We ignore both the WinChips and the fact that the official specs     */
-/* seem to be much weaker (and arguably too weak to be usable).         */
-
-#include "../ordered_except_wr.h"
-
 #include "../test_and_set_t_is_char.h"
 
-#if defined(__x86_64__) && !defined(AO_USE_PENTIUM4_INSTRS)
-  /* "mfence" (SSE2) is supported on all x86_64/amd64 chips.            */
+#if defined(__SSE2__) && !defined(AO_USE_PENTIUM4_INSTRS)
+  /* "mfence" is a part of SSE2 set (introduced on Intel Pentium 4).    */
 # define AO_USE_PENTIUM4_INSTRS
 #endif
 
@@ -123,6 +114,10 @@ AO_short_fetch_and_add_full (volatile unsigned short *p, unsigned short incr)
                         : "memory");
   }
 # define AO_HAVE_xor_full
+
+  /* AO_store_full could be implemented directly using "xchg" but it    */
+  /* could be generalized efficiently as an ordinary store accomplished */
+  /* with AO_nop_full ("mfence" instruction).                           */
 #endif /* !AO_PREFER_GENERALIZED */
 
 AO_INLINE AO_TS_VAL_t
@@ -172,7 +167,7 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
     AO_t fetched_val;
     __asm__ __volatile__ ("lock; cmpxchg %3, %4"
                         : "=a" (fetched_val), "=m" (*addr)
-                        : "0" (old_val), "q" (new_val), "m" (*addr)
+                        : "a" (old_val), "r" (new_val), "m" (*addr)
                         : "memory");
     return fetched_val;
 # endif
@@ -181,6 +176,12 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
 
 #if !defined(__x86_64__) && !defined(AO_USE_SYNC_CAS_BUILTIN)
 # include "../standard_ao_double_t.h"
+
+  /* Reading or writing a quadword aligned on a 64-bit boundary is      */
+  /* always carried out atomically on at least a Pentium according to   */
+  /* Chapter 8.1.1 of Volume 3A Part 1 of Intel processor manuals.      */
+# define AO_ACCESS_double_CHECK_ALIGNED
+# include "../loadstore/double_atomic_load_store.h"
 
   /* Returns nonzero if the comparison succeeded.       */
   /* Really requires at least a Pentium.                */
@@ -249,6 +250,11 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
 #elif defined(__ILP32__) || !defined(__x86_64__)
 # include "../standard_ao_double_t.h"
 
+  /* Reading or writing a quadword aligned on a 64-bit boundary is      */
+  /* always carried out atomically (requires at least a Pentium).       */
+# define AO_ACCESS_double_CHECK_ALIGNED
+# include "../loadstore/double_atomic_load_store.h"
+
   /* X32 has native support for 64-bit integer operations (AO_double_t  */
   /* is a 64-bit integer and we could use 64-bit cmpxchg).              */
   /* This primitive is used by compare_double_and_swap_double_full.     */
@@ -279,6 +285,20 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
     return result;
   }
 # define AO_HAVE_int_fetch_and_add_full
+
+  /* The Intel and AMD Architecture Programmer Manuals state roughly    */
+  /* the following:                                                     */
+  /* - CMPXCHG16B (with a LOCK prefix) can be used to perform 16-byte   */
+  /* atomic accesses in 64-bit mode (with certain alignment             */
+  /* restrictions);                                                     */
+  /* - SSE instructions that access data larger than a quadword (like   */
+  /* MOVDQA) may be implemented using multiple memory accesses;         */
+  /* - LOCK prefix causes an invalid-opcode exception when used with    */
+  /* 128-bit media (SSE) instructions.                                  */
+  /* Thus, currently, the only way to implement lock-free double_load   */
+  /* and double_store on x86_64 is to use CMPXCHG16B (if available).    */
+
+/* TODO: Test some gcc macro to detect presence of cmpxchg16b. */
 
 # ifdef AO_CMPXCHG16B_AVAILABLE
 #   include "../standard_ao_double_t.h"
@@ -330,3 +350,11 @@ AO_fetch_compare_and_swap_full(volatile AO_t *addr, AO_t old_val,
 # endif /* AO_WEAK_DOUBLE_CAS_EMULATION && !AO_CMPXCHG16B_AVAILABLE */
 
 #endif /* x86_64 && !ILP32 */
+
+/* Real X86 implementations, except for some old 32-bit WinChips,       */
+/* appear to enforce ordering between memory operations, EXCEPT that    */
+/* a later read can pass earlier writes, presumably due to the visible  */
+/* presence of store buffers.                                           */
+/* We ignore both the WinChips and the fact that the official specs     */
+/* seem to be much weaker (and arguably too weak to be usable).         */
+#include "../ordered_except_wr.h"

@@ -43,6 +43,10 @@
 
 #include "atomic_ops_stack.h" /* includes atomic_ops.h as well */
 
+#if (defined(_WIN32_WCE) || defined(__MINGW32CE__)) && !defined(abort)
+# define abort() _exit(-1) /* there is no abort() in WinCE */
+#endif
+
 #ifndef MAX_NTHREADS
 # define MAX_NTHREADS 100
 #endif
@@ -171,9 +175,9 @@ volatile AO_t ops_performed = 0;
   list_element * t[MAX_NTHREADS + 1];
   int index = (int)(size_t)arg;
   int i;
-  int j = 0;
-
 # ifdef VERBOSE
+    int j = 0;
+
     printf("starting thread %d\n", index);
 # endif
   while (fetch_and_add(&ops_performed, index + 1) + index + 1 < LIMIT)
@@ -191,7 +195,9 @@ volatile AO_t ops_performed = 0;
         {
           AO_stack_push(&the_list, (AO_t *)t[i]);
         }
-      j += (index + 1);
+#     ifdef VERBOSE
+        j += index + 1;
+#     endif
     }
 # ifdef VERBOSE
     printf("finished thread %d: %d total ops\n", index, j);
@@ -299,22 +305,23 @@ int main(int argc, char **argv)
       }
     for (nthreads = 1; nthreads <= max_nthreads; ++nthreads)
       {
-        unsigned long sum = 0;
+#       ifndef NO_TIMES
+          unsigned long sum = 0;
+#       endif
 
         printf("About %d pushes + %d pops in %d threads:",
                LIMIT, LIMIT, nthreads);
-        for (exper_n = 0; exper_n < N_EXPERIMENTS; ++exper_n)
-          {
+#       ifndef NO_TIMES
+          for (exper_n = 0; exper_n < N_EXPERIMENTS; ++exper_n) {
 #           if defined(VERBOSE)
               printf(" [%lu]", times[nthreads][exper_n]);
 #           endif
             sum += times[nthreads][exper_n];
           }
-#     ifndef NO_TIMES
-        printf(" %lu msecs\n", (sum + N_EXPERIMENTS/2)/N_EXPERIMENTS);
-#     else
-        printf(" completed\n");
-#     endif
+          printf(" %lu msecs\n", (sum + N_EXPERIMENTS/2)/N_EXPERIMENTS);
+#       else
+          printf(" completed\n");
+#       endif
       }
   return 0;
 }

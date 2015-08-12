@@ -15,24 +15,33 @@
  * FIXME:  This should probably make finer distinctions.  SGI MIPS is
  * much more strongly ordered, and in fact closer to sequentially
  * consistent.  This is really aimed at modern embedded implementations.
- * It looks to me like this assumes a 32-bit ABI.  -HB
  */
 
 #include "../all_aligned_atomic_load_store.h"
-#include "../acquire_release_volatile.h"
+
 #include "../test_and_set_t_is_ao_t.h"
 
 /* Data dependence does not imply read ordering.  */
 #define AO_NO_DD_ORDERING
 
+#if defined(_ABI64) && (_MIPS_SIM == _ABI64)
+# define AO_MIPS_SET_ISA    "       .set mips3\n"
+# define AO_MIPS_LL_1(args) "       lld " args "\n"
+# define AO_MIPS_SC(args)   "       scd " args "\n"
+#else
+# define AO_MIPS_SET_ISA    "       .set mips2\n"
+# define AO_MIPS_LL_1(args) "       ll " args "\n"
+# define AO_MIPS_SC(args)   "       sc " args "\n"
+# define AO_T_IS_INT
+#endif
+
 #ifdef AO_ICE9A1_LLSC_WAR
   /* ICE9 rev A1 chip (used in very few systems) is reported to */
   /* have a low-frequency bug that causes LL to fail.           */
   /* To workaround, just issue the second 'LL'.                 */
-# define AO_MIPS_LL_FIX(args_str) \
-      "       ll   " args_str "\n"
+# define AO_MIPS_LL(args) AO_MIPS_LL_1(args) AO_MIPS_LL_1(args)
 #else
-# define AO_MIPS_LL_FIX(args_str) ""
+# define AO_MIPS_LL(args) AO_MIPS_LL_1(args)
 #endif
 
 AO_INLINE void
@@ -40,7 +49,7 @@ AO_nop_full(void)
 {
   __asm__ __volatile__(
       "       .set push           \n"
-      "       .set mips2          \n"
+      AO_MIPS_SET_ISA
       "       .set noreorder      \n"
       "       .set nomacro        \n"
       "       sync                \n"
@@ -57,19 +66,18 @@ AO_fetch_and_add(volatile AO_t *addr, AO_t incr)
   register int temp;
 
   __asm__ __volatile__(
-
       "       .set push\n"
-      "       .set mips2\n"
+      AO_MIPS_SET_ISA
       "       .set noreorder\n"
       "       .set nomacro\n"
-      "1:     ll   %0, %2\n"
-      AO_MIPS_LL_FIX("%0, %2")
+      "1: "
+      AO_MIPS_LL("%0, %2")
       "       addu %1, %0, %3\n"
-      "       sc   %1, %2\n"
+      AO_MIPS_SC("%1, %2")
       "       beqz %1, 1b\n"
       "       nop\n"
       "       .set pop "
-      : "=&r" (result), "=&r" (temp), "=m" (*addr)
+      : "=&r" (result), "=&r" (temp), "+m" (*addr)
       : "Ir" (incr)
       : "memory");
   return (AO_t)result;
@@ -84,17 +92,17 @@ AO_test_and_set(volatile AO_TS_t *addr)
 
   __asm__ __volatile__(
       "       .set push\n"
-      "       .set mips2\n"
+      AO_MIPS_SET_ISA
       "       .set noreorder\n"
       "       .set nomacro\n"
-      "1:     ll   %0, %2\n"
-      AO_MIPS_LL_FIX("%0, %2")
+      "1: "
+      AO_MIPS_LL("%0, %2")
       "       move %1, %3\n"
-      "       sc   %1, %2\n"
+      AO_MIPS_SC("%1, %2")
       "       beqz %1, 1b\n"
       "       nop\n"
       "       .set pop "
-      : "=&r" (oldval), "=&r" (temp), "=m" (*addr)
+      : "=&r" (oldval), "=&r" (temp), "+m" (*addr)
       : "r" (1)
       : "memory");
   return (AO_TS_VAL_t)oldval;
@@ -113,19 +121,19 @@ AO_test_and_set(volatile AO_TS_t *addr)
 
     __asm__ __volatile__(
         "       .set push           \n"
-        "       .set mips2          \n"
+        AO_MIPS_SET_ISA
         "       .set noreorder      \n"
         "       .set nomacro        \n"
-        "1:     ll      %0, %1      \n"
-        AO_MIPS_LL_FIX("%0, %1")
+        "1: "
+        AO_MIPS_LL("%0, %1")
         "       bne     %0, %4, 2f  \n"
-        "        move   %0, %3      \n"
-        "       sc      %0, %1      \n"
+        "       move   %0, %3      \n"
+        AO_MIPS_SC("%0, %1")
         "       .set pop            \n"
         "       beqz    %0, 1b      \n"
         "       li      %2, 1       \n"
         "2:                           "
-        : "=&r" (temp), "+R" (*addr), "+r" (was_equal)
+        : "=&r" (temp), "+m" (*addr), "+r" (was_equal)
         : "r" (new_val), "r" (old)
         : "memory");
     return was_equal;
@@ -141,19 +149,19 @@ AO_fetch_compare_and_swap(volatile AO_t *addr, AO_t old, AO_t new_val)
 
   __asm__ __volatile__(
       "       .set push\n"
-      "       .set mips2\n"
+      AO_MIPS_SET_ISA
       "       .set noreorder\n"
       "       .set nomacro\n"
-      "1:     ll   %0, %2\n"
-      AO_MIPS_LL_FIX("%0, %2")
+      "1: "
+      AO_MIPS_LL("%0, %2")
       "       bne  %0, %4, 2f\n"
       "       move %1, %3\n"
-      "       sc   %1, %2\n"
+      AO_MIPS_SC("%1, %2")
       "       beqz %1, 1b\n"
       "       nop\n"
       "       .set pop\n"
       "2:"
-      : "=&r" (fetched_val), "=&r" (temp), "=m" (*addr)
+      : "=&r" (fetched_val), "=&r" (temp), "+m" (*addr)
       : "r" (new_val), "Jr" (old)
       : "memory");
   return (AO_t)fetched_val;
@@ -161,11 +169,8 @@ AO_fetch_compare_and_swap(volatile AO_t *addr, AO_t old, AO_t new_val)
 #define AO_HAVE_fetch_compare_and_swap
 
 /* #include "../standard_ao_double_t.h" */
-/* TODO: implement AO_compare_double_and_swap_double if available.      */
+/* TODO: Implement double-wide operations if available. */
 
 /* CAS primitives with acquire, release and full semantics are  */
 /* generated automatically (and AO_int_... primitives are       */
 /* defined properly after the first generalization pass).       */
-
-/* FIXME: 32-bit ABI is assumed.    */
-#define AO_T_IS_INT
