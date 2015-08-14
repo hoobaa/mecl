@@ -1032,7 +1032,7 @@ ecl_fficall_align(int data)
 }
 
 #line 811
-cl_object si::call-cfun(cl_narg narg, cl_object fun, cl_object return_type, cl_object arg_types, cl_object args, ...)
+cl_object si_call_cfun(cl_narg narg, cl_object fun, cl_object return_type, cl_object arg_types, cl_object args, ...)
 {
 #line 811
 
@@ -1102,7 +1102,7 @@ cl_object si::call-cfun(cl_narg narg, cl_object fun, cl_object return_type, cl_o
 }
 
 #line 848
-cl_object si::make-dynamic-callback(cl_narg narg, cl_object fun, cl_object sym, cl_object rtype, cl_object argtypes, ...)
+cl_object si_make_dynamic_callback(cl_narg narg, cl_object fun, cl_object sym, cl_object rtype, cl_object argtypes, ...)
 {
 #line 848
 
@@ -1227,7 +1227,7 @@ prepare_cif(cl_env_ptr the_env, ffi_cif *cif, cl_object return_type,
 }
 
 #line 940
-cl_object si::call-cfun(cl_narg narg, cl_object fun, cl_object return_type, cl_object arg_types, cl_object args, ...)
+cl_object si_call_cfun(cl_narg narg, cl_object fun, cl_object return_type, cl_object arg_types, cl_object args, ...)
 {
 #line 940
 
@@ -1314,7 +1314,7 @@ the_env->nvalues = 0; return ECL_NIL;
 }
 
 #line 989
-cl_object si::make-dynamic-callback(cl_narg narg, cl_object fun, cl_object sym, cl_object return_type, cl_object arg_types, ...)
+cl_object si_make_dynamic_callback(cl_narg narg, cl_object fun, cl_object sym, cl_object return_type, cl_object arg_types, ...)
 {
 #line 989
 

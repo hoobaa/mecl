@@ -1,2 +1,2 @@
 #!/bin/sh
-exec /Users/strobolights/dev/mecl/local-install/host/lib/ecl-12.12.1/dpp $*
+exec /Users/strobolights/dev/mecl/local-install/host64/lib/ecl-12.12.1/dpp $*

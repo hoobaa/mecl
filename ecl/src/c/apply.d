@@ -147,327 +147,143 @@ typedef cl_object (*t_f64)(cl_narg,cl_object,cl_object,cl_object,cl_object,cl_ob
                         x[57],x[58],x[59],x[60],x[61],x[62],x[63]);
     }
   }
+typedef cl_object (*t_ff0)();
+typedef cl_object (*t_ff1)(cl_object);
+typedef cl_object (*t_ff2)(cl_object,cl_object);
+typedef cl_object (*t_ff3)(cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff4)(cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff5)(cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff6)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff7)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff8)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff9)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff10)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff11)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff12)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff13)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff14)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff15)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff16)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff17)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff18)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff19)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff20)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff21)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff22)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff23)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff24)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff25)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff26)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff27)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff28)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff29)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff30)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff31)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff32)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff33)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff34)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff35)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff36)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff37)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff38)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff39)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff40)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff41)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff42)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff43)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff44)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff45)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff46)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff47)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff48)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff49)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff50)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff51)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff52)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff53)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff54)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff55)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff56)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff57)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff58)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff59)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff60)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff61)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff62)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff63)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_ff64)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
   cl_object
   APPLY_fixed(cl_narg n, cl_object (*fn)(), cl_object *x)
   {
+
+    nlogd(">>FUCK APPLY-fixed n:%d", n);
     switch (n) {
+
     case 0:  return (*fn)();
-    case 1:  return (*fn)(x[0]);
-    case 2:  return (*fn)(x[0],x[1]);
-    case 3:  return (*fn)(x[0],x[1],x[2]);
-    case 4:  return (*fn)(x[0],x[1],x[2],x[3]);
-    case 5:  return (*fn)(x[0],x[1],x[2],x[3],x[4]);
-    case 6:  return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5]);
-    case 7:  return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6]);
-    case 8:  return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7]);
-    case 9:  return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		     x[8]);
-    case 10: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9]);
-    case 11: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10]);
-    case 12: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11]);
-    case 13: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12]);
-    case 14: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13]);
-    case 15: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14]);
-    case 16: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15]);
-    case 17: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16]);
-    case 18: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17]);
-    case 19: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18]);
-    case 20: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19]);
-    case 21: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20]);
-    case 22: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21]);
-    case 23: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22]);
-    case 24: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23]);
-    case 25: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24]);
-    case 26: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25]);
-    case 27: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26]);
-    case 28: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27]);
-    case 29: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28]);
-    case 30: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29]);
-    case 31: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30]);
-    case 32: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31]);
-    case 33: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32]);
-    case 34: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33]);
-    case 35: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34]);
-    case 36: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35]);
-    case 37: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36]);
-    case 38: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37]);
-    case 39: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38]);
-    case 40: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39]);
-    case 41: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40]);
-    case 42: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41]);
-    case 43: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42]);
-    case 44: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43]);
-    case 45: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44]);
-    case 46: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45]);
-    case 47: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46]);
-    case 48: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47]);
-    case 49: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48]);
-    case 50: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49]);
-    case 51: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50]);
-    case 52: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51]);
-    case 53: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51],x[52]);
-    case 54: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51],x[52],x[53]);
-    case 55: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51],x[52],x[53],x[54]);
-    case 56: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51],x[52],x[53],x[54],x[55]);
-    case 57: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51],x[52],x[53],x[54],x[55],x[56]);
-    case 58: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51],x[52],x[53],x[54],x[55],x[56],
-  		      x[57]);
-    case 59: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51],x[52],x[53],x[54],x[55],x[56],
-  		      x[57],x[58]);
-    case 60: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51],x[52],x[53],x[54],x[55],x[56],
-  		      x[57],x[58],x[59]);
-    case 61: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51],x[52],x[53],x[54],x[55],x[56],
-  		      x[57],x[58],x[59],x[60]);
-    case 62: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51],x[52],x[53],x[54],x[55],x[56],
-  		      x[57],x[58],x[59],x[60],x[61]);
-    case 63: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51],x[52],x[53],x[54],x[55],x[56],
-  		      x[57],x[58],x[59],x[60],x[61],x[62]);
-    case 64: return (*fn)(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
-  		      x[8],x[9],x[10],x[11],x[12],x[13],x[14],
-  		      x[15],x[16],x[17],x[18],x[19],x[20],x[21],
-  		      x[22],x[23],x[24],x[25],x[26],x[27],x[28],
-  		      x[29],x[30],x[31],x[32],x[33],x[34],x[35],
-  		      x[36],x[37],x[38],x[39],x[40],x[41],x[42],
-  		      x[43],x[44],x[45],x[46],x[47],x[48],x[49],
-  		      x[50],x[51],x[52],x[53],x[54],x[55],x[56],
-  		      x[57],x[58],x[59],x[60],x[61],x[62],x[63]);
+    case 1: return (*((t_ff1)(fn)))(x[0]);
+    case 2: return (*((t_ff2)(fn)))(x[0],x[1]);
+    case 3: return (*((t_ff3)(fn)))(x[0],x[1],x[2]);
+    case 4: return (*((t_ff4)(fn)))(x[0],x[1],x[2],x[3]);
+    case 5: return (*((t_ff5)(fn)))(x[0],x[1],x[2],x[3],x[4]);
+    case 6: return (*((t_ff6)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5]);
+    case 7: return (*((t_ff7)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6]);
+    case 8: return (*((t_ff8)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7]);
+    case 9: return (*((t_ff9)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8]);
+    case 10: return (*((t_ff10)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9]);
+    case 11: return (*((t_ff11)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10]);
+    case 12: return (*((t_ff12)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11]);
+    case 13: return (*((t_ff13)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12]);
+    case 14: return (*((t_ff14)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13]);
+    case 15: return (*((t_ff15)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14]);
+    case 16: return (*((t_ff16)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15]);
+    case 17: return (*((t_ff17)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16]);
+    case 18: return (*((t_ff18)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17]);
+    case 19: return (*((t_ff19)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18]);
+    case 20: return (*((t_ff20)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19]);
+    case 21: return (*((t_ff21)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20]);
+    case 22: return (*((t_ff22)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21]);
+    case 23: return (*((t_ff23)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22]);
+    case 24: return (*((t_ff24)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23]);
+    case 25: return (*((t_ff25)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24]);
+    case 26: return (*((t_ff26)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25]);
+    case 27: return (*((t_ff27)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26]);
+    case 28: return (*((t_ff28)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27]);
+    case 29: return (*((t_ff29)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28]);
+    case 30: return (*((t_ff30)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29]);
+    case 31: return (*((t_ff31)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30]);
+    case 32: return (*((t_ff32)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31]);
+    case 33: return (*((t_ff33)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32]);
+    case 34: return (*((t_ff34)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33]);
+    case 35: return (*((t_ff35)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34]);
+    case 36: return (*((t_ff36)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35]);
+    case 37: return (*((t_ff37)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36]);
+    case 38: return (*((t_ff38)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37]);
+    case 39: return (*((t_ff39)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38]);
+    case 40: return (*((t_ff40)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39]);
+    case 41: return (*((t_ff41)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40]);
+    case 42: return (*((t_ff42)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41]);
+    case 43: return (*((t_ff43)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42]);
+    case 44: return (*((t_ff44)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43]);
+    case 45: return (*((t_ff45)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44]);
+    case 46: return (*((t_ff46)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45]);
+    case 47: return (*((t_ff47)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46]);
+    case 48: return (*((t_ff48)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47]);
+    case 49: return (*((t_ff49)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48]);
+    case 50: return (*((t_ff50)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49]);
+    case 51: return (*((t_ff51)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50]);
+    case 52: return (*((t_ff52)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51]);
+    case 53: return (*((t_ff53)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52]);
+    case 54: return (*((t_ff54)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53]);
+    case 55: return (*((t_ff55)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54]);
+    case 56: return (*((t_ff56)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54],x[55]);
+    case 57: return (*((t_ff57)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54],x[55],x[56]);
+    case 58: return (*((t_ff58)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54],x[55],x[56],x[57]);
+    case 59: return (*((t_ff59)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54],x[55],x[56],x[57],x[58]);
+    case 60: return (*((t_ff60)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54],x[55],x[56],x[57],x[58],x[59]);
+    case 61: return (*((t_ff61)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54],x[55],x[56],x[57],x[58],x[59],x[60]);
+    case 62: return (*((t_ff62)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54],x[55],x[56],x[57],x[58],x[59],x[60],x[61]);
+    case 63: return (*((t_ff63)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54],x[55],x[56],x[57],x[58],x[59],x[60],x[61],x[62]);
+    case 64: return (*((t_ff64)(fn)))(x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54],x[55],x[56],x[57],x[58],x[59],x[60],x[61],x[62],x[63]);
     default:
   	  FEprogram_error_noreturn("Too many arguments", 0);
     }

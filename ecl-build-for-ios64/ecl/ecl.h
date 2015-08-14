@@ -1,17 +1,17 @@
 /* -*- mode: c; c-basic-offset: 8 -*- */
 /*
-    ecl.h -- Main headers for development of ECL
+  ecl.h -- Main headers for development of ECL
 */
 /*
-    Copyright (c) 1984, Taiichi Yuasa and Masami Hagiya.
-    Copyright (c) 1990, Giuseppe Attardi.
-
-    ECoLisp is free software; you can redistribute it and/or
-    modify it under the terms of the GNU Library General Public
-    License as published by the Free Software Foundation; either
-    version 2 of the License, or (at your option) any later version.
-
-    See file '../Copyright' for full details.
+  Copyright (c) 1984, Taiichi Yuasa and Masami Hagiya.
+  Copyright (c) 1990, Giuseppe Attardi.
+  
+  ECoLisp is free software; you can redistribute it and/or
+  modify it under the terms of the GNU Library General Public
+  License as published by the Free Software Foundation; either
+  version 2 of the License, or (at your option) any later version.
+  
+  See file '../Copyright' for full details.
 */
 
 #ifndef ECL_ECL_H
@@ -27,8 +27,8 @@
 #include <stdio.h>		/* FILE */
 /* Microsoft VC++ does not have va_copy() */
 #if defined(_MSC_VER) || !defined(va_copy)
-#define va_copy(dst, src) \
-   ((void) memcpy(&(dst), &(src), sizeof(va_list)))
+#define va_copy(dst, src)                               \
+        ((void) memcpy(&(dst), &(src), sizeof(va_list)))
 #endif
 
 #ifndef FIXNUM_BITS
@@ -60,9 +60,9 @@
 #  include <windows.h>
 # endif
 # ifdef ECL_THREADS
-   typedef HANDLE pthread_t;
-   typedef HANDLE pthread_mutex_t;
-   typedef HANDLE pthread_cond_t; /*Dummy, not really used*/
+typedef HANDLE pthread_t;
+typedef HANDLE pthread_mutex_t;
+typedef HANDLE pthread_cond_t; /*Dummy, not really used*/
 #  undef ERROR
 #  ifdef GBC_BOEHM
 #   define CreateThread GC_CreateThread

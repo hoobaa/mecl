@@ -183,7 +183,7 @@ si_make_weak_pointer(1406,44650
 ecl_weak_pointer_value(1413,44774
 si_weak_pointer_value(1419,44848
 
-/Users/strobolights/dev/mecl/ecl/src/c/apply.d,2689
+/Users/strobolights/dev/mecl/ecl/src/c/apply.d,5594
 typedef cl_object (*t_f0)t_f02,23
 typedef cl_object (*t_f1)t_f13,59
 typedef cl_object (*t_f2)t_f24,105
@@ -250,7 +250,80 @@ typedef cl_object (*t_f62)t_f6264,21217
 typedef cl_object (*t_f63)t_f6365,21874
 typedef cl_object (*t_f64)t_f6466,22541
   APPLY(69,23254
-  APPLY_fixed(151,38106
+typedef cl_object (*t_ff0)t_ff0150,38094
+typedef cl_object (*t_ff1)t_ff1151,38124
+typedef cl_object (*t_ff2)t_ff2152,38163
+typedef cl_object (*t_ff3)t_ff3153,38212
+typedef cl_object (*t_ff4)t_ff4154,38271
+typedef cl_object (*t_ff5)t_ff5155,38340
+typedef cl_object (*t_ff6)t_ff6156,38419
+typedef cl_object (*t_ff7)t_ff7157,38508
+typedef cl_object (*t_ff8)t_ff8158,38607
+typedef cl_object (*t_ff9)t_ff9159,38716
+typedef cl_object (*t_ff10)t_ff10160,38835
+typedef cl_object (*t_ff11)t_ff11161,38965
+typedef cl_object (*t_ff12)t_ff12162,39105
+typedef cl_object (*t_ff13)t_ff13163,39255
+typedef cl_object (*t_ff14)t_ff14164,39415
+typedef cl_object (*t_ff15)t_ff15165,39585
+typedef cl_object (*t_ff16)t_ff16166,39765
+typedef cl_object (*t_ff17)t_ff17167,39955
+typedef cl_object (*t_ff18)t_ff18168,40155
+typedef cl_object (*t_ff19)t_ff19169,40365
+typedef cl_object (*t_ff20)t_ff20170,40585
+typedef cl_object (*t_ff21)t_ff21171,40815
+typedef cl_object (*t_ff22)t_ff22172,41055
+typedef cl_object (*t_ff23)t_ff23173,41305
+typedef cl_object (*t_ff24)t_ff24174,41565
+typedef cl_object (*t_ff25)t_ff25175,41835
+typedef cl_object (*t_ff26)t_ff26176,42115
+typedef cl_object (*t_ff27)t_ff27177,42405
+typedef cl_object (*t_ff28)t_ff28178,42705
+typedef cl_object (*t_ff29)t_ff29179,43015
+typedef cl_object (*t_ff30)t_ff30180,43335
+typedef cl_object (*t_ff31)t_ff31181,43665
+typedef cl_object (*t_ff32)t_ff32182,44005
+typedef cl_object (*t_ff33)t_ff33183,44355
+typedef cl_object (*t_ff34)t_ff34184,44715
+typedef cl_object (*t_ff35)t_ff35185,45085
+typedef cl_object (*t_ff36)t_ff36186,45465
+typedef cl_object (*t_ff37)t_ff37187,45855
+typedef cl_object (*t_ff38)t_ff38188,46255
+typedef cl_object (*t_ff39)t_ff39189,46665
+typedef cl_object (*t_ff40)t_ff40190,47085
+typedef cl_object (*t_ff41)t_ff41191,47515
+typedef cl_object (*t_ff42)t_ff42192,47955
+typedef cl_object (*t_ff43)t_ff43193,48405
+typedef cl_object (*t_ff44)t_ff44194,48865
+typedef cl_object (*t_ff45)t_ff45195,49335
+typedef cl_object (*t_ff46)t_ff46196,49815
+typedef cl_object (*t_ff47)t_ff47197,50305
+typedef cl_object (*t_ff48)t_ff48198,50805
+typedef cl_object (*t_ff49)t_ff49199,51315
+typedef cl_object (*t_ff50)t_ff50200,51835
+typedef cl_object (*t_ff51)t_ff51201,52365
+typedef cl_object (*t_ff52)t_ff52202,52905
+typedef cl_object (*t_ff53)t_ff53203,53455
+typedef cl_object (*t_ff54)t_ff54204,54015
+typedef cl_object (*t_ff55)t_ff55205,54585
+typedef cl_object (*t_ff56)t_ff56206,55165
+typedef cl_object (*t_ff57)t_ff57207,55755
+typedef cl_object (*t_ff58)t_ff58208,56355
+typedef cl_object (*t_ff59)t_ff59209,56965
+typedef cl_object (*t_ff60)t_ff60210,57585
+typedef cl_object (*t_ff61)t_ff61211,58215
+typedef cl_object (*t_ff62)t_ff62212,58855
+typedef cl_object (*t_ff63)t_ff63213,59505
+typedef cl_object (*t_ff64)t_ff64214,60165
+  APPLY_fixed(216,60847
+
+/Users/strobolights/dev/mecl/ecl/src/c/apply.d.org.c,190
+typedef cl_object (*t_f0)t_f025,760
+typedef cl_object (*t_f1)t_f126,797
+typedef cl_object (*t_f2)t_f227,845
+typedef cl_object (*t_f3)t_f328,904
+APPLY(33,1008
+APPLY_fixed(360,17257
 
 /Users/strobolights/dev/mecl/ecl/src/c/arch/apply_x86.d,58
 APPLY(20,485
@@ -6610,6 +6683,8 @@ typedef struct ecl_frame 229,7580
 /Users/strobolights/dev/mecl/ecl/src/c/arch/ffi_ppc32.d,0
 
 /Users/strobolights/dev/mecl/ecl/src/c/arch/apply_x86.d,0
+
+/Users/strobolights/dev/mecl/ecl/src/c/apply.d.org.c,0
 
 /Users/strobolights/dev/mecl/ecl/src/c/apply.d,0
 
