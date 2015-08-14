@@ -945,7 +945,7 @@ mp_restore_signals(cl_object sigmask)
 void
 init_threads(cl_env_ptr env)
 {
-        printf("%s:%d\n", __FILE__, __LINE__);
+        printf("START:%s:%d\n", __FILE__, __LINE__);
 	cl_object process;
 	pthread_t main_thread;
 
@@ -999,20 +999,27 @@ init_threads(cl_env_ptr env)
 
 	env->own_process = process;
 
-        printf("%s:%d\n", __FILE__, __LINE__);
-
+        printf("FUCK:%s:%d\n", __FILE__, __LINE__);
 	{
 		cl_object v = si_make_vector(ECL_T, /* Element type */
-					   ecl_make_fixnum(256), /* Size */
-					   ecl_make_fixnum(0), /* fill pointer */
-					   ECL_NIL, ECL_NIL, ECL_NIL);
+                                             ecl_make_fixnum(256), /* Size */
+                                             ecl_make_fixnum(0), /* fill pointer */
+                                             ECL_NIL, ECL_NIL, ECL_NIL);
+                printf("1:%s:%d\n", __FILE__, __LINE__);
+		//v->array.self.t[0] = ECL_NIL;
+                printf("5:%s:%d\n", __FILE__, __LINE__);
 		v->vector.self.t[0] = process;
+                printf("10:%s:%d\n", __FILE__, __LINE__);
 		v->vector.fillp = 1;
+                printf("20:%s:%d\n", __FILE__, __LINE__);
 		cl_core.processes = v;
+                printf("50:%s:%d\n", __FILE__, __LINE__);
 		cl_core.global_lock = ecl_make_lock(ECL_SYM("MP::GLOBAL-LOCK",1441), 1);
 		cl_core.error_lock = ecl_make_lock(ECL_SYM("MP::ERROR-LOCK",1442), 1);
 		cl_core.global_env_lock = ecl_make_rwlock(ECL_SYM("EXT::PACKAGE-LOCK",1114));
+                printf("100:%s:%d\n", __FILE__, __LINE__);
 	}
         
-        printf(">>>>%d\n", __LINE__);
+        // printf(">>>>%d\n", __LINE__);
+        printf("END-INIT_THREADS:%s:%d\n", __FILE__, __LINE__);
 }

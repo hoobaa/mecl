@@ -2762,14 +2762,7 @@ L19:;
     return value0;
 L18:;
     v3l = ecl_cdr(v3l);
-    {
-     cl_object v5;
-     v5 = ecl_one_minus(v4i);
-     T0 = cl_realp(v5);
-     if (ecl_unlikely(!((T0)!=ECL_NIL)))
-         FEwrong_type_argument(ECL_SYM("REAL",703),v5);
-     v4i = v5;
-    }
+    v4i = ecl_one_minus(v4i);
     goto L15;
    }
   }
@@ -4435,14 +4428,7 @@ L8:;
     T1 = ecl_times(ecl_make_fixnum(8),v3i);
     T2 = cl_ash(T0, T1);
     v5 = ecl_plus(v5,T2);
-    {
-     cl_object v6;
-     v6 = ecl_one_plus(v3i);
-     T0 = cl_realp(v6);
-     if (ecl_unlikely(!((T0)!=ECL_NIL)))
-         FEwrong_type_argument(ECL_SYM("REAL",703),v6);
-     v3i = v6;
-    }
+    v3i = ecl_one_plus(v3i);
     goto L6;
 L7:;
     value0 = v5;
@@ -16430,7 +16416,7 @@ TTL:
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _eclZRyBEHa3fImi9_XiutVE21(cl_object flag)
+ECL_DLLEXPORT void _eclLoWkIob7_01ExWE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -16451,7 +16437,7 @@ ECL_DLLEXPORT void _eclZRyBEHa3fImi9_XiutVE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_eclZRyBEHa3fImi9_XiutVE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_eclLoWkIob7_01ExWE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);

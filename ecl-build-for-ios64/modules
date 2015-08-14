@@ -13,6 +13,9 @@ libql-minitar.a
 ecl-curl.asd
 ecl-curl.fasc
 libecl-curl.a
+serve-event.asd
+serve-event.fasc
+libserve-event.a
 sb-bsd-sockets.asd
 sb-bsd-sockets.fasc
 libsb-bsd-sockets.a
@@ -34,6 +37,3 @@ libecl-help.a
 ecl-cdb.asd
 ecl-cdb.fasc
 libecl-cdb.a
-cmp.asd
-cmp.fasc
-libcmp.a

@@ -52,7 +52,7 @@ cl_object si_sequence_count(cl_object v1count)
  {
 TTL:
   if (!(v1count==ECL_NIL)) { goto L1; }
-  value0 = ecl_make_fixnum(2305843009213693951);
+  value0 = ecl_make_fixnum(536870911);
   cl_env_copy->nvalues = 1;
   return value0;
 L1:;
@@ -67,7 +67,7 @@ L3:;
   cl_env_copy->nvalues = 1;
   return value0;
 L7:;
-  value0 = ecl_make_fixnum(2305843009213693951);
+  value0 = ecl_make_fixnum(536870911);
   cl_env_copy->nvalues = 1;
   return value0;
 L5:;
@@ -3880,7 +3880,7 @@ static cl_object LC17__g462(cl_narg narg, ...)
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _eclklIiiBzXPT3p9_n3jtVE21(cl_object flag)
+ECL_DLLEXPORT void _ecl29TP6va7_kR6xWE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -3901,7 +3901,7 @@ ECL_DLLEXPORT void _eclklIiiBzXPT3p9_n3jtVE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_eclklIiiBzXPT3p9_n3jtVE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_ecl29TP6va7_kR6xWE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);

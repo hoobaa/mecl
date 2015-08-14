@@ -516,9 +516,10 @@ si_make_vector(cl_object etype, cl_object dim, cl_object adj,
 	}
 	x->vector.fillp = f;
 
-	if (Null(displ))
+	if (Null(displ)) {
+                printf(">>ecl_array_allocself_before\n");
 		ecl_array_allocself(x);
-	else
+        } else
 		ecl_displace(x, displ, disploff);
 	@(return x)
 }
@@ -541,7 +542,9 @@ ecl_array_allocself(cl_object x)
 	switch (t) {
 	/* assign self field only after it has been filled, for GC sake  */
 	case ecl_aet_object:
+                printf(">>allocself as t. d(%d)\n", d);
 		x->array.self.t = alloc_pointerfull_memory(d);
+                // x->vector.self.t = alloc_pointerfull_memory(d);
 		return;
 #ifdef ECL_UNICODE
 	case ecl_aet_ch: {

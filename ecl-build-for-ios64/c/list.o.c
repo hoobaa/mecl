@@ -45,6 +45,7 @@ test_compare(struct cl_test *t, cl_object x)
 {
 	x = KEY(t,x);
 	t->env->function = t->test_function;
+    printf("string tag 1st(%d) 2nd(%d)", t->item_compared->string.t, x->string.t);
 	return t->test_fn(2, t->item_compared, x) != ECL_NIL;
 }
 
@@ -134,20 +135,20 @@ setup_test(struct cl_test *t, cl_object item, cl_object test,
 	}
 }
 
-#line 136
+#line 137
 cl_object cl_list(cl_narg narg, ...)
 {
-#line 136
+#line 137
 
 	cl_object head = ECL_NIL;
-#line 139
+#line 140
 	const cl_env_ptr the_env = ecl_process_env();
-#line 139
+#line 140
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 139
+#line 140
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(481));
-#line 139
+#line 140
 	if (narg--) {
 		cl_object tail = head = ecl_list1(ecl_va_arg(args));
 		while (narg--) {
@@ -157,32 +158,32 @@ cl_object cl_list(cl_narg narg, ...)
 		}
 	}
 	{
-#line 147
-		#line 147
+#line 148
+		#line 148
 		cl_object __value0 = head;
-#line 147
+#line 148
 		the_env->nvalues = 1;
-#line 147
+#line 148
 		return __value0;
-#line 147
+#line 148
 	}
 
 }
 
-#line 150
+#line 151
 cl_object cl_listX(cl_narg narg, ...)
 {
-#line 150
+#line 151
 
 	cl_object head;
-#line 153
+#line 154
 	const cl_env_ptr the_env = ecl_process_env();
-#line 153
+#line 154
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 153
+#line 154
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(482));
-#line 153
+#line 154
 	if (narg == 0)
 		FEwrong_num_arguments(ecl_make_fixnum(/*LIST**/482));
 	head = ecl_va_arg(args);
@@ -196,14 +197,14 @@ cl_object cl_listX(cl_narg narg, ...)
 		ECL_RPLACD(tail, ecl_va_arg(args));
 	}
 	{
-#line 165
-		#line 165
+#line 166
+		#line 166
 		cl_object __value0 = head;
-#line 165
+#line 166
 		the_env->nvalues = 1;
-#line 165
+#line 166
 		return __value0;
-#line 165
+#line 166
 	}
 
 }
@@ -225,20 +226,20 @@ append_into(cl_object head, cl_object *tail, cl_object l)
 	return tail;
 }
 
-#line 185
+#line 186
 cl_object cl_append(cl_narg narg, ...)
 {
-#line 185
+#line 186
 
 	cl_object head = ECL_NIL, *tail = &head;
-#line 188
+#line 189
 	const cl_env_ptr the_env = ecl_process_env();
-#line 188
+#line 189
 	ecl_va_list rest;
 	ecl_va_start(rest, narg, narg, 0);
-#line 188
+#line 189
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(88));
-#line 188
+#line 189
 	for (; narg > 1; narg--) {
 		cl_object other = ecl_va_arg(rest);
                 tail = append_into(head, tail, other);
@@ -251,14 +252,14 @@ cl_object cl_append(cl_narg narg, ...)
                 *tail = ecl_va_arg(rest);
         }
 	{
-#line 199
-		#line 199
+#line 200
+		#line 200
 		cl_object __value0 = head;
-#line 199
+#line 200
 		the_env->nvalues = 1;
-#line 199
+#line 200
 		return __value0;
-#line 199
+#line 200
 	}
 
 }
@@ -316,57 +317,57 @@ BEGIN:
 	}
 }
 
-#line 255
+#line 256
 cl_object cl_tree_equal(cl_narg narg, cl_object x, cl_object y, ...)
 {
-#line 255
+#line 256
 
 	struct cl_test t;
 	cl_object output;
-#line 259
+#line 260
 	const cl_env_ptr the_env = ecl_process_env();
-#line 259
+#line 260
 	static cl_object KEYS[2] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317)};
 	cl_object test;
 	cl_object test_not;
-#line 259
+#line 260
 	cl_object KEY_VARS[4];
-#line 259
+#line 260
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, y, narg, 2);
-#line 259
+#line 260
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(863));
-#line 259
+#line 260
 	cl_parse_key(ARGS, 2, KEYS, KEY_VARS, NULL, 0);
-#line 259
+#line 260
 	if (KEY_VARS[2]==ECL_NIL) {
-#line 259
+#line 260
 	  test = ECL_NIL;
 	} else {
-#line 259
+#line 260
 	  test = KEY_VARS[0];
 	}
-#line 259
+#line 260
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 259
+#line 260
 	  test_not = ECL_NIL;
 	} else {
-#line 259
+#line 260
 	  test_not = KEY_VARS[1];
 	}
-#line 259
+#line 260
 	setup_test(&t, ECL_NIL, test, test_not, ECL_NIL);
 	output = tree_equal(&t, x, y)? ECL_T : ECL_NIL;
 	close_test(&t);
 	{
-#line 262
-		#line 262
+#line 263
+		#line 263
 		cl_object __value0 = output;
-#line 262
+#line 263
 		the_env->nvalues = 1;
-#line 262
+#line 263
 		return __value0;
-#line 262
+#line 263
 	}
 
 }
@@ -381,16 +382,16 @@ cl_endp(cl_object x)
                 FEwrong_type_only_arg(ecl_make_fixnum(/*ENDP*/330), x, ecl_make_fixnum(/*LIST*/481));
         }
         {
-#line 274
+#line 275
 	const cl_env_ptr the_env = ecl_process_env();
-#line 274
-	#line 274
+#line 275
+	#line 275
 	cl_object __value0 = output;
-#line 274
+#line 275
 	the_env->nvalues = 1;
-#line 274
+#line 275
 	return __value0;
-#line 274
+#line 275
 }
 ;
 }
@@ -420,32 +421,32 @@ cl_list_length(cl_object x)
 		if (n & 1) {
 			/* Circular list? */
 			if (slow == fast) {
-#line 301
+#line 302
 				const cl_env_ptr the_env = ecl_process_env();
-#line 301
-				#line 301
+#line 302
+				#line 302
 				cl_object __value0 = ECL_NIL;
-#line 301
+#line 302
 				the_env->nvalues = 1;
-#line 301
+#line 302
 				return __value0;
-#line 301
+#line 302
 			}
 ;
 			slow = ECL_CONS_CDR(slow);
 		}
 	}
 	{
-#line 305
+#line 306
 		const cl_env_ptr the_env = ecl_process_env();
-#line 305
-		#line 305
+#line 306
+		#line 306
 		cl_object __value0 = ecl_make_fixnum(n);
-#line 305
+#line 306
 		the_env->nvalues = 1;
-#line 305
+#line 306
 		return __value0;
-#line 305
+#line 306
 	}
 ;
 }
@@ -472,16 +473,16 @@ si_proper_list_p(cl_object x)
 		}
 	}
 	{
-#line 329
+#line 330
 		const cl_env_ptr the_env = ecl_process_env();
-#line 329
-		#line 329
+#line 330
+		#line 330
 		cl_object __value0 = test;
-#line 329
+#line 330
 		the_env->nvalues = 1;
-#line 329
+#line 330
 		return __value0;
-#line 329
+#line 330
 	}
 ;
 }
@@ -490,16 +491,16 @@ cl_object
 cl_nth(cl_object n, cl_object x)
 {
 	{
-#line 335
+#line 336
 		const cl_env_ptr the_env = ecl_process_env();
-#line 335
-		#line 335
+#line 336
+		#line 336
 		cl_object __value0 = ecl_nth(ecl_to_size(n), x);
-#line 335
+#line 336
 		the_env->nvalues = 1;
-#line 335
+#line 336
 		return __value0;
-#line 335
+#line 336
 	}
 
 }
@@ -524,16 +525,16 @@ cl_object
 cl_nthcdr(cl_object n, cl_object x)
 {
 	{
-#line 357
+#line 358
 		const cl_env_ptr the_env = ecl_process_env();
-#line 357
-		#line 357
+#line 358
+		#line 358
 		cl_object __value0 = ecl_nthcdr(ecl_to_size(n), x);
-#line 357
+#line 358
 		the_env->nvalues = 1;
-#line 357
+#line 358
 		return __value0;
-#line 357
+#line 358
 	}
 
 }
@@ -581,102 +582,102 @@ ecl_last(cl_object l, cl_index n)
 	}
 }
 
-#line 403
+#line 404
 cl_object cl_last(cl_narg narg, cl_object l, ...)
 {
-#line 403
+#line 404
 
-#line 405
+#line 406
 	const cl_env_ptr the_env = ecl_process_env();
-#line 405
+#line 406
 	cl_object k;
-#line 405
+#line 406
 	va_list ARGS;
 	va_start(ARGS, l);
-#line 405
+#line 406
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(455));
-#line 405
+#line 406
 	if (narg > 1) {
-#line 405
+#line 406
 		k = va_arg(ARGS,cl_object);
-#line 405
+#line 406
 	} else {
-#line 405
+#line 406
 		k = ecl_make_fixnum(1);
-#line 405
+#line 406
 	}
-#line 405
+#line 406
 	if (ecl_t_of(k) == t_bignum)
 		{
-#line 406
-			#line 406
+#line 407
+			#line 407
 			cl_object __value0 = l;
-#line 406
+#line 407
 			the_env->nvalues = 1;
-#line 406
+#line 407
 			return __value0;
-#line 406
+#line 407
 		}
 
 	{
-#line 407
-		#line 407
+#line 408
+		#line 408
 		cl_object __value0 = ecl_last(l, ecl_to_size(k));
-#line 407
+#line 408
 		the_env->nvalues = 1;
-#line 407
+#line 408
 		return __value0;
-#line 407
+#line 408
 	}
 
 }
 
-#line 410
+#line 411
 cl_object cl_make_list(cl_narg narg, cl_object size, ...)
 {
-#line 410
+#line 411
 
 	cl_fixnum i;
-#line 413
+#line 414
 	const cl_env_ptr the_env = ecl_process_env();
-#line 413
+#line 414
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1251)};
 	cl_object initial_element;
-#line 413
+#line 414
 	cl_object x;
-#line 413
+#line 414
 	cl_object KEY_VARS[2];
-#line 413
+#line 414
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, size, narg, 1);
-#line 413
+#line 414
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(529));
-#line 413
+#line 414
 	cl_parse_key(ARGS, 1, KEYS, KEY_VARS, NULL, 0);
-#line 413
+#line 414
 	if (KEY_VARS[1]==ECL_NIL) {
-#line 413
+#line 414
 	  initial_element = ECL_NIL;
 	} else {
-#line 413
+#line 414
 	  initial_element = KEY_VARS[0];
 	}
-#line 413
+#line 414
 	x = ECL_NIL;
-#line 413
+#line 414
 	/* INV: ecl_to_size() signals a type-error if SIZE is not a integer >=0 */
 	i = ecl_to_size(size);
 	while (i-- > 0)
 		x = CONS(initial_element, x);
 	{
-#line 417
-		#line 417
+#line 418
+		#line 418
 		cl_object __value0 = x;
-#line 417
+#line 418
 		the_env->nvalues = 1;
-#line 417
+#line 418
 		return __value0;
-#line 417
+#line 418
 	}
 
 }
@@ -699,16 +700,16 @@ cl_copy_list(cl_object x)
 		ECL_RPLACD(tail, x);
 	}
 	{
-#line 437
+#line 438
 		const cl_env_ptr the_env = ecl_process_env();
-#line 437
-		#line 437
+#line 438
+		#line 438
 		cl_object __value0 = copy;
-#line 437
+#line 438
 		the_env->nvalues = 1;
-#line 437
+#line 438
 		return __value0;
-#line 437
+#line 438
 	}
 ;
 }
@@ -743,16 +744,16 @@ cl_copy_alist(cl_object x)
 		}
 	}
 	{
-#line 469
+#line 470
 		const cl_env_ptr the_env = ecl_process_env();
-#line 469
-		#line 469
+#line 470
+		#line 470
 		cl_object __value0 = copy;
-#line 469
+#line 470
 		the_env->nvalues = 1;
-#line 469
+#line 470
 		return __value0;
-#line 469
+#line 470
 	}
 ;
 }
@@ -771,16 +772,16 @@ cl_object
 cl_copy_tree(cl_object x)
 {
 	{
-#line 485
+#line 486
 		const cl_env_ptr the_env = ecl_process_env();
-#line 485
-		#line 485
+#line 486
+		#line 486
 		cl_object __value0 = do_copy_tree(x);
-#line 485
+#line 486
 		the_env->nvalues = 1;
-#line 485
+#line 486
 		return __value0;
-#line 485
+#line 486
 	}
 
 }
@@ -792,34 +793,34 @@ cl_revappend(cl_object x, cl_object y)
 		y = CONS(ECL_CONS_CAR(x),y);
 	} end_loop_for_in;
 	{
-#line 494
+#line 495
 		const cl_env_ptr the_env = ecl_process_env();
-#line 494
-		#line 494
+#line 495
+		#line 495
 		cl_object __value0 = y;
-#line 494
+#line 495
 		the_env->nvalues = 1;
-#line 494
+#line 495
 		return __value0;
-#line 494
+#line 495
 	}
 
 }
 
-#line 497
+#line 498
 cl_object cl_nconc(cl_narg narg, ...)
 {
-#line 497
+#line 498
 
 	cl_object head = ECL_NIL, tail = ECL_NIL;
-#line 499
+#line 500
 	const cl_env_ptr the_env = ecl_process_env();
-#line 499
+#line 500
 	ecl_va_list lists;
 	ecl_va_start(lists, narg, narg, 0);
-#line 499
+#line 500
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(581));
-#line 499
+#line 500
 
 	while (narg--) {
 		cl_object new_tail, other = ecl_va_arg(lists);
@@ -839,14 +840,14 @@ cl_object cl_nconc(cl_narg narg, ...)
 		tail = new_tail;
 	}
 	{
-#line 517
-		#line 517
+#line 518
+		#line 518
 		cl_object __value0 = head;
-#line 517
+#line 518
 		the_env->nvalues = 1;
-#line 517
+#line 518
 		return __value0;
-#line 517
+#line 518
 	}
 
 }
@@ -878,16 +879,16 @@ cl_nreconc(cl_object l, cl_object y)
 		y = z;
 	}
 	{
-#line 546
+#line 547
 		const cl_env_ptr the_env = ecl_process_env();
-#line 546
-		#line 546
+#line 547
+		#line 547
 		cl_object __value0 = y;
-#line 546
+#line 547
 		the_env->nvalues = 1;
-#line 546
+#line 547
 		return __value0;
-#line 546
+#line 547
 	}
 
 }
@@ -920,54 +921,54 @@ ecl_butlast(cl_object l, cl_index n)
 	}
 }
 
-#line 577
+#line 578
 cl_object cl_butlast(cl_narg narg, cl_object lis, ...)
 {
-#line 577
+#line 578
 
-#line 579
+#line 580
 	const cl_env_ptr the_env = ecl_process_env();
-#line 579
+#line 580
 	cl_object nn;
-#line 579
+#line 580
 	va_list ARGS;
 	va_start(ARGS, lis);
-#line 579
+#line 580
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(161));
-#line 579
+#line 580
 	if (narg > 1) {
-#line 579
+#line 580
 		nn = va_arg(ARGS,cl_object);
-#line 579
+#line 580
 	} else {
-#line 579
+#line 580
 		nn = ecl_make_fixnum(1);
-#line 579
+#line 580
 	}
-#line 579
+#line 580
 	/* INV: No list has more than MOST_POSITIVE_FIXNUM elements */
 	if (ecl_t_of(nn) == t_bignum)
 		{
-#line 581
-			#line 581
+#line 582
+			#line 582
 			cl_object __value0 = ECL_NIL;
-#line 581
+#line 582
 			the_env->nvalues = 1;
-#line 581
+#line 582
 			return __value0;
-#line 581
+#line 582
 		}
 ;
 	/* INV: ecl_to_size() signals a type-error if NN is not an integer >=0 */
 	{
-#line 583
-		#line 583
+#line 584
+		#line 584
 		cl_object __value0 = ecl_butlast(lis, ecl_to_size(nn));
-#line 583
+#line 584
 		the_env->nvalues = 1;
-#line 583
+#line 584
 		return __value0;
-#line 583
+#line 584
 	}
 
 }
@@ -992,54 +993,54 @@ ecl_nbutlast(cl_object l, cl_index n)
 	return ECL_NIL;
 }
 
-#line 606
+#line 607
 cl_object cl_nbutlast(cl_narg narg, cl_object lis, ...)
 {
-#line 606
+#line 607
 
-#line 608
+#line 609
 	const cl_env_ptr the_env = ecl_process_env();
-#line 608
+#line 609
 	cl_object nn;
-#line 608
+#line 609
 	va_list ARGS;
 	va_start(ARGS, lis);
-#line 608
+#line 609
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(580));
-#line 608
+#line 609
 	if (narg > 1) {
-#line 608
+#line 609
 		nn = va_arg(ARGS,cl_object);
-#line 608
+#line 609
 	} else {
-#line 608
+#line 609
 		nn = ecl_make_fixnum(1);
-#line 608
+#line 609
 	}
-#line 608
+#line 609
 	/* INV: No list has more than MOST_POSITIVE_FIXNUM elements */
 	if (ecl_t_of(nn) == t_bignum)
 		{
-#line 610
-			#line 610
+#line 611
+			#line 611
 			cl_object __value0 = ECL_NIL;
-#line 610
+#line 611
 			the_env->nvalues = 1;
-#line 610
+#line 611
 			return __value0;
-#line 610
+#line 611
 		}
 
 	/* INV: ecl_to_size() signas a type-error if NN is not an integer >=0 */
 	{
-#line 612
-		#line 612
+#line 613
+		#line 613
 		cl_object __value0 = ecl_nbutlast(lis, ecl_to_size(nn));
-#line 612
+#line 613
 		the_env->nvalues = 1;
-#line 612
+#line 613
 		return __value0;
-#line 612
+#line 613
 	}
 
 }
@@ -1072,16 +1073,16 @@ cl_ldiff(cl_object x, cl_object y)
 		}
 	}
 	{
-#line 642
+#line 643
 		const cl_env_ptr the_env = ecl_process_env();
-#line 642
-		#line 642
+#line 643
+		#line 643
 		cl_object __value0 = head;
-#line 642
+#line 643
 		the_env->nvalues = 1;
-#line 642
+#line 643
 		return __value0;
-#line 642
+#line 643
 	}
 
 }
@@ -1093,16 +1094,16 @@ cl_rplaca(cl_object x, cl_object v)
                 FEwrong_type_nth_arg(ecl_make_fixnum(/*RPLACA*/732), 1, x, ecl_make_fixnum(/*CONS*/251));
 	ECL_RPLACA(x, v);
 	{
-#line 651
+#line 652
 		const cl_env_ptr the_env = ecl_process_env();
-#line 651
-		#line 651
+#line 652
+		#line 652
 		cl_object __value0 = x;
-#line 651
+#line 652
 		the_env->nvalues = 1;
-#line 651
+#line 652
 		return __value0;
-#line 651
+#line 652
 	}
 
 }
@@ -1114,80 +1115,80 @@ cl_rplacd(cl_object x, cl_object v)
                 FEwrong_type_nth_arg(ecl_make_fixnum(/*RPLACD*/733), 1, x, ecl_make_fixnum(/*CONS*/251));
 	ECL_RPLACD(x, v);
 	{
-#line 660
+#line 661
 		const cl_env_ptr the_env = ecl_process_env();
-#line 660
-		#line 660
+#line 661
+		#line 661
 		cl_object __value0 = x;
-#line 660
+#line 661
 		the_env->nvalues = 1;
-#line 660
+#line 661
 		return __value0;
-#line 660
+#line 661
 	}
 
 }
 
-#line 663
+#line 664
 cl_object cl_subst(cl_narg narg, cl_object new_obj, cl_object old_obj, cl_object tree, ...)
 {
-#line 663
+#line 664
 
 	struct cl_test t;
 	cl_object output;
-#line 667
+#line 668
 	const cl_env_ptr the_env = ecl_process_env();
-#line 667
+#line 668
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 667
+#line 668
 	cl_object KEY_VARS[6];
-#line 667
+#line 668
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, tree, narg, 3);
-#line 667
+#line 668
 	if (ecl_unlikely(narg < 3)) FEwrong_num_arguments(ecl_make_fixnum(831));
-#line 667
+#line 668
 	cl_parse_key(ARGS, 3, KEYS, KEY_VARS, NULL, 0);
-#line 667
+#line 668
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 667
+#line 668
 	  test = ECL_NIL;
 	} else {
-#line 667
+#line 668
 	  test = KEY_VARS[0];
 	}
-#line 667
+#line 668
 	if (KEY_VARS[4]==ECL_NIL) {
-#line 667
+#line 668
 	  test_not = ECL_NIL;
 	} else {
-#line 667
+#line 668
 	  test_not = KEY_VARS[1];
 	}
-#line 667
+#line 668
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 667
+#line 668
 	  key = ECL_NIL;
 	} else {
-#line 667
+#line 668
 	  key = KEY_VARS[2];
 	}
-#line 667
+#line 668
 	setup_test(&t, old_obj, test, test_not, key);
 	output = subst(&t, new_obj, tree);
 	close_test(&t);
 	{
-#line 670
-		#line 670
+#line 671
+		#line 671
 		cl_object __value0 = output;
-#line 670
+#line 671
 		the_env->nvalues = 1;
-#line 670
+#line 671
 		return __value0;
-#line 670
+#line 671
 	}
 
 }
@@ -1220,65 +1221,65 @@ subst(struct cl_test *t, cl_object new_obj, cl_object tree)
 	}
 }
 
-#line 701
+#line 702
 cl_object cl_nsubst(cl_narg narg, cl_object new_obj, cl_object old_obj, cl_object tree, ...)
 {
-#line 701
+#line 702
 
 	struct cl_test t;
-#line 704
+#line 705
 	const cl_env_ptr the_env = ecl_process_env();
-#line 704
+#line 705
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 704
+#line 705
 	cl_object KEY_VARS[6];
-#line 704
+#line 705
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, tree, narg, 3);
-#line 704
+#line 705
 	if (ecl_unlikely(narg < 3)) FEwrong_num_arguments(ecl_make_fixnum(596));
-#line 704
+#line 705
 	cl_parse_key(ARGS, 3, KEYS, KEY_VARS, NULL, 0);
-#line 704
+#line 705
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 704
+#line 705
 	  test = ECL_NIL;
 	} else {
-#line 704
+#line 705
 	  test = KEY_VARS[0];
 	}
-#line 704
+#line 705
 	if (KEY_VARS[4]==ECL_NIL) {
-#line 704
+#line 705
 	  test_not = ECL_NIL;
 	} else {
-#line 704
+#line 705
 	  test_not = KEY_VARS[1];
 	}
-#line 704
+#line 705
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 704
+#line 705
 	  key = ECL_NIL;
 	} else {
-#line 704
+#line 705
 	  key = KEY_VARS[2];
 	}
-#line 704
+#line 705
 	setup_test(&t, old_obj, test, test_not, key);
 	tree = nsubst(&t, new_obj, tree);
 	close_test(&t);
 	{
-#line 707
-		#line 707
+#line 708
+		#line 708
 		cl_object __value0 = tree;
-#line 707
+#line 708
 		the_env->nvalues = 1;
-#line 707
+#line 708
 		return __value0;
-#line 707
+#line 708
 	}
 
 }
@@ -1314,71 +1315,71 @@ nsubst(struct cl_test *t, cl_object new_obj, cl_object tree)
 	return tree;
 }
 
-#line 741
+#line 742
 cl_object cl_sublis(cl_narg narg, cl_object alist, cl_object tree, ...)
 {
-#line 741
+#line 742
 
 	/* t[0] is the test for the objects in the tree, configured
 	   with test, test_not and key. t[1] is the test for searching
 	   in the association list.
 	 */
 	struct cl_test t[2];
-#line 748
+#line 749
 	const cl_env_ptr the_env = ecl_process_env();
-#line 748
+#line 749
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 748
+#line 749
 	cl_object KEY_VARS[6];
-#line 748
+#line 749
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, tree, narg, 2);
-#line 748
+#line 749
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(828));
-#line 748
+#line 749
 	cl_parse_key(ARGS, 3, KEYS, KEY_VARS, NULL, 0);
-#line 748
+#line 749
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 748
+#line 749
 	  test = ECL_NIL;
 	} else {
-#line 748
+#line 749
 	  test = KEY_VARS[0];
 	}
-#line 748
+#line 749
 	if (KEY_VARS[4]==ECL_NIL) {
-#line 748
+#line 749
 	  test_not = ECL_NIL;
 	} else {
-#line 748
+#line 749
 	  test_not = KEY_VARS[1];
 	}
-#line 748
+#line 749
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 748
+#line 749
 	  key = ECL_NIL;
 	} else {
-#line 748
+#line 749
 	  key = KEY_VARS[2];
 	}
-#line 748
+#line 749
 	setup_test(t, ECL_NIL, ECL_NIL, ECL_NIL, key);
 	setup_test(t+1, ECL_NIL, test, test_not, ECL_NIL);
 	tree = sublis(t, alist, tree);
 	close_test(t+1);
 	close_test(t);
 	{
-#line 753
-		#line 753
+#line 754
+		#line 754
 		cl_object __value0 = tree;
-#line 753
+#line 754
 		the_env->nvalues = 1;
-#line 753
+#line 754
 		return __value0;
-#line 753
+#line 754
 	}
 
 }
@@ -1403,71 +1404,71 @@ sublis(struct cl_test *t, cl_object alist, cl_object tree)
 	return tree;
 }
 
-#line 776
+#line 777
 cl_object cl_nsublis(cl_narg narg, cl_object alist, cl_object tree, ...)
 {
-#line 776
+#line 777
 
 	/* t[0] is the test for the objects in the tree, configured
 	   with test, test_not and key. t[1] is the test for searching
 	   in the association list.
 	 */
 	struct cl_test t[2];
-#line 783
+#line 784
 	const cl_env_ptr the_env = ecl_process_env();
-#line 783
+#line 784
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 783
+#line 784
 	cl_object KEY_VARS[6];
-#line 783
+#line 784
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, tree, narg, 2);
-#line 783
+#line 784
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(595));
-#line 783
+#line 784
 	cl_parse_key(ARGS, 3, KEYS, KEY_VARS, NULL, 0);
-#line 783
+#line 784
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 783
+#line 784
 	  test = ECL_NIL;
 	} else {
-#line 783
+#line 784
 	  test = KEY_VARS[0];
 	}
-#line 783
+#line 784
 	if (KEY_VARS[4]==ECL_NIL) {
-#line 783
+#line 784
 	  test_not = ECL_NIL;
 	} else {
-#line 783
+#line 784
 	  test_not = KEY_VARS[1];
 	}
-#line 783
+#line 784
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 783
+#line 784
 	  key = ECL_NIL;
 	} else {
-#line 783
+#line 784
 	  key = KEY_VARS[2];
 	}
-#line 783
+#line 784
 	setup_test(t, ECL_NIL, ECL_NIL, ECL_NIL, key);
 	setup_test(t+1, ECL_NIL, test, test_not, ECL_NIL);
 	tree = nsublis(t, alist, tree);
 	close_test(t+1);
 	close_test(t);
 	{
-#line 788
-		#line 788
+#line 789
+		#line 789
 		cl_object __value0 = tree;
-#line 788
+#line 789
 		the_env->nvalues = 1;
-#line 788
+#line 789
 		return __value0;
-#line 788
+#line 789
 	}
 
 }
@@ -1493,53 +1494,53 @@ nsublis(struct cl_test *t, cl_object alist, cl_object tree)
 	return tree;
 }
 
-#line 812
+#line 813
 cl_object cl_member(cl_narg narg, cl_object item, cl_object list, ...)
 {
-#line 812
+#line 813
 
 	struct cl_test t;
-#line 815
+#line 816
 	const cl_env_ptr the_env = ecl_process_env();
-#line 815
+#line 816
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 815
+#line 816
 	cl_object KEY_VARS[6];
-#line 815
+#line 816
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, list, narg, 2);
-#line 815
+#line 816
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(552));
-#line 815
+#line 816
 	cl_parse_key(ARGS, 3, KEYS, KEY_VARS, NULL, 0);
-#line 815
+#line 816
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 815
+#line 816
 	  test = ECL_NIL;
 	} else {
-#line 815
+#line 816
 	  test = KEY_VARS[0];
 	}
-#line 815
+#line 816
 	if (KEY_VARS[4]==ECL_NIL) {
-#line 815
+#line 816
 	  test_not = ECL_NIL;
 	} else {
-#line 815
+#line 816
 	  test_not = KEY_VARS[1];
 	}
-#line 815
+#line 816
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 815
+#line 816
 	  key = ECL_NIL;
 	} else {
-#line 815
+#line 816
 	  key = KEY_VARS[2];
 	}
-#line 815
+#line 816
 	setup_test(&t, item, test, test_not, key);
 	loop_for_in(list) {
 		if (TEST(&t, ECL_CONS_CAR(list)))
@@ -1547,14 +1548,14 @@ cl_object cl_member(cl_narg narg, cl_object item, cl_object list, ...)
 	} end_loop_for_in;
 	close_test(&t);
 	{
-#line 821
-		#line 821
+#line 822
+		#line 822
 		cl_object __value0 = list;
-#line 821
+#line 822
 		the_env->nvalues = 1;
-#line 821
+#line 822
 		return __value0;
-#line 821
+#line 822
 	}
 
 }
@@ -1575,30 +1576,30 @@ si_memq(cl_object x, cl_object l)
 	loop_for_in(l) {
 		if (x == ECL_CONS_CAR(l))
 			{
-#line 839
+#line 840
 				const cl_env_ptr the_env = ecl_process_env();
-#line 839
-				#line 839
+#line 840
+				#line 840
 				cl_object __value0 = l;
-#line 839
+#line 840
 				the_env->nvalues = 1;
-#line 839
+#line 840
 				return __value0;
-#line 839
+#line 840
 			}
 
 	} end_loop_for_in;
 	{
-#line 841
+#line 842
 		const cl_env_ptr the_env = ecl_process_env();
-#line 841
-		#line 841
+#line 842
+		#line 842
 		cl_object __value0 = ECL_NIL;
-#line 841
+#line 842
 		the_env->nvalues = 1;
-#line 841
+#line 842
 		return __value0;
-#line 841
+#line 842
 	}
 
 }
@@ -1639,16 +1640,16 @@ si_member1(cl_object item, cl_object list, cl_object test, cl_object test_not, c
 	} end_loop_for_in;
 	close_test(&t);
 	{
-#line 879
+#line 880
 		const cl_env_ptr the_env = ecl_process_env();
-#line 879
-		#line 879
+#line 880
+		#line 880
 		cl_object __value0 = list;
-#line 879
+#line 880
 		the_env->nvalues = 1;
-#line 879
+#line 880
 		return __value0;
-#line 879
+#line 880
 	}
 
 }
@@ -1658,69 +1659,69 @@ cl_tailp(cl_object y, cl_object x)
 {
 	loop_for_on(x) {
 		if (ecl_eql(x, y)) {
-#line 886
+#line 887
 			const cl_env_ptr the_env = ecl_process_env();
-#line 886
-			#line 886
+#line 887
+			#line 887
 			cl_object __value0 = ECL_T;
-#line 886
+#line 887
 			the_env->nvalues = 1;
-#line 886
+#line 887
 			return __value0;
-#line 886
+#line 887
 		}
 ;
 	} end_loop_for_on(x);
 	return cl_eql(x, y);
 }
 
-#line 891
+#line 892
 cl_object cl_adjoin(cl_narg narg, cl_object item, cl_object list, ...)
 {
-#line 891
+#line 892
 
 	cl_object output;
-#line 894
+#line 895
 	const cl_env_ptr the_env = ecl_process_env();
-#line 894
+#line 895
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 894
+#line 895
 	cl_object KEY_VARS[6];
-#line 894
+#line 895
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, list, narg, 2);
-#line 894
+#line 895
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(82));
-#line 894
+#line 895
 	cl_parse_key(ARGS, 3, KEYS, KEY_VARS, NULL, 0);
-#line 894
+#line 895
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 894
+#line 895
 	  test = ECL_NIL;
 	} else {
-#line 894
+#line 895
 	  test = KEY_VARS[0];
 	}
-#line 894
+#line 895
 	if (KEY_VARS[4]==ECL_NIL) {
-#line 894
+#line 895
 	  test_not = ECL_NIL;
 	} else {
-#line 894
+#line 895
 	  test_not = KEY_VARS[1];
 	}
-#line 894
+#line 895
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 894
+#line 895
 	  key = ECL_NIL;
 	} else {
-#line 894
+#line 895
 	  key = KEY_VARS[2];
 	}
-#line 894
+#line 895
 	if (narg < 2)
 		FEwrong_num_arguments(ecl_make_fixnum(/*ADJOIN*/82));
 	output = si_member1(item, list, test, test_not, key);
@@ -1729,14 +1730,14 @@ cl_object cl_adjoin(cl_narg narg, cl_object item, cl_object list, ...)
 	else
 		output = list;
 	{
-#line 901
-		#line 901
+#line 902
+		#line 902
 		cl_object __value0 = output;
-#line 901
+#line 902
 		the_env->nvalues = 1;
-#line 901
+#line 902
 		return __value0;
-#line 901
+#line 902
 	}
 
 }
@@ -1745,16 +1746,16 @@ cl_object
 cl_cons(cl_object x, cl_object y)
 {
 	{
-#line 907
+#line 908
 		const cl_env_ptr the_env = ecl_process_env();
-#line 907
-		#line 907
+#line 908
+		#line 908
 		cl_object __value0 = CONS(x, y);
-#line 907
+#line 908
 		the_env->nvalues = 1;
-#line 907
+#line 908
 		return __value0;
-#line 907
+#line 908
 	}
 
 }
@@ -1763,46 +1764,46 @@ cl_object
 cl_acons(cl_object x, cl_object y, cl_object z)
 {
 	{
-#line 913
+#line 914
 		const cl_env_ptr the_env = ecl_process_env();
-#line 913
-		#line 913
+#line 914
+		#line 914
 		cl_object __value0 = CONS(CONS(x, y), z);
-#line 913
+#line 914
 		the_env->nvalues = 1;
-#line 913
+#line 914
 		return __value0;
-#line 913
+#line 914
 	}
 
 }
 
-#line 916
+#line 917
 cl_object cl_pairlis(cl_narg narg, cl_object keys, cl_object data, ...)
 {
-#line 916
+#line 917
 
 	cl_object k, d;
-#line 919
+#line 920
 	const cl_env_ptr the_env = ecl_process_env();
-#line 919
+#line 920
 	cl_object a_list;
-#line 919
+#line 920
 	va_list ARGS;
 	va_start(ARGS, data);
-#line 919
+#line 920
 	if (ecl_unlikely(narg < 2|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(626));
-#line 919
+#line 920
 	if (narg > 2) {
-#line 919
+#line 920
 		a_list = va_arg(ARGS,cl_object);
-#line 919
+#line 920
 	} else {
-#line 919
+#line 920
 		a_list = ECL_NIL;
-#line 919
+#line 920
 	}
-#line 919
+#line 920
 	k = keys;
 	d = data;
 	loop_for_in(k) {
@@ -1815,78 +1816,78 @@ cl_object cl_pairlis(cl_narg narg, cl_object keys, cl_object data, ...)
 error:	    FEerror("The keys ~S and the data ~S are not of the same length",
 		    2, keys, data);
 	{
-#line 930
-		#line 930
+#line 931
+		#line 931
 		cl_object __value0 = a_list;
-#line 930
+#line 931
 		the_env->nvalues = 1;
-#line 930
+#line 931
 		return __value0;
-#line 930
+#line 931
 	}
 
 }
 
 
-#line 934
+#line 935
 cl_object cl_assoc(cl_narg narg, cl_object item, cl_object a_list, ...)
 {
-#line 934
+#line 935
 
 	struct cl_test t;
-#line 937
+#line 938
 	const cl_env_ptr the_env = ecl_process_env();
-#line 937
+#line 938
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 937
+#line 938
 	cl_object KEY_VARS[6];
-#line 937
+#line 938
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, a_list, narg, 2);
-#line 937
+#line 938
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(114));
-#line 937
+#line 938
 	cl_parse_key(ARGS, 3, KEYS, KEY_VARS, NULL, 0);
-#line 937
+#line 938
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 937
+#line 938
 	  test = ECL_NIL;
 	} else {
-#line 937
+#line 938
 	  test = KEY_VARS[0];
 	}
-#line 937
+#line 938
 	if (KEY_VARS[4]==ECL_NIL) {
-#line 937
+#line 938
 	  test_not = ECL_NIL;
 	} else {
-#line 937
+#line 938
 	  test_not = KEY_VARS[1];
 	}
-#line 937
+#line 938
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 937
+#line 938
 	  key = ECL_NIL;
 	} else {
-#line 937
+#line 938
 	  key = KEY_VARS[2];
 	}
-#line 937
+#line 938
 	setup_test(&t, item, test, test_not, key);
 	a_list = do_assoc(&t, a_list);
 	close_test(&t);
 	{
-#line 940
-		#line 940
+#line 941
+		#line 941
 		cl_object __value0 = a_list;
-#line 940
+#line 941
 		the_env->nvalues = 1;
-#line 940
+#line 941
 		return __value0;
-#line 940
+#line 941
 	}
 
 }
@@ -1906,53 +1907,53 @@ do_assoc(struct cl_test *t, cl_object a_list)
 	return ECL_NIL;
 }
 
-#line 958
+#line 959
 cl_object cl_rassoc(cl_narg narg, cl_object item, cl_object a_list, ...)
 {
-#line 958
+#line 959
 
 	struct cl_test t;
-#line 961
+#line 962
 	const cl_env_ptr the_env = ecl_process_env();
-#line 961
+#line 962
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 961
+#line 962
 	cl_object KEY_VARS[6];
-#line 961
+#line 962
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, a_list, narg, 2);
-#line 961
+#line 962
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(683));
-#line 961
+#line 962
 	cl_parse_key(ARGS, 3, KEYS, KEY_VARS, NULL, 0);
-#line 961
+#line 962
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 961
+#line 962
 	  test = ECL_NIL;
 	} else {
-#line 961
+#line 962
 	  test = KEY_VARS[0];
 	}
-#line 961
+#line 962
 	if (KEY_VARS[4]==ECL_NIL) {
-#line 961
+#line 962
 	  test_not = ECL_NIL;
 	} else {
-#line 961
+#line 962
 	  test_not = KEY_VARS[1];
 	}
-#line 961
+#line 962
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 961
+#line 962
 	  key = ECL_NIL;
 	} else {
-#line 961
+#line 962
 	  key = KEY_VARS[2];
 	}
-#line 961
+#line 962
 	setup_test(&t, item, test, test_not, key);
 	loop_for_in(a_list) {
 		cl_object pair = ECL_CONS_CAR(a_list);
@@ -1967,14 +1968,14 @@ cl_object cl_rassoc(cl_narg narg, cl_object item, cl_object a_list, ...)
 	} end_loop_for_in;
 	close_test(&t);
 	{
-#line 974
-		#line 974
+#line 975
+		#line 975
 		cl_object __value0 = a_list;
-#line 974
+#line 975
 		the_env->nvalues = 1;
-#line 974
+#line 975
 		return __value0;
-#line 974
+#line 975
 	}
 
 }

@@ -44,6 +44,7 @@ test_compare(struct cl_test *t, cl_object x)
 {
 	x = KEY(t,x);
 	t->env->function = t->test_function;
+    printf("string tag 1st(%d) 2nd(%d)", t->item_compared->string.t, x->string.t);
 	return t->test_fn(2, t->item_compared, x) != ECL_NIL;
 }
 

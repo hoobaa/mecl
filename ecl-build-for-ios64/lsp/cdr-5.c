@@ -11,7 +11,7 @@ static cl_object LC1negative_fixnum()
  ecl_cs_check(cl_env_copy,value0);
  {
 TTL:
-  value0 = cl_list(3, ECL_SYM("INTEGER",437), ecl_make_fixnum(-2305843009213693952), ecl_make_fixnum(-1));
+  value0 = cl_list(3, ECL_SYM("INTEGER",437), ecl_make_fixnum(-536870912), ecl_make_fixnum(-1));
   return value0;
  }
 }
@@ -24,7 +24,7 @@ static cl_object LC2non_positive_fixnum()
  ecl_cs_check(cl_env_copy,value0);
  {
 TTL:
-  value0 = cl_list(3, ECL_SYM("INTEGER",437), ecl_make_fixnum(-2305843009213693952), ecl_make_fixnum(0));
+  value0 = cl_list(3, ECL_SYM("INTEGER",437), ecl_make_fixnum(-536870912), ecl_make_fixnum(0));
   return value0;
  }
 }
@@ -37,7 +37,7 @@ static cl_object LC3non_negative_fixnum()
  ecl_cs_check(cl_env_copy,value0);
  {
 TTL:
-  value0 = cl_list(3, ECL_SYM("INTEGER",437), ecl_make_fixnum(0), ecl_make_fixnum(2305843009213693951));
+  value0 = cl_list(3, ECL_SYM("INTEGER",437), ecl_make_fixnum(0), ecl_make_fixnum(536870911));
   return value0;
  }
 }
@@ -50,7 +50,7 @@ static cl_object LC4positive_fixnum()
  ecl_cs_check(cl_env_copy,value0);
  {
 TTL:
-  value0 = cl_list(3, ECL_SYM("INTEGER",437), ecl_make_fixnum(1), ecl_make_fixnum(2305843009213693951));
+  value0 = cl_list(3, ECL_SYM("INTEGER",437), ecl_make_fixnum(1), ecl_make_fixnum(536870911));
   return value0;
  }
 }
@@ -148,7 +148,7 @@ cl_object si_array_index_p(cl_object v1p)
  {
 TTL:
   if (!(ECL_FIXNUMP(v1p))) { goto L2; }
-  value0 = ecl_make_bool(((0)<=(ecl_to_fixnum(v1p)) && (ecl_to_fixnum(v1p))<=(2305843009213693951)));
+  value0 = ecl_make_bool(((0)<=(ecl_to_fixnum(v1p)) && (ecl_to_fixnum(v1p))<=(536870911)));
   cl_env_copy->nvalues = 1;
   return value0;
 L2:;
@@ -835,7 +835,7 @@ cl_object si_negative_long_float_p(cl_object v1p)
  {
 TTL:
   if (Null(ecl_function_dispatch(cl_env_copy,VV[5])(1, v1p) /*  LONG-FLOATP */)) { goto L2; }
-  value0 = ecl_make_bool((ecl_to_long_double(v1p))<0);
+  value0 = ecl_make_bool((ecl_to_double(v1p))<0);
   cl_env_copy->nvalues = 1;
   return value0;
 L2:;
@@ -854,7 +854,7 @@ cl_object si_positive_long_float_p(cl_object v1p)
  {
 TTL:
   if (Null(ecl_function_dispatch(cl_env_copy,VV[5])(1, v1p) /*  LONG-FLOATP */)) { goto L2; }
-  value0 = ecl_make_bool((ecl_to_long_double(v1p))>0);
+  value0 = ecl_make_bool((ecl_to_double(v1p))>0);
   cl_env_copy->nvalues = 1;
   return value0;
 L2:;
@@ -875,7 +875,7 @@ TTL:
   if (Null(ecl_function_dispatch(cl_env_copy,VV[5])(1, v1p) /*  LONG-FLOATP */)) { goto L2; }
   {
    bool v2;
-   v2 = (ecl_to_long_double(v1p))<0;
+   v2 = (ecl_to_double(v1p))<0;
    value0 = (v2)?ECL_NIL:ECL_T;
    cl_env_copy->nvalues = 1;
    return value0;
@@ -898,7 +898,7 @@ TTL:
   if (Null(ecl_function_dispatch(cl_env_copy,VV[5])(1, v1p) /*  LONG-FLOATP */)) { goto L2; }
   {
    bool v2;
-   v2 = (ecl_to_long_double(v1p))>0;
+   v2 = (ecl_to_double(v1p))>0;
    value0 = (v2)?ECL_NIL:ECL_T;
    cl_env_copy->nvalues = 1;
    return value0;
@@ -914,7 +914,7 @@ L2:;
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _eclh1xec0D0YEJh9_LwktVE21(cl_object flag)
+ECL_DLLEXPORT void _eclzUToeBa7_WX8xWE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -935,7 +935,7 @@ ECL_DLLEXPORT void _eclh1xec0D0YEJh9_LwktVE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_eclh1xec0D0YEJh9_LwktVE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_eclzUToeBa7_WX8xWE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);

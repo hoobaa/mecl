@@ -355,16 +355,16 @@ static cl_object L2scale_exponent(cl_object v1original_x)
  cl_object value0;
 TTL:
  {
-  long double v2x;
+  double v2x;
   cl_fixnum v3delta;
-  v2x = ecl_to_long_double(v1original_x);
+  v2x = ecl_to_double(v1original_x);
   v3delta = 0;
   {
    cl_fixnum v5;                                  /*  EXPONENT        */
-   value0 = cl_decode_float(ecl_make_long_float(v2x));
+   value0 = cl_decode_float(ecl_make_double_float(v2x));
    v5 = ecl_fixnum(cl_env_copy->values[1]);
    if (!((v2x)==0)) { goto L4; }
-   T0 = cl_float(2, cl_core.longfloat_zero, v1original_x);
+   T0 = cl_float(2, cl_core.doublefloat_zero, v1original_x);
    cl_env_copy->nvalues = 2;
    cl_env_copy->values[1] = ecl_make_fixnum(1);
    cl_env_copy->values[0] = T0;
@@ -372,36 +372,36 @@ TTL:
 L4:;
    if (!((v5)<0)) { goto L6; }
    {
-    long double v6;
-    v6 = -LDBL_MIN;
+    double v6;
+    v6 = -DBL_MIN;
     {
-     long double v7;
-     v7 = LDBL_MIN;
+     double v7;
+     v7 = DBL_MIN;
      if (!(((v6)<(v2x) && (v2x)<(v7)))) { goto L6; }
     }
    }
-   v2x = (v2x)*(10.e+17l);
-   v3delta = -18;
+   v2x = (v2x)*(10000000000000000.0    );
+   v3delta = -16;
 L6:;
    {
     cl_fixnum v6ex;
     {
-     long double v7;
-     v7 = (v5)*(3.0102999148365123557e-1l);
-     v6ex = ecl_fixnum(ecl_round1(ecl_make_long_float(v7)));
+     double v7;
+     v7 = (v5)*(.3010299914836512    );
+     v6ex = ecl_fixnum(ecl_round1(ecl_make_double_float(v7)));
     }
     if (!((v6ex)<0)) { goto L15; }
     {
-     long double v7y;
-     v7y = 0.e+0l;
+     double v7y;
+     v7y =     0.    ;
 L18:;
      {
       cl_fixnum v8;
       v8 = -(v6ex);
       T0 = ecl_expt(_ecl_static_5,ecl_make_fixnum(v8));
-      v7y = (v2x)*(ecl_long_float(T0));
+      v7y = (v2x)*(ecl_double_float(T0));
      }
-     if ((v7y)<=(10.e-2l)) { goto L22; }
+     if ((v7y)<=(   10.0e-2)) { goto L22; }
      goto L19;
 L22:;
      v6ex = (v6ex)-(1);
@@ -412,18 +412,18 @@ L19:;
       v8 = (v3delta)+(v6ex);
       cl_env_copy->nvalues = 2;
       cl_env_copy->values[1] = ecl_make_fixnum(v8);
-      cl_env_copy->values[0] = ecl_make_long_float(v7y);
+      cl_env_copy->values[0] = ecl_make_double_float(v7y);
       return cl_env_copy->values[0];
      }
     }
 L15:;
     {
-     long double v8y;
-     v8y = 0.e+0l;
+     double v8y;
+     v8y =     0.    ;
 L29:;
      T0 = ecl_expt(_ecl_static_5,ecl_make_fixnum(v6ex));
-     v8y = (v2x)/(ecl_long_float(T0));
-     if ((v8y)>(10.e-1l)) { goto L33; }
+     v8y = (v2x)/(ecl_double_float(T0));
+     if ((v8y)>(   1.0    )) { goto L33; }
      goto L30;
 L33:;
      v6ex = (v6ex)+(1);
@@ -434,7 +434,7 @@ L30:;
       v9 = (v3delta)+(v6ex);
       cl_env_copy->nvalues = 2;
       cl_env_copy->values[1] = ecl_make_fixnum(v9);
-      cl_env_copy->values[0] = ecl_make_long_float(v8y);
+      cl_env_copy->values[0] = ecl_make_double_float(v8y);
       return cl_env_copy->values[0];
      }
     }
@@ -7520,7 +7520,7 @@ L5:;
   cl_env_copy->nvalues = 1;
   return value0;
 L7:;
-  if (!(ECL_LONG_FLOAT_P(v1number))) { goto L9; }
+  if (!(ECL_DOUBLE_FLOAT_P(v1number))) { goto L9; }
   value0 = CODE_CHAR(108);
   cl_env_copy->nvalues = 1;
   return value0;
@@ -16606,7 +16606,7 @@ L16:;
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _ecl3jeOprGpXN8m9_SgjtVE21(cl_object flag)
+ECL_DLLEXPORT void _eclWWewOka7_jO7xWE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -16627,7 +16627,7 @@ ECL_DLLEXPORT void _ecl3jeOprGpXN8m9_SgjtVE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_ecl3jeOprGpXN8m9_SgjtVE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_eclWWewOka7_jO7xWE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);

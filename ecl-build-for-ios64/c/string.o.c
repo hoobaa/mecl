@@ -793,80 +793,85 @@ ecl_string_eq(cl_object x, cl_object y)
 }
 
 
-#line 518
+static void test(cl_object string1, cl_object string2) {
+        printf(">>>>FUCKFUCK:%d:%d\n", string1->string.t, string2->string.t);
+}
+
+#line 522
 cl_object cl_string_equal(cl_narg narg, cl_object string1, cl_object string2, ...)
 {
-#line 518
+#line 522
 
 	cl_index s1, e1, s2, e2;
         cl_index_pair p;
 	int output;
-#line 523
+#line 527
 	const cl_env_ptr the_env = ecl_process_env();
-#line 523
+#line 527
 	static cl_object KEYS[4] = {(cl_object)(cl_symbols+1311), (cl_object)(cl_symbols+1226), (cl_object)(cl_symbols+1312), (cl_object)(cl_symbols+1227)};
 	cl_object start1;
 	cl_object end1;
 	cl_object start2;
 	cl_object end2;
-#line 523
+#line 527
 	cl_object KEY_VARS[8];
-#line 523
+#line 527
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, string2, narg, 2);
-#line 523
+#line 527
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(808));
-#line 523
+#line 527
 	cl_parse_key(ARGS, 4, KEYS, KEY_VARS, NULL, 0);
-#line 523
+#line 527
 	if (KEY_VARS[4]==ECL_NIL) {
-#line 523
+#line 527
 	  start1 = ecl_make_fixnum(0);
 	} else {
-#line 523
+#line 527
 	  start1 = KEY_VARS[0];
 	}
-#line 523
+#line 527
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 523
+#line 527
 	  end1 = ECL_NIL;
 	} else {
-#line 523
+#line 527
 	  end1 = KEY_VARS[1];
 	}
-#line 523
+#line 527
 	if (KEY_VARS[6]==ECL_NIL) {
-#line 523
+#line 527
 	  start2 = ecl_make_fixnum(0);
 	} else {
-#line 523
+#line 527
 	  start2 = KEY_VARS[2];
 	}
-#line 523
+#line 527
 	if (KEY_VARS[7]==ECL_NIL) {
-#line 523
+#line 527
 	  end2 = ECL_NIL;
 	} else {
-#line 523
+#line 527
 	  end2 = KEY_VARS[3];
 	}
-#line 523
+#line 527
+  printf("FUCK:%d, %d", string1->string.t, string2->string.t);
 	string1 = cl_string(string1);
-	string2 = cl_string(string2);
+	string2 = cl_string(string2); // this is fuckin string2->string.t == \xf4 (must be 10)
 	p = ecl_vector_start_end(ecl_make_fixnum(/*STRING=*/822), string1, start1, end1);
         s1 = p.start; e1 = p.end;
 	p = ecl_vector_start_end(ecl_make_fixnum(/*STRING=*/822), string2, start2, end2);
         s2 = p.start; e2 = p.end;
 	if (e1 - s1 != e2 - s2)
 		{
-#line 530
-			#line 530
+#line 535
+			#line 535
 			cl_object __value0 = ECL_NIL;
-#line 530
+#line 535
 			the_env->nvalues = 1;
-#line 530
+#line 535
 			return __value0;
-#line 530
+#line 535
 		}
 ;
 #ifdef ECL_UNICODE
@@ -878,14 +883,14 @@ cl_object cl_string_equal(cl_narg narg, cl_object string1, cl_object string2, ..
 			      string2->base_string.self + s2, e2 - s2,
 			      0, &e1);
 	{
-#line 539
-		#line 539
+#line 544
+		#line 544
 		cl_object __value0 = ((output == 0)? ECL_T : ECL_NIL);
-#line 539
+#line 544
 		the_env->nvalues = 1;
-#line 539
+#line 544
 		return __value0;
-#line 539
+#line 544
 	}
 
 }
@@ -941,16 +946,16 @@ string_compare(cl_narg narg, int sign1, int sign2, int case_sensitive, ecl_va_li
 		result = ECL_NIL;
 	}
 	{
-#line 592
+#line 597
 		const cl_env_ptr the_env = ecl_process_env();
-#line 592
-		#line 592
+#line 597
+		#line 597
 		cl_object __value0 = result;
-#line 592
+#line 597
 		the_env->nvalues = 1;
-#line 592
+#line 597
 		return __value0;
-#line 592
+#line 597
 	}
 
 #undef start1p
@@ -961,163 +966,163 @@ string_compare(cl_narg narg, int sign1, int sign2, int case_sensitive, ecl_va_li
 #undef end2
 }
 
-#line 601
+#line 606
 cl_object cl_stringL(cl_narg narg, ...)
 {
-#line 601
+#line 606
 
-#line 603
+#line 608
 	const cl_env_ptr the_env = ecl_process_env();
-#line 603
+#line 608
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 603
+#line 608
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(820));
-#line 603
+#line 608
 	return string_compare(narg, -1, -1, 1, args);
 }
 
-#line 606
+#line 611
 cl_object cl_stringG(cl_narg narg, ...)
 {
-#line 606
+#line 611
 
-#line 608
+#line 613
 	const cl_env_ptr the_env = ecl_process_env();
-#line 608
+#line 613
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 608
+#line 613
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(823));
-#line 608
+#line 613
 	return string_compare(narg, +1, +1, 1, args);
 }
 
-#line 611
+#line 616
 cl_object cl_stringLE(cl_narg narg, ...)
 {
-#line 611
+#line 616
 
-#line 613
+#line 618
 	const cl_env_ptr the_env = ecl_process_env();
-#line 613
+#line 618
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 613
+#line 618
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(821));
-#line 613
+#line 618
 	return string_compare(narg, -1, 0, 1, args);
 }
 
-#line 616
+#line 621
 cl_object cl_stringGE(cl_narg narg, ...)
 {
-#line 616
+#line 621
 
-#line 618
+#line 623
 	const cl_env_ptr the_env = ecl_process_env();
-#line 618
+#line 623
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 618
+#line 623
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(824));
-#line 618
+#line 623
 	return string_compare(narg, 0, +1, 1, args);
 }
 
-#line 621
+#line 626
 cl_object cl_stringNE(cl_narg narg, ...)
 {
-#line 621
+#line 626
 
-#line 623
+#line 628
 	const cl_env_ptr the_env = ecl_process_env();
-#line 623
+#line 628
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 623
+#line 628
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(819));
-#line 623
+#line 628
 	return string_compare(narg, -1, +1, 1, args);
 }
 
-#line 626
+#line 631
 cl_object cl_string_lessp(cl_narg narg, ...)
 {
-#line 626
+#line 631
 
-#line 628
+#line 633
 	const cl_env_ptr the_env = ecl_process_env();
-#line 628
+#line 633
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 628
+#line 633
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(811));
-#line 628
+#line 633
 	return string_compare(narg, -1, -1, 0, args);
 }
 
-#line 631
+#line 636
 cl_object cl_string_greaterp(cl_narg narg, ...)
 {
-#line 631
+#line 636
 
-#line 633
+#line 638
 	const cl_env_ptr the_env = ecl_process_env();
-#line 633
+#line 638
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 633
+#line 638
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(809));
-#line 633
+#line 638
 	return string_compare(narg, +1, +1, 0, args);
 }
 
-#line 636
+#line 641
 cl_object cl_string_not_greaterp(cl_narg narg, ...)
 {
-#line 636
+#line 641
 
-#line 638
+#line 643
 	const cl_env_ptr the_env = ecl_process_env();
-#line 638
+#line 643
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 638
+#line 643
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(813));
-#line 638
+#line 643
 	return string_compare(narg, -1, 0, 0, args);
 }
 
-#line 641
+#line 646
 cl_object cl_string_not_lessp(cl_narg narg, ...)
 {
-#line 641
+#line 646
 
-#line 643
+#line 648
 	const cl_env_ptr the_env = ecl_process_env();
-#line 643
+#line 648
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 643
+#line 648
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(814));
-#line 643
+#line 648
 	return string_compare(narg, 0, +1, 0, args);
 }
 
-#line 646
+#line 651
 cl_object cl_string_not_equal(cl_narg narg, ...)
 {
-#line 646
+#line 651
 
-#line 648
+#line 653
 	const cl_env_ptr the_env = ecl_process_env();
-#line 648
+#line 653
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 648
+#line 653
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(812));
-#line 648
+#line 653
 	return string_compare(narg, -1, +1, 0, args);
 }
 
@@ -1238,16 +1243,16 @@ string_case(cl_narg narg, cl_object fun, ecl_casefun casefun, ecl_va_list ARGS)
 	for (i = p.start;  i < p.end;  i++)
 		strng->base_string.self[i] = (*casefun)(strng->base_string.self[i], &b);
 	{
-#line 767
+#line 772
 		const cl_env_ptr the_env = ecl_process_env();
-#line 767
-		#line 767
+#line 772
+		#line 772
 		cl_object __value0 = strng;
-#line 767
+#line 772
 		the_env->nvalues = 1;
-#line 767
+#line 772
 		return __value0;
-#line 767
+#line 772
 	}
 
 #undef kstartp
@@ -1261,19 +1266,19 @@ char_upcase(ecl_character c, bool *bp)
 	return ecl_char_upcase(c);
 }
 
-#line 779
+#line 784
 cl_object cl_string_upcase(cl_narg narg, ...)
 {
-#line 779
+#line 784
 
-#line 781
+#line 786
 	const cl_env_ptr the_env = ecl_process_env();
-#line 781
+#line 786
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 781
+#line 786
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(818));
-#line 781
+#line 786
 	return string_case(narg, ecl_make_fixnum(/*STRING-UPCASE*/818), char_upcase, args);
 }
 
@@ -1283,19 +1288,19 @@ char_downcase(ecl_character c, bool *bp)
 	return ecl_char_downcase(c);
 }
 
-#line 790
+#line 795
 cl_object cl_string_downcase(cl_narg narg, ...)
 {
-#line 790
+#line 795
 
-#line 792
+#line 797
 	const cl_env_ptr the_env = ecl_process_env();
-#line 792
+#line 797
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 792
+#line 797
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(806));
-#line 792
+#line 797
 	return string_case(narg, ecl_make_fixnum(/*STRING-DOWNCASE*/806), char_downcase, args);
 }
 
@@ -1316,19 +1321,19 @@ char_capitalize(ecl_character c, bool *bp)
 	return c;
 }
 
-#line 812
+#line 817
 cl_object cl_string_capitalize(cl_narg narg, ...)
 {
-#line 812
+#line 817
 
-#line 814
+#line 819
 	const cl_env_ptr the_env = ecl_process_env();
-#line 814
+#line 819
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 814
+#line 819
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(807));
-#line 814
+#line 819
 	return string_case(narg, ecl_make_fixnum(/*STRING-CAPITALIZE*/807), char_capitalize, args);
 }
 
@@ -1366,16 +1371,16 @@ nstring_case(cl_narg narg, cl_object fun, ecl_casefun casefun, ecl_va_list ARGS)
 	for (i = p.start;  i < p.end;  i++)
 		strng->base_string.self[i] = (*casefun)(strng->base_string.self[i], &b);
 	{
-#line 850
+#line 855
 		const cl_env_ptr the_env = ecl_process_env();
-#line 850
-		#line 850
+#line 855
+		#line 855
 		cl_object __value0 = strng;
-#line 850
+#line 855
 		the_env->nvalues = 1;
-#line 850
+#line 855
 		return __value0;
-#line 850
+#line 855
 	}
 
 #undef kstartp
@@ -1383,70 +1388,70 @@ nstring_case(cl_narg narg, cl_object fun, ecl_casefun casefun, ecl_va_list ARGS)
 #undef kend
 }
 
-#line 856
+#line 861
 cl_object cl_nstring_upcase(cl_narg narg, ...)
 {
-#line 856
+#line 861
 
-#line 858
+#line 863
 	const cl_env_ptr the_env = ecl_process_env();
-#line 858
+#line 863
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 858
+#line 863
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(594));
-#line 858
+#line 863
 	return nstring_case(narg, ECL_SYM("NSTRING-UPCASE",594), char_upcase, args);
 }
 
-#line 861
+#line 866
 cl_object cl_nstring_downcase(cl_narg narg, ...)
 {
-#line 861
+#line 866
 
-#line 863
+#line 868
 	const cl_env_ptr the_env = ecl_process_env();
-#line 863
+#line 868
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 863
+#line 868
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(593));
-#line 863
+#line 868
 	return nstring_case(narg, ECL_SYM("NSTRING-DOWNCASE",593), char_downcase, args);
 }
 
-#line 866
+#line 871
 cl_object cl_nstring_capitalize(cl_narg narg, ...)
 {
-#line 866
+#line 871
 
-#line 868
+#line 873
 	const cl_env_ptr the_env = ecl_process_env();
-#line 868
+#line 873
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 868
+#line 873
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(592));
-#line 868
+#line 873
 	return nstring_case(narg, ECL_SYM("NSTRING-CAPITALIZE",592), char_capitalize, args);
 }
 
-#line 871
+#line 876
 cl_object si_base_string_concatenate(cl_narg narg, ...)
 {
-#line 871
+#line 876
 
 	cl_index l;
 	int i;
 	cl_object output;
-#line 876
+#line 881
 	const cl_env_ptr the_env = ecl_process_env();
-#line 876
+#line 881
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 876
+#line 881
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1149));
-#line 876
+#line 881
 	/* Compute final size and store NONEMPTY coerced strings. */
 	for (i = 0, l = 0; i < narg; i++) {
 		cl_object s = si_coerce_to_base_string(ecl_va_arg(args));
@@ -1464,14 +1469,14 @@ cl_object si_base_string_concatenate(cl_narg narg, ...)
 		memcpy(output->base_string.self + l, s->base_string.self, bytes);
 	}
 	{
-#line 892
-		#line 892
+#line 897
+		#line 897
 		cl_object __value0 = output;
-#line 892
+#line 897
 		the_env->nvalues = 1;
-#line 892
+#line 897
 		return __value0;
-#line 892
+#line 897
 	}
 ;
 }

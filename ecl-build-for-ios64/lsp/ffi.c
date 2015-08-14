@@ -1549,7 +1549,7 @@ TTL:
     {
 	cl_object lisp_string = v2lisp_string;
 	cl_index size = lisp_string->base_string.fillp;
-	cl_object output = ecl_allocate_foreign_data(VV[139], size+1);
+	cl_object output = ecl_allocate_foreign_data(VV[135], size+1);
 	memcpy(output->foreign.data, lisp_string->base_string.self, size);
 	output->foreign.data[size] = '\0';
 	v3= output;
@@ -1973,204 +1973,9 @@ TTL:
   return value0;
  }
 }
-/*	local function DEF-LIB-FUNCTION                               */
-/*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC49def_lib_function(cl_object v1, cl_object v2)
-{
- cl_object T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10;
- const cl_env_ptr cl_env_copy = ecl_process_env();
- cl_object value0;
- ecl_cs_check(cl_env_copy,value0);
- {
-TTL:
-  {
-   cl_object v3;
-   cl_object v4name;
-   cl_object v5args;
-   cl_object v6;
-   cl_object v7returning;
-   cl_object v8;
-   cl_object v9module;
-   cl_object v10;
-   cl_object v11call;
-   v3 = ecl_cdr(v1);
-   if (!(v3==ECL_NIL)) { goto L3; }
-   si_dm_too_few_arguments(v1);
-L3:;
-   {
-    cl_object v12;
-    v12 = ecl_car(v3);
-    v3 = ecl_cdr(v3);
-    v4name = v12;
-   }
-   if (!(v3==ECL_NIL)) { goto L9; }
-   si_dm_too_few_arguments(v1);
-L9:;
-   {
-    cl_object v12;
-    v12 = ecl_car(v3);
-    v3 = ecl_cdr(v3);
-    v5args = v12;
-   }
-   v6 = si_search_keyword(2, v3, VV[54]);
-   if (!((v6)==(ECL_SYM("MISSING-KEYWORD",1929)))) { goto L16; }
-   v7returning = ECL_NIL;
-   goto L15;
-L16:;
-   v7returning = v6;
-L15:;
-   v8 = si_search_keyword(2, v3, VV[55]);
-   if (!((v8)==(ECL_SYM("MISSING-KEYWORD",1929)))) { goto L20; }
-   v9module = ECL_NIL;
-   goto L19;
-L20:;
-   v9module = v8;
-L19:;
-   v10 = si_search_keyword(2, v3, VV[56]);
-   if (!((v10)==(ECL_SYM("MISSING-KEYWORD",1929)))) { goto L24; }
-   v11call = ECL_SYM("CDECL",1593);
-   goto L23;
-L24:;
-   v11call = v10;
-L23:;
-   si_check_keyword(2, v3, VV[57]);
-   {
-    cl_object v13;                                /*  C-NAME          */
-    cl_object v14;                                /*  LISP-NAME       */
-    value0 = L45lisp_to_c_name(v4name);
-    v13 = value0;
-    {
-     const int v15 = cl_env_copy->nvalues;
-     cl_object v16;
-     v16 = (v15<=1)? ECL_NIL : cl_env_copy->values[1];
-     v14 = v16;
-    }
-    {
-     cl_object v15return_type;
-     cl_object v16argtypes;
-     v15return_type = L47_convert_to_return_type(v7returning);
-     {
-      cl_object v17;
-      cl_object v18;
-      v17 = ECL_NIL;
-      if (ecl_unlikely(!ECL_LISTP(v5args))) FEtype_error_list(v5args);
-      v18 = v5args;
-      {
-       cl_object v19;
-       cl_object v20;
-       v19 = ecl_list1(ECL_NIL);
-       v20 = v19;
-L35:;
-       if (!(ecl_endp(v18))) { goto L37; }
-       goto L36;
-L37:;
-       v17 = _ecl_car(v18);
-       {
-        cl_object v21;
-        v21 = _ecl_cdr(v18);
-        if (ecl_unlikely(!ECL_LISTP(v21))) FEtype_error_list(v21);
-        v18 = v21;
-       }
-       if (ecl_unlikely(ECL_ATOM(v20))) FEtype_error_cons(v20);
-       T0 = v20;
-       T2 = ecl_cadr(v17);
-       T1 = L46_convert_to_arg_type(T2);
-       v20 = ecl_list1(T1);
-       (ECL_CONS_CDR(T0)=v20,T0);
-       goto L35;
-L36:;
-       v16argtypes = ecl_cdr(v19);
-       goto L29;
-      }
-     }
-L29:;
-     T0 = cl_list(2, ECL_SYM("QUOTE",679), v13);
-     T1 = cl_listX(4, ECL_SYM("FIND-FOREIGN-SYMBOL",1344), T0, v9module, VV[59]);
-     T2 = cl_list(2, VV[58], T1);
-     T3 = ecl_list1(T2);
-     {
-      cl_object v17;
-      cl_object v18;
-      v17 = ECL_NIL;
-      if (ecl_unlikely(!ECL_LISTP(v5args))) FEtype_error_list(v5args);
-      v18 = v5args;
-      {
-       cl_object v19;
-       cl_object v20;
-       v19 = ecl_list1(ECL_NIL);
-       v20 = v19;
-L58:;
-       if (!(ecl_endp(v18))) { goto L60; }
-       goto L59;
-L60:;
-       v17 = _ecl_car(v18);
-       {
-        cl_object v21;
-        v21 = _ecl_cdr(v18);
-        if (ecl_unlikely(!ECL_LISTP(v21))) FEtype_error_list(v21);
-        v18 = v21;
-       }
-       if (ecl_unlikely(ECL_ATOM(v20))) FEtype_error_cons(v20);
-       T5 = v20;
-       T6 = ecl_car(v17);
-       v20 = ecl_list1(T6);
-       (ECL_CONS_CDR(T5)=v20,T5);
-       goto L58;
-L59:;
-       T4 = ecl_cdr(v19);
-       goto L52;
-      }
-     }
-L52:;
-     T5 = cl_list(2, ECL_SYM("QUOTE",679), v15return_type);
-     T6 = cl_list(2, ECL_SYM("QUOTE",679), v16argtypes);
-     {
-      cl_object v17;
-      cl_object v18;
-      v17 = ECL_NIL;
-      if (ecl_unlikely(!ECL_LISTP(v5args))) FEtype_error_list(v5args);
-      v18 = v5args;
-      {
-       cl_object v19;
-       cl_object v20;
-       v19 = ecl_list1(ECL_NIL);
-       v20 = v19;
-L80:;
-       if (!(ecl_endp(v18))) { goto L82; }
-       goto L81;
-L82:;
-       v17 = _ecl_car(v18);
-       {
-        cl_object v21;
-        v21 = _ecl_cdr(v18);
-        if (ecl_unlikely(!ECL_LISTP(v21))) FEtype_error_list(v21);
-        v18 = v21;
-       }
-       if (ecl_unlikely(ECL_ATOM(v20))) FEtype_error_cons(v20);
-       T8 = v20;
-       T9 = ecl_car(v17);
-       v20 = ecl_list1(T9);
-       (ECL_CONS_CDR(T8)=v20,T8);
-       goto L80;
-L81:;
-       T7 = ecl_cdr(v19);
-       goto L74;
-      }
-     }
-L74:;
-     T8 = CONS(ECL_SYM("LIST",481),T7);
-     T9 = cl_list(6, ECL_SYM("CALL-CFUN",1589), VV[58], T5, T6, T8, v11call);
-     T10 = cl_list(4, ECL_SYM("DEFUN",289), v14, T4, T9);
-     value0 = cl_list(3, ECL_SYM("LET",477), T3, T10);
-     return value0;
-    }
-   }
-  }
- }
-}
 /*	local function DEF-FUNCTION                                   */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC50def_function(cl_object v1, cl_object v2)
+static cl_object LC49def_function(cl_object v1, cl_object v2)
 {
  cl_object T0, T1, T2;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2183,190 +1988,171 @@ TTL:
    cl_object v4name;
    cl_object v5args;
    cl_object v6;
-   cl_object v7module;
-   cl_object v8;
-   cl_object v9returning;
-   cl_object v10;
-   cl_object v11call;
+   cl_object v7;
+   cl_object v8returning;
+   cl_object v9;
    v3 = ecl_cdr(v1);
    if (!(v3==ECL_NIL)) { goto L3; }
    si_dm_too_few_arguments(v1);
 L3:;
    {
-    cl_object v12;
-    v12 = ecl_car(v3);
+    cl_object v10;
+    v10 = ecl_car(v3);
     v3 = ecl_cdr(v3);
-    v4name = v12;
+    v4name = v10;
    }
    if (!(v3==ECL_NIL)) { goto L9; }
    si_dm_too_few_arguments(v1);
 L9:;
    {
-    cl_object v12;
-    v12 = ecl_car(v3);
+    cl_object v10;
+    v10 = ecl_car(v3);
     v3 = ecl_cdr(v3);
-    v5args = v12;
+    v5args = v10;
    }
-   v6 = si_search_keyword(2, v3, VV[55]);
-   if (!((v6)==(ECL_SYM("MISSING-KEYWORD",1929)))) { goto L16; }
-   v7module = ECL_NIL;
-   goto L15;
+   v6 = si_search_keyword(2, v3, VV[54]);
+   v7 = si_search_keyword(2, v3, VV[55]);
+   if (!((v7)==(ECL_SYM("MISSING-KEYWORD",1929)))) { goto L17; }
+   v8returning = ECL_SYM("VOID",1381);
+   goto L16;
+L17:;
+   v8returning = v7;
 L16:;
-   v7module = v6;
-L15:;
-   v8 = si_search_keyword(2, v3, VV[54]);
-   if (!((v8)==(ECL_SYM("MISSING-KEYWORD",1929)))) { goto L20; }
-   v9returning = ECL_SYM("VOID",1381);
-   goto L19;
-L20:;
-   v9returning = v8;
-L19:;
-   v10 = si_search_keyword(2, v3, VV[56]);
-   if (!((v10)==(ECL_SYM("MISSING-KEYWORD",1929)))) { goto L24; }
-   v11call = ECL_SYM("CDECL",1593);
-   goto L23;
-L24:;
-   v11call = v10;
-L23:;
-   si_check_keyword(2, v3, VV[61]);
-   if (Null(v7module)) { goto L27; }
-   if (Null(ecl_symbol_value(ECL_SYM("*USE-DFFI*",1969)))) { goto L27; }
-   value0 = cl_list(9, VV[60], v4name, v5args, VV[54], v9returning, VV[55], v7module, VV[56], v11call);
-   return value0;
-L27:;
+   v9 = si_search_keyword(2, v3, VV[56]);
+   si_check_keyword(2, v3, VV[57]);
    {
-    cl_object v13;                                /*  C-NAME          */
-    cl_object v14;                                /*  LISP-NAME       */
+    cl_object v11;                                /*  C-NAME          */
+    cl_object v12;                                /*  LISP-NAME       */
     value0 = L45lisp_to_c_name(v4name);
-    v13 = value0;
+    v11 = value0;
     {
-     const int v15 = cl_env_copy->nvalues;
-     cl_object v16;
-     v16 = (v15<=1)? ECL_NIL : cl_env_copy->values[1];
-     v14 = v16;
+     const int v13 = cl_env_copy->nvalues;
+     cl_object v14;
+     v14 = (v13<=1)? ECL_NIL : cl_env_copy->values[1];
+     v12 = v14;
     }
     {
-     cl_object v15arguments;
-     cl_object v16arg_types;
-     cl_object v17return_type;
-     cl_fixnum v18nargs;
-     cl_object v19c_string;
-     cl_object v20casting_required;
-     cl_object v21inline_form;
+     cl_object v13arguments;
+     cl_object v14arg_types;
+     cl_object v15return_type;
+     cl_fixnum v16nargs;
+     cl_object v17c_string;
+     cl_object v18casting_required;
+     cl_object v19inline_form;
      {
-      cl_object v22;
-      cl_object v23;
-      v22 = ECL_NIL;
+      cl_object v20;
+      cl_object v21;
+      v20 = ECL_NIL;
       if (ecl_unlikely(!ECL_LISTP(v5args))) FEtype_error_list(v5args);
-      v23 = v5args;
+      v21 = v5args;
       {
-       cl_object v24;
-       cl_object v25;
-       v24 = ecl_list1(ECL_NIL);
-       v25 = v24;
-L37:;
-       if (!(ecl_endp(v23))) { goto L39; }
-       goto L38;
-L39:;
-       v22 = _ecl_car(v23);
+       cl_object v22;
+       cl_object v23;
+       v22 = ecl_list1(ECL_NIL);
+       v23 = v22;
+L28:;
+       if (!(ecl_endp(v21))) { goto L30; }
+       goto L29;
+L30:;
+       v20 = _ecl_car(v21);
        {
-        cl_object v26;
-        v26 = _ecl_cdr(v23);
-        if (ecl_unlikely(!ECL_LISTP(v26))) FEtype_error_list(v26);
-        v23 = v26;
+        cl_object v24;
+        v24 = _ecl_cdr(v21);
+        if (ecl_unlikely(!ECL_LISTP(v24))) FEtype_error_list(v24);
+        v21 = v24;
        }
-       if (ecl_unlikely(ECL_ATOM(v25))) FEtype_error_cons(v25);
-       T0 = v25;
-       T1 = ecl_car(v22);
-       v25 = ecl_list1(T1);
-       (ECL_CONS_CDR(T0)=v25,T0);
-       goto L37;
-L38:;
-       v15arguments = ecl_cdr(v24);
-       goto L31;
+       if (ecl_unlikely(ECL_ATOM(v23))) FEtype_error_cons(v23);
+       T0 = v23;
+       T1 = ecl_car(v20);
+       v23 = ecl_list1(T1);
+       (ECL_CONS_CDR(T0)=v23,T0);
+       goto L28;
+L29:;
+       v13arguments = ecl_cdr(v22);
+       goto L22;
       }
      }
-L31:;
+L22:;
      {
-      cl_object v22;
-      cl_object v23;
-      v22 = ECL_NIL;
+      cl_object v20;
+      cl_object v21;
+      v20 = ECL_NIL;
       if (ecl_unlikely(!ECL_LISTP(v5args))) FEtype_error_list(v5args);
-      v23 = v5args;
+      v21 = v5args;
       {
-       cl_object v24;
-       cl_object v25;
-       v24 = ecl_list1(ECL_NIL);
-       v25 = v24;
-L59:;
-       if (!(ecl_endp(v23))) { goto L61; }
-       goto L60;
-L61:;
-       v22 = _ecl_car(v23);
+       cl_object v22;
+       cl_object v23;
+       v22 = ecl_list1(ECL_NIL);
+       v23 = v22;
+L50:;
+       if (!(ecl_endp(v21))) { goto L52; }
+       goto L51;
+L52:;
+       v20 = _ecl_car(v21);
        {
-        cl_object v26;
-        v26 = _ecl_cdr(v23);
-        if (ecl_unlikely(!ECL_LISTP(v26))) FEtype_error_list(v26);
-        v23 = v26;
+        cl_object v24;
+        v24 = _ecl_cdr(v21);
+        if (ecl_unlikely(!ECL_LISTP(v24))) FEtype_error_list(v24);
+        v21 = v24;
        }
-       if (ecl_unlikely(ECL_ATOM(v25))) FEtype_error_cons(v25);
-       T0 = v25;
-       T2 = ecl_cadr(v22);
+       if (ecl_unlikely(ECL_ATOM(v23))) FEtype_error_cons(v23);
+       T0 = v23;
+       T2 = ecl_cadr(v20);
        T1 = L46_convert_to_arg_type(T2);
-       v25 = ecl_list1(T1);
-       (ECL_CONS_CDR(T0)=v25,T0);
-       goto L59;
-L60:;
-       v16arg_types = ecl_cdr(v24);
-       goto L53;
+       v23 = ecl_list1(T1);
+       (ECL_CONS_CDR(T0)=v23,T0);
+       goto L50;
+L51:;
+       v14arg_types = ecl_cdr(v22);
+       goto L44;
       }
      }
-L53:;
-     v17return_type = L47_convert_to_return_type(v9returning);
-     v18nargs = ecl_length(v15arguments);
-     v19c_string = L48produce_function_call(v13, ecl_make_fixnum(v18nargs));
-     if (!(ecl_eql(v17return_type,ECL_SYM("VOID",1381)))) { goto L88; }
-     value0 = VV[62];
-     goto L86;
-L88:;
+L44:;
+     v15return_type = L47_convert_to_return_type(v8returning);
+     v16nargs = ecl_length(v13arguments);
+     v17c_string = L48produce_function_call(v11, ecl_make_fixnum(v16nargs));
+     if (!(ecl_eql(v15return_type,ECL_SYM("VOID",1381)))) { goto L79; }
+     value0 = VV[58];
+     goto L77;
+L79:;
      value0 = ECL_NIL;
-     goto L86;
-L86:;
-     if ((value0)!=ECL_NIL) { goto L85; }
-     if (!(ecl_eql(v17return_type,ECL_SYM("CSTRING",1365)))) { goto L91; }
-     value0 = VV[63];
-     goto L83;
-L91:;
-     value0 = ECL_NIL;
-     goto L83;
-L85:;
-     goto L83;
-L83:;
-     if ((value0)!=ECL_NIL) { goto L82; }
-     T0 = si_foreign_elt_type_p(v17return_type);
-     goto L80;
+     goto L77;
+L77:;
+     if ((value0)!=ECL_NIL) { goto L76; }
+     if (!(ecl_eql(v15return_type,ECL_SYM("CSTRING",1365)))) { goto L82; }
+     value0 = VV[59];
+     goto L74;
 L82:;
+     value0 = ECL_NIL;
+     goto L74;
+L76:;
+     goto L74;
+L74:;
+     if ((value0)!=ECL_NIL) { goto L73; }
+     T0 = si_foreign_elt_type_p(v15return_type);
+     goto L71;
+L73:;
      T0 = value0;
-     goto L80;
-L80:;
-     v20casting_required = Null(T0)?ECL_T:ECL_NIL;
-     if (Null(v20casting_required)) { goto L95; }
+     goto L71;
+L71:;
+     v18casting_required = Null(T0)?ECL_T:ECL_NIL;
+     if (Null(v18casting_required)) { goto L86; }
      T0 = ECL_SYM("POINTER-VOID",1377);
-     goto L94;
-L95:;
-     T0 = v17return_type;
-L94:;
-     v21inline_form = cl_listX(6, ECL_SYM("C-INLINE",1973), v15arguments, v16arg_types, T0, v19c_string, VV[64]);
-     if (Null(v20casting_required)) { goto L97; }
-     T0 = cl_list(2, ECL_SYM("QUOTE",679), v17return_type);
+     goto L85;
+L86:;
+     T0 = v15return_type;
+L85:;
+     v19inline_form = cl_listX(6, ECL_SYM("C-INLINE",1973), v13arguments, v14arg_types, T0, v17c_string, VV[60]);
+     if (Null(v18casting_required)) { goto L88; }
+     T0 = cl_list(2, ECL_SYM("QUOTE",679), v15return_type);
      T1 = cl_list(2, VV[9], T0);
-     T2 = cl_list(2, ECL_SYM("QUOTE",679), v17return_type);
-     v21inline_form = cl_list(4, ECL_SYM("FOREIGN-DATA-RECAST",1350), v21inline_form, T1, T2);
-L97:;
-     if (!((v18nargs)>(36))) { goto L100; }
+     T2 = cl_list(2, ECL_SYM("QUOTE",679), v15return_type);
+     v19inline_form = cl_list(4, ECL_SYM("FOREIGN-DATA-RECAST",1350), v19inline_form, T1, T2);
+L88:;
+     if (!((v16nargs)>(36))) { goto L91; }
      cl_error(1, _ecl_static_22);
-L100:;
-     value0 = cl_list(4, ECL_SYM("DEFUN",289), v14, v15arguments, v21inline_form);
+L91:;
+     value0 = cl_list(4, ECL_SYM("DEFUN",289), v12, v13arguments, v19inline_form);
      return value0;
     }
    }
@@ -2375,7 +2161,7 @@ L100:;
 }
 /*	local function DEF-FOREIGN-VAR                                */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC51def_foreign_var(cl_object v1, cl_object v2)
+static cl_object LC50def_foreign_var(cl_object v1, cl_object v2)
 {
  cl_object T0, T1, T2, T3, T4, T5, T6, T7;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2442,7 +2228,7 @@ L20:;
       cl_object v13;
       v13 = ecl_car(v10ffi_type);
       if (!((v13)==(ECL_SYM("*",18)))) { goto L36; }
-      value0 = VV[66];
+      value0 = VV[62];
       goto L34;
 L36:;
       value0 = ECL_NIL;
@@ -2450,7 +2236,7 @@ L36:;
 L34:;
       if ((value0)!=ECL_NIL) { goto L33; }
       if (!(ecl_eql(v13,ECL_SYM("ARRAY",1199)))) { goto L39; }
-      v11can_deref = VV[67];
+      v11can_deref = VV[63];
       goto L24;
 L39:;
       v11can_deref = ECL_NIL;
@@ -2466,29 +2252,21 @@ L26:;
      v11can_deref = value0;
      goto L24;
 L24:;
-     if (Null(v6module)) { goto L42; }
-     if (Null(ecl_symbol_value(ECL_SYM("*USE-DFFI*",1969)))) { goto L42; }
-     T0 = cl_list(2, ECL_SYM("QUOTE",679), v5type);
-     T1 = L6size_of_foreign_type(v5type);
-     v12inline_form = cl_list(5, ECL_SYM("FIND-FOREIGN-SYMBOL",1344), v8, v6module, T0, T1);
-     goto L41;
-L42:;
      T0 = L6size_of_foreign_type(v5type);
      T1 = cl_format(5, ECL_NIL, _ecl_static_23, v5type, T0, v8);
-     v12inline_form = cl_listX(6, ECL_SYM("C-INLINE",1973), ECL_NIL, ECL_NIL, ECL_SYM("OBJECT",1278), T1, VV[68]);
-L41:;
-     if (Null(v11can_deref)) { goto L45; }
+     v12inline_form = cl_listX(6, ECL_SYM("C-INLINE",1973), ECL_NIL, ECL_NIL, ECL_SYM("OBJECT",1278), T1, VV[64]);
+     if (Null(v11can_deref)) { goto L42; }
      T0 = cl_list(2, ECL_SYM("QUOTE",679), v9);
-     T1 = cl_list(4, ECL_SYM("PUT-SYSPROP",1124), T0, VV[69], v12inline_form);
+     T1 = cl_list(4, ECL_SYM("PUT-SYSPROP",1124), T0, VV[65], v12inline_form);
      T2 = cl_list(2, ECL_SYM("QUOTE",679), v9);
-     T3 = cl_list(3, ECL_SYM("GET-SYSPROP",1083), T2, VV[69]);
+     T3 = cl_list(3, ECL_SYM("GET-SYSPROP",1083), T2, VV[65]);
      T4 = cl_list(2, ECL_SYM("QUOTE",679), v5type);
      T5 = cl_list(3, VV[27], T3, T4);
      T6 = cl_list(3, ECL_SYM("DEFINE-SYMBOL-MACRO",282), v9, T5);
      T7 = cl_list(3, ECL_SYM("EVAL-WHEN",340), VV[1], T6);
      value0 = cl_list(3, ECL_SYM("PROGN",671), T1, T7);
      return value0;
-L45:;
+L42:;
      value0 = cl_list(3, ECL_SYM("DEFPARAMETER",285), v9, v12inline_form);
      return value0;
     }
@@ -2498,7 +2276,7 @@ L45:;
 }
 /*	function definition for FIND-FOREIGN-LIBRARY                  */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L52find_foreign_library(cl_narg narg, cl_object v1names, cl_object v2directories, ...)
+static cl_object L51find_foreign_library(cl_narg narg, cl_object v1names, cl_object v2directories, ...)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2511,7 +2289,7 @@ static cl_object L52find_foreign_library(cl_narg narg, cl_object v1names, cl_obj
   ecl_va_list args; ecl_va_start(args,v2directories,narg,2);
   {
    cl_object keyvars[4];
-   cl_parse_key(args,2,L52find_foreign_librarykeys,keyvars,NULL,FALSE);
+   cl_parse_key(args,2,L51find_foreign_librarykeys,keyvars,NULL,FALSE);
    ecl_va_end(args);
    v3drive_letters = keyvars[0];
    v4types = keyvars[1];
@@ -2523,7 +2301,7 @@ L1:;
   v2directories = ecl_list1(v2directories);
 L4:;
   if ((v4types)!=ECL_NIL) { goto L7; }
-  v4types = VV[71];
+  v4types = VV[67];
 L7:;
   if (ECL_LISTP(v4types)) { goto L10; }
   v4types = ecl_list1(v4types);
@@ -2531,7 +2309,7 @@ L10:;
   if (ECL_LISTP(v3drive_letters)) { goto L13; }
   v3drive_letters = ecl_list1(v3drive_letters);
 L13:;
-  v3drive_letters = VV[72];
+  v3drive_letters = VV[68];
   {
    cl_object v5;
    v5 = v3drive_letters;
@@ -2579,7 +2357,7 @@ L55:;
           T0 = v8p;
           goto L52;
 L57:;
-          T0 = si_etypecase_error(v8p, VV[73]);
+          T0 = si_etypecase_error(v8p, VV[69]);
 L52:;
           T1 = cl_make_pathname(8, ECL_SYM("DEVICE",1217), v6d, ECL_SYM("DIRECTORY",1219), T0, ECL_SYM("NAME",1273), v10n, ECL_SYM("TYPE",1318), v12e);
           v13full_path = cl_probe_file(T1);
@@ -2624,7 +2402,7 @@ L74:;
 }
 /*	function definition for DO-LOAD-FOREIGN-LIBRARY               */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L53do_load_foreign_library(cl_narg narg, cl_object v1tmp, ...)
+static cl_object L52do_load_foreign_library(cl_narg narg, cl_object v1tmp, ...)
 {
  cl_object T0, T1, T2, T3;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2659,7 +2437,7 @@ L3:;
    v3path = v1tmp;
    goto L2;
 L5:;
-   v3path = (cl_env_copy->function=(ECL_SYM("COMPILE-FILE-PATHNAME",235)->symbol.gfdef))->cfun.entry(3, v1tmp, ECL_SYM("TYPE",1318), VV[76]) /*  COMPILE-FILE-PATHNAME */;
+   v3path = (cl_env_copy->function=(ECL_SYM("COMPILE-FILE-PATHNAME",235)->symbol.gfdef))->cfun.entry(3, v1tmp, ECL_SYM("TYPE",1318), VV[72]) /*  COMPILE-FILE-PATHNAME */;
 L2:;
    v4filename = cl_namestring(v3path);
    v5pack = cl_find_package(_ecl_static_24);
@@ -2672,7 +2450,7 @@ L10:;
    {
     cl_object v7;
     cl_object v8;
-    v7 = ecl_symbol_value(VV[75]);
+    v7 = ecl_symbol_value(VV[71]);
     v8 = si_make_seq_iterator(2, v7, ecl_make_fixnum(0));
 L17:;
     if ((v8)!=ECL_NIL) { goto L19; }
@@ -2705,7 +2483,7 @@ L14:;
    T2 = cl_symbol_value(T1);
    T3 = cl_concatenate(4, ECL_SYM("STRING",805), T2, _ecl_static_27, v6flag);
    cl_set(T0, T3);
-   cl_set(VV[75],CONS(v4filename,ecl_symbol_value(VV[75])));
+   cl_set(VV[71],CONS(v4filename,ecl_symbol_value(VV[71])));
 L13:;
    value0 = ECL_T;
    cl_env_copy->nvalues = 1;
@@ -2715,7 +2493,7 @@ L13:;
 }
 /*	local function LOAD-FOREIGN-LIBRARY                           */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC54load_foreign_library(cl_object v1, cl_object v2)
+static cl_object LC53load_foreign_library(cl_object v1, cl_object v2)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2741,38 +2519,29 @@ L3:;
     v3 = ecl_cdr(v3);
     v4filename = v10;
    }
-   v5 = si_search_keyword(2, v3, VV[55]);
-   v6 = si_search_keyword(2, v3, VV[78]);
-   v7 = si_search_keyword(2, v3, VV[79]);
-   v8 = si_search_keyword(2, v3, VV[80]);
+   v5 = si_search_keyword(2, v3, VV[54]);
+   v6 = si_search_keyword(2, v3, VV[74]);
+   v7 = si_search_keyword(2, v3, VV[75]);
+   v8 = si_search_keyword(2, v3, VV[76]);
    if (!((v8)==(ECL_SYM("MISSING-KEYWORD",1929)))) { goto L13; }
    v9system_library = ECL_NIL;
    goto L12;
 L13:;
    v9system_library = v8;
 L12:;
-   si_check_keyword(2, v3, VV[81]);
+   si_check_keyword(2, v3, VV[77]);
    {
     cl_object v10;
-    cl_object v11;
     if (Null(cl_constantp(1, v4filename))) { goto L18; }
-    T0 = cl_list(3, VV[77], v4filename, v9system_library);
-    T1 = cl_list(3, ECL_SYM("EVAL-WHEN",340), VV[82], T0);
+    T0 = cl_list(3, VV[73], v4filename, v9system_library);
+    T1 = cl_list(3, ECL_SYM("EVAL-WHEN",340), VV[78], T0);
     v10 = ecl_list1(T1);
     goto L16;
 L18:;
     v10 = ECL_NIL;
     goto L16;
 L16:;
-    if ((v9system_library)!=ECL_NIL) { goto L21; }
-    if (Null(ecl_symbol_value(ECL_SYM("*USE-DFFI*",1969)))) { goto L21; }
-    T0 = cl_list(2, ECL_SYM("LOAD-FOREIGN-MODULE",1359), v4filename);
-    v11 = ecl_list1(T0);
-    goto L20;
-L21:;
-    v11 = ECL_NIL;
-L20:;
-    T0 = ecl_append(v10,v11);
+    T0 = ecl_append(v10,ECL_NIL);
     value0 = CONS(ECL_SYM("PROGN",671),T0);
     cl_env_copy->nvalues = 1;
     return value0;
@@ -2782,9 +2551,8 @@ L20:;
 }
 /*	local function DEFCALLBACK                                    */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC55defcallback(cl_object v1, cl_object v2)
+static cl_object LC54defcallback(cl_object v1, cl_object v2)
 {
- cl_object T0, T1, T2, T3, T4;
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
  ecl_cs_check(cl_env_copy,value0);
@@ -2792,138 +2560,7 @@ static cl_object LC55defcallback(cl_object v1, cl_object v2)
 TTL:
   {
    cl_object v3;
-   cl_object v4name;
-   cl_object v5ret_type;
-   cl_object v6arg_desc;
    v3 = ecl_cdr(v1);
-   if (!(v3==ECL_NIL)) { goto L3; }
-   si_dm_too_few_arguments(v1);
-L3:;
-   {
-    cl_object v7;
-    v7 = ecl_car(v3);
-    v3 = ecl_cdr(v3);
-    v4name = v7;
-   }
-   if (!(v3==ECL_NIL)) { goto L9; }
-   si_dm_too_few_arguments(v1);
-L9:;
-   {
-    cl_object v7;
-    v7 = ecl_car(v3);
-    v3 = ecl_cdr(v3);
-    v5ret_type = v7;
-   }
-   if (!(v3==ECL_NIL)) { goto L15; }
-   si_dm_too_few_arguments(v1);
-L15:;
-   {
-    cl_object v7;
-    v7 = ecl_car(v3);
-    v3 = ecl_cdr(v3);
-    v6arg_desc = v7;
-   }
-   if (Null(ecl_symbol_value(ECL_SYM("*USE-DFFI*",1969)))) { goto L20; }
-   {
-    cl_object v8;                                 /*  NAME            */
-    cl_object v9;                                 /*  CALL-TYPE       */
-    if (!(ECL_CONSP(v4name))) { goto L23; }
-    value0 = cl_values_list(v4name);
-    goto L22;
-L23:;
-    cl_env_copy->nvalues = 2;
-    cl_env_copy->values[1] = ECL_SYM("CDECL",1593);
-    cl_env_copy->values[0] = v4name;
-    value0 = cl_env_copy->values[0];
-L22:;
-    v8 = value0;
-    {
-     const int v10 = cl_env_copy->nvalues;
-     cl_object v11;
-     v11 = (v10<=1)? ECL_NIL : cl_env_copy->values[1];
-     v9 = v11;
-    }
-    {
-     cl_object v10;
-     cl_object v11;
-     {
-      cl_object v12;
-      cl_object v13;
-      v12 = ECL_NIL;
-      if (ecl_unlikely(!ECL_LISTP(v6arg_desc))) FEtype_error_list(v6arg_desc);
-      v13 = v6arg_desc;
-      {
-       cl_object v14;
-       cl_object v15;
-       v14 = ecl_list1(ECL_NIL);
-       v15 = v14;
-L31:;
-       if (!(ecl_endp(v13))) { goto L33; }
-       goto L32;
-L33:;
-       v12 = _ecl_car(v13);
-       {
-        cl_object v16;
-        v16 = _ecl_cdr(v13);
-        if (ecl_unlikely(!ECL_LISTP(v16))) FEtype_error_list(v16);
-        v13 = v16;
-       }
-       if (ecl_unlikely(ECL_ATOM(v15))) FEtype_error_cons(v15);
-       T0 = v15;
-       T1 = ecl_cadr(v12);
-       v15 = ecl_list1(T1);
-       (ECL_CONS_CDR(T0)=v15,T0);
-       goto L31;
-L32:;
-       v10 = ecl_cdr(v14);
-       goto L25;
-      }
-     }
-L25:;
-     {
-      cl_object v12;
-      cl_object v13;
-      v12 = ECL_NIL;
-      if (ecl_unlikely(!ECL_LISTP(v6arg_desc))) FEtype_error_list(v6arg_desc);
-      v13 = v6arg_desc;
-      {
-       cl_object v14;
-       cl_object v15;
-       v14 = ecl_list1(ECL_NIL);
-       v15 = v14;
-L53:;
-       if (!(ecl_endp(v13))) { goto L55; }
-       goto L54;
-L55:;
-       v12 = _ecl_car(v13);
-       {
-        cl_object v16;
-        v16 = _ecl_cdr(v13);
-        if (ecl_unlikely(!ECL_LISTP(v16))) FEtype_error_list(v16);
-        v13 = v16;
-       }
-       if (ecl_unlikely(ECL_ATOM(v15))) FEtype_error_cons(v15);
-       T0 = v15;
-       T1 = ecl_car(v12);
-       v15 = ecl_list1(T1);
-       (ECL_CONS_CDR(T0)=v15,T0);
-       goto L53;
-L54:;
-       v11 = ecl_cdr(v14);
-       goto L47;
-      }
-     }
-L47:;
-     T0 = cl_listX(4, ECL_SYM("LAMBDA-BLOCK",1339), v8, v11, v3);
-     T1 = cl_list(2, ECL_SYM("FUNCTION",396), T0);
-     T2 = cl_list(2, ECL_SYM("QUOTE",679), v8);
-     T3 = cl_list(2, ECL_SYM("QUOTE",679), v5ret_type);
-     T4 = cl_list(2, ECL_SYM("QUOTE",679), v10);
-     value0 = cl_list(6, ECL_SYM("MAKE-DYNAMIC-CALLBACK",1591), T1, T2, T3, T4, v9);
-     return value0;
-    }
-   }
-L20:;
    value0 = cl_error(1, _ecl_static_30);
    return value0;
   }
@@ -2931,7 +2568,7 @@ L20:;
 }
 /*	function definition for CALLBACK                              */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L56callback(cl_object v1name)
+static cl_object L55callback(cl_object v1name)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -2952,7 +2589,7 @@ L2:;
 }
 /*	function definition for CLINES                                */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L57clines(cl_narg narg, ...)
+static cl_object L56clines(cl_narg narg, ...)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -2968,7 +2605,7 @@ static cl_object L57clines(cl_narg narg, ...)
 }
 /*	local function C-INLINE                                       */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC58c_inline(cl_object v1, cl_object v2)
+static cl_object LC57c_inline(cl_object v1, cl_object v2)
 {
  cl_object T0, T1, T2, T3;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3020,7 +2657,7 @@ L15:;
 }
 /*	local function DEFINLINE                                      */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC59definline(cl_object v1, cl_object v2)
+static cl_object LC58definline(cl_object v1, cl_object v2)
 {
  cl_object T0, T1, T2, T3, T4;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3078,7 +2715,7 @@ L26:;
    T1 = cl_list(3, ECL_SYM("FUNCTION",396), v5arg_types, v6type);
    T2 = cl_list(3, ECL_SYM("FTYPE",393), T1, v4fun);
    T3 = cl_list(2, ECL_SYM("DECLAIM",272), T2);
-   T4 = cl_list(6, VV[88], v4fun, VV[89], v5arg_types, v6type, v7code);
+   T4 = cl_list(6, VV[84], v4fun, VV[85], v5arg_types, v6type, v7code);
    value0 = cl_list(5, ECL_SYM("EVAL-WHEN",340), VV[1], T0, T3, T4);
    return value0;
   }
@@ -3086,7 +2723,7 @@ L26:;
 }
 /*	local function DEFLA                                          */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC60defla(cl_object v1, cl_object v2)
+static cl_object LC59defla(cl_object v1, cl_object v2)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3098,14 +2735,14 @@ TTL:
    cl_object v3;
    v3 = ecl_cdr(v1);
    T0 = CONS(ECL_SYM("DEFUN",289),v3);
-   value0 = cl_list(3, ECL_SYM("EVAL-WHEN",340), VV[91], T0);
+   value0 = cl_list(3, ECL_SYM("EVAL-WHEN",340), VV[87], T0);
    return value0;
   }
  }
 }
 /*	local function DEFCBODY                                       */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC61defcbody(cl_object v1, cl_object v2)
+static cl_object LC60defcbody(cl_object v1, cl_object v2)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3195,7 +2832,7 @@ L36:;
      }
     }
 L29:;
-    T0 = cl_listX(6, VV[87], v8args, v5arg_types, v6result_type, v7c_expr, VV[93]);
+    T0 = cl_listX(6, VV[83], v8args, v5arg_types, v6result_type, v7c_expr, VV[89]);
     value0 = cl_list(4, ECL_SYM("DEFUN",289), v4name, v8args, T0);
     return value0;
    }
@@ -3204,7 +2841,7 @@ L29:;
 }
 /*	local function DEFENTRY                                       */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC62defentry(cl_object v1, cl_object v2)
+static cl_object LC61defentry(cl_object v1, cl_object v2)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3247,14 +2884,14 @@ L15:;
     v3 = ecl_cdr(v3);
     v6c_name = v9;
    }
-   v7 = si_search_keyword(2, v3, VV[95]);
+   v7 = si_search_keyword(2, v3, VV[91]);
    if (!((v7)==(ECL_SYM("MISSING-KEYWORD",1929)))) { goto L22; }
    v8no_interrupts = ECL_NIL;
    goto L21;
 L22:;
    v8no_interrupts = v7;
 L21:;
-   si_check_keyword(2, v3, VV[96]);
+   si_check_keyword(2, v3, VV[92]);
    {
     cl_object v9;
     cl_object v10output_type;
@@ -3313,7 +2950,7 @@ L56:;
      v12full_text = v11call;
 L55:;
      T0 = Null(v8no_interrupts)?ECL_T:ECL_NIL;
-     T1 = cl_list(7, VV[87], v9, v5arg_types, v10output_type, v12full_text, VV[97], T0);
+     T1 = cl_list(7, VV[83], v9, v5arg_types, v10output_type, v12full_text, VV[93], T0);
      value0 = cl_list(4, ECL_SYM("DEFUN",289), v4name, v9, T1);
      return value0;
     }
@@ -3326,7 +2963,7 @@ L55:;
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _ecl5MX3foVtPdEo9_GektVE21(cl_object flag)
+ECL_DLLEXPORT void _ecll270RZa7_CE8xWE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -3347,80 +2984,79 @@ ECL_DLLEXPORT void _ecl5MX3foVtPdEo9_GektVE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_ecl5MX3foVtPdEo9_GektVE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_ecll270RZa7_CE8xWE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);
  cl_import(1, ECL_SYM("NULL-POINTER-P",1360));
  cl_export(1, ECL_SYM("NULL-POINTER-P",1360));
- ecl_cmp_defmacro(VV[99]);                        /*  DEF-CONSTANT    */
+ ecl_cmp_defmacro(VV[95]);                        /*  DEF-CONSTANT    */
  si_Xmake_special(VV[3]);
  cl_set(VV[3],cl_make_hash_table(2, ECL_SYM("SIZE",1308), ecl_make_fixnum(128)));
  si_Xmake_special(ECL_SYM("*USE-DFFI*",1969));
  cl_set(ECL_SYM("*USE-DFFI*",1969),ECL_T);
- ecl_cmp_defmacro(VV[100]);                       /*  DEF-FOREIGN-TYPE */
- ecl_cmp_defmacro(VV[101]);                       /*  DEF-TYPE        */
- ecl_cmp_defun(VV[102]);                          /*  %CONVERT-TO-FFI-TYPE */
- ecl_cmp_defmacro(VV[103]);                       /*  %ALIGN-DATA     */
- ecl_cmp_defun(VV[104]);                          /*  SIZE-OF-FOREIGN-TYPE */
- ecl_cmp_defun(VV[105]);                          /*  ALLOCATE-FOREIGN-OBJECT */
- ecl_cmp_defun(VV[106]);                          /*  FREE-FOREIGN-OBJECT */
- ecl_cmp_defmacro(VV[107]);                       /*  DEF-ENUM        */
- ecl_cmp_defmacro(VV[108]);                       /*  DEF-STRUCT      */
- ecl_cmp_defun(VV[109]);                          /*  SLOT-POSITION   */
- ecl_cmp_defun(VV[110]);                          /*  GET-SLOT-VALUE  */
- ecl_cmp_defun(VV[111]);                          /*  (SETF GET-SLOT-VALUE) */
- ecl_cmp_defun(VV[112]);                          /*  GET-SLOT-POINTER */
- ecl_cmp_defmacro(VV[113]);                       /*  DEF-ARRAY-POINTER */
- ecl_cmp_defun(VV[114]);                          /*  DEREF-ARRAY     */
- ecl_cmp_defun(VV[115]);                          /*  (SETF DEREF-ARRAY) */
- ecl_cmp_defun(VV[116]);                          /*  %FOREIGN-DATA-SET */
- ecl_cmp_defun(VV[117]);                          /*  %FOREIGN-DATA-REF */
- ecl_cmp_defmacro(VV[118]);                       /*  DEF-UNION       */
+ ecl_cmp_defmacro(VV[96]);                        /*  DEF-FOREIGN-TYPE */
+ ecl_cmp_defmacro(VV[97]);                        /*  DEF-TYPE        */
+ ecl_cmp_defun(VV[98]);                           /*  %CONVERT-TO-FFI-TYPE */
+ ecl_cmp_defmacro(VV[99]);                        /*  %ALIGN-DATA     */
+ ecl_cmp_defun(VV[100]);                          /*  SIZE-OF-FOREIGN-TYPE */
+ ecl_cmp_defun(VV[101]);                          /*  ALLOCATE-FOREIGN-OBJECT */
+ ecl_cmp_defun(VV[102]);                          /*  FREE-FOREIGN-OBJECT */
+ ecl_cmp_defmacro(VV[103]);                       /*  DEF-ENUM        */
+ ecl_cmp_defmacro(VV[104]);                       /*  DEF-STRUCT      */
+ ecl_cmp_defun(VV[105]);                          /*  SLOT-POSITION   */
+ ecl_cmp_defun(VV[106]);                          /*  GET-SLOT-VALUE  */
+ ecl_cmp_defun(VV[107]);                          /*  (SETF GET-SLOT-VALUE) */
+ ecl_cmp_defun(VV[108]);                          /*  GET-SLOT-POINTER */
+ ecl_cmp_defmacro(VV[109]);                       /*  DEF-ARRAY-POINTER */
+ ecl_cmp_defun(VV[110]);                          /*  DEREF-ARRAY     */
+ ecl_cmp_defun(VV[111]);                          /*  (SETF DEREF-ARRAY) */
+ ecl_cmp_defun(VV[112]);                          /*  %FOREIGN-DATA-SET */
+ ecl_cmp_defun(VV[113]);                          /*  %FOREIGN-DATA-REF */
+ ecl_cmp_defmacro(VV[114]);                       /*  DEF-UNION       */
  si_Xmake_special(ECL_SYM("+NULL-CSTRING-POINTER+",1970));
  cl_set(ECL_SYM("+NULL-CSTRING-POINTER+",1970),si_allocate_foreign_data(ECL_SYM("POINTER-VOID",1377), ecl_make_fixnum(0)));
- ecl_cmp_defun(VV[119]);                          /*  POINTER-ADDRESS */
- ecl_cmp_defun(VV[120]);                          /*  DEREF-POINTER   */
- ecl_cmp_defun(VV[121]);                          /*  (SETF DEREF-POINTER) */
- ecl_cmp_defun(VV[122]);                          /*  MAKE-NULL-POINTER */
- ecl_cmp_defun(VV[123]);                          /*  MAKE-POINTER    */
- ecl_cmp_defun(VV[124]);                          /*  NULL-CHAR-P     */
- ecl_cmp_defun(VV[125]);                          /*  ENSURE-CHAR-CHARACTER */
- ecl_cmp_defun(VV[126]);                          /*  ENSURE-CHAR-INTEGER */
- ecl_cmp_defun(VV[127]);                          /*  ENSURE-CHAR-STORABLE */
- ecl_cmp_defun(VV[128]);                          /*  CHAR-ARRAY-TO-POINTER */
- ecl_cmp_defmacro(VV[129]);                       /*  CONVERT-FROM-CSTRING */
- ecl_cmp_defmacro(VV[130]);                       /*  CONVERT-TO-CSTRING */
- ecl_cmp_defmacro(VV[131]);                       /*  FREE-CSTRING    */
- ecl_cmp_defmacro(VV[132]);                       /*  WITH-CSTRING    */
- ecl_cmp_defmacro(VV[133]);                       /*  WITH-CSTRINGS   */
- ecl_cmp_defun(VV[134]);                          /*  FOREIGN-STRING-LENGTH */
- ecl_cmp_defun(VV[135]);                          /*  CONVERT-FROM-FOREIGN-STRING */
- ecl_cmp_defun(VV[138]);                          /*  CONVERT-TO-FOREIGN-STRING */
- ecl_cmp_defun(VV[140]);                          /*  ALLOCATE-FOREIGN-STRING */
- ecl_cmp_defmacro(VV[142]);                       /*  WITH-FOREIGN-STRING */
- ecl_cmp_defmacro(VV[143]);                       /*  WITH-FOREIGN-STRINGS */
- ecl_cmp_defmacro(VV[144]);                       /*  WITH-FOREIGN-OBJECT */
- ecl_cmp_defmacro(VV[145]);                       /*  WITH-FOREIGN-OBJECTS */
- ecl_cmp_defmacro(VV[146]);                       /*  WITH-CAST-POINTER */
- ecl_cmp_defun(VV[147]);                          /*  LISP-TO-C-NAME  */
- ecl_cmp_defun(VV[148]);                          /*  %CONVERT-TO-ARG-TYPE */
- ecl_cmp_defun(VV[149]);                          /*  %CONVERT-TO-RETURN-TYPE */
+ ecl_cmp_defun(VV[115]);                          /*  POINTER-ADDRESS */
+ ecl_cmp_defun(VV[116]);                          /*  DEREF-POINTER   */
+ ecl_cmp_defun(VV[117]);                          /*  (SETF DEREF-POINTER) */
+ ecl_cmp_defun(VV[118]);                          /*  MAKE-NULL-POINTER */
+ ecl_cmp_defun(VV[119]);                          /*  MAKE-POINTER    */
+ ecl_cmp_defun(VV[120]);                          /*  NULL-CHAR-P     */
+ ecl_cmp_defun(VV[121]);                          /*  ENSURE-CHAR-CHARACTER */
+ ecl_cmp_defun(VV[122]);                          /*  ENSURE-CHAR-INTEGER */
+ ecl_cmp_defun(VV[123]);                          /*  ENSURE-CHAR-STORABLE */
+ ecl_cmp_defun(VV[124]);                          /*  CHAR-ARRAY-TO-POINTER */
+ ecl_cmp_defmacro(VV[125]);                       /*  CONVERT-FROM-CSTRING */
+ ecl_cmp_defmacro(VV[126]);                       /*  CONVERT-TO-CSTRING */
+ ecl_cmp_defmacro(VV[127]);                       /*  FREE-CSTRING    */
+ ecl_cmp_defmacro(VV[128]);                       /*  WITH-CSTRING    */
+ ecl_cmp_defmacro(VV[129]);                       /*  WITH-CSTRINGS   */
+ ecl_cmp_defun(VV[130]);                          /*  FOREIGN-STRING-LENGTH */
+ ecl_cmp_defun(VV[131]);                          /*  CONVERT-FROM-FOREIGN-STRING */
+ ecl_cmp_defun(VV[134]);                          /*  CONVERT-TO-FOREIGN-STRING */
+ ecl_cmp_defun(VV[136]);                          /*  ALLOCATE-FOREIGN-STRING */
+ ecl_cmp_defmacro(VV[138]);                       /*  WITH-FOREIGN-STRING */
+ ecl_cmp_defmacro(VV[139]);                       /*  WITH-FOREIGN-STRINGS */
+ ecl_cmp_defmacro(VV[140]);                       /*  WITH-FOREIGN-OBJECT */
+ ecl_cmp_defmacro(VV[141]);                       /*  WITH-FOREIGN-OBJECTS */
+ ecl_cmp_defmacro(VV[142]);                       /*  WITH-CAST-POINTER */
+ ecl_cmp_defun(VV[143]);                          /*  LISP-TO-C-NAME  */
+ ecl_cmp_defun(VV[144]);                          /*  %CONVERT-TO-ARG-TYPE */
+ ecl_cmp_defun(VV[145]);                          /*  %CONVERT-TO-RETURN-TYPE */
  (void)0; /* No entry created for PRODUCE-FUNCTION-CALL */
- ecl_cmp_defmacro(VV[150]);                       /*  DEF-LIB-FUNCTION */
- ecl_cmp_defmacro(VV[151]);                       /*  DEF-FUNCTION    */
- ecl_cmp_defmacro(VV[152]);                       /*  DEF-FOREIGN-VAR */
- ecl_cmp_defun(VV[153]);                          /*  FIND-FOREIGN-LIBRARY */
- si_Xmake_special(VV[75]);
- cl_set(VV[75],ECL_NIL);
- ecl_cmp_defun(VV[156]);                          /*  DO-LOAD-FOREIGN-LIBRARY */
- ecl_cmp_defmacro(VV[157]);                       /*  LOAD-FOREIGN-LIBRARY */
- ecl_cmp_defmacro(VV[158]);                       /*  DEFCALLBACK     */
- ecl_cmp_defun(VV[159]);                          /*  CALLBACK        */
- ecl_cmp_defun(VV[160]);                          /*  CLINES          */
- ecl_cmp_defmacro(VV[161]);                       /*  C-INLINE        */
- ecl_cmp_defmacro(VV[162]);                       /*  DEFINLINE       */
- ecl_cmp_defmacro(VV[163]);                       /*  DEFLA           */
- ecl_cmp_defmacro(VV[164]);                       /*  DEFCBODY        */
- ecl_cmp_defmacro(VV[165]);                       /*  DEFENTRY        */
+ ecl_cmp_defmacro(VV[146]);                       /*  DEF-FUNCTION    */
+ ecl_cmp_defmacro(VV[147]);                       /*  DEF-FOREIGN-VAR */
+ ecl_cmp_defun(VV[148]);                          /*  FIND-FOREIGN-LIBRARY */
+ si_Xmake_special(VV[71]);
+ cl_set(VV[71],ECL_NIL);
+ ecl_cmp_defun(VV[151]);                          /*  DO-LOAD-FOREIGN-LIBRARY */
+ ecl_cmp_defmacro(VV[152]);                       /*  LOAD-FOREIGN-LIBRARY */
+ ecl_cmp_defmacro(VV[153]);                       /*  DEFCALLBACK     */
+ ecl_cmp_defun(VV[154]);                          /*  CALLBACK        */
+ ecl_cmp_defun(VV[155]);                          /*  CLINES          */
+ ecl_cmp_defmacro(VV[156]);                       /*  C-INLINE        */
+ ecl_cmp_defmacro(VV[157]);                       /*  DEFINLINE       */
+ ecl_cmp_defmacro(VV[158]);                       /*  DEFLA           */
+ ecl_cmp_defmacro(VV[159]);                       /*  DEFCBODY        */
+ ecl_cmp_defmacro(VV[160]);                       /*  DEFENTRY        */
 }

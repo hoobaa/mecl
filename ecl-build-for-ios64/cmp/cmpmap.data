@@ -1,3 +1,0 @@
-static const char compiler_data_text[] = 
-":in :collect :on :do c::with c::finally :for c::expand-mapcar 0 c::firt ";
-#define compiler_data_text_size 72

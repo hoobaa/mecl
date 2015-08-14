@@ -597,21 +597,22 @@ si_make_vector(cl_object etype, cl_object dim, cl_object adj,
 	}
 	x->vector.fillp = f;
 
-	if (Null(displ))
+	if (Null(displ)) {
+                printf(">>ecl_array_allocself_before\n");
 		ecl_array_allocself(x);
-	else
+        } else
 		ecl_displace(x, displ, disploff);
 	{
-#line 523
+#line 524
 		const cl_env_ptr the_env = ecl_process_env();
-#line 523
-		#line 523
+#line 524
+		#line 524
 		cl_object __value0 = x;
-#line 523
+#line 524
 		the_env->nvalues = 1;
-#line 523
+#line 524
 		return __value0;
-#line 523
+#line 524
 	}
 
 }
@@ -634,7 +635,9 @@ ecl_array_allocself(cl_object x)
 	switch (t) {
 	/* assign self field only after it has been filled, for GC sake  */
 	case ecl_aet_object:
+                printf(">>allocself as t. d(%d)\n", d);
 		x->array.self.t = alloc_pointerfull_memory(d);
+                // x->vector.self.t = alloc_pointerfull_memory(d);
 		return;
 #ifdef ECL_UNICODE
 	case ecl_aet_ch: {
@@ -782,20 +785,20 @@ si_array_element_type_byte_size(cl_object type) {
 	if (aet == ecl_aet_bit)
 		size = ecl_make_ratio(ecl_make_fixnum(1),ecl_make_fixnum(CHAR_BIT));
 	{
-#line 691
+#line 694
 		const cl_env_ptr the_env = ecl_process_env();
-#line 691
-		#line 691
+#line 694
+		#line 694
 		cl_object __value0 = size;
-#line 691
+#line 694
 		cl_object __value1 = ecl_elttype_to_symbol(aet);
-#line 691
+#line 694
 		the_env->nvalues = 2;
-#line 691
+#line 694
 		the_env->values[1] = __value1;
-#line 691
+#line 694
 		return __value0;
-#line 691
+#line 694
 	}
 
 }
@@ -849,16 +852,16 @@ cl_object
 cl_array_element_type(cl_object a)
 {
 	{
-#line 742
+#line 745
 		const cl_env_ptr the_env = ecl_process_env();
-#line 742
-		#line 742
+#line 745
+		#line 745
 		cl_object __value0 = ecl_elttype_to_symbol(ecl_array_elttype(a));
-#line 742
+#line 745
 		the_env->nvalues = 1;
-#line 742
+#line 745
 		return __value0;
-#line 742
+#line 745
 	}
 
 }
@@ -969,16 +972,16 @@ si_array_raw_data(cl_object x)
                                         ecl_make_fixnum(displ));
         }
         {
-#line 850
+#line 853
 	const cl_env_ptr the_env = ecl_process_env();
-#line 850
-	#line 850
+#line 853
+	#line 853
 	cl_object __value0 = output;
-#line 850
+#line 853
 	the_env->nvalues = 1;
-#line 850
+#line 853
 	return __value0;
-#line 850
+#line 853
 }
 
 }
@@ -995,16 +998,16 @@ cl_object
 cl_array_rank(cl_object a)
 {
 	{
-#line 864
+#line 867
 		const cl_env_ptr the_env = ecl_process_env();
-#line 864
-		#line 864
+#line 867
+		#line 867
 		cl_object __value0 = ecl_make_fixnum(ecl_array_rank(a));
-#line 864
+#line 867
 		the_env->nvalues = 1;
-#line 864
+#line 867
 		return __value0;
-#line 864
+#line 867
 	}
 
 }
@@ -1031,16 +1034,16 @@ cl_object
 cl_array_dimension(cl_object a, cl_object index)
 {
 	{
-#line 888
+#line 891
 		const cl_env_ptr the_env = ecl_process_env();
-#line 888
-		#line 888
+#line 891
+		#line 891
 		cl_object __value0 = ecl_make_fixnum(ecl_array_dimension(a, ecl_to_size(index)));
-#line 888
+#line 891
 		the_env->nvalues = 1;
-#line 888
+#line 891
 		return __value0;
-#line 888
+#line 891
 	}
 
 }
@@ -1074,16 +1077,16 @@ cl_array_total_size(cl_object a)
         if (ecl_unlikely(!ECL_ARRAYP(a)))
                 FEwrong_type_only_arg(ecl_make_fixnum(/*ARRAY-TOTAL-SIZE*/107), a, ecl_make_fixnum(/*ARRAY*/96));
 	{
-#line 919
+#line 922
 		const cl_env_ptr the_env = ecl_process_env();
-#line 919
-		#line 919
+#line 922
+		#line 922
 		cl_object __value0 = ecl_make_fixnum(a->array.dim);
-#line 919
+#line 922
 		the_env->nvalues = 1;
-#line 919
+#line 922
 		return __value0;
-#line 919
+#line 922
 	}
 
 }
@@ -1094,16 +1097,16 @@ cl_adjustable_array_p(cl_object a)
         if (ecl_unlikely(!ECL_ARRAYP(a)))
                 FEwrong_type_only_arg(ecl_make_fixnum(/*ADJUSTABLE-ARRAY-P*/84), a, ecl_make_fixnum(/*ARRAY*/96));
 	{
-#line 927
+#line 930
 		const cl_env_ptr the_env = ecl_process_env();
-#line 927
-		#line 927
+#line 930
+		#line 930
 		cl_object __value0 = (ECL_ADJUSTABLE_ARRAY_P(a) ? ECL_T : ECL_NIL);
-#line 927
+#line 930
 		the_env->nvalues = 1;
-#line 927
+#line 930
 		return __value0;
-#line 927
+#line 930
 	}
 
 }
@@ -1480,16 +1483,16 @@ si_copy_subarray(cl_object dest, cl_object start0,
                           orig, ecl_to_size(start1),
                           ecl_to_size(length));
         {
-#line 1301
+#line 1304
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1301
-	#line 1301
+#line 1304
+	#line 1304
 	cl_object __value0 = dest;
-#line 1301
+#line 1304
 	the_env->nvalues = 1;
-#line 1301
+#line 1304
 	return __value0;
-#line 1301
+#line 1304
 }
 
 }
@@ -1617,16 +1620,16 @@ si_fill_array_with_elt(cl_object x, cl_object elt, cl_object start, cl_object en
 	}
  END:
         {
-#line 1426
+#line 1429
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1426
-	#line 1426
+#line 1429
+	#line 1429
 	cl_object __value0 = x;
-#line 1426
+#line 1429
 	the_env->nvalues = 1;
-#line 1426
+#line 1429
 	return __value0;
-#line 1426
+#line 1429
 }
 
 }

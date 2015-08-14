@@ -514,14 +514,19 @@ ecl_string_eq(cl_object x, cl_object y)
 }
 
 
+static void test(cl_object string1, cl_object string2) {
+        printf(">>>>FUCKFUCK:%d:%d\n", string1->string.t, string2->string.t);
+}
+
 @(defun string_equal (string1 string2 &key (start1 ecl_make_fixnum(0)) end1
 		                           (start2 ecl_make_fixnum(0)) end2)
 	cl_index s1, e1, s2, e2;
         cl_index_pair p;
 	int output;
 @
+  printf("FUCK:%d, %d", string1->string.t, string2->string.t);
 	string1 = cl_string(string1);
-	string2 = cl_string(string2);
+	string2 = cl_string(string2); // this is fuckin string2->string.t == \xf4 (must be 10)
 	p = ecl_vector_start_end(@[string=], string1, start1, end1);
         s1 = p.start; e1 = p.end;
 	p = ecl_vector_start_end(@[string=], string2, start2, end2);

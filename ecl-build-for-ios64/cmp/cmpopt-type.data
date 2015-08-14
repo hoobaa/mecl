@@ -1,3 +1,0 @@
-static const char compiler_data_text[] = 
-":read-only c::reckless ";
-#define compiler_data_text_size 23

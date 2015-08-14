@@ -35,7 +35,7 @@ coprocessor).")
 (defvar *ar* "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar"
   "Name of the `AR' program on the hosting platform.")
 
-(defvar *cc-flags* "   -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -DAPPLE -I/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/include -D_THREAD_SAFE -Ddarwin")
+(defvar *cc-flags* "   -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -DAPPLE -I/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/include -D_THREAD_SAFE -Ddarwin")
 
 (defvar *cc-optimize* #-msvc "-O2"
                       #+msvc "@CFLAGS_OPTIMIZE@")
@@ -51,16 +51,16 @@ coprocessor).")
 			   "~A -I. \"-I~A\" ~A ~:[~*~;~A~] -w -c \"~A\" -o \"~A\"~{ '~A'~}")))
 
 #-dlopen
-(defvar *ld-flags* "  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -lecl -latomic_ops   -lgmp -lgc -lpthread   -lm ")
+(defvar *ld-flags* " -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -lecl -latomic_ops   -lgmp -lgc -lpthread   -lm ")
 #+dlopen
-(defvar *ld-flags* #-msvc "  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -lecl  -lgmp -lgc -lpthread   -lm "
-                   #+msvc "  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    ecl.lib @CLIBS@")
+(defvar *ld-flags* #-msvc " -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -lecl  -lgmp -lgc -lpthread   -lm "
+                   #+msvc " -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    ecl.lib @CLIBS@")
 #+dlopen
-(defvar *ld-shared-flags* #-msvc "-dynamiclib -flat_namespace -undefined suppress   -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib     -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -lecl  -lgmp -lgc -lpthread   -lm "
-                          #+msvc "-dynamiclib -flat_namespace -undefined suppress   -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib     -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    ecl.lib @CLIBS@")
+(defvar *ld-shared-flags* #-msvc "-dynamiclib -flat_namespace -undefined suppress  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -lecl  -lgmp -lgc -lpthread   -lm "
+                          #+msvc "-dynamiclib -flat_namespace -undefined suppress  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    ecl.lib @CLIBS@")
 #+dlopen
-(defvar *ld-bundle-flags* #-msvc "-bundle   -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib     -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -lecl  -lgmp -lgc -lpthread   -lm "
-                          #+msvc "-bundle   -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib     -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    ecl.lib @CLIBS@")
+(defvar *ld-bundle-flags* #-msvc "-bundle  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -lecl  -lgmp -lgc -lpthread   -lm "
+                          #+msvc "-bundle  -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    ecl.lib @CLIBS@")
 
 (defvar +shared-library-prefix+ "lib")
 (defvar +shared-library-extension+ "dylib")

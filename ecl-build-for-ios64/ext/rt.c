@@ -584,14 +584,7 @@ L88:;
     cl_env_copy->nvalues = 1;
     return value0;
 L90:;
-    {
-     cl_object v16;
-     v16 = ecl_one_plus(v14i);
-     T0 = cl_realp(v16);
-     if (ecl_unlikely(!((T0)!=ECL_NIL)))
-         FEwrong_type_argument(ECL_SYM("REAL",703),v16);
-     v14i = v16;
-    }
+    v14i = ecl_one_plus(v14i);
     goto L86;
 L87:;
     value0 = ECL_T;
@@ -1035,7 +1028,7 @@ L56:;
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _eclneS7gSXbpRZo9_67xtVE21(cl_object flag)
+ECL_DLLEXPORT void _eclXHDJSAb7_6yGxWE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -1056,7 +1049,7 @@ ECL_DLLEXPORT void _eclneS7gSXbpRZo9_67xtVE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_eclneS7gSXbpRZo9_67xtVE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_eclXHDJSAb7_6yGxWE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  ecl_function_dispatch(cl_env_copy,VV[31])(10, _ecl_static_0, VVtemp[0], _ecl_static_1, VVtemp[1], ECL_NIL, ECL_NIL, VVtemp[2], ECL_NIL, ECL_NIL, ECL_NIL) /*  DODEFPACKAGE */;

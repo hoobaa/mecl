@@ -31,8 +31,8 @@ static const char compiler_data_text[] =
  "e-float nil '#30=(double-float * #29#)) #30# (deftype ext::non-negative-double-f"
  "loat nil '#31=(double-float #29# *)) #31# (deftype ext::positive-double-float ni"
  "l '#32=(double-float (#29#) *)) #32# (deftype ext::negative-long-float nil '#33="
- "(long-float * (#34=0.0l0))) #33# (deftype ext::non-positive-long-float nil '#35="
- "(long-float * #34#)) #35# (deftype ext::non-negative-long-float nil '#36=(long-f"
- "loat #34# *)) #36# (deftype ext::positive-long-float nil '#37=(long-float (#34#)"
- " *)) #37# ";
-#define compiler_data_text_size 2810
+ "(long-float * (#29#))) #33# (deftype ext::non-positive-long-float nil '#34=(long"
+ "-float * #29#)) #34# (deftype ext::non-negative-long-float nil '#35=(long-float "
+ "#29# *)) #35# (deftype ext::positive-long-float nil '#36=(long-float (#29#) *)) "
+ "#36# ";
+#define compiler_data_text_size 2805

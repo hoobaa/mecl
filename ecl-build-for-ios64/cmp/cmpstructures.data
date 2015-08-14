@@ -1,9 +1,0 @@
-static const char compiler_data_text[] = 
-"c::get-slot-type si::structure-access c::maybe-optimize-structure-access ((:obje"
- "ct :fixnum) :object \"(#0)->instance.slots[#1]\" :one-liner t) ((:object :object :"
- "fixnum) :object \"ecl_structure_ref(#0,#1,#2)\" :one-liner t) :read-only ((:object"
- " :fixnum :object) :object \"(#0)->instance.slots[#1]=#2\" :one-liner t) ((:object "
- ":object :fixnum :object) :object \"ecl_structure_set(#0,#1,#2,#3)\" :one-liner t) "
- "0 0 c::inline-possible c::policy-inline-slot-access-p c::cmpwarn c::policy-inlin"
- "e-slot-access c::cmp-eval c::policy-assume-no-errors ";
-#define compiler_data_text_size 533

@@ -1,4 +1,0 @@
-static const char compiler_data_text[] = 
-"(if or and null not progn) c::pure c::constant-expression-p c::extract-constant-"
- "value c::constant-value-p 0 c::inline-possible 0 c::cmp-eval 0 ";
-#define compiler_data_text_size 143

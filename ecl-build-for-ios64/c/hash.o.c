@@ -31,6 +31,15 @@
 static void ECL_INLINE
 assert_type_hash_table(cl_object function, cl_narg narg, cl_object p)
 {
+        int rc;
+        // printf("fuckppp:%d\n", __LINE__);
+        // rc = ((cl_fixnum)(p) & 3);
+        // printf("fuckppp:%d\n", __LINE__);
+        // rc = ((p)->d.t == t_hashtable);
+
+        rc = ECL_HASH_TABLE_P(p);
+        printf("fuckp:%d\n", rc);
+
 	unlikely_if (!ECL_HASH_TABLE_P(p))
 		FEwrong_type_nth_arg(function, narg, p, ecl_make_fixnum(/*HASH-TABLE*/418));
 }
@@ -726,70 +735,70 @@ ecl_extend_hashtable(cl_object hashtable)
         return new;
 }
 
-#line 732
+#line 741
 cl_object cl_make_hash_table(cl_narg narg, ...)
 {
-#line 732
+#line 741
 
-#line 734
+#line 743
 	const cl_env_ptr the_env = ecl_process_env();
-#line 734
+#line 743
 	static cl_object KEYS[5] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1947), (cl_object)(cl_symbols+1308), (cl_object)(cl_symbols+1297), (cl_object)(cl_symbols+1298)};
 	cl_object test;
 	cl_object weakness;
 	cl_object size;
 	cl_object rehash_size;
 	cl_object rehash_threshold;
-#line 734
+#line 743
 	cl_object KEY_VARS[10];
-#line 734
+#line 743
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, narg, narg, 0);
-#line 734
+#line 743
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(528));
-#line 734
+#line 743
 	cl_parse_key(ARGS, 5, KEYS, KEY_VARS, NULL, 0);
-#line 734
+#line 743
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 734
+#line 743
 	  test = ECL_SYM("EQL",334);
 	} else {
-#line 734
+#line 743
 	  test = KEY_VARS[0];
 	}
-#line 734
+#line 743
 	if (KEY_VARS[6]==ECL_NIL) {
-#line 734
+#line 743
 	  weakness = ECL_NIL;
 	} else {
-#line 734
+#line 743
 	  weakness = KEY_VARS[1];
 	}
-#line 734
+#line 743
 	if (KEY_VARS[7]==ECL_NIL) {
-#line 734
+#line 743
 	  size = ecl_make_fixnum(1024);
 	} else {
-#line 734
+#line 743
 	  size = KEY_VARS[2];
 	}
-#line 734
+#line 743
 	if (KEY_VARS[8]==ECL_NIL) {
-#line 734
+#line 743
 	  rehash_size = cl_core.rehash_size;
 	} else {
-#line 734
+#line 743
 	  rehash_size = KEY_VARS[3];
 	}
-#line 734
+#line 743
 	if (KEY_VARS[9]==ECL_NIL) {
-#line 734
+#line 743
 	  rehash_threshold = cl_core.rehash_threshold;
 	} else {
-#line 734
+#line 743
 	  rehash_threshold = KEY_VARS[4];
 	}
-#line 734
+#line 743
 {
 	cl_object hash = cl__make_hash_table(test, size, rehash_size, rehash_threshold);
 #ifdef ECL_WEAK_HASH
@@ -814,14 +823,14 @@ cl_object cl_make_hash_table(cl_narg narg, ...)
 	}
 #endif
 	{
-#line 757
-		#line 757
+#line 766
+		#line 766
 		cl_object __value0 = hash;
-#line 757
+#line 766
 		the_env->nvalues = 1;
-#line 757
+#line 766
 		return __value0;
-#line 757
+#line 766
 	}
 
 }
@@ -952,16 +961,16 @@ cl_object
 cl_hash_table_p(cl_object ht)
 {
 	{
-#line 885
+#line 894
 		const cl_env_ptr the_env = ecl_process_env();
-#line 885
-		#line 885
+#line 894
+		#line 894
 		cl_object __value0 = (ECL_HASH_TABLE_P(ht) ? ECL_T : ECL_NIL);
-#line 885
+#line 894
 		the_env->nvalues = 1;
-#line 885
+#line 894
 		return __value0;
-#line 885
+#line 894
 	}
 
 }
@@ -979,79 +988,79 @@ si_hash_table_weakness(cl_object ht)
 	}
 #endif
 	{
-#line 900
+#line 909
 		const cl_env_ptr the_env = ecl_process_env();
-#line 900
-		#line 900
+#line 909
+		#line 909
 		cl_object __value0 = output;
-#line 900
+#line 909
 		the_env->nvalues = 1;
-#line 900
+#line 909
 		return __value0;
-#line 900
+#line 909
 	}
 
 }
 
-#line 903
+#line 912
 cl_object cl_gethash(cl_narg narg, cl_object key, cl_object ht, ...)
 {
-#line 903
+#line 912
 
-#line 905
+#line 914
 	const cl_env_ptr the_env = ecl_process_env();
-#line 905
+#line 914
 	cl_object no_value;
-#line 905
+#line 914
 	va_list ARGS;
 	va_start(ARGS, ht);
-#line 905
+#line 914
 	if (ecl_unlikely(narg < 2|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(413));
-#line 905
+#line 914
 	if (narg > 2) {
-#line 905
+#line 914
 		no_value = va_arg(ARGS,cl_object);
-#line 905
+#line 914
 	} else {
-#line 905
+#line 914
 		no_value = ECL_NIL;
-#line 905
+#line 914
 	}
-#line 905
+#line 914
 {
 	assert_type_hash_table(ecl_make_fixnum(/*GETHASH*/413), 2, ht);
 	{
 		cl_object v = ht->hash.get(key, ht, OBJNULL);
 		if (v != OBJNULL) {
 			{
-#line 910
-				#line 910
+#line 919
+				#line 919
 				cl_object __value0 = v;
-#line 910
+#line 919
 				cl_object __value1 = ECL_T;
-#line 910
+#line 919
 				the_env->nvalues = 2;
-#line 910
+#line 919
 				the_env->values[1] = __value1;
-#line 910
+#line 919
 				return __value0;
-#line 910
+#line 919
 			}
 ;
 		} else {
 			{
-#line 912
-				#line 912
+#line 921
+				#line 921
 				cl_object __value0 = no_value;
-#line 912
+#line 921
 				cl_object __value1 = ECL_NIL;
-#line 912
+#line 921
 				the_env->nvalues = 2;
-#line 912
+#line 921
 				the_env->values[1] = __value1;
-#line 912
+#line 921
 				return __value0;
-#line 912
+#line 921
 			}
 ;
 		}
@@ -1065,16 +1074,16 @@ si_hash_set(cl_object key, cl_object ht, cl_object val)
 	/* INV: ecl_sethash() checks the type of hashtable */
 	ecl_sethash(key, ht, val);
 	{
-#line 923
+#line 932
 		const cl_env_ptr the_env = ecl_process_env();
-#line 923
-		#line 923
+#line 932
+		#line 932
 		cl_object __value0 = val;
-#line 923
+#line 932
 		the_env->nvalues = 1;
-#line 923
+#line 932
 		return __value0;
-#line 923
+#line 932
 	}
 
 }
@@ -1091,16 +1100,16 @@ cl_remhash(cl_object key, cl_object ht)
 {
 	/* INV: _ecl_remhash() checks the type of hashtable */
 	{
-#line 937
+#line 946
 		const cl_env_ptr the_env = ecl_process_env();
-#line 937
-		#line 937
+#line 946
+		#line 946
 		cl_object __value0 = (ecl_remhash(key, ht)? ECL_T : ECL_NIL);
-#line 937
+#line 946
 		the_env->nvalues = 1;
-#line 937
+#line 946
 		return __value0;
-#line 937
+#line 946
 	}
 ;
 }
@@ -1113,16 +1122,16 @@ cl_clrhash(cl_object ht)
 		do_clrhash(ht);
 	}
 	{
-#line 947
+#line 956
 		const cl_env_ptr the_env = ecl_process_env();
-#line 947
-		#line 947
+#line 956
+		#line 956
 		cl_object __value0 = ht;
-#line 947
+#line 956
 		the_env->nvalues = 1;
-#line 947
+#line 956
 		return __value0;
-#line 947
+#line 956
 	}
 
 }
@@ -1141,16 +1150,16 @@ cl_hash_table_test(cl_object ht)
 	    default: output = ECL_SYM("EQUAL",335);
 	}
 	{
-#line 963
+#line 972
 		const cl_env_ptr the_env = ecl_process_env();
-#line 963
-		#line 963
+#line 972
+		#line 972
 		cl_object __value0 = output;
-#line 963
+#line 972
 		the_env->nvalues = 1;
-#line 963
+#line 972
 		return __value0;
-#line 963
+#line 972
 	}
 
 }
@@ -1160,16 +1169,16 @@ cl_hash_table_size(cl_object ht)
 {
 	assert_type_hash_table(ecl_make_fixnum(/*HASH-TABLE-SIZE*/423), 1, ht);
 	{
-#line 970
+#line 979
 		const cl_env_ptr the_env = ecl_process_env();
-#line 970
-		#line 970
+#line 979
+		#line 979
 		cl_object __value0 = ecl_make_fixnum(ht->hash.size);
-#line 970
+#line 979
 		the_env->nvalues = 1;
-#line 970
+#line 979
 		return __value0;
-#line 970
+#line 979
 	}
 
 }
@@ -1179,16 +1188,16 @@ cl_hash_table_count(cl_object ht)
 {
 	assert_type_hash_table(ecl_make_fixnum(/*HASH-TABLE-COUNT*/419), 1, ht);
 	{
-#line 977
+#line 986
 		const cl_env_ptr the_env = ecl_process_env();
-#line 977
-		#line 977
+#line 986
+		#line 986
 		cl_object __value0 = (ecl_make_fixnum(ht->hash.entries));
-#line 977
+#line 986
 		the_env->nvalues = 1;
-#line 977
+#line 986
 		return __value0;
-#line 977
+#line 986
 	}
 
 }
@@ -1212,24 +1221,24 @@ si_hash_table_iterate(cl_narg narg)
 				cl_object ndx = ecl_make_fixnum(i);
 				ECL_RPLACA(env, ndx);
 				{
-#line 998
+#line 1007
 					const cl_env_ptr the_env = ecl_process_env();
-#line 998
-					#line 998
+#line 1007
+					#line 1007
 					cl_object __value0 = ndx;
-#line 998
+#line 1007
 					cl_object __value1 = e.key;
-#line 998
+#line 1007
 					cl_object __value2 = e.value;
-#line 998
+#line 1007
 					the_env->nvalues = 3;
-#line 998
+#line 1007
 					the_env->values[2] = __value2;
-#line 998
+#line 1007
 					the_env->values[1] = __value1;
-#line 998
+#line 1007
 					return __value0;
-#line 998
+#line 1007
 				}
 
 			}
@@ -1237,16 +1246,16 @@ si_hash_table_iterate(cl_narg narg)
 		ECL_RPLACA(env, ECL_NIL);
 	}
 	{
-#line 1003
+#line 1012
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1003
-		#line 1003
+#line 1012
+		#line 1012
 		cl_object __value0 = ECL_NIL;
-#line 1003
+#line 1012
 		the_env->nvalues = 1;
-#line 1003
+#line 1012
 		return __value0;
-#line 1003
+#line 1012
 	}
 
 }
@@ -1256,18 +1265,18 @@ si_hash_table_iterator(cl_object ht)
 {
 	assert_type_hash_table(ecl_make_fixnum(/*SI::HASH-TABLE-ITERATOR*/1089), 1, ht);
 	{
-#line 1012
+#line 1021
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1012
-		#line 1012
+#line 1021
+		#line 1021
 		cl_object __value0 = ecl_make_cclosure_va((cl_objectfn)si_hash_table_iterate,
                                       cl_list(2, ecl_make_fixnum(-1), ht),
                                       ECL_SYM("SI::HASH-TABLE-ITERATOR",1089));
-#line 1012
+#line 1021
 		the_env->nvalues = 1;
-#line 1012
+#line 1021
 		return __value0;
-#line 1012
+#line 1021
 	}
 
 }
@@ -1277,16 +1286,16 @@ cl_hash_table_rehash_size(cl_object ht)
 {
 	assert_type_hash_table(ecl_make_fixnum(/*HASH-TABLE-REHASH-SIZE*/421), 1, ht);
 	{
-#line 1019
+#line 1028
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1019
-		#line 1019
+#line 1028
+		#line 1028
 		cl_object __value0 = ht->hash.rehash_size;
-#line 1019
+#line 1028
 		the_env->nvalues = 1;
-#line 1019
+#line 1028
 		return __value0;
-#line 1019
+#line 1028
 	}
 
 }
@@ -1296,16 +1305,16 @@ cl_hash_table_rehash_threshold(cl_object ht)
 {
 	assert_type_hash_table(ecl_make_fixnum(/*HASH-TABLE-REHASH-THRESHOLD*/422), 1, ht);
 	{
-#line 1026
+#line 1035
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1026
-		#line 1026
+#line 1035
+		#line 1035
 		cl_object __value0 = ht->hash.threshold;
-#line 1026
+#line 1035
 		the_env->nvalues = 1;
-#line 1026
+#line 1035
 		return __value0;
-#line 1026
+#line 1035
 	}
 
 }
@@ -1316,109 +1325,109 @@ cl_sxhash(cl_object key)
 	cl_index output = _hash_equal(3, 0, key);
 	const cl_index mask = ((cl_index)1 << (FIXNUM_BITS - 3)) - 1;
 	{
-#line 1034
+#line 1043
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1034
-		#line 1034
+#line 1043
+		#line 1043
 		cl_object __value0 = ecl_make_fixnum(output & mask);
-#line 1034
+#line 1043
 		the_env->nvalues = 1;
-#line 1034
+#line 1043
 		return __value0;
-#line 1034
+#line 1043
 	}
 
 }
 
-#line 1037
+#line 1046
 cl_object si_hash_eql(cl_narg narg, ...)
 {
-#line 1037
+#line 1046
 
 	cl_index h;
-#line 1040
+#line 1049
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1040
+#line 1049
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 1040
+#line 1049
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1660));
-#line 1040
+#line 1049
 	for (h = 0; narg; narg--) {
 		cl_object o = ecl_va_arg(args);
 		h = _hash_eql(h, o);
 	}
 	{
-#line 1044
-		#line 1044
+#line 1053
+		#line 1053
 		cl_object __value0 = ecl_make_fixnum(h);
-#line 1044
+#line 1053
 		the_env->nvalues = 1;
-#line 1044
+#line 1053
 		return __value0;
-#line 1044
+#line 1053
 	}
 
 }
 
-#line 1047
+#line 1056
 cl_object si_hash_equal(cl_narg narg, ...)
 {
-#line 1047
+#line 1056
 
 	cl_index h;
-#line 1050
+#line 1059
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1050
+#line 1059
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 1050
+#line 1059
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1661));
-#line 1050
+#line 1059
 	for (h = 0; narg; narg--) {
 		cl_object o = ecl_va_arg(args);
 		h = _hash_equal(3, h, o);
 	}
 	{
-#line 1054
-		#line 1054
+#line 1063
+		#line 1063
 		cl_object __value0 = ecl_make_fixnum(h);
-#line 1054
+#line 1063
 		the_env->nvalues = 1;
-#line 1054
+#line 1063
 		return __value0;
-#line 1054
+#line 1063
 	}
 
 }
 
-#line 1057
+#line 1066
 cl_object si_hash_equalp(cl_narg narg, ...)
 {
-#line 1057
+#line 1066
 
 	cl_index h;
-#line 1060
+#line 1069
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1060
+#line 1069
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
-#line 1060
+#line 1069
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1662));
-#line 1060
+#line 1069
 	for (h = 0; narg; narg--) {
 		cl_object o = ecl_va_arg(args);
 		h = _hash_equalp(3, h, o);
 	}
 	{
-#line 1064
-		#line 1064
+#line 1073
+		#line 1073
 		cl_object __value0 = ecl_make_fixnum(h);
-#line 1064
+#line 1073
 		the_env->nvalues = 1;
-#line 1064
+#line 1073
 		return __value0;
-#line 1064
+#line 1073
 	}
 
 }
@@ -1435,16 +1444,16 @@ cl_maphash(cl_object fun, cl_object ht)
 			funcall(3, fun, e.key, e.value);
 	}
 	{
-#line 1078
+#line 1087
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1078
-		#line 1078
+#line 1087
+		#line 1087
 		cl_object __value0 = ECL_NIL;
-#line 1078
+#line 1087
 		the_env->nvalues = 1;
-#line 1078
+#line 1087
 		return __value0;
-#line 1078
+#line 1087
 	}
 
 }
@@ -1461,16 +1470,16 @@ si_hash_table_content(cl_object ht)
 			output = ecl_cons(ecl_cons(e.key, e.value), output);
 	}
 	{
-#line 1092
+#line 1101
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1092
-		#line 1092
+#line 1101
+		#line 1101
 		cl_object __value0 = output;
-#line 1092
+#line 1101
 		the_env->nvalues = 1;
-#line 1092
+#line 1101
 		return __value0;
-#line 1092
+#line 1101
 	}
 
 }
@@ -1487,16 +1496,16 @@ si_hash_table_fill(cl_object ht, cl_object values)
 		ecl_sethash(key, ht, value);
 	}
 	{
-#line 1106
+#line 1115
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1106
-		#line 1106
+#line 1115
+		#line 1115
 		cl_object __value0 = ht;
-#line 1106
+#line 1115
 		the_env->nvalues = 1;
-#line 1106
+#line 1115
 		return __value0;
-#line 1106
+#line 1115
 	}
 
 }
@@ -1513,16 +1522,16 @@ si_copy_hash_table(cl_object orig)
 	       orig->hash.size * sizeof(*orig->hash.data));
 	hash->hash.entries = orig->hash.entries;
 	{
-#line 1120
+#line 1129
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1120
-		#line 1120
+#line 1129
+		#line 1129
 		cl_object __value0 = hash;
-#line 1120
+#line 1129
 		the_env->nvalues = 1;
-#line 1120
+#line 1129
 		return __value0;
-#line 1120
+#line 1129
 	}
 
 }

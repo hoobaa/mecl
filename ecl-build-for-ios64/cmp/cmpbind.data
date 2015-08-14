@@ -1,7 +1,0 @@
-static const char compiler_data_text[] = 
-"c::closure c::var c::*env-lvl* c::lexical 0 c::global 0 c::lcl c::bind 0 0 c::*i"
- "nline-blocks* c::*temp* c::*destination* c::bind-init 0 0 c::*unwind-exit* c::bd"
- "s-bind c::bds-bind 0 c::var-kind c::var-loc c::next-env c::wt-nl c::wt-coerce-lo"
- "c c::wt c::var-name c::wt-comment c::next-lex c::wt-lex c::var-rep-type c::baboo"
- "n 0 c::inline-args c::coerce-locs c::close-inline-blocks c::c2expr* 0 c::var-p ";
-#define compiler_data_text_size 399

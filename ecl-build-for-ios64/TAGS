@@ -253,34 +253,34 @@ ecl_aset(370,9997
 ecl_aset1(382,10331
 si_make_pure_array(400,10852
 si_make_vector(465,13513
-alloc_pointerfull_memory(527,15488
-ecl_array_allocself(537,15715
-ecl_alloc_simple_vector(576,16828
-ecl_symbol_to_elttype(621,18250
-ecl_elttype_to_symbol(678,19555
-si_array_element_type_byte_size(684,19642
-address_inc(695,20029
-cl_array_element_type(740,20862
-ecl_displace(755,21357
-si_array_raw_data(811,23488
-ecl_array_elttype(854,25171
-cl_array_rank(862,25344
-ecl_array_rank(868,25431
-cl_array_dimension(886,25746
-ecl_array_dimension(892,25880
-cl_array_total_size(915,26436
-cl_adjustable_array_p(923,26640
-cl_array_displacement(934,26928
-cl_svref(1007,28757
-si_svset(1024,29339
-cl_array_has_fill_pointer_p(1041,29928
-cl_fill_pointer(1063,30388
-si_fill_pointer_set(1079,30922
-si_replace_array(1106,31912
-ecl_copy_subarray(1147,32936
-ecl_reverse_subarray(1181,34228
-si_copy_subarray(1295,37032
-si_fill_array_with_elt(1305,37344
+alloc_pointerfull_memory(528,15557
+ecl_array_allocself(538,15784
+ecl_alloc_simple_vector(579,17020
+ecl_symbol_to_elttype(624,18442
+ecl_elttype_to_symbol(681,19747
+si_array_element_type_byte_size(687,19834
+address_inc(698,20221
+cl_array_element_type(743,21054
+ecl_displace(758,21549
+si_array_raw_data(814,23680
+ecl_array_elttype(857,25363
+cl_array_rank(865,25536
+ecl_array_rank(871,25623
+cl_array_dimension(889,25938
+ecl_array_dimension(895,26072
+cl_array_total_size(918,26628
+cl_adjustable_array_p(926,26832
+cl_array_displacement(937,27120
+cl_svref(1010,28949
+si_svset(1027,29531
+cl_array_has_fill_pointer_p(1044,30120
+cl_fill_pointer(1066,30580
+si_fill_pointer_set(1082,31114
+si_replace_array(1109,32104
+ecl_copy_subarray(1150,33128
+ecl_reverse_subarray(1184,34420
+si_copy_subarray(1298,37224
+si_fill_array_with_elt(1308,37536
 
 /Users/strobolights/dev/mecl/ecl/src/c/assignment.d,524
 static void FEconstant_assignment(22,606
@@ -1816,89 +1816,89 @@ _ecl_standard_dispatch(215,6823
 generic_function_dispatch_vararg(264,8299
 si_clear_gfun_hash(275,8584
 
-/Users/strobolights/dev/mecl/ecl/src/c/hash.d,2521
+/Users/strobolights/dev/mecl/ecl/src/c/hash.d,2522
 #define ECL_INCLUDE_MATH_H19,557
 #define SYMBOL_NAME(28,737
 assert_type_hash_table(31,842
-_hash_eql(38,1029
-                struct { double mantissa;57,1760
-                struct { double mantissa; int exponent;57,1760
-                struct { double mantissa; int exponent; int sign;57,1760
-_hash_equal(78,2354
-                struct { double mantissa;136,4293
-                struct { double mantissa; int exponent;136,4293
-                struct { double mantissa; int exponent; int sign;136,4293
-_hash_equalp(154,4800
-#define HASH_TABLE_LOOP(211,6249
-#define HASH_TABLE_SET(237,7006
-#define HASH_TABLE_SET(239,7065
-#define _hash_eq(263,7623
-#define _hash_eq(265,7693
-_ecl_hash_loop_eq(269,7780
-_ecl_gethash_eq(275,7925
-_ecl_remhash_eq(283,8156
-_ecl_sethash_eq(298,8466
-_ecl_hash_loop_eql(308,8661
-_ecl_gethash_eql(314,8814
-_ecl_sethash_eql(322,9056
-_ecl_remhash_eql(328,9207
-_ecl_hash_loop_equal(347,9570
-_ecl_gethash_equal(353,9727
-_ecl_sethash_equal(361,9978
-_ecl_remhash_equal(367,10138
-_ecl_hash_loop_equalp(386,10511
-_ecl_gethash_equalp(392,10670
-_ecl_sethash_equalp(400,10924
-_ecl_remhash_equalp(406,11087
-_ecl_hash_loop_pack(425,11464
-_ecl_gethash_pack(432,11707
-_ecl_sethash_pack(440,11956
-_ecl_remhash_pack(446,12141
-#define copy_entry(464,12496
-_ecl_hash_key(469,12572
-normalize_weak_key_entry(480,12852
-normalize_weak_value_entry(485,12973
-normalize_weak_key_and_value_entry(490,13100
-copy_entry(498,13315
-_ecl_weak_hash_loop(535,14120
-_ecl_gethash_weak(574,15144
-_ecl_sethash_weak(587,15440
-_ecl_remhash_weak(622,16283
-ecl_gethash(645,16693
-ecl_gethash_safe(652,16861
-_ecl_sethash(659,17045
-ecl_sethash(665,17178
-ecl_extend_hashtable(673,17390
-do_clrhash(762,20091
-cl__make_hash_table(780,20523
-cl_hash_table_p(883,23710
-si_hash_table_weakness(889,23807
-si_hash_set(919,24444
-ecl_remhash(927,24608
-cl_remhash(934,24767
-cl_clrhash(941,24930
-cl_hash_table_test(951,25074
-cl_hash_table_size(967,25492
-cl_hash_table_count(974,25634
-si_hash_table_iterate(981,25790
-si_hash_table_iterator(1007,26376
-cl_hash_table_rehash_size(1016,26697
-cl_hash_table_rehash_threshold(1023,26843
-cl_sxhash(1030,26997
-	for (h = 0; narg;1040,27224
-		cl_object o 1041,27253
-		h 1042,27287
-	@(1044,27313
-	for (h = 0; narg;1050,27398
-		cl_object o 1051,27427
-		h 1052,27461
-	for (h = 0; narg;1060,27578
-		cl_object o 1061,27607
-		h 1062,27641
-	@(1064,27673
-si_hash_table_content(1082,28003
-si_hash_table_fill(1096,28349
-si_copy_hash_table(1110,28687
+_hash_eql(47,1286
+                struct { double mantissa;66,2017
+                struct { double mantissa; int exponent;66,2017
+                struct { double mantissa; int exponent; int sign;66,2017
+_hash_equal(87,2611
+                struct { double mantissa;145,4550
+                struct { double mantissa; int exponent;145,4550
+                struct { double mantissa; int exponent; int sign;145,4550
+_hash_equalp(163,5057
+#define HASH_TABLE_LOOP(220,6506
+#define HASH_TABLE_SET(246,7263
+#define HASH_TABLE_SET(248,7322
+#define _hash_eq(272,7880
+#define _hash_eq(274,7950
+_ecl_hash_loop_eq(278,8037
+_ecl_gethash_eq(284,8182
+_ecl_remhash_eq(292,8413
+_ecl_sethash_eq(307,8723
+_ecl_hash_loop_eql(317,8918
+_ecl_gethash_eql(323,9071
+_ecl_sethash_eql(331,9313
+_ecl_remhash_eql(337,9464
+_ecl_hash_loop_equal(356,9827
+_ecl_gethash_equal(362,9984
+_ecl_sethash_equal(370,10235
+_ecl_remhash_equal(376,10395
+_ecl_hash_loop_equalp(395,10768
+_ecl_gethash_equalp(401,10927
+_ecl_sethash_equalp(409,11181
+_ecl_remhash_equalp(415,11344
+_ecl_hash_loop_pack(434,11721
+_ecl_gethash_pack(441,11964
+_ecl_sethash_pack(449,12213
+_ecl_remhash_pack(455,12398
+#define copy_entry(473,12753
+_ecl_hash_key(478,12829
+normalize_weak_key_entry(489,13109
+normalize_weak_value_entry(494,13230
+normalize_weak_key_and_value_entry(499,13357
+copy_entry(507,13572
+_ecl_weak_hash_loop(544,14377
+_ecl_gethash_weak(583,15401
+_ecl_sethash_weak(596,15697
+_ecl_remhash_weak(631,16540
+ecl_gethash(654,16950
+ecl_gethash_safe(661,17118
+_ecl_sethash(668,17302
+ecl_sethash(674,17435
+ecl_extend_hashtable(682,17647
+do_clrhash(771,20348
+cl__make_hash_table(789,20780
+cl_hash_table_p(892,23967
+si_hash_table_weakness(898,24064
+si_hash_set(928,24701
+ecl_remhash(936,24865
+cl_remhash(943,25024
+cl_clrhash(950,25187
+cl_hash_table_test(960,25331
+cl_hash_table_size(976,25749
+cl_hash_table_count(983,25891
+si_hash_table_iterate(990,26047
+si_hash_table_iterator(1016,26633
+cl_hash_table_rehash_size(1025,26954
+cl_hash_table_rehash_threshold(1032,27100
+cl_sxhash(1039,27254
+	for (h = 0; narg;1049,27481
+		cl_object o 1050,27510
+		h 1051,27544
+	@(1053,27570
+	for (h = 0; narg;1059,27655
+		cl_object o 1060,27684
+		h 1061,27718
+	for (h = 0; narg;1069,27835
+		cl_object o 1070,27864
+		h 1071,27898
+	@(1073,27930
+si_hash_table_content(1091,28260
+si_hash_table_fill(1105,28606
+si_copy_hash_table(1119,28944
 
 /Users/strobolights/dev/mecl/ecl/src/c/instance.d,4302
 ecl_allocate_instance(22,560
@@ -2002,7 +2002,7 @@ odd_number_of_keywords(251,7347
 unknown_keyword(259,7567
 ecl_interpret(269,7908
 
-/Users/strobolights/dev/mecl/ecl/src/c/list.d,2393
+/Users/strobolights/dev/mecl/ecl/src/c/list.d,2394
 struct cl_test 21,594
 	bool (*test_c_function)test_c_function22,611
 	cl_object (*key_c_function)key_c_function23,666
@@ -2016,93 +2016,93 @@ struct cl_test 21,594
 #define KEY(39,1292
 #define close_test(40,1340
 test_compare(43,1383
-test_compare_not(51,1553
-test_eq(59,1727
-test_eql(65,1824
-test_equal(71,1927
-test_equalp(77,2034
-key_function(83,2148
-key_identity(90,2276
-setup_test(96,2349
-	@(147,3875
-	head 155,3992
-	@(165,4232
-		cl_object other 189,4692
-                tail 190,4730
-	@(199,5020
-#define LENTH(218,5391
-cl_object @fifth	LENTH(222,5524
-#undef LENTH228,5683
-	cl_object output;257,6165
-	setup_test(&t, ECL_NIL, test, test_not, ECL_NIL)259,6186
-	output 260,6237
-	close_test(&t)t261,6286
-	@(262,6303
-ecl_endp(278,6592
-cl_list_length(289,6812
-si_proper_list_p(309,7237
-cl_nth(333,7789
-ecl_nth(339,7875
-cl_nthcdr(355,8199
-ecl_nthcdr(361,8291
-ecl_last(376,8510
-@(403,9140
-	@(417,9497
-duplicate_pairs(441,9948
-cl_copy_alist(450,10107
-do_copy_tree(473,10576
-cl_copy_tree(483,10726
-cl_revappend(489,10794
-	@(517,11341
-cl_nreconc(532,11508
-ecl_butlast(550,11914
-	@(583,12866
-@(606,13316
-cl_rplaca(646,14257
-cl_rplacd(655,14441
-	cl_object output;665,14694
-	setup_test(&t, old_obj, test, test_not, key)667,14715
-	output 668,14762
-	close_test(&t)t669,14798
-	@(670,14815
-	setup_test(&t, old_obj, test, test_not, key)704,15469
-	tree 705,15516
-	close_test(&t)t706,15551
-	@(707,15568
-nsubst(732,15994
-	tree 750,16504
-	@(753,16570
-	tree 785,17350
-	@(788,17417
-	setup_test(&t, item, test, test_not, key)815,17970
-	} end_loop_for_in;819,18081
-	close_test(&t)t820,18101
-	@(821,18118
-si_memq(835,18297
-ecl_memql(846,18518
-ecl_member(856,18674
-si_member1(867,18862
-cl_tailp(883,19208
-	output 896,19471
-		output 900,19582
-	@(901,19599
-cl_acons(911,19702
-	k 919,19850
-	d 920,19861
-	} end_loop_for_in;926,20003
-	setup_test(&t, item, test, test_not, key)937,20236
-	a_list 938,20280
-	close_test(&t)t939,20312
-	@(940,20329
-	setup_test(&t, item, test, test_not, key)961,20721
-	} end_loop_for_in;972,20978
-	close_test(&t)t973,20998
-	@(974,21015
-ecl_delete_eq(996,21403
-ecl_assq(1013,21851
-ecl_assql(1024,22031
-ecl_assoc(1035,22219
-ecl_assqlp(1046,22409
+test_compare_not(52,1636
+test_eq(60,1810
+test_eql(66,1907
+test_equal(72,2010
+test_equalp(78,2117
+key_function(84,2231
+key_identity(91,2359
+setup_test(97,2432
+	@(148,3958
+	head 156,4075
+	@(166,4315
+		cl_object other 190,4775
+                tail 191,4813
+	@(200,5103
+#define LENTH(219,5474
+cl_object @fifth	LENTH(223,5607
+#undef LENTH229,5766
+	cl_object output;258,6248
+	setup_test(&t, ECL_NIL, test, test_not, ECL_NIL)260,6269
+	output 261,6320
+	close_test(&t)t262,6369
+	@(263,6386
+ecl_endp(279,6675
+cl_list_length(290,6895
+si_proper_list_p(310,7320
+cl_nth(334,7872
+ecl_nth(340,7958
+cl_nthcdr(356,8282
+ecl_nthcdr(362,8374
+ecl_last(377,8593
+@(404,9223
+	@(418,9580
+duplicate_pairs(442,10031
+cl_copy_alist(451,10190
+do_copy_tree(474,10659
+cl_copy_tree(484,10809
+cl_revappend(490,10877
+	@(518,11424
+cl_nreconc(533,11591
+ecl_butlast(551,11997
+	@(584,12949
+@(607,13399
+cl_rplaca(647,14340
+cl_rplacd(656,14524
+	cl_object output;666,14777
+	setup_test(&t, old_obj, test, test_not, key)668,14798
+	output 669,14845
+	close_test(&t)t670,14881
+	@(671,14898
+	setup_test(&t, old_obj, test, test_not, key)705,15552
+	tree 706,15599
+	close_test(&t)t707,15634
+	@(708,15651
+nsubst(733,16077
+	tree 751,16587
+	@(754,16653
+	tree 786,17433
+	@(789,17500
+	setup_test(&t, item, test, test_not, key)816,18053
+	} end_loop_for_in;820,18164
+	close_test(&t)t821,18184
+	@(822,18201
+si_memq(836,18380
+ecl_memql(847,18601
+ecl_member(857,18757
+si_member1(868,18945
+cl_tailp(884,19291
+	output 897,19554
+		output 901,19665
+	@(902,19682
+cl_acons(912,19785
+	k 920,19933
+	d 921,19944
+	} end_loop_for_in;927,20086
+	setup_test(&t, item, test, test_not, key)938,20319
+	a_list 939,20363
+	close_test(&t)t940,20395
+	@(941,20412
+	setup_test(&t, item, test, test_not, key)962,20804
+	} end_loop_for_in;973,21061
+	close_test(&t)t974,21081
+	@(975,21098
+ecl_delete_eq(997,21486
+ecl_assq(1014,21934
+ecl_assql(1025,22114
+ecl_assoc(1036,22302
+ecl_assqlp(1047,22492
 
 /Users/strobolights/dev/mecl/ecl/src/c/load.d,197
 si_load_binary(23,636
@@ -3209,7 +3209,7 @@ si_set_limit(599,15495
 si_get_limit(618,16018
 init_stacks(637,16471
 
-/Users/strobolights/dev/mecl/ecl/src/c/string.d,1977
+/Users/strobolights/dev/mecl/ecl/src/c/string.d,2005
 typedef ecl_character (*ecl_casefun)ecl_casefun24,633
 do_make_base_string(27,712
 do_make_string(38,937
@@ -3235,57 +3235,58 @@ compare_base(391,9279
 	cl_index s1, e1, s2, e2;425,10020
 @426,10046
 ecl_string_eq(475,11282
-        cl_index_pair p;520,12470
-	int output;521,12495
-	string1 523,12510
-	string2 524,12541
-	p 525,12572
-        s1 526,12634
-        s1 = p.start; e1 526,12634
-	p 527,12668
-        s2 528,12730
-        s2 = p.start; e2 528,12730
-	output 536,12994
-	@(539,13126
-#define start1 552,13463
-#define end1 553,13490
-#define start2 554,13515
-#define end2 555,13542
-#define start1p 556,13567
-#define start2p 557,13595
-#undef start1p593,14679
-#undef start2p594,14694
-#undef start1595,14709
-#undef end1596,14723
-#undef start2597,14735
-#undef end2598,14749
-ecl_member_char(652,15631
-string_trim0(692,16615
-cl_string_trim(718,17136
-cl_string_left_trim(724,17254
-cl_string_right_trim(730,17378
-string_case(736,17510
-#define kstart 743,17696
-#define kend 744,17723
-#define kstartp 745,17748
-#undef kstartp768,18455
-#undef kstart769,18470
-#undef kend770,18484
-char_upcase(774,18520
-char_downcase(785,18718
-char_capitalize(796,18926
-nstring_case(819,19336
-#define kstart 826,19523
-#define kend 827,19550
-#define kstartp 828,19575
-#undef kstartp851,20316
-#undef kstart852,20331
-#undef kend853,20345
-	int i;873,20764
-	cl_object output;874,20772
-	for (i = 0, l = 0; i < narg;877,20855
-		cl_object s 878,20892
-	output 885,21103
+static void test(517,12305
+        cl_index_pair p;524,12608
+	int output;525,12633
+	string1 528,12711
+	string2 529,12742
+	p 530,12830
+        s1 531,12892
+        s1 = p.start; e1 531,12892
+	p 532,12926
+        s2 533,12988
+        s2 = p.start; e2 533,12988
+	output 541,13252
+	@(544,13384
+#define start1 557,13721
+#define end1 558,13748
+#define start2 559,13773
+#define end2 560,13800
+#define start1p 561,13825
+#define start2p 562,13853
+#undef start1p598,14937
+#undef start2p599,14952
+#undef start1600,14967
+#undef end1601,14981
+#undef start2602,14993
+#undef end2603,15007
+ecl_member_char(657,15889
+string_trim0(697,16873
+cl_string_trim(723,17394
+cl_string_left_trim(729,17512
+cl_string_right_trim(735,17636
+string_case(741,17768
+#define kstart 748,17954
+#define kend 749,17981
+#define kstartp 750,18006
+#undef kstartp773,18713
+#undef kstart774,18728
+#undef kend775,18742
+char_upcase(779,18778
+char_downcase(790,18976
+char_capitalize(801,19184
+nstring_case(824,19594
+#define kstart 831,19781
+#define kend 832,19808
+#define kstartp 833,19833
+#undef kstartp856,20574
+#undef kstart857,20589
+#undef kend858,20603
+	int i;878,21022
+	cl_object output;879,21030
+	for (i = 0, l = 0; i < narg;882,21113
+		cl_object s 883,21150
+	output 890,21361
 
 /Users/strobolights/dev/mecl/ecl/src/c/structure.d,441
 structure_subtypep(30,761
@@ -6035,11 +6036,11 @@ typedef struct ecl_frame 229,7580
 @(defun si::gc-timesi::gc-time965,22564
 
 /Users/strobolights/dev/mecl/ecl/src/c/hash.d,229
-@(defun make_hash_tablemake_hash_table728,19125
-@(defun gethashgethash903,24182
-@(defun si::hash-eqlsi::hash-eql1037,27175
-@(defun si::hash-equalsi::hash-equal1047,27347
-@(defun si::hash-equalpsi::hash-equalp1057,27526
+@(defun make_hash_tablemake_hash_table737,19382
+@(defun gethashgethash912,24439
+@(defun si::hash-eqlsi::hash-eql1046,27432
+@(defun si::hash-equalsi::hash-equal1056,27604
+@(defun si::hash-equalpsi::hash-equalp1066,27783
 
 /Users/strobolights/dev/mecl/ecl/src/c/instance.d,39
 @(defun find-classfind-class199,5211
@@ -6048,24 +6049,24 @@ typedef struct ecl_frame 229,7580
 @(defun si::interpreter-stacksi::interpreter-stack1274,35930
 
 /Users/strobolights/dev/mecl/ecl/src/c/list.d,578
-@(defun listlist136,3632
-@(defun list*list*150,3895
-@(defun appendappend185,4592
-@(defun tree_equaltree_equal255,6102
-@(defun lastlast403,9140
-@(defun make_listmake_list410,9279
-@(defun nconcnconc497,10920
-@(defun butlastbutlast577,12617
-@(defun nbutlastnbutlast606,13316
-@(defun substsubst663,14615
-@(defun nsubstnsubst701,15387
-@(defun sublissublis741,16170
-@(defun nsublisnsublis776,17015
-@(defun membermember812,17899
-@(defun adjoinadjoin891,19349
-@(defun pairlispairlis916,19786
-@(defun assocassoc934,20164
-@(defun rassocrassoc958,20648
+@(defun listlist137,3715
+@(defun list*list*151,3978
+@(defun appendappend186,4675
+@(defun tree_equaltree_equal256,6185
+@(defun lastlast404,9223
+@(defun make_listmake_list411,9362
+@(defun nconcnconc498,11003
+@(defun butlastbutlast578,12700
+@(defun nbutlastnbutlast607,13399
+@(defun substsubst664,14698
+@(defun nsubstnsubst702,15470
+@(defun sublissublis742,16253
+@(defun nsublisnsublis777,17098
+@(defun membermember813,17982
+@(defun adjoinadjoin892,19432
+@(defun pairlispairlis917,19869
+@(defun assocassoc935,20247
+@(defun rassocrassoc959,20731
 
 /Users/strobolights/dev/mecl/ecl/src/c/load.d,27
 @(defun loadload199,7137
@@ -6216,24 +6217,24 @@ typedef struct ecl_frame 229,7580
 /Users/strobolights/dev/mecl/ecl/src/c/string.d,911
 @(defun make_stringmake_string50,1176
 @(defun stringstring422,9866
-@(defun string_equalstring_equal517,12305
-@(defun stringstring601,14764
-@(defun stringstring606,14846
-@(defun stringstring611,14928
-@(defun stringstring616,15010
-@(defun stringstring621,15092
-@(defun string-lesspstring-lessp626,15175
-@(defun string-greaterpstring-greaterp631,15262
-@(defun string-not-greaterpstring-not-greaterp636,15352
-@(defun string-not-lesspstring-not-lessp641,15445
-@(defun string-not-equalstring-not-equal646,15535
-@(defun string-upcasestring-upcase779,18592
-@(defun string-downcasestring-downcase790,18794
-@(defun string-capitalizestring-capitalize812,19201
-@(defun nstring-upcasenstring-upcase856,20360
-@(defun nstring-downcasenstring-downcase861,20468
-@(defun nstring-capitalizenstring-capitalize866,20582
-@(defun si::base-string-concatenatesi::base-string-concatenate871,20702
+@(defun string_equalstring_equal521,12443
+@(defun stringstring606,15022
+@(defun stringstring611,15104
+@(defun stringstring616,15186
+@(defun stringstring621,15268
+@(defun stringstring626,15350
+@(defun string-lesspstring-lessp631,15433
+@(defun string-greaterpstring-greaterp636,15520
+@(defun string-not-greaterpstring-not-greaterp641,15610
+@(defun string-not-lesspstring-not-lessp646,15703
+@(defun string-not-equalstring-not-equal651,15793
+@(defun string-upcasestring-upcase784,18850
+@(defun string-downcasestring-downcase795,19052
+@(defun string-capitalizestring-capitalize817,19459
+@(defun nstring-upcasenstring-upcase861,20618
+@(defun nstring-downcasenstring-downcase866,20726
+@(defun nstring-capitalizenstring-capitalize871,20840
+@(defun si::base-string-concatenatesi::base-string-concatenate876,20960
 
 /Users/strobolights/dev/mecl/ecl/src/c/structure.d,54
 @(defun si::make-structuresi::make-structure65,1510

@@ -154,16 +154,16 @@
  * use autoconf to guess the following values.
  */
 #define ECL_INT_BITS		32
-#define ECL_LONG_BITS		32
-#define FIXNUM_BITS		32
+#define ECL_LONG_BITS		64
+#define FIXNUM_BITS		64
 #define MOST_POSITIVE_FIXNUM	((cl_fixnum)536870911L)
 #define MOST_NEGATIVE_FIXNUM	((cl_fixnum)-536870912L)
 #define MOST_POSITIVE_FIXNUM_VAL 536870911L
 #define MOST_NEGATIVE_FIXNUM_VAL -536870912L
 
-typedef int cl_fixnum;
-typedef unsigned int cl_index;
-typedef unsigned int cl_hashkey;
+typedef long cl_fixnum;
+typedef unsigned long cl_index;
+typedef unsigned long cl_hashkey;
 
 /*
  * The character type

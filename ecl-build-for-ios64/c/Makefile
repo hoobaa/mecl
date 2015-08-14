@@ -10,7 +10,7 @@ VPATH	= /Users/strobolights/dev/mecl/ecl/src/c
 AR	= /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar
 CC	= /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 TRUE_CC = $(CC)
-CFLAGS	= -I. -I/Users/strobolights/dev/mecl/ecl-build-for-ios64 -I$(srcdir) -I../ecl/gc -DECL_API -DECL_NO_LEGACY     -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -DAPPLE -I/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/include -DECL_THREAD=0  -D_THREAD_SAFE -Ddarwin -c
+CFLAGS	= -I. -I/Users/strobolights/dev/mecl/ecl-build-for-ios64 -I$(srcdir) -I../ecl/gc -DECL_API -DECL_NO_LEGACY     -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -DAPPLE -I/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/include -D_THREAD_SAFE -Ddarwin -c
 
 # The following flags could be added and used by GCC
 #  -Wall -W -Wfloat-equal -Wundef -Wendif-labels -Wpointer-arith -Wcast-align \
@@ -116,7 +116,7 @@ clean:
 
 $(DPP): $(srcdir)/dpp.c $(srcdir)/symbols_list2.h
 	if test -f ../CROSS-DPP; then touch dpp; else \
-	$(TRUE_CC) -I$(srcdir) -I/Users/strobolights/dev/mecl/ecl-build-for-ios64 -I./ $(srcdir)/dpp.c    -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -DAPPLE -I/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/include -DECL_THREAD=0  -D_THREAD_SAFE -Ddarwin -o $@ ; \
+	$(TRUE_CC) -I$(srcdir) -I/Users/strobolights/dev/mecl/ecl-build-for-ios64 -I./ $(srcdir)/dpp.c    -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -DAPPLE -I/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/include -D_THREAD_SAFE -Ddarwin -o $@ ; \
 	fi
 
 #

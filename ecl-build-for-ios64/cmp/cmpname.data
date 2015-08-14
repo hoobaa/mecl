@@ -1,7 +1,0 @@
-static const char compiler_data_text[] = 
-"c::unique-init-name c::init-name-tag :pnacl (unsigned-byte 8) c::find-init-name "
- "c::remove-prefix :kind c::guess-init-name 0 :c 0 :fasl 0 :fas 0 :prefix :static-"
- "library 0 :lib 0 c::+static-library-prefix+ :shared-library 0 :dll 0 c::+shared-"
- "library-prefix+ :program 0 c::compute-init-name c::compute-main-name :library 0 "
- "c::init-function-name 0 0 0 :tag 0 0 0 c::guess-kind :kind :prefix 0 0 ";
-#define compiler_data_text_size 391

@@ -1,6 +1,0 @@
-static const char compiler_data_text[] = 
-":kind c::global :initial-value c::*cmp-env* c::*cmp-env-root* c::process-declaim"
- "-args (declare (notinline mapc)) (:compile-toplevel) 'proclaim (:load-toplevel :"
- "execute) declaim ext::c-declaim 0 c::c1body c::cmpwarn-style c::add-one-declarat"
- "ion c::c1make-global-variable c::cmp-env-register-var 0 0 ";
-#define compiler_data_text_size 298

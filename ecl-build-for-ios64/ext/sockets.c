@@ -790,7 +790,7 @@ L9:;
    v3 = ecl_car(v2address);
    v4 = ecl_cadr(v2address);
    {
-    cl_fixnum v5;
+    int v5;
     if (ecl_unlikely((0)>=(v3)->vector.dim))
            FEwrong_index(ECL_NIL,v3,-1,ecl_make_fixnum(0),(v3)->vector.dim);
     T0 = ecl_aref_unsafe(v3,0);
@@ -816,9 +816,9 @@ L9:;
 	ecl_enable_interrupts();
 	v6= output;
 }
-     v5 = (cl_fixnum)(v6);
+     v5 = v6;
     }
-    if (!((-1)==(v5))) { goto L13; }
+    if (!(ecl_number_equalp(ecl_make_fixnum(-1),ecl_make_int(v5)))) { goto L13; }
    }
    value0 = L44socket_error(_ecl_static_27);
    return value0;
@@ -884,7 +884,7 @@ TTL:
     v4 = value0;
     v5 = cl_env_copy->values[1];
     v6 = cl_env_copy->values[2];
-    if (!((ecl_fixnum(v4))==(-1))) { goto L3; }
+    if (!(ecl_number_equalp(v4,ecl_make_fixnum(-1)))) { goto L3; }
     value0 = L44socket_error(_ecl_static_28);
     return value0;
 L3:;
@@ -921,7 +921,7 @@ static cl_object LC23__g86(cl_narg narg, cl_object v1socket, ...)
    v3 = ecl_car(v2address);
    v4 = ecl_cadr(v2address);
    {
-    cl_fixnum v5;
+    int v5;
     if (ecl_unlikely((0)>=(v3)->vector.dim))
            FEwrong_index(ECL_NIL,v3,-1,ecl_make_fixnum(0),(v3)->vector.dim);
     T0 = ecl_aref_unsafe(v3,0);
@@ -949,9 +949,9 @@ static cl_object LC23__g86(cl_narg narg, cl_object v1socket, ...)
 
 	v6= output;
 }
-     v5 = (cl_fixnum)(v6);
+     v5 = v6;
     }
-    if (!((-1)==(v5))) { goto L3; }
+    if (!(ecl_number_equalp(ecl_make_fixnum(-1),ecl_make_int(v5)))) { goto L3; }
    }
    value0 = L44socket_error(_ecl_static_29);
    return value0;
@@ -974,7 +974,7 @@ TTL:
   {
    cl_object v2vector;
    cl_object v3fd;
-   cl_fixnum v4port;
+   int v4port;
    v2vector = si_make_vector(ECL_T, ecl_make_fixnum(4), ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
    v3fd = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
    {
@@ -1002,11 +1002,11 @@ TTL:
                 v5= -1;
          }
 }
-    v4port = (cl_fixnum)(v5);
+    v4port = v5;
    }
-   if (!((v4port)>=(0))) { goto L4; }
+   if (!(ecl_number_compare(ecl_make_int(v4port),ecl_make_fixnum(0))>=0)) { goto L4; }
    cl_env_copy->nvalues = 2;
-   cl_env_copy->values[1] = ecl_make_fixnum(v4port);
+   cl_env_copy->values[1] = ecl_make_int(v4port);
    cl_env_copy->values[0] = v2vector;
    return cl_env_copy->values[0];
 L4:;
@@ -1027,7 +1027,7 @@ TTL:
   {
    cl_object v2vector;
    cl_object v3fd;
-   cl_fixnum v4port;
+   int v4port;
    v2vector = si_make_vector(ECL_T, ecl_make_fixnum(4), ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
    v3fd = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
    {
@@ -1055,11 +1055,11 @@ TTL:
                 v5= -1;
          }
 }
-    v4port = (cl_fixnum)(v5);
+    v4port = v5;
    }
-   if (!((v4port)>=(0))) { goto L4; }
+   if (!(ecl_number_compare(ecl_make_int(v4port),ecl_make_fixnum(0))>=0)) { goto L4; }
    cl_env_copy->nvalues = 2;
-   cl_env_copy->values[1] = ecl_make_fixnum(v4port);
+   cl_env_copy->values[1] = ecl_make_int(v4port);
    cl_env_copy->values[0] = v2vector;
    return cl_env_copy->values[0];
 L4:;
@@ -1123,7 +1123,7 @@ L11:;
 L9:;
    v14 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
    {
-    long v15len_sent;
+    int v15len_sent;
     if (Null(v4address)) { goto L15; }
     goto L19;
 L18:;
@@ -1199,7 +1199,7 @@ L22:;
         v16= len;
 }
 
-     v15len_sent = v16;
+     v15len_sent = (int)(v16);
      goto L14;
     }
 L15:;
@@ -1232,14 +1232,14 @@ L15:;
         v17= len;
 }
 
-     v15len_sent = v17;
+     v15len_sent = (int)(v17);
     }
 L14:;
-    if (!(ecl_number_equalp(ecl_make_long(v15len_sent),ecl_make_fixnum(-1)))) { goto L40; }
+    if (!(ecl_number_equalp(ecl_make_int(v15len_sent),ecl_make_fixnum(-1)))) { goto L40; }
     value0 = L44socket_error(_ecl_static_32);
     return value0;
 L40:;
-    value0 = ecl_make_long(v15len_sent);
+    value0 = ecl_make_int(v15len_sent);
     cl_env_copy->nvalues = 1;
     return value0;
    }
@@ -1298,7 +1298,7 @@ L9:;
    v4 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
    v5 = ecl_function_dispatch(cl_env_copy,VV[172])(1, v1socket) /*  SOCKET-FAMILY */;
    {
-    cl_fixnum v6;
+    int v6;
     {
      cl_object v7;
      v7 = si_copy_to_simple_base_string(v3);
@@ -1322,10 +1322,10 @@ L9:;
 
         v8= output;
 }
-      v6 = (cl_fixnum)(v8);
+      v6 = v8;
      }
     }
-    if (!((-1)==(v6))) { goto L14; }
+    if (!(ecl_number_equalp(ecl_make_fixnum(-1),ecl_make_int(v6)))) { goto L14; }
    }
    value0 = L44socket_error(_ecl_static_27);
    return value0;
@@ -1369,7 +1369,7 @@ TTL:
    }
    v3 = value0;
    v4 = cl_env_copy->values[1];
-   if (!((ecl_fixnum(v3))==(-1))) { goto L2; }
+   if (!(ecl_number_equalp(v3,ecl_make_fixnum(-1)))) { goto L2; }
    value0 = L44socket_error(_ecl_static_28);
    return value0;
 L2:;
@@ -1422,7 +1422,7 @@ L9:;
    v4 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
    v5 = ecl_function_dispatch(cl_env_copy,VV[172])(1, v1socket) /*  SOCKET-FAMILY */;
    {
-    cl_fixnum v6;
+    int v6;
     {
      cl_object v7;
      v7 = si_copy_to_simple_base_string(v3);
@@ -1445,10 +1445,10 @@ L9:;
 
         v8= output;
 }
-      v6 = (cl_fixnum)(v8);
+      v6 = v8;
      }
     }
-    if (!((-1)==(v6))) { goto L14; }
+    if (!(ecl_number_equalp(ecl_make_fixnum(-1),ecl_make_int(v6)))) { goto L14; }
    }
    value0 = L44socket_error(_ecl_static_29);
    return value0;
@@ -1515,11 +1515,11 @@ TTL:
    cl_object v2fd;
    v2fd = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
    {
-    cl_fixnum v3;
-    v3 = (cl_fixnum)(fcntl(ecl_to_int(v2fd),F_GETFL,NULL)&O_NONBLOCK);
+    int v3;
+    v3 = fcntl(ecl_to_int(v2fd),F_GETFL,NULL)&O_NONBLOCK;
     {
      bool v4;
-     v4 = (v3)==0;
+     v4 = ecl_zerop(ecl_make_int(v3));
      value0 = (v4)?ECL_NIL:ECL_T;
      cl_env_copy->nvalues = 1;
      return value0;
@@ -1548,7 +1548,7 @@ L3:;
    v4 = 0;
 L2:;
    {
-    cl_fixnum v5;
+    int v5;
     {
      int v6;
      
@@ -1560,9 +1560,9 @@ L2:;
         v6= fcntl(ecl_to_int(v3),F_SETFL,newflags);
 	ecl_enable_interrupts();
 }
-     v5 = (cl_fixnum)(v6);
+     v5 = v6;
     }
-    if (!((-1)==(v5))) { goto L5; }
+    if (!(ecl_number_equalp(ecl_make_fixnum(-1),ecl_make_int(v5)))) { goto L5; }
    }
    value0 = L44socket_error(_ecl_static_36);
    return value0;
@@ -1931,11 +1931,11 @@ static cl_object L44socket_error(cl_object v1where)
  {
 TTL:
   {
-   cl_fixnum v2errno;
+   int v2errno;
    cl_object v3condition;
-   v2errno = (cl_fixnum)(errno);
-   v3condition = L43condition_for_errno(ecl_make_fixnum(v2errno));
-   value0 = cl_error(5, v3condition, VV[89], ecl_make_fixnum(v2errno), VV[90], v1where);
+   v2errno = errno;
+   v3condition = L43condition_for_errno(ecl_make_int(v2errno));
+   value0 = cl_error(5, v3condition, VV[89], ecl_make_int(v2errno), VV[90], v1where);
    return value0;
   }
  }
@@ -1951,9 +1951,9 @@ static cl_object L45name_service_error(cl_object v1where)
 TTL:
   L50get_name_service_errno();
   {
-   cl_fixnum v2;
-   v2 = (cl_fixnum)(NETDB_INTERNAL);
-   if (!(ecl_number_equalp(ecl_symbol_value(VV[92]),ecl_make_fixnum(v2)))) { goto L2; }
+   int v2;
+   v2 = NETDB_INTERNAL;
+   if (!(ecl_number_equalp(ecl_symbol_value(VV[92]),ecl_make_int(v2)))) { goto L2; }
   }
   value0 = L44socket_error(v1where);
   return value0;
@@ -2530,12 +2530,12 @@ static cl_object L61sockopt_type(cl_object v1socket)
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v2;
-   v2 = (cl_fixnum)(SOL_SOCKET);
+   int v2;
+   v2 = SOL_SOCKET;
    {
-    cl_fixnum v3;
-    v3 = (cl_fixnum)(SO_TYPE);
-    value0 = L52get_sockopt_int(T0, ecl_make_fixnum(v2), ecl_make_fixnum(v3));
+    int v3;
+    v3 = SO_TYPE;
+    value0 = L52get_sockopt_int(T0, ecl_make_int(v2), ecl_make_int(v3));
     return value0;
    }
   }
@@ -2553,12 +2553,12 @@ static cl_object L62sockopt_receive_buffer(cl_object v1socket)
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v2;
-   v2 = (cl_fixnum)(SOL_SOCKET);
+   int v2;
+   v2 = SOL_SOCKET;
    {
-    cl_fixnum v3;
-    v3 = (cl_fixnum)(SO_RCVBUF);
-    value0 = L52get_sockopt_int(T0, ecl_make_fixnum(v2), ecl_make_fixnum(v3));
+    int v3;
+    v3 = SO_RCVBUF;
+    value0 = L52get_sockopt_int(T0, ecl_make_int(v2), ecl_make_int(v3));
     return value0;
    }
   }
@@ -2576,12 +2576,12 @@ static cl_object L63_setf_sockopt_receive_buffer_(cl_object v1value, cl_object v
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v2socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v3;
-   v3 = (cl_fixnum)(SOL_SOCKET);
+   int v3;
+   v3 = SOL_SOCKET;
    {
-    cl_fixnum v4;
-    v4 = (cl_fixnum)(SO_RCVBUF);
-    value0 = L56set_sockopt_int(T0, ecl_make_fixnum(v3), ecl_make_fixnum(v4), v1value);
+    int v4;
+    v4 = SO_RCVBUF;
+    value0 = L56set_sockopt_int(T0, ecl_make_int(v3), ecl_make_int(v4), v1value);
     return value0;
    }
   }
@@ -2599,12 +2599,12 @@ static cl_object L64sockopt_receive_timeout(cl_object v1socket)
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v2;
-   v2 = (cl_fixnum)(SOL_SOCKET);
+   int v2;
+   v2 = SOL_SOCKET;
    {
-    cl_fixnum v3;
-    v3 = (cl_fixnum)(SO_RCVTIMEO);
-    value0 = L54get_sockopt_timeval(T0, ecl_make_fixnum(v2), ecl_make_fixnum(v3));
+    int v3;
+    v3 = SO_RCVTIMEO;
+    value0 = L54get_sockopt_timeval(T0, ecl_make_int(v2), ecl_make_int(v3));
     return value0;
    }
   }
@@ -2622,12 +2622,12 @@ static cl_object L65_setf_sockopt_receive_timeout_(cl_object v1value, cl_object 
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v2socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v3;
-   v3 = (cl_fixnum)(SOL_SOCKET);
+   int v3;
+   v3 = SOL_SOCKET;
    {
-    cl_fixnum v4;
-    v4 = (cl_fixnum)(SO_RCVTIMEO);
-    value0 = L58set_sockopt_timeval(T0, ecl_make_fixnum(v3), ecl_make_fixnum(v4), v1value);
+    int v4;
+    v4 = SO_RCVTIMEO;
+    value0 = L58set_sockopt_timeval(T0, ecl_make_int(v3), ecl_make_int(v4), v1value);
     return value0;
    }
   }
@@ -2645,12 +2645,12 @@ static cl_object L66sockopt_send_timeout(cl_object v1socket)
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v2;
-   v2 = (cl_fixnum)(SOL_SOCKET);
+   int v2;
+   v2 = SOL_SOCKET;
    {
-    cl_fixnum v3;
-    v3 = (cl_fixnum)(SO_SNDTIMEO);
-    value0 = L54get_sockopt_timeval(T0, ecl_make_fixnum(v2), ecl_make_fixnum(v3));
+    int v3;
+    v3 = SO_SNDTIMEO;
+    value0 = L54get_sockopt_timeval(T0, ecl_make_int(v2), ecl_make_int(v3));
     return value0;
    }
   }
@@ -2668,12 +2668,12 @@ static cl_object L67_setf_sockopt_send_timeout_(cl_object v1value, cl_object v2s
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v2socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v3;
-   v3 = (cl_fixnum)(SOL_SOCKET);
+   int v3;
+   v3 = SOL_SOCKET;
    {
-    cl_fixnum v4;
-    v4 = (cl_fixnum)(SO_SNDTIMEO);
-    value0 = L58set_sockopt_timeval(T0, ecl_make_fixnum(v3), ecl_make_fixnum(v4), v1value);
+    int v4;
+    v4 = SO_SNDTIMEO;
+    value0 = L58set_sockopt_timeval(T0, ecl_make_int(v3), ecl_make_int(v4), v1value);
     return value0;
    }
   }
@@ -2691,12 +2691,12 @@ static cl_object L68sockopt_reuse_address(cl_object v1socket)
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v2;
-   v2 = (cl_fixnum)(SOL_SOCKET);
+   int v2;
+   v2 = SOL_SOCKET;
    {
-    cl_fixnum v3;
-    v3 = (cl_fixnum)(SO_REUSEADDR);
-    value0 = L53get_sockopt_bool(T0, ecl_make_fixnum(v2), ecl_make_fixnum(v3));
+    int v3;
+    v3 = SO_REUSEADDR;
+    value0 = L53get_sockopt_bool(T0, ecl_make_int(v2), ecl_make_int(v3));
     return value0;
    }
   }
@@ -2714,12 +2714,12 @@ static cl_object L69_setf_sockopt_reuse_address_(cl_object v1value, cl_object v2
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v2socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v3;
-   v3 = (cl_fixnum)(SOL_SOCKET);
+   int v3;
+   v3 = SOL_SOCKET;
    {
-    cl_fixnum v4;
-    v4 = (cl_fixnum)(SO_REUSEADDR);
-    value0 = L57set_sockopt_bool(T0, ecl_make_fixnum(v3), ecl_make_fixnum(v4), v1value);
+    int v4;
+    v4 = SO_REUSEADDR;
+    value0 = L57set_sockopt_bool(T0, ecl_make_int(v3), ecl_make_int(v4), v1value);
     return value0;
    }
   }
@@ -2737,12 +2737,12 @@ static cl_object L70sockopt_keep_alive(cl_object v1socket)
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v2;
-   v2 = (cl_fixnum)(SOL_SOCKET);
+   int v2;
+   v2 = SOL_SOCKET;
    {
-    cl_fixnum v3;
-    v3 = (cl_fixnum)(SO_KEEPALIVE);
-    value0 = L53get_sockopt_bool(T0, ecl_make_fixnum(v2), ecl_make_fixnum(v3));
+    int v3;
+    v3 = SO_KEEPALIVE;
+    value0 = L53get_sockopt_bool(T0, ecl_make_int(v2), ecl_make_int(v3));
     return value0;
    }
   }
@@ -2760,12 +2760,12 @@ static cl_object L71_setf_sockopt_keep_alive_(cl_object v1value, cl_object v2soc
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v2socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v3;
-   v3 = (cl_fixnum)(SOL_SOCKET);
+   int v3;
+   v3 = SOL_SOCKET;
    {
-    cl_fixnum v4;
-    v4 = (cl_fixnum)(SO_KEEPALIVE);
-    value0 = L57set_sockopt_bool(T0, ecl_make_fixnum(v3), ecl_make_fixnum(v4), v1value);
+    int v4;
+    v4 = SO_KEEPALIVE;
+    value0 = L57set_sockopt_bool(T0, ecl_make_int(v3), ecl_make_int(v4), v1value);
     return value0;
    }
   }
@@ -2783,12 +2783,12 @@ static cl_object L72sockopt_dont_route(cl_object v1socket)
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v2;
-   v2 = (cl_fixnum)(SOL_SOCKET);
+   int v2;
+   v2 = SOL_SOCKET;
    {
-    cl_fixnum v3;
-    v3 = (cl_fixnum)(SO_DONTROUTE);
-    value0 = L53get_sockopt_bool(T0, ecl_make_fixnum(v2), ecl_make_fixnum(v3));
+    int v3;
+    v3 = SO_DONTROUTE;
+    value0 = L53get_sockopt_bool(T0, ecl_make_int(v2), ecl_make_int(v3));
     return value0;
    }
   }
@@ -2806,12 +2806,12 @@ static cl_object L73_setf_sockopt_dont_route_(cl_object v1value, cl_object v2soc
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v2socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v3;
-   v3 = (cl_fixnum)(SOL_SOCKET);
+   int v3;
+   v3 = SOL_SOCKET;
    {
-    cl_fixnum v4;
-    v4 = (cl_fixnum)(SO_DONTROUTE);
-    value0 = L57set_sockopt_bool(T0, ecl_make_fixnum(v3), ecl_make_fixnum(v4), v1value);
+    int v4;
+    v4 = SO_DONTROUTE;
+    value0 = L57set_sockopt_bool(T0, ecl_make_int(v3), ecl_make_int(v4), v1value);
     return value0;
    }
   }
@@ -2829,12 +2829,12 @@ static cl_object L74sockopt_linger(cl_object v1socket)
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v2;
-   v2 = (cl_fixnum)(SOL_SOCKET);
+   int v2;
+   v2 = SOL_SOCKET;
    {
-    cl_fixnum v3;
-    v3 = (cl_fixnum)(SO_LINGER);
-    value0 = L55get_sockopt_linger(T0, ecl_make_fixnum(v2), ecl_make_fixnum(v3));
+    int v3;
+    v3 = SO_LINGER;
+    value0 = L55get_sockopt_linger(T0, ecl_make_int(v2), ecl_make_int(v3));
     return value0;
    }
   }
@@ -2852,12 +2852,12 @@ static cl_object L75_setf_sockopt_linger_(cl_object v1value, cl_object v2socket)
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v2socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v3;
-   v3 = (cl_fixnum)(SOL_SOCKET);
+   int v3;
+   v3 = SOL_SOCKET;
    {
-    cl_fixnum v4;
-    v4 = (cl_fixnum)(SO_LINGER);
-    value0 = L59set_sockopt_linger(T0, ecl_make_fixnum(v3), ecl_make_fixnum(v4), v1value);
+    int v4;
+    v4 = SO_LINGER;
+    value0 = L59set_sockopt_linger(T0, ecl_make_int(v3), ecl_make_int(v4), v1value);
     return value0;
    }
   }
@@ -2875,12 +2875,12 @@ static cl_object L76sockopt_reuse_port(cl_object v1socket)
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v2;
-   v2 = (cl_fixnum)(SOL_SOCKET);
+   int v2;
+   v2 = SOL_SOCKET;
    {
-    cl_fixnum v3;
-    v3 = (cl_fixnum)(SO_REUSEPORT);
-    value0 = L53get_sockopt_bool(T0, ecl_make_fixnum(v2), ecl_make_fixnum(v3));
+    int v3;
+    v3 = SO_REUSEPORT;
+    value0 = L53get_sockopt_bool(T0, ecl_make_int(v2), ecl_make_int(v3));
     return value0;
    }
   }
@@ -2898,12 +2898,12 @@ static cl_object L77_setf_sockopt_reuse_port_(cl_object v1value, cl_object v2soc
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v2socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v3;
-   v3 = (cl_fixnum)(SOL_SOCKET);
+   int v3;
+   v3 = SOL_SOCKET;
    {
-    cl_fixnum v4;
-    v4 = (cl_fixnum)(SO_REUSEPORT);
-    value0 = L57set_sockopt_bool(T0, ecl_make_fixnum(v3), ecl_make_fixnum(v4), v1value);
+    int v4;
+    v4 = SO_REUSEPORT;
+    value0 = L57set_sockopt_bool(T0, ecl_make_int(v3), ecl_make_int(v4), v1value);
     return value0;
    }
   }
@@ -2921,12 +2921,12 @@ static cl_object L78sockopt_tcp_nodelay(cl_object v1socket)
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v1socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v2;
-   v2 = (cl_fixnum)(IPPROTO_TCP);
+   int v2;
+   v2 = IPPROTO_TCP;
    {
-    cl_fixnum v3;
-    v3 = (cl_fixnum)(TCP_NODELAY);
-    value0 = L53get_sockopt_bool(T0, ecl_make_fixnum(v2), ecl_make_fixnum(v3));
+    int v3;
+    v3 = TCP_NODELAY;
+    value0 = L53get_sockopt_bool(T0, ecl_make_int(v2), ecl_make_int(v3));
     return value0;
    }
   }
@@ -2944,12 +2944,12 @@ static cl_object L79_setf_sockopt_tcp_nodelay_(cl_object v1value, cl_object v2so
 TTL:
   T0 = ecl_function_dispatch(cl_env_copy,VV[171])(1, v2socket) /*  SOCKET-FILE-DESCRIPTOR */;
   {
-   cl_fixnum v3;
-   v3 = (cl_fixnum)(IPPROTO_TCP);
+   int v3;
+   v3 = IPPROTO_TCP;
    {
-    cl_fixnum v4;
-    v4 = (cl_fixnum)(TCP_NODELAY);
-    value0 = L57set_sockopt_bool(T0, ecl_make_fixnum(v3), ecl_make_fixnum(v4), v1value);
+    int v4;
+    v4 = TCP_NODELAY;
+    value0 = L57set_sockopt_bool(T0, ecl_make_int(v3), ecl_make_int(v4), v1value);
     return value0;
    }
   }
@@ -2960,7 +2960,7 @@ TTL:
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
+ECL_DLLEXPORT void _eclQ5rqp4b7_IvFxWE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -2981,29 +2981,29 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_eclekPx67Hqtmli9_WGwtVE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_eclQ5rqp4b7_IvFxWE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(AF_INET);
-  si_Xmake_constant(VV[0], ecl_make_fixnum(v1));
+  int v1;
+  v1 = AF_INET;
+  si_Xmake_constant(VV[0], ecl_make_int(v1));
  }
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(AF_LOCAL);
-  si_Xmake_constant(VV[1], ecl_make_fixnum(v1));
+  int v1;
+  v1 = AF_LOCAL;
+  si_Xmake_constant(VV[1], ecl_make_int(v1));
  }
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(EAGAIN);
-  si_Xmake_constant(VV[2], ecl_make_fixnum(v1));
+  int v1;
+  v1 = EAGAIN;
+  si_Xmake_constant(VV[2], ecl_make_int(v1));
  }
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(EINTR);
-  si_Xmake_constant(VV[3], ecl_make_fixnum(v1));
+  int v1;
+  v1 = EINTR;
+  si_Xmake_constant(VV[3], ecl_make_int(v1));
  }
  ecl_cmp_defun(VV[158]);                          /*  FF-SOCKET       */
  ecl_cmp_defun(VV[159]);                          /*  FF-LISTEN       */
@@ -3268,9 +3268,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(EADDRINUSE);
-  si_Xmake_constant(VV[61], ecl_make_fixnum(v1));
+  int v1;
+  v1 = EADDRINUSE;
+  si_Xmake_constant(VV[61], ecl_make_int(v1));
  }
  clos_load_defclass(VV[62], VV[57], VVtemp[31], ECL_NIL);
  cl_export(1, VV[62]);
@@ -3280,9 +3280,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(EAGAIN);
-  si_Xmake_constant(VV[63], ecl_make_fixnum(v1));
+  int v1;
+  v1 = EAGAIN;
+  si_Xmake_constant(VV[63], ecl_make_int(v1));
  }
  clos_load_defclass(VV[64], VV[57], VVtemp[32], ECL_NIL);
  cl_export(1, VV[64]);
@@ -3292,9 +3292,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(EBADF);
-  si_Xmake_constant(VV[65], ecl_make_fixnum(v1));
+  int v1;
+  v1 = EBADF;
+  si_Xmake_constant(VV[65], ecl_make_int(v1));
  }
  clos_load_defclass(VV[66], VV[57], VVtemp[33], ECL_NIL);
  cl_export(1, VV[66]);
@@ -3304,9 +3304,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(ECONNREFUSED);
-  si_Xmake_constant(VV[67], ecl_make_fixnum(v1));
+  int v1;
+  v1 = ECONNREFUSED;
+  si_Xmake_constant(VV[67], ecl_make_int(v1));
  }
  clos_load_defclass(VV[68], VV[57], VVtemp[34], ECL_NIL);
  cl_export(1, VV[68]);
@@ -3316,9 +3316,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(ETIMEDOUT);
-  si_Xmake_constant(VV[69], ecl_make_fixnum(v1));
+  int v1;
+  v1 = ETIMEDOUT;
+  si_Xmake_constant(VV[69], ecl_make_int(v1));
  }
  clos_load_defclass(VV[70], VV[57], VVtemp[35], ECL_NIL);
  cl_export(1, VV[70]);
@@ -3328,9 +3328,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(EINTR);
-  si_Xmake_constant(VV[71], ecl_make_fixnum(v1));
+  int v1;
+  v1 = EINTR;
+  si_Xmake_constant(VV[71], ecl_make_int(v1));
  }
  clos_load_defclass(VV[64], VV[57], VVtemp[36], ECL_NIL);
  cl_export(1, VV[64]);
@@ -3340,9 +3340,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(EINVAL);
-  si_Xmake_constant(VV[72], ecl_make_fixnum(v1));
+  int v1;
+  v1 = EINVAL;
+  si_Xmake_constant(VV[72], ecl_make_int(v1));
  }
  clos_load_defclass(VV[73], VV[57], VVtemp[37], ECL_NIL);
  cl_export(1, VV[73]);
@@ -3352,9 +3352,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(ENOBUFS);
-  si_Xmake_constant(VV[74], ecl_make_fixnum(v1));
+  int v1;
+  v1 = ENOBUFS;
+  si_Xmake_constant(VV[74], ecl_make_int(v1));
  }
  clos_load_defclass(VV[75], VV[57], VVtemp[38], ECL_NIL);
  cl_export(1, VV[75]);
@@ -3364,9 +3364,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(ENOMEM);
-  si_Xmake_constant(VV[76], ecl_make_fixnum(v1));
+  int v1;
+  v1 = ENOMEM;
+  si_Xmake_constant(VV[76], ecl_make_int(v1));
  }
  clos_load_defclass(VV[77], VV[57], VVtemp[39], ECL_NIL);
  cl_export(1, VV[77]);
@@ -3376,9 +3376,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(EOPNOTSUPP);
-  si_Xmake_constant(VV[78], ecl_make_fixnum(v1));
+  int v1;
+  v1 = EOPNOTSUPP;
+  si_Xmake_constant(VV[78], ecl_make_int(v1));
  }
  clos_load_defclass(VV[79], VV[57], VVtemp[40], ECL_NIL);
  cl_export(1, VV[79]);
@@ -3388,9 +3388,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(EPERM);
-  si_Xmake_constant(VV[80], ecl_make_fixnum(v1));
+  int v1;
+  v1 = EPERM;
+  si_Xmake_constant(VV[80], ecl_make_int(v1));
  }
  clos_load_defclass(VV[81], VV[57], VVtemp[41], ECL_NIL);
  cl_export(1, VV[81]);
@@ -3400,9 +3400,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(EPROTONOSUPPORT);
-  si_Xmake_constant(VV[82], ecl_make_fixnum(v1));
+  int v1;
+  v1 = EPROTONOSUPPORT;
+  si_Xmake_constant(VV[82], ecl_make_int(v1));
  }
  clos_load_defclass(VV[83], VV[57], VVtemp[42], ECL_NIL);
  cl_export(1, VV[83]);
@@ -3412,9 +3412,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(ESOCKTNOSUPPORT);
-  si_Xmake_constant(VV[84], ecl_make_fixnum(v1));
+  int v1;
+  v1 = ESOCKTNOSUPPORT;
+  si_Xmake_constant(VV[84], ecl_make_int(v1));
  }
  clos_load_defclass(VV[85], VV[57], VVtemp[43], ECL_NIL);
  cl_export(1, VV[85]);
@@ -3424,9 +3424,9 @@ ECL_DLLEXPORT void _eclekPx67Hqtmli9_WGwtVE21(cl_object flag)
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(ENETUNREACH);
-  si_Xmake_constant(VV[86], ecl_make_fixnum(v1));
+  int v1;
+  v1 = ENETUNREACH;
+  si_Xmake_constant(VV[86], ecl_make_int(v1));
  }
  clos_load_defclass(VV[87], VV[57], VVtemp[44], ECL_NIL);
  cl_export(1, VV[87]);
@@ -3457,9 +3457,9 @@ L301:;
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(NETDB_INTERNAL);
-  si_Xmake_constant(VV[98], ecl_make_fixnum(v1));
+  int v1;
+  v1 = NETDB_INTERNAL;
+  si_Xmake_constant(VV[98], ecl_make_int(v1));
  }
  clos_load_defclass(VV[99], VV[94], VVtemp[50], ECL_NIL);
  T0 = CONS(ecl_symbol_value(VV[98]),VV[99]);
@@ -3469,9 +3469,9 @@ L301:;
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(NETDB_SUCCESS);
-  si_Xmake_constant(VV[100], ecl_make_fixnum(v1));
+  int v1;
+  v1 = NETDB_SUCCESS;
+  si_Xmake_constant(VV[100], ecl_make_int(v1));
  }
  clos_load_defclass(VV[101], VV[94], VVtemp[51], ECL_NIL);
  T0 = CONS(ecl_symbol_value(VV[100]),VV[101]);
@@ -3481,9 +3481,9 @@ L301:;
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(HOST_NOT_FOUND);
-  si_Xmake_constant(VV[102], ecl_make_fixnum(v1));
+  int v1;
+  v1 = HOST_NOT_FOUND;
+  si_Xmake_constant(VV[102], ecl_make_int(v1));
  }
  clos_load_defclass(VV[103], VV[94], VVtemp[52], ECL_NIL);
  T0 = CONS(ecl_symbol_value(VV[102]),VV[103]);
@@ -3493,9 +3493,9 @@ L301:;
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(TRY_AGAIN);
-  si_Xmake_constant(VV[104], ecl_make_fixnum(v1));
+  int v1;
+  v1 = TRY_AGAIN;
+  si_Xmake_constant(VV[104], ecl_make_int(v1));
  }
  clos_load_defclass(VV[105], VV[94], VVtemp[53], ECL_NIL);
  T0 = CONS(ecl_symbol_value(VV[104]),VV[105]);
@@ -3505,9 +3505,9 @@ L301:;
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(NO_RECOVERY);
-  si_Xmake_constant(VV[106], ecl_make_fixnum(v1));
+  int v1;
+  v1 = NO_RECOVERY;
+  si_Xmake_constant(VV[106], ecl_make_int(v1));
  }
  clos_load_defclass(VV[107], VV[94], VVtemp[54], ECL_NIL);
  T0 = CONS(ecl_symbol_value(VV[106]),VV[107]);
@@ -3517,9 +3517,9 @@ L301:;
  {
   cl_object T0;
  {
-  cl_fixnum v1;
-  v1 = (cl_fixnum)(NO_ADDRESS);
-  si_Xmake_constant(VV[108], ecl_make_fixnum(v1));
+  int v1;
+  v1 = NO_ADDRESS;
+  si_Xmake_constant(VV[108], ecl_make_int(v1));
  }
  clos_load_defclass(VV[109], VV[94], VVtemp[55], ECL_NIL);
  T0 = CONS(ecl_symbol_value(VV[108]),VV[109]);

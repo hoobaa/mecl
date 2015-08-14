@@ -28,15 +28,18 @@ PREFIX=/Users/strobolights/dev/mecl/local-install/iPhoneOS-${ARC2}
 export CFLAGS=" -g -arch ${ARC2} -isysroot ${N_SDK_DIR} -DAPPLE -I$PREFIX/include"
 # export CFLAGS=" -arch ${ARC2} -isysroot ${N_SDK_DIR} -DAPPLE -I$PREFIX/include -DECL_THREAD=0 "
 # export LDFLAGS=" -L$PREFIX/lib "
-export LDFLAGS="  -isysroot ${N_SDK_DIR} -arch ${ARC2} -D__arm__ -L$PREFIX/lib  "
+export LDFLAGS=" -isysroot ${N_SDK_DIR} -arch ${ARC2} -D__arm__ -L$PREFIX/lib  "
 
 env |sort > env.log
 
 # ecl_to_run=/Users/strobolights/dev/mecl/local-install/host64/bin/ecl
 
-# ../ecl/src/configure --srcdir=/Users/strobolights/dev/mecl/ecl/src --prefix=/Users/strobolights/dev/mecl/local-install/iPhoneOS-${ARC2} --target=${ARC}-apple-darwin --host=${ARC}-apple-darwin --disable-shared --enable-libatomic=system --with-system-behm --enable-boehm=system --enable-threads=no
-../ecl/src/configure --srcdir=/Users/strobolights/dev/mecl/ecl/src --prefix=/Users/strobolights/dev/mecl/local-install/iPhoneOS-${ARC2} --target=${ARC}-apple-darwin --host=${ARC}-apple-darwin --disable-shared --enable-libatomic=system --with-system-behm --enable-boehm=system 
 
+../ecl/src/configure --srcdir=/Users/strobolights/dev/mecl/ecl/src --prefix=/Users/strobolights/dev/mecl/local-install/iPhoneOS-${ARC2} --target=${ARC}-apple-darwin --host=${ARC}-apple-darwin --disable-shared --enable-libatomic=system --with-system-behm --enable-boehm=system --enable-threads=yes --with-dffi=no --with-cmp=no --with-asdf=builtin --with-bytecmp=builtin --with-serve-event=yes
+
+# ../ecl/src/configure --srcdir=/Users/strobolights/dev/mecl/ecl/src --prefix=/Users/strobolights/dev/mecl/local-install/iPhoneOS-${ARC2} --target=${ARC}-apple-darwin --host=${ARC}-apple-darwin --disable-shared --enable-libatomic=system --with-system-behm --enable-boehm=system 
+
+# ../ecl/src/configure --srcdir=/Users/strobolights/dev/mecl/ecl/src --prefix=/Users/strobolights/dev/mecl/local-install/iPhoneOS-${ARC2} --target=${ARC}-apple-darwin --host=${ARC}-apple-darwin --disable-shared --enable-libatomic=system --with-system-behm --enable-boehm=system --enable-threads=no
 # ./configure --srcdir=/Users/strobolights/dev/mecl/ecl/src --prefix=/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64 --target=aarch64-apple-darwin --host=aarch64-apple-darwin --disable-shared --build=x86_64-apple-darwin
 
 make

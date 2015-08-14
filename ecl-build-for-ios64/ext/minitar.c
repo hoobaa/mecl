@@ -88,22 +88,8 @@ L10:;
      }
      T1 = cl_code_char(T0);
      si_char_set(v4string,v5i,T1);
-     {
-      cl_object v8;
-      v8 = ecl_one_plus(v5i);
-      T0 = cl_realp(v8);
-      if (ecl_unlikely(!((T0)!=ECL_NIL)))
-         FEwrong_type_argument(ECL_SYM("REAL",703),v8);
-      v5i = v8;
-     }
-     {
-      cl_object v8;
-      v8 = ecl_one_plus(v6j);
-      T0 = cl_realp(v8);
-      if (ecl_unlikely(!((T0)!=ECL_NIL)))
-         FEwrong_type_argument(ECL_SYM("REAL",703),v8);
-      v6j = v8;
-     }
+     v5i = ecl_one_plus(v5i);
+     v6j = ecl_one_plus(v6j);
      goto L8;
 L9:;
     }
@@ -622,7 +608,7 @@ L34:;
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _eclTaxIcB1NOGWj9_zWwtVE21(cl_object flag)
+ECL_DLLEXPORT void _eclhJvnQYZ7_EZGxWE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -643,7 +629,7 @@ ECL_DLLEXPORT void _eclTaxIcB1NOGWj9_zWwtVE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_eclTaxIcB1NOGWj9_zWwtVE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_eclhJvnQYZ7_EZGxWE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  ecl_function_dispatch(cl_env_copy,VV[21])(10, _ecl_static_0, ECL_NIL, _ecl_static_1, VVtemp[0], ECL_NIL, ECL_NIL, VVtemp[1], ECL_NIL, ECL_NIL, ECL_NIL) /*  DODEFPACKAGE */;

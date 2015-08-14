@@ -129,20 +129,22 @@ static cl_object L7update_adler32_checksum(cl_object v1crc, cl_object v2buffer, 
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
- cl_fixnum v4crc;
+ unsigned int v4crc;
  cl_fixnum v5end;
- v4crc = ecl_fixnum(v1crc);
+ v4crc = ecl_to_uint(v1crc);
  v5end = ecl_fixnum(v3end);
 TTL:
  {
-  cl_fixnum v6;
-  cl_fixnum v7;
-  cl_fixnum v8s1;
-  cl_fixnum v9s2;
-  v6 = ecl_fixnum(ecl_make_fixnum((((~((cl_fixnum)-1 << (16))) << (0)) & (cl_fixnum)(v4crc)) >> (0)));
-  v7 = ecl_fixnum(ecl_make_fixnum((((~((cl_fixnum)-1 << (16))) << (16)) & (cl_fixnum)(v4crc)) >> (16)));
-  v8s1 = v6;
-  v9s2 = v7;
+  cl_object v6;
+  cl_object v7;
+  unsigned int v8s1;
+  unsigned int v9s2;
+  T0 = cl_byte(ecl_make_fixnum(16), ecl_make_fixnum(0));
+  v6 = cl_ldb(T0, ecl_make_uint(v4crc));
+  T0 = cl_byte(ecl_make_fixnum(16), ecl_make_fixnum(16));
+  v7 = cl_ldb(T0, ecl_make_uint(v4crc));
+  v8s1 = ecl_to_uint(v6);
+  v9s2 = ecl_to_uint(v7);
   {
    cl_fixnum v10i;
    v10i = 0;
@@ -151,11 +153,11 @@ L7:;
    {
     uint8_t v11;
     v11 = (uint8_t)((v2buffer)->vector.self.b8[v10i]);
-    T0 = ecl_plus(ecl_make_fixnum(v8s1),ecl_make_uint8_t(v11));
-    v8s1 = ecl_fixnum((ecl_floor2(T0,ecl_make_fixnum(65521)),cl_env_copy->values[1]));
+    T0 = ecl_plus(ecl_make_uint(v8s1),ecl_make_uint8_t(v11));
+    v8s1 = ecl_to_uint((ecl_floor2(T0,ecl_make_fixnum(65521)),cl_env_copy->values[1]));
    }
-   T0 = ecl_plus(ecl_make_fixnum(v9s2),ecl_make_fixnum(v8s1));
-   v9s2 = ecl_fixnum((ecl_floor2(T0,ecl_make_fixnum(65521)),cl_env_copy->values[1]));
+   T0 = ecl_plus(ecl_make_uint(v9s2),ecl_make_uint(v8s1));
+   v9s2 = ecl_to_uint((ecl_floor2(T0,ecl_make_fixnum(65521)),cl_env_copy->values[1]));
    v10i = (v10i)+1;
 L8:;
    if (!((v10i)<(v5end))) { goto L17; }
@@ -163,7 +165,7 @@ L8:;
 L17:;
   }
   T0 = cl_byte(ecl_make_fixnum(16), ecl_make_fixnum(16));
-  value0 = cl_dpb(ecl_make_fixnum(v9s2), T0, ecl_make_fixnum(v8s1));
+  value0 = cl_dpb(ecl_make_uint(v9s2), T0, ecl_make_uint(v8s1));
   return value0;
  }
 }
@@ -197,7 +199,7 @@ L12:;
       T0 = ecl_boole(ECL_BOOLAND,(v4cur),(ecl_make_fixnum(1)));
       if (!(ecl_number_equalp(ecl_make_fixnum(1),T0))) { goto L17; }
       T0 = ecl_ash(v4cur,-1);
-      v4cur = ecl_boole(ECL_BOOLXOR,(T0),(ecl_make_fixnum(3988292384)));
+      v4cur = ecl_boole(ECL_BOOLXOR,(T0),(ECL_SYM_VAL(cl_env_copy,VV[8])));
       goto L16;
 L17:;
       v4cur = ecl_ash(v4cur,-1);
@@ -208,7 +210,7 @@ L13:;
       goto L12;
 L21:;
      }
-     (v1result)->vector.self.b32[v3i]= ecl_fixnum(v4cur);
+     (v1result)->vector.self.b32[v3i]= ecl_to_uint(v4cur);
     }
     v3i = (v3i)+1;
 L6:;
@@ -229,16 +231,16 @@ static cl_object L9update_crc32_checksum(cl_object v1crc, cl_object v2buffer, cl
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
- cl_fixnum v4crc;
+ unsigned int v4crc;
  cl_fixnum v5end;
- v4crc = ecl_fixnum(v1crc);
+ v4crc = ecl_to_uint(v1crc);
  v5end = ecl_fixnum(v3end);
 TTL:
  {
   cl_object v6;
-  cl_fixnum v7cur;
-  v6 = ecl_make_fixnum(((v4crc) ^ (4294967295)));
-  v7cur = ecl_fixnum(v6);
+  unsigned int v7cur;
+  v6 = ecl_boole(ECL_BOOLXOR,(ecl_make_uint(v4crc)),(VV[11]));
+  v7cur = ecl_to_uint(v6);
   {
    cl_fixnum v8i;
    v8i = 0;
@@ -249,17 +251,14 @@ L5:;
     {
      uint8_t v10;
      v10 = (uint8_t)((v2buffer)->vector.self.b8[v8i]);
-     {
-      cl_fixnum v11;
-      v11 = ((v7cur) ^ ((cl_fixnum)(v10)));
-      v9index = (uint8_t)(((255) & (v11)));
-     }
+     T0 = ecl_boole(ECL_BOOLXOR,(ecl_make_uint(v7cur)),(ecl_make_uint8_t(v10)));
+     v9index = ecl_fixnum(ecl_boole(ECL_BOOLAND,(ecl_make_fixnum(255)),(T0)));
     }
     {
-     cl_fixnum v10;
-     v10 = (cl_fixnum)((VV[10])->vector.self.b32[(cl_fixnum)(v9index)]);
-     T0 = ecl_ash(ecl_make_fixnum(v7cur),-8);
-     v7cur = ecl_fixnum(ecl_boole(ECL_BOOLXOR,(ecl_make_fixnum(v10)),(T0)));
+     unsigned int v10;
+     v10 = (unsigned int)((VV[10])->vector.self.b32[(cl_fixnum)(v9index)]);
+     T0 = ecl_ash(ecl_make_uint(v7cur),-8);
+     v7cur = ecl_to_uint(ecl_boole(ECL_BOOLXOR,(ecl_make_uint(v10)),(T0)));
     }
    }
    v8i = (v8i)+1;
@@ -268,7 +267,7 @@ L6:;
    goto L5;
 L15:;
   }
-  value0 = ecl_make_fixnum(((v7cur) ^ (4294967295)));
+  value0 = ecl_boole(ECL_BOOLXOR,(ecl_make_uint(v7cur)),(VV[11]));
   cl_env_copy->nvalues = 1;
   return value0;
  }
@@ -308,12 +307,12 @@ static cl_object L10make_sliding_window_stream(cl_narg narg, ...)
   }
  }
  {
-  cl_fixnum v6;
-  v6 = 0;
-  if (!(ECL_FIXNUMP(v5))) { goto L8; }
-  v6 = ecl_fixnum(v5);
-  if (!((v6)<=(4294967295))) { goto L13; }
-  if ((v6)>=(0)) { goto L4; }
+  cl_object v6;
+  v6 = ecl_make_fixnum(0);
+  if (!(ECL_FIXNUMP(v5)||ECL_BIGNUMP(v5))) { goto L8; }
+  v6 = v5;
+  if (!(ecl_number_compare(v6,VV[11])<=0)) { goto L13; }
+  if (ecl_number_compare(v6,ecl_make_fixnum(0))>=0) { goto L4; }
   goto L5;
 L13:;
   goto L5;
@@ -321,21 +320,21 @@ L8:;
   goto L5;
  }
 L5:;
- si_structure_type_error(4, v5, VV[16], VV[13], VV[17]);
+ si_structure_type_error(4, v5, VV[17], VV[14], VV[18]);
 L4:;
  if (ECL_SYMBOLP(v4)) { goto L15; }
- si_structure_type_error(4, v4, ECL_SYM("SYMBOL",840), VV[13], VV[18]);
+ si_structure_type_error(4, v4, ECL_SYM("SYMBOL",840), VV[14], VV[19]);
 L15:;
  if (ECL_FIXNUMP(v3)) { goto L17; }
- si_structure_type_error(4, v3, ECL_SYM("FIXNUM",372), VV[13], VV[19]);
+ si_structure_type_error(4, v3, ECL_SYM("FIXNUM",372), VV[14], VV[20]);
 L17:;
- if ((cl_typep(2, v2, VV[20]))!=ECL_NIL) { goto L19; }
- si_structure_type_error(4, v2, VV[20], VV[13], VV[21]);
+ if ((cl_typep(2, v2, VV[21]))!=ECL_NIL) { goto L19; }
+ si_structure_type_error(4, v2, VV[21], VV[14], VV[22]);
 L19:;
  if ((cl_streamp(v1))!=ECL_NIL) { goto L21; }
- si_structure_type_error(4, v1, ECL_SYM("STREAM",799), VV[13], ECL_SYM("STREAM",799));
+ si_structure_type_error(4, v1, ECL_SYM("STREAM",799), VV[14], ECL_SYM("STREAM",799));
 L21:;
- value0 = si_make_structure(6, VV[22], v1, v2, v3, v4, v5);
+ value0 = si_make_structure(6, VV[23], v1, v2, v3, v4, v5);
  return value0;
 }
 /*	function definition for SLIDING-WINDOW-STREAM-WRITE-BYTE      */
@@ -350,31 +349,31 @@ static cl_object L11sliding_window_stream_write_byte(cl_object v1stream, cl_obje
 TTL:
  {
   cl_fixnum v4end;
-  v4end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[97])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
+  v4end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[99])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
   if ((v4end)<(32768)) { goto L2; }
-  T0 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-  T1 = ecl_function_dispatch(cl_env_copy,VV[99])(1, v1stream) /*  SLIDING-WINDOW-STREAM-STREAM */;
+  T0 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+  T1 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v1stream) /*  SLIDING-WINDOW-STREAM-STREAM */;
   cl_write_sequence(2, T0, T1);
   {
    cl_object v5;
-   v5 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM */;
-   if (!(ecl_eql(v5,VV[24]))) { goto L7; }
+   v5 = ecl_function_dispatch(cl_env_copy,VV[102])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM */;
+   if (!(ecl_eql(v5,VV[25]))) { goto L7; }
    {
-    cl_fixnum v6;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-    v6 = ecl_fixnum(L7update_adler32_checksum(T0, T1, ecl_make_fixnum(32768)));
-    (v1stream)->instance.slots[4]=ecl_make_fixnum(v6);
+    unsigned int v6;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+    v6 = ecl_to_uint(L7update_adler32_checksum(T0, T1, ecl_make_fixnum(32768)));
+    (v1stream)->instance.slots[4]=ecl_make_uint(v6);
     goto L5;
    }
 L7:;
-   if (!(ecl_eql(v5,VV[25]))) { goto L5; }
+   if (!(ecl_eql(v5,VV[26]))) { goto L5; }
    {
-    cl_fixnum v7;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-    v7 = ecl_fixnum(L9update_crc32_checksum(T0, T1, ecl_make_fixnum(32768)));
-    (v1stream)->instance.slots[4]=ecl_make_fixnum(v7);
+    unsigned int v7;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+    v7 = ecl_to_uint(L9update_crc32_checksum(T0, T1, ecl_make_fixnum(32768)));
+    (v1stream)->instance.slots[4]=ecl_make_uint(v7);
    }
   }
 L5:;
@@ -382,7 +381,7 @@ L5:;
 L2:;
   {
    cl_object v5;
-   v5 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+   v5 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
    ecl_aset_unsafe(v5,v4end,ecl_make_uint8_t(v3byte));
   }
   {
@@ -404,33 +403,33 @@ static cl_object L12sliding_window_stream_flush(cl_object v1stream)
 TTL:
  {
   cl_fixnum v2end;
-  v2end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[97])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
+  v2end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[99])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
   if ((v2end)==0) { goto L2; }
   {
    cl_object v3;
-   v3 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM */;
-   if (!(ecl_eql(v3,VV[24]))) { goto L6; }
+   v3 = ecl_function_dispatch(cl_env_copy,VV[102])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM */;
+   if (!(ecl_eql(v3,VV[25]))) { goto L6; }
    {
-    cl_fixnum v4;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-    v4 = ecl_fixnum(L7update_adler32_checksum(T0, T1, ecl_make_fixnum(v2end)));
-    (v1stream)->instance.slots[4]=ecl_make_fixnum(v4);
+    unsigned int v4;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+    v4 = ecl_to_uint(L7update_adler32_checksum(T0, T1, ecl_make_fixnum(v2end)));
+    (v1stream)->instance.slots[4]=ecl_make_uint(v4);
     goto L4;
    }
 L6:;
-   if (!(ecl_eql(v3,VV[25]))) { goto L4; }
+   if (!(ecl_eql(v3,VV[26]))) { goto L4; }
    {
-    cl_fixnum v5;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-    v5 = ecl_fixnum(L9update_crc32_checksum(T0, T1, ecl_make_fixnum(v2end)));
-    (v1stream)->instance.slots[4]=ecl_make_fixnum(v5);
+    unsigned int v5;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+    v5 = ecl_to_uint(L9update_crc32_checksum(T0, T1, ecl_make_fixnum(v2end)));
+    (v1stream)->instance.slots[4]=ecl_make_uint(v5);
    }
   }
 L4:;
-  T0 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-  T1 = ecl_function_dispatch(cl_env_copy,VV[99])(1, v1stream) /*  SLIDING-WINDOW-STREAM-STREAM */;
+  T0 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+  T1 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v1stream) /*  SLIDING-WINDOW-STREAM-STREAM */;
   value0 = cl_write_sequence(4, T0, T1, ECL_SYM("END",1225), ecl_make_fixnum(v2end));
   return value0;
 L2:;
@@ -455,10 +454,10 @@ TTL:
   cl_fixnum v6end;
   cl_fixnum v7start;
   cl_object v8buffer;
-  v6end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[97])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
+  v6end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[99])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
   T0 = ecl_minus(ecl_make_fixnum(v6end),ecl_make_fixnum(v4distance));
   v7start = ecl_fixnum((ecl_floor2(T0,ecl_make_fixnum(32768)),cl_env_copy->values[1]));
-  v8buffer = ecl_function_dispatch(cl_env_copy,VV[98])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+  v8buffer = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
   {
    cl_fixnum v9i;
    v9i = 0;
@@ -471,31 +470,31 @@ L5:;
     v10 = (uint8_t)((v8buffer)->vector.self.b8[ecl_fixnum(T1)]);
     {
      cl_fixnum v11end;
-     v11end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[97])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
+     v11end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[99])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
      if ((v11end)<(32768)) { goto L11; }
-     T0 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-     T1 = ecl_function_dispatch(cl_env_copy,VV[99])(1, v1stream) /*  SLIDING-WINDOW-STREAM-STREAM */;
+     T0 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+     T1 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v1stream) /*  SLIDING-WINDOW-STREAM-STREAM */;
      cl_write_sequence(2, T0, T1);
      {
       cl_object v12;
-      v12 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM */;
-      if (!(ecl_eql(v12,VV[24]))) { goto L16; }
+      v12 = ecl_function_dispatch(cl_env_copy,VV[102])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM */;
+      if (!(ecl_eql(v12,VV[25]))) { goto L16; }
       {
-       cl_fixnum v13;
-       T0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
-       T1 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-       v13 = ecl_fixnum(L7update_adler32_checksum(T0, T1, ecl_make_fixnum(32768)));
-       (v1stream)->instance.slots[4]=ecl_make_fixnum(v13);
+       unsigned int v13;
+       T0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+       T1 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+       v13 = ecl_to_uint(L7update_adler32_checksum(T0, T1, ecl_make_fixnum(32768)));
+       (v1stream)->instance.slots[4]=ecl_make_uint(v13);
        goto L14;
       }
 L16:;
-      if (!(ecl_eql(v12,VV[25]))) { goto L14; }
+      if (!(ecl_eql(v12,VV[26]))) { goto L14; }
       {
-       cl_fixnum v14;
-       T0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
-       T1 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-       v14 = ecl_fixnum(L9update_crc32_checksum(T0, T1, ecl_make_fixnum(32768)));
-       (v1stream)->instance.slots[4]=ecl_make_fixnum(v14);
+       unsigned int v14;
+       T0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v1stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+       T1 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+       v14 = ecl_to_uint(L9update_crc32_checksum(T0, T1, ecl_make_fixnum(32768)));
+       (v1stream)->instance.slots[4]=ecl_make_uint(v14);
       }
      }
 L14:;
@@ -503,7 +502,7 @@ L14:;
 L11:;
      {
       cl_object v12;
-      v12 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+      v12 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
       ecl_aset_unsafe(v12,v11end,ecl_make_uint8_t(v10));
      }
      {
@@ -570,7 +569,7 @@ L8:;
   goto L5;
  }
 L5:;
- si_structure_type_error(4, v4, VV[32], VV[29], VV[33]);
+ si_structure_type_error(4, v4, VV[33], VV[30], VV[34]);
 L4:;
  {
   cl_fixnum v5;
@@ -586,15 +585,15 @@ L19:;
   goto L16;
  }
 L16:;
- si_structure_type_error(4, v3, VV[34], VV[29], VV[35]);
+ si_structure_type_error(4, v3, VV[35], VV[30], VV[36]);
 L15:;
  if (ECL_FIXNUMP(v2)) { goto L26; }
- si_structure_type_error(4, v2, ECL_SYM("FIXNUM",372), VV[29], VV[36]);
+ si_structure_type_error(4, v2, ECL_SYM("FIXNUM",372), VV[30], VV[37]);
 L26:;
  if ((cl_streamp(v1))!=ECL_NIL) { goto L28; }
- si_structure_type_error(4, v1, ECL_SYM("STREAM",799), VV[29], ECL_SYM("STREAM",799));
+ si_structure_type_error(4, v1, ECL_SYM("STREAM",799), VV[30], ECL_SYM("STREAM",799));
 L28:;
- value0 = si_make_structure(5, VV[37], v1, v2, v3, v4);
+ value0 = si_make_structure(5, VV[38], v1, v2, v3, v4);
  return value0;
 }
 /*	function definition for BIT-STREAM-GET-BYTE                   */
@@ -605,7 +604,7 @@ static cl_object L15bit_stream_get_byte(cl_object v1stream)
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
 TTL:
- T0 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1stream) /*  BIT-STREAM-STREAM */;
+ T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1stream) /*  BIT-STREAM-STREAM */;
  value0 = cl_read_byte(1, T0);
  return value0;
 }
@@ -618,18 +617,18 @@ static cl_object L16bit_stream_read_bits(cl_object v1stream, cl_object v2bits)
  cl_object value0;
 TTL:
 L2:;
- T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1stream) /*  BIT-STREAM-BIT-COUNT */;
+ T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1stream) /*  BIT-STREAM-BIT-COUNT */;
  if (ecl_number_compare(T0,v2bits)<0) { goto L4; }
  goto L3;
 L4:;
  {
   cl_object v3;
-  T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1stream) /*  BIT-STREAM-BITS */;
+  T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1stream) /*  BIT-STREAM-BITS */;
   {
    uint8_t v4;
-   T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1stream) /*  BIT-STREAM-STREAM */;
+   T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1stream) /*  BIT-STREAM-STREAM */;
    v4 = ecl_fixnum(cl_read_byte(1, T1));
-   T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1stream) /*  BIT-STREAM-BIT-COUNT */;
+   T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1stream) /*  BIT-STREAM-BIT-COUNT */;
    T2 = cl_ash(ecl_make_uint8_t(v4), T1);
    v3 = ecl_boole(ECL_BOOLIOR,(T0),(T2));
   }
@@ -637,17 +636,17 @@ L4:;
  }
  {
   cl_object v3;
-  T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1stream) /*  BIT-STREAM-BIT-COUNT */;
+  T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1stream) /*  BIT-STREAM-BIT-COUNT */;
   v3 = ecl_plus(T0,ecl_make_fixnum(8));
   (v1stream)->instance.slots[3]=v3;
  }
  goto L2;
 L3:;
- T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1stream) /*  BIT-STREAM-BIT-COUNT */;
+ T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1stream) /*  BIT-STREAM-BIT-COUNT */;
  if (!(ecl_number_equalp(T0,v2bits))) { goto L12; }
  {
   cl_object v3;
-  v3 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1stream) /*  BIT-STREAM-BITS */;
+  v3 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1stream) /*  BIT-STREAM-BITS */;
   (v1stream)->instance.slots[2]=ecl_make_fixnum(0);
   (v1stream)->instance.slots[3]=ecl_make_fixnum(0);
   value0 = v3;
@@ -658,18 +657,18 @@ L12:;
  {
   cl_object v4;
   T0 = cl_byte(v2bits, ecl_make_fixnum(0));
-  T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1stream) /*  BIT-STREAM-BITS */;
+  T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1stream) /*  BIT-STREAM-BITS */;
   v4 = cl_ldb(T0, T1);
   {
    cl_object v5;
-   T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1stream) /*  BIT-STREAM-BITS */;
+   T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1stream) /*  BIT-STREAM-BITS */;
    T1 = ecl_negate(v2bits);
    v5 = cl_ash(T0, T1);
    (v1stream)->instance.slots[2]=v5;
   }
   {
    cl_object v5;
-   T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1stream) /*  BIT-STREAM-BIT-COUNT */;
+   T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1stream) /*  BIT-STREAM-BIT-COUNT */;
    v5 = ecl_minus(T0,v2bits);
    (v1stream)->instance.slots[3]=v5;
   }
@@ -693,11 +692,11 @@ TTL:
   cl_object v4nlen;
   {
    uint8_t v5;
-   T0 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1stream) /*  BIT-STREAM-STREAM */;
+   T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1stream) /*  BIT-STREAM-STREAM */;
    v5 = ecl_fixnum(cl_read_byte(1, T0));
    {
     uint8_t v6;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1stream) /*  BIT-STREAM-STREAM */;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1stream) /*  BIT-STREAM-STREAM */;
     v6 = ecl_fixnum(cl_read_byte(1, T0));
     T0 = ecl_ash(ecl_make_uint8_t(v6),8);
     v3len = ecl_boole(ECL_BOOLIOR,(ecl_make_uint8_t(v5)),(T0));
@@ -706,11 +705,11 @@ TTL:
   T0 = cl_byte(ecl_make_fixnum(16), ecl_make_fixnum(0));
   {
    uint8_t v5;
-   T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1stream) /*  BIT-STREAM-STREAM */;
+   T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1stream) /*  BIT-STREAM-STREAM */;
    v5 = ecl_fixnum(cl_read_byte(1, T1));
    {
     uint8_t v6;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1stream) /*  BIT-STREAM-STREAM */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1stream) /*  BIT-STREAM-STREAM */;
     v6 = ecl_fixnum(cl_read_byte(1, T1));
     T1 = ecl_ash(ecl_make_uint8_t(v6),8);
     T2 = ecl_boole(ECL_BOOLIOR,(ecl_make_uint8_t(v5)),(T1));
@@ -729,35 +728,35 @@ L9:;
 L12:;
    {
     uint8_t v6;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1stream) /*  BIT-STREAM-STREAM */;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1stream) /*  BIT-STREAM-STREAM */;
     v6 = ecl_fixnum(cl_read_byte(1, T0));
     {
      cl_fixnum v7end;
-     v7end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[97])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
+     v7end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[99])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
      if ((v7end)<(32768)) { goto L18; }
-     T0 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-     T1 = ecl_function_dispatch(cl_env_copy,VV[99])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-STREAM */;
+     T0 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+     T1 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-STREAM */;
      cl_write_sequence(2, T0, T1);
      {
       cl_object v8;
-      v8 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM */;
-      if (!(ecl_eql(v8,VV[24]))) { goto L23; }
+      v8 = ecl_function_dispatch(cl_env_copy,VV[102])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM */;
+      if (!(ecl_eql(v8,VV[25]))) { goto L23; }
       {
-       cl_fixnum v9;
-       T0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
-       T1 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-       v9 = ecl_fixnum(L7update_adler32_checksum(T0, T1, ecl_make_fixnum(32768)));
-       (v2out_stream)->instance.slots[4]=ecl_make_fixnum(v9);
+       unsigned int v9;
+       T0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+       T1 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+       v9 = ecl_to_uint(L7update_adler32_checksum(T0, T1, ecl_make_fixnum(32768)));
+       (v2out_stream)->instance.slots[4]=ecl_make_uint(v9);
        goto L21;
       }
 L23:;
-      if (!(ecl_eql(v8,VV[25]))) { goto L21; }
+      if (!(ecl_eql(v8,VV[26]))) { goto L21; }
       {
-       cl_fixnum v10;
-       T0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
-       T1 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-       v10 = ecl_fixnum(L9update_crc32_checksum(T0, T1, ecl_make_fixnum(32768)));
-       (v2out_stream)->instance.slots[4]=ecl_make_fixnum(v10);
+       unsigned int v10;
+       T0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+       T1 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+       v10 = ecl_to_uint(L9update_crc32_checksum(T0, T1, ecl_make_fixnum(32768)));
+       (v2out_stream)->instance.slots[4]=ecl_make_uint(v10);
       }
      }
 L21:;
@@ -765,7 +764,7 @@ L21:;
 L18:;
      {
       cl_object v8;
-      v8 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+      v8 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2out_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
       ecl_aset_unsafe(v8,v7end,ecl_make_uint8_t(v6));
      }
      {
@@ -801,25 +800,25 @@ static cl_object L18make_decode_tree(cl_narg narg, ...)
   cl_parse_key(args,2,L18make_decode_treekeys,keyvars,NULL,FALSE);
   ecl_va_end(args);
   if (Null(keyvars[2])) {
-   T0 = si_make_vector(ECL_SYM("INTEGER64",1338), ecl_make_fixnum(16), ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
+   T0 = si_make_vector(ECL_SYM("INTEGER32",1337), ecl_make_fixnum(16), ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
    v1 = si_fill_array_with_elt(T0, ecl_make_fixnum(0), ecl_make_fixnum(0), ECL_NIL);
   } else {
    v1 = keyvars[0];
   }
   if (Null(keyvars[3])) {
-   T0 = si_make_vector(ECL_SYM("INTEGER64",1338), ecl_make_fixnum(16), ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
+   T0 = si_make_vector(ECL_SYM("INTEGER32",1337), ecl_make_fixnum(16), ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
    v2 = si_fill_array_with_elt(T0, ecl_make_fixnum(0), ecl_make_fixnum(0), ECL_NIL);
   } else {
    v2 = keyvars[1];
   }
  }
- if ((cl_typep(2, v2, VV[45]))!=ECL_NIL) { goto L3; }
- si_structure_type_error(4, v2, VV[45], VV[42], VV[46]);
+ if ((cl_typep(2, v2, VV[46]))!=ECL_NIL) { goto L3; }
+ si_structure_type_error(4, v2, VV[46], VV[43], VV[47]);
 L3:;
- if ((cl_typep(2, v1, VV[45]))!=ECL_NIL) { goto L5; }
- si_structure_type_error(4, v1, VV[45], VV[42], VV[47]);
+ if ((cl_typep(2, v1, VV[46]))!=ECL_NIL) { goto L5; }
+ si_structure_type_error(4, v1, VV[46], VV[43], VV[48]);
 L5:;
- value0 = si_make_structure(3, VV[48], v1, v2);
+ value0 = si_make_structure(3, VV[49], v1, v2);
  return value0;
 }
 /*	function definition for MAKE-HUFFMAN-DECODE-TREE              */
@@ -836,18 +835,18 @@ TTL:
   cl_object v4code_symbols;
   cl_object v5length_count;
   T0 = (ECL_SYM("MAX",551)->symbol.gfdef);
-  v2max_length = cl_reduce(4, T0, v1code_lengths, VV[50], ecl_make_fixnum(0));
+  v2max_length = cl_reduce(4, T0, v1code_lengths, VV[51], ecl_make_fixnum(0));
   T0 = ecl_one_plus(v2max_length);
-  T1 = si_make_pure_array(ECL_SYM("INTEGER64",1338), T0, ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
+  T1 = si_make_pure_array(ECL_SYM("INTEGER32",1337), T0, ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
   v3next_code = si_fill_array_with_elt(T1, ecl_make_fixnum(0), ecl_make_fixnum(0), ECL_NIL);
   {
    cl_fixnum v6;
    v6 = ecl_length(v1code_lengths);
-   T0 = si_make_pure_array(ECL_SYM("INTEGER64",1338), ecl_make_fixnum(v6), ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
+   T0 = si_make_pure_array(ECL_SYM("INTEGER32",1337), ecl_make_fixnum(v6), ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
    v4code_symbols = si_fill_array_with_elt(T0, ecl_make_fixnum(0), ecl_make_fixnum(0), ECL_NIL);
   }
   T0 = ecl_one_plus(v2max_length);
-  T1 = si_make_pure_array(ECL_SYM("INTEGER64",1338), T0, ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
+  T1 = si_make_pure_array(ECL_SYM("INTEGER32",1337), T0, ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
   v5length_count = si_fill_array_with_elt(T1, ecl_make_fixnum(0), ecl_make_fixnum(0), ECL_NIL);
   {
    cl_object v6index;
@@ -872,11 +871,11 @@ L19:;
      {
       cl_object v11;
       {
-       long v12;
-       v12 = (long)((v5length_count)->vector.self.i64[ecl_fixnum(v8length)]);
-       v11 = ecl_plus(ecl_make_long(v12),ecl_make_fixnum(1));
+       int v12;
+       v12 = (int)((v5length_count)->vector.self.i32[ecl_fixnum(v8length)]);
+       v11 = ecl_plus(ecl_make_int(v12),ecl_make_fixnum(1));
       }
-      (v5length_count)->vector.self.i64[ecl_fixnum(v8length)]= ecl_to_long(v11);
+      (v5length_count)->vector.self.i32[ecl_fixnum(v8length)]= ecl_to_int(v11);
      }
      goto L15;
 L16:;
@@ -887,16 +886,16 @@ L16:;
 L30:;
     v7code = ecl_make_fixnum(0);
 L9:;
-    (v3next_code)->vector.self.i64[ecl_fixnum(v6index)]= ecl_to_long(v7code);
+    (v3next_code)->vector.self.i32[ecl_fixnum(v6index)]= ecl_to_int(v7code);
     v6index = ecl_one_plus(v6index);
     if (!(ecl_number_compare(v6index,v2max_length)>0)) { goto L37; }
     goto L10;
 L37:;
     {
-     long v8;
+     int v8;
      T0 = ecl_one_minus(v6index);
-     v8 = (long)((v5length_count)->vector.self.i64[ecl_fixnum(T0)]);
-     v7code = ecl_plus(v7code,ecl_make_long(v8));
+     v8 = (int)((v5length_count)->vector.self.i32[ecl_fixnum(T0)]);
+     v7code = ecl_plus(v7code,ecl_make_int(v8));
     }
     goto L9;
 L10:;
@@ -922,17 +921,17 @@ L48:;
     if (ecl_zerop(v6length)) { goto L58; }
     {
      cl_fixnum v10;
-     v10 = (cl_fixnum)((v3next_code)->vector.self.i64[ecl_fixnum(v6length)]);
-     (v4code_symbols)->vector.self.i64[v10]= ecl_to_long(v9index);
+     v10 = (cl_fixnum)((v3next_code)->vector.self.i32[ecl_fixnum(v6length)]);
+     (v4code_symbols)->vector.self.i32[v10]= ecl_to_int(v9index);
     }
     {
      cl_object v10;
      {
-      long v11;
-      v11 = (long)((v3next_code)->vector.self.i64[ecl_fixnum(v6length)]);
-      v10 = ecl_plus(ecl_make_long(v11),ecl_make_fixnum(1));
+      int v11;
+      v11 = (int)((v3next_code)->vector.self.i32[ecl_fixnum(v6length)]);
+      v10 = ecl_plus(ecl_make_int(v11),ecl_make_fixnum(1));
      }
-     (v3next_code)->vector.self.i64[ecl_fixnum(v6length)]= ecl_to_long(v10);
+     (v3next_code)->vector.self.i32[ecl_fixnum(v6length)]= ecl_to_int(v10);
     }
 L58:;
     if (!((v7)>=(v8))) { goto L64; }
@@ -945,7 +944,7 @@ L64:;
 L49:;
    }
   }
-  value0 = L18make_decode_tree(4, VV[51], v5length_count, VV[52], v4code_symbols);
+  value0 = L18make_decode_tree(4, VV[52], v5length_count, VV[53], v4code_symbols);
   return value0;
  }
 }
@@ -959,10 +958,10 @@ static cl_object L20read_huffman_code(cl_object v1bit_stream, cl_object v2decode
 TTL:
  {
   cl_object v3length_count;
-  v3length_count = ecl_function_dispatch(cl_env_copy,VV[118])(1, v2decode_tree) /*  DECODE-TREE-LENGTH-COUNT */;
+  v3length_count = ecl_function_dispatch(cl_env_copy,VV[120])(1, v2decode_tree) /*  DECODE-TREE-LENGTH-COUNT */;
   {
    cl_object v4code_symbols;
-   v4code_symbols = ecl_function_dispatch(cl_env_copy,VV[119])(1, v2decode_tree) /*  DECODE-TREE-CODE-SYMBOLS */;
+   v4code_symbols = ecl_function_dispatch(cl_env_copy,VV[121])(1, v2decode_tree) /*  DECODE-TREE-CODE-SYMBOLS */;
    {
     cl_fixnum v5code;
     v5code = 0;
@@ -984,18 +983,18 @@ TTL:
          cl_object v11;
          v11 = ECL_NIL;
 L15:;
-         T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+         T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
          if (ecl_number_compare(T0,ecl_make_fixnum(1))<0) { goto L17; }
          goto L16;
 L17:;
          {
           cl_object v12;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           uint8_t v13;
-          T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
           v13 = ecl_fixnum(cl_read_byte(1, T1));
-          T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           T2 = cl_ash(ecl_make_uint8_t(v13), T1);
           v12 = ecl_boole(ECL_BOOLIOR,(T0),(T2));
           }
@@ -1003,17 +1002,17 @@ L17:;
          }
          {
           cl_object v12;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v12 = ecl_plus(T0,ecl_make_fixnum(8));
           (v1bit_stream)->instance.slots[3]=v12;
          }
          goto L15;
 L16:;
-         T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+         T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
          if (!(ecl_number_equalp(T0,ecl_make_fixnum(1)))) { goto L25; }
          {
           cl_object v12;
-          v12 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          v12 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
           (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
           v5code = ecl_fixnum(v12);
@@ -1023,11 +1022,11 @@ L25:;
          {
           cl_object v13;
           T0 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-          T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           v13 = cl_ldb(T0, T1);
           {
           cl_object v14;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           cl_fixnum v15;
           v15 = -(1);
@@ -1037,7 +1036,7 @@ L25:;
           }
           {
           cl_object v14;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v14 = ecl_minus(T0,ecl_make_fixnum(1));
           (v1bit_stream)->instance.slots[3]=v14;
           }
@@ -1050,12 +1049,12 @@ L10:;
          if (!((v9length)>=(v8))) { goto L39; }
          goto L11;
 L39:;
-         v10count = ecl_make_int64_t((v3length_count)->vector.self.i64[v9length]);
+         v10count = ecl_make_int32_t((v3length_count)->vector.self.i32[v9length]);
          T0 = ecl_plus(ecl_make_fixnum(v7first),v10count);
          if (!((v5code)<(ecl_fixnum(T0)))) { goto L46; }
          T0 = ecl_minus(ecl_make_fixnum(v5code),ecl_make_fixnum(v7first));
          T1 = ecl_plus(ecl_make_fixnum(v6index),T0);
-         v11 = ecl_make_int64_t((v4code_symbols)->vector.self.i64[ecl_fixnum(T1)]);
+         v11 = ecl_make_int32_t((v4code_symbols)->vector.self.i32[ecl_fixnum(T1)]);
          goto L45;
 L46:;
          v11 = ECL_NIL;
@@ -1067,18 +1066,18 @@ L45:;
 L43:;
          T0 = ecl_times(ecl_make_fixnum(v5code),ecl_make_fixnum(2));
 L52:;
-         T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+         T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
          if (ecl_number_compare(T2,ecl_make_fixnum(1))<0) { goto L54; }
          goto L53;
 L54:;
          {
           cl_object v12;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           uint8_t v13;
-          T3 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
           v13 = ecl_fixnum(cl_read_byte(1, T3));
-          T3 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           T4 = cl_ash(ecl_make_uint8_t(v13), T3);
           v12 = ecl_boole(ECL_BOOLIOR,(T2),(T4));
           }
@@ -1086,17 +1085,17 @@ L54:;
          }
          {
           cl_object v12;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v12 = ecl_plus(T2,ecl_make_fixnum(8));
           (v1bit_stream)->instance.slots[3]=v12;
          }
          goto L52;
 L53:;
-         T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+         T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
          if (!(ecl_number_equalp(T2,ecl_make_fixnum(1)))) { goto L62; }
          {
           cl_object v12;
-          v12 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          v12 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
           (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
           T1 = v12;
@@ -1106,11 +1105,11 @@ L62:;
          {
           cl_object v13;
           T2 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-          T3 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           v13 = cl_ldb(T2, T3);
           {
           cl_object v14;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           cl_fixnum v15;
           v15 = -(1);
@@ -1120,7 +1119,7 @@ L62:;
           }
           {
           cl_object v14;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v14 = ecl_minus(T2,ecl_make_fixnum(1));
           (v1bit_stream)->instance.slots[3]=v14;
           }
@@ -1159,7 +1158,7 @@ TTL:
  {
   cl_object v4;
   cl_object v5index;
-  T0 = si_make_pure_array(ECL_SYM("INTEGER64",1338), v2count, ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
+  T0 = si_make_pure_array(ECL_SYM("INTEGER32",1337), v2count, ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
   v4 = si_fill_array_with_elt(T0, ecl_make_fixnum(0), ecl_make_fixnum(0), ECL_NIL);
   v5index = ecl_make_fixnum(0);
   goto L5;
@@ -1168,10 +1167,10 @@ L4:;
    cl_object v6code;
    {
     cl_object v7length_count;
-    v7length_count = ecl_function_dispatch(cl_env_copy,VV[118])(1, v3decode_tree) /*  DECODE-TREE-LENGTH-COUNT */;
+    v7length_count = ecl_function_dispatch(cl_env_copy,VV[120])(1, v3decode_tree) /*  DECODE-TREE-LENGTH-COUNT */;
     {
      cl_object v8code_symbols;
-     v8code_symbols = ecl_function_dispatch(cl_env_copy,VV[119])(1, v3decode_tree) /*  DECODE-TREE-CODE-SYMBOLS */;
+     v8code_symbols = ecl_function_dispatch(cl_env_copy,VV[121])(1, v3decode_tree) /*  DECODE-TREE-CODE-SYMBOLS */;
      {
       cl_fixnum v9code;
       v9code = 0;
@@ -1193,18 +1192,18 @@ L4:;
           cl_object v15;
           v15 = ECL_NIL;
 L23:;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (ecl_number_compare(T0,ecl_make_fixnum(1))<0) { goto L25; }
           goto L24;
 L25:;
           {
           cl_object v16;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           uint8_t v17;
-          T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
           v17 = ecl_fixnum(cl_read_byte(1, T1));
-          T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           T2 = cl_ash(ecl_make_uint8_t(v17), T1);
           v16 = ecl_boole(ECL_BOOLIOR,(T0),(T2));
           }
@@ -1212,17 +1211,17 @@ L25:;
           }
           {
           cl_object v16;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v16 = ecl_plus(T0,ecl_make_fixnum(8));
           (v1bit_stream)->instance.slots[3]=v16;
           }
           goto L23;
 L24:;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (!(ecl_number_equalp(T0,ecl_make_fixnum(1)))) { goto L33; }
           {
           cl_object v16;
-          v16 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          v16 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
           (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
           v9code = ecl_fixnum(v16);
@@ -1232,11 +1231,11 @@ L33:;
           {
           cl_object v17;
           T0 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-          T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           v17 = cl_ldb(T0, T1);
           {
           cl_object v18;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           cl_fixnum v19;
           v19 = -(1);
@@ -1246,7 +1245,7 @@ L33:;
           }
           {
           cl_object v18;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v18 = ecl_minus(T0,ecl_make_fixnum(1));
           (v1bit_stream)->instance.slots[3]=v18;
           }
@@ -1259,12 +1258,12 @@ L18:;
           if (!((v13length)>=(v12))) { goto L47; }
           goto L19;
 L47:;
-          v14count = ecl_make_int64_t((v7length_count)->vector.self.i64[v13length]);
+          v14count = ecl_make_int32_t((v7length_count)->vector.self.i32[v13length]);
           T0 = ecl_plus(ecl_make_fixnum(v11first),v14count);
           if (!((v9code)<(ecl_fixnum(T0)))) { goto L54; }
           T0 = ecl_minus(ecl_make_fixnum(v9code),ecl_make_fixnum(v11first));
           T1 = ecl_plus(ecl_make_fixnum(v10index),T0);
-          v15 = ecl_make_int64_t((v8code_symbols)->vector.self.i64[ecl_fixnum(T1)]);
+          v15 = ecl_make_int32_t((v8code_symbols)->vector.self.i32[ecl_fixnum(T1)]);
           goto L53;
 L54:;
           v15 = ECL_NIL;
@@ -1275,18 +1274,18 @@ L53:;
 L51:;
           T0 = ecl_times(ecl_make_fixnum(v9code),ecl_make_fixnum(2));
 L60:;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (ecl_number_compare(T2,ecl_make_fixnum(1))<0) { goto L62; }
           goto L61;
 L62:;
           {
           cl_object v16;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           uint8_t v17;
-          T3 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
           v17 = ecl_fixnum(cl_read_byte(1, T3));
-          T3 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           T4 = cl_ash(ecl_make_uint8_t(v17), T3);
           v16 = ecl_boole(ECL_BOOLIOR,(T2),(T4));
           }
@@ -1294,17 +1293,17 @@ L62:;
           }
           {
           cl_object v16;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v16 = ecl_plus(T2,ecl_make_fixnum(8));
           (v1bit_stream)->instance.slots[3]=v16;
           }
           goto L60;
 L61:;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (!(ecl_number_equalp(T2,ecl_make_fixnum(1)))) { goto L70; }
           {
           cl_object v16;
-          v16 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          v16 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
           (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
           T1 = v16;
@@ -1314,11 +1313,11 @@ L70:;
           {
           cl_object v17;
           T2 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-          T3 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           v17 = cl_ldb(T2, T3);
           {
           cl_object v18;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           cl_fixnum v19;
           v19 = -(1);
@@ -1328,7 +1327,7 @@ L70:;
           }
           {
           cl_object v18;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v18 = ecl_minus(T2,ecl_make_fixnum(1));
           (v1bit_stream)->instance.slots[3]=v18;
           }
@@ -1354,8 +1353,8 @@ L19:;
     }
    }
 L8:;
-   if (Null(ecl_memql(v6code,VV[58]))) { goto L88; }
-   (v4)->vector.self.i64[ecl_fixnum(v5index)]= ecl_to_long(v6code);
+   if (Null(ecl_memql(v6code,VV[59]))) { goto L88; }
+   (v4)->vector.self.i32[ecl_fixnum(v5index)]= ecl_to_int(v6code);
    v5index = ecl_plus(v5index,ecl_make_fixnum(1));
    goto L7;
 L88:;
@@ -1363,18 +1362,18 @@ L88:;
    {
     cl_object v7length;
 L97:;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     if (ecl_number_compare(T1,ecl_make_fixnum(2))<0) { goto L99; }
     goto L98;
 L99:;
     {
      cl_object v8;
-     T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      {
       uint8_t v9;
-      T2 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+      T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
       v9 = ecl_fixnum(cl_read_byte(1, T2));
-      T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+      T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
       T3 = cl_ash(ecl_make_uint8_t(v9), T2);
       v8 = ecl_boole(ECL_BOOLIOR,(T1),(T3));
      }
@@ -1382,17 +1381,17 @@ L99:;
     }
     {
      cl_object v8;
-     T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      v8 = ecl_plus(T1,ecl_make_fixnum(8));
      (v1bit_stream)->instance.slots[3]=v8;
     }
     goto L97;
 L98:;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     if (!(ecl_number_equalp(T1,ecl_make_fixnum(2)))) { goto L107; }
     {
      cl_object v8;
-     v8 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     v8 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
      (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
      T0 = v8;
@@ -1402,11 +1401,11 @@ L107:;
     {
      cl_object v9;
      T1 = cl_byte(ecl_make_fixnum(2), ecl_make_fixnum(0));
-     T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      v9 = cl_ldb(T1, T2);
      {
       cl_object v10;
-      T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+      T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
       {
        cl_fixnum v11;
        v11 = -(2);
@@ -1416,7 +1415,7 @@ L107:;
      }
      {
       cl_object v10;
-      T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+      T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
       v10 = ecl_minus(T1,ecl_make_fixnum(2));
       (v1bit_stream)->instance.slots[3]=v10;
      }
@@ -1431,10 +1430,10 @@ L95:;
 L119:;
      T0 = ecl_plus(v5index,v8i);
      {
-      long v9;
+      int v9;
       T1 = ecl_one_minus(v5index);
-      v9 = (long)((v4)->vector.self.i64[ecl_fixnum(T1)]);
-      (v4)->vector.self.i64[ecl_fixnum(T0)]= v9;
+      v9 = (int)((v4)->vector.self.i32[ecl_fixnum(T1)]);
+      (v4)->vector.self.i32[ecl_fixnum(T0)]= v9;
      }
      v8i = ecl_one_plus(v8i);
 L120:;
@@ -1450,18 +1449,18 @@ L92:;
    {
     cl_object v8length;
 L134:;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     if (ecl_number_compare(T1,ecl_make_fixnum(3))<0) { goto L136; }
     goto L135;
 L136:;
     {
      cl_object v9;
-     T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      {
       uint8_t v10;
-      T2 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+      T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
       v10 = ecl_fixnum(cl_read_byte(1, T2));
-      T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+      T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
       T3 = cl_ash(ecl_make_uint8_t(v10), T2);
       v9 = ecl_boole(ECL_BOOLIOR,(T1),(T3));
      }
@@ -1469,17 +1468,17 @@ L136:;
     }
     {
      cl_object v9;
-     T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      v9 = ecl_plus(T1,ecl_make_fixnum(8));
      (v1bit_stream)->instance.slots[3]=v9;
     }
     goto L134;
 L135:;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     if (!(ecl_number_equalp(T1,ecl_make_fixnum(3)))) { goto L144; }
     {
      cl_object v9;
-     v9 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     v9 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
      (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
      T0 = v9;
@@ -1489,11 +1488,11 @@ L144:;
     {
      cl_object v10;
      T1 = cl_byte(ecl_make_fixnum(3), ecl_make_fixnum(0));
-     T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      v10 = cl_ldb(T1, T2);
      {
       cl_object v11;
-      T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+      T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
       {
        cl_fixnum v12;
        v12 = -(3);
@@ -1503,7 +1502,7 @@ L144:;
      }
      {
       cl_object v11;
-      T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+      T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
       v11 = ecl_minus(T1,ecl_make_fixnum(3));
       (v1bit_stream)->instance.slots[3]=v11;
      }
@@ -1532,18 +1531,18 @@ L129:;
    {
     cl_object v9length;
 L170:;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     if (ecl_number_compare(T1,ecl_make_fixnum(7))<0) { goto L172; }
     goto L171;
 L172:;
     {
      cl_object v10;
-     T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      {
       uint8_t v11;
-      T2 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+      T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
       v11 = ecl_fixnum(cl_read_byte(1, T2));
-      T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+      T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
       T3 = cl_ash(ecl_make_uint8_t(v11), T2);
       v10 = ecl_boole(ECL_BOOLIOR,(T1),(T3));
      }
@@ -1551,17 +1550,17 @@ L172:;
     }
     {
      cl_object v10;
-     T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      v10 = ecl_plus(T1,ecl_make_fixnum(8));
      (v1bit_stream)->instance.slots[3]=v10;
     }
     goto L170;
 L171:;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     if (!(ecl_number_equalp(T1,ecl_make_fixnum(7)))) { goto L180; }
     {
      cl_object v10;
-     v10 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     v10 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
      (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
      T0 = v10;
@@ -1571,11 +1570,11 @@ L180:;
     {
      cl_object v11;
      T1 = cl_byte(ecl_make_fixnum(7), ecl_make_fixnum(0));
-     T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      v11 = cl_ldb(T1, T2);
      {
       cl_object v12;
-      T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+      T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
       {
        cl_fixnum v13;
        v13 = -(7);
@@ -1585,7 +1584,7 @@ L180:;
      }
      {
       cl_object v12;
-      T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+      T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
       v12 = ecl_minus(T1,ecl_make_fixnum(7));
       (v1bit_stream)->instance.slots[3]=v12;
      }
@@ -1610,7 +1609,7 @@ L198:;
     goto L7;
    }
 L165:;
-   si_ecase_error(v6code, VV[59]);
+   si_ecase_error(v6code, VV[60]);
   }
 L7:;
 L5:;
@@ -1635,18 +1634,18 @@ TTL:
   cl_object v3hdist;
   cl_object v4hclen;
 L3:;
-  T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   if (ecl_number_compare(T0,ecl_make_fixnum(5))<0) { goto L5; }
   goto L4;
 L5:;
   {
    cl_object v5;
-   T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    {
     uint8_t v6;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
     v6 = ecl_fixnum(cl_read_byte(1, T1));
-    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     T2 = cl_ash(ecl_make_uint8_t(v6), T1);
     v5 = ecl_boole(ECL_BOOLIOR,(T0),(T2));
    }
@@ -1654,17 +1653,17 @@ L5:;
   }
   {
    cl_object v5;
-   T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    v5 = ecl_plus(T0,ecl_make_fixnum(8));
    (v1bit_stream)->instance.slots[3]=v5;
   }
   goto L3;
 L4:;
-  T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   if (!(ecl_number_equalp(T0,ecl_make_fixnum(5)))) { goto L13; }
   {
    cl_object v5;
-   v5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   v5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
    (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
    v2hlit = v5;
@@ -1674,11 +1673,11 @@ L13:;
   {
    cl_object v6;
    T0 = cl_byte(ecl_make_fixnum(5), ecl_make_fixnum(0));
-   T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    v6 = cl_ldb(T0, T1);
    {
     cl_object v7;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     {
      cl_fixnum v8;
      v8 = -(5);
@@ -1688,7 +1687,7 @@ L13:;
    }
    {
     cl_object v7;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     v7 = ecl_minus(T0,ecl_make_fixnum(5));
     (v1bit_stream)->instance.slots[3]=v7;
    }
@@ -1696,18 +1695,18 @@ L13:;
   }
 L1:;
 L25:;
-  T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   if (ecl_number_compare(T0,ecl_make_fixnum(5))<0) { goto L27; }
   goto L26;
 L27:;
   {
    cl_object v5;
-   T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    {
     uint8_t v6;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
     v6 = ecl_fixnum(cl_read_byte(1, T1));
-    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     T2 = cl_ash(ecl_make_uint8_t(v6), T1);
     v5 = ecl_boole(ECL_BOOLIOR,(T0),(T2));
    }
@@ -1715,17 +1714,17 @@ L27:;
   }
   {
    cl_object v5;
-   T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    v5 = ecl_plus(T0,ecl_make_fixnum(8));
    (v1bit_stream)->instance.slots[3]=v5;
   }
   goto L25;
 L26:;
-  T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   if (!(ecl_number_equalp(T0,ecl_make_fixnum(5)))) { goto L35; }
   {
    cl_object v5;
-   v5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   v5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
    (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
    v3hdist = v5;
@@ -1735,11 +1734,11 @@ L35:;
   {
    cl_object v6;
    T0 = cl_byte(ecl_make_fixnum(5), ecl_make_fixnum(0));
-   T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    v6 = cl_ldb(T0, T1);
    {
     cl_object v7;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     {
      cl_fixnum v8;
      v8 = -(5);
@@ -1749,7 +1748,7 @@ L35:;
    }
    {
     cl_object v7;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     v7 = ecl_minus(T0,ecl_make_fixnum(5));
     (v1bit_stream)->instance.slots[3]=v7;
    }
@@ -1757,18 +1756,18 @@ L35:;
   }
 L23:;
 L47:;
-  T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   if (ecl_number_compare(T0,ecl_make_fixnum(4))<0) { goto L49; }
   goto L48;
 L49:;
   {
    cl_object v5;
-   T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    {
     uint8_t v6;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
     v6 = ecl_fixnum(cl_read_byte(1, T1));
-    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     T2 = cl_ash(ecl_make_uint8_t(v6), T1);
     v5 = ecl_boole(ECL_BOOLIOR,(T0),(T2));
    }
@@ -1776,17 +1775,17 @@ L49:;
   }
   {
    cl_object v5;
-   T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    v5 = ecl_plus(T0,ecl_make_fixnum(8));
    (v1bit_stream)->instance.slots[3]=v5;
   }
   goto L47;
 L48:;
-  T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   if (!(ecl_number_equalp(T0,ecl_make_fixnum(4)))) { goto L57; }
   {
    cl_object v5;
-   v5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   v5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
    (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
    v4hclen = v5;
@@ -1796,11 +1795,11 @@ L57:;
   {
    cl_object v6;
    T0 = cl_byte(ecl_make_fixnum(4), ecl_make_fixnum(0));
-   T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    v6 = cl_ldb(T0, T1);
    {
     cl_object v7;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     {
      cl_fixnum v8;
      v8 = -(4);
@@ -1810,7 +1809,7 @@ L57:;
    }
    {
     cl_object v7;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     v7 = ecl_minus(T0,ecl_make_fixnum(4));
     (v1bit_stream)->instance.slots[3]=v7;
    }
@@ -1839,18 +1838,18 @@ L73:;
        goto L74;
 L75:;
 L80:;
-       T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+       T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
        if (ecl_number_compare(T0,ecl_make_fixnum(3))<0) { goto L82; }
        goto L81;
 L82:;
        {
         cl_object v11;
-        T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+        T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
         {
          uint8_t v12;
-         T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+         T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
          v12 = ecl_fixnum(cl_read_byte(1, T1));
-         T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+         T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
          T2 = cl_ash(ecl_make_uint8_t(v12), T1);
          v11 = ecl_boole(ECL_BOOLIOR,(T0),(T2));
         }
@@ -1858,17 +1857,17 @@ L82:;
        }
        {
         cl_object v11;
-        T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+        T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
         v11 = ecl_plus(T0,ecl_make_fixnum(8));
         (v1bit_stream)->instance.slots[3]=v11;
        }
        goto L80;
 L81:;
-       T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+       T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
        if (!(ecl_number_equalp(T0,ecl_make_fixnum(3)))) { goto L90; }
        {
         cl_object v11;
-        v11 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+        v11 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
         (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
         (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
         v9code_length = v11;
@@ -1878,11 +1877,11 @@ L90:;
        {
         cl_object v12;
         T0 = cl_byte(ecl_make_fixnum(3), ecl_make_fixnum(0));
-        T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+        T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
         v12 = cl_ldb(T0, T1);
         {
          cl_object v13;
-         T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+         T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
          {
           cl_fixnum v14;
           v14 = -(3);
@@ -1892,7 +1891,7 @@ L90:;
         }
         {
          cl_object v13;
-         T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+         T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
          v13 = ecl_minus(T0,ecl_make_fixnum(3));
          (v1bit_stream)->instance.slots[3]=v13;
         }
@@ -1901,7 +1900,7 @@ L90:;
 L78:;
        {
         cl_object v11;
-        v11 = ECL_SYM_VAL(cl_env_copy,VV[57]);
+        v11 = ECL_SYM_VAL(cl_env_copy,VV[58]);
         v10code_index = ecl_aref_unsafe(v11,ecl_fixnum(v8index));
        }
        (v6code_lengths)->vector.self.b8[ecl_fixnum(v10code_index)]= ecl_fixnum(v9code_length);
@@ -1953,18 +1952,18 @@ L1:;
  T1 = ecl_times(T0,ecl_make_fixnum(2));
  T2 = ecl_plus(ecl_make_fixnum(11),T1);
 L7:;
- T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+ T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
  if (ecl_number_compare(T4,ecl_make_fixnum(1))<0) { goto L9; }
  goto L8;
 L9:;
  {
   cl_object v3;
-  T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   {
    uint8_t v4;
-   T5 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v2bit_stream) /*  BIT-STREAM-STREAM */;
+   T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-STREAM */;
    v4 = ecl_fixnum(cl_read_byte(1, T5));
-   T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    T6 = cl_ash(ecl_make_uint8_t(v4), T5);
    v3 = ecl_boole(ECL_BOOLIOR,(T4),(T6));
   }
@@ -1972,17 +1971,17 @@ L9:;
  }
  {
   cl_object v3;
-  T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   v3 = ecl_plus(T4,ecl_make_fixnum(8));
   (v2bit_stream)->instance.slots[3]=v3;
  }
  goto L7;
 L8:;
- T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+ T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
  if (!(ecl_number_equalp(T4,ecl_make_fixnum(1)))) { goto L17; }
  {
   cl_object v3;
-  v3 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  v3 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   (v2bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
   (v2bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
   T3 = v3;
@@ -1992,11 +1991,11 @@ L17:;
  {
   cl_object v4;
   T4 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-  T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   v4 = cl_ldb(T4, T5);
   {
    cl_object v5;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
    {
     cl_fixnum v6;
     v6 = -(1);
@@ -2006,7 +2005,7 @@ L17:;
   }
   {
    cl_object v5;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    v5 = ecl_minus(T4,ecl_make_fixnum(1));
    (v2bit_stream)->instance.slots[3]=v5;
   }
@@ -2022,18 +2021,18 @@ L3:;
  T1 = ecl_times(T0,ecl_make_fixnum(4));
  T2 = ecl_plus(ecl_make_fixnum(19),T1);
 L31:;
- T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+ T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
  if (ecl_number_compare(T4,ecl_make_fixnum(2))<0) { goto L33; }
  goto L32;
 L33:;
  {
   cl_object v3;
-  T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   {
    uint8_t v4;
-   T5 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v2bit_stream) /*  BIT-STREAM-STREAM */;
+   T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-STREAM */;
    v4 = ecl_fixnum(cl_read_byte(1, T5));
-   T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    T6 = cl_ash(ecl_make_uint8_t(v4), T5);
    v3 = ecl_boole(ECL_BOOLIOR,(T4),(T6));
   }
@@ -2041,17 +2040,17 @@ L33:;
  }
  {
   cl_object v3;
-  T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   v3 = ecl_plus(T4,ecl_make_fixnum(8));
   (v2bit_stream)->instance.slots[3]=v3;
  }
  goto L31;
 L32:;
- T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+ T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
  if (!(ecl_number_equalp(T4,ecl_make_fixnum(2)))) { goto L41; }
  {
   cl_object v3;
-  v3 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  v3 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   (v2bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
   (v2bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
   T3 = v3;
@@ -2061,11 +2060,11 @@ L41:;
  {
   cl_object v4;
   T4 = cl_byte(ecl_make_fixnum(2), ecl_make_fixnum(0));
-  T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   v4 = cl_ldb(T4, T5);
   {
    cl_object v5;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
    {
     cl_fixnum v6;
     v6 = -(2);
@@ -2075,7 +2074,7 @@ L41:;
   }
   {
    cl_object v5;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    v5 = ecl_minus(T4,ecl_make_fixnum(2));
    (v2bit_stream)->instance.slots[3]=v5;
   }
@@ -2091,18 +2090,18 @@ L27:;
  T1 = ecl_times(T0,ecl_make_fixnum(8));
  T2 = ecl_plus(ecl_make_fixnum(35),T1);
 L55:;
- T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+ T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
  if (ecl_number_compare(T4,ecl_make_fixnum(3))<0) { goto L57; }
  goto L56;
 L57:;
  {
   cl_object v3;
-  T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   {
    uint8_t v4;
-   T5 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v2bit_stream) /*  BIT-STREAM-STREAM */;
+   T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-STREAM */;
    v4 = ecl_fixnum(cl_read_byte(1, T5));
-   T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    T6 = cl_ash(ecl_make_uint8_t(v4), T5);
    v3 = ecl_boole(ECL_BOOLIOR,(T4),(T6));
   }
@@ -2110,17 +2109,17 @@ L57:;
  }
  {
   cl_object v3;
-  T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   v3 = ecl_plus(T4,ecl_make_fixnum(8));
   (v2bit_stream)->instance.slots[3]=v3;
  }
  goto L55;
 L56:;
- T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+ T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
  if (!(ecl_number_equalp(T4,ecl_make_fixnum(3)))) { goto L65; }
  {
   cl_object v3;
-  v3 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  v3 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   (v2bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
   (v2bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
   T3 = v3;
@@ -2130,11 +2129,11 @@ L65:;
  {
   cl_object v4;
   T4 = cl_byte(ecl_make_fixnum(3), ecl_make_fixnum(0));
-  T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   v4 = cl_ldb(T4, T5);
   {
    cl_object v5;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
    {
     cl_fixnum v6;
     v6 = -(3);
@@ -2144,7 +2143,7 @@ L65:;
   }
   {
    cl_object v5;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    v5 = ecl_minus(T4,ecl_make_fixnum(3));
    (v2bit_stream)->instance.slots[3]=v5;
   }
@@ -2160,18 +2159,18 @@ L51:;
  T1 = ecl_times(T0,ecl_make_fixnum(16));
  T2 = ecl_plus(ecl_make_fixnum(67),T1);
 L79:;
- T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+ T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
  if (ecl_number_compare(T4,ecl_make_fixnum(4))<0) { goto L81; }
  goto L80;
 L81:;
  {
   cl_object v3;
-  T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   {
    uint8_t v4;
-   T5 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v2bit_stream) /*  BIT-STREAM-STREAM */;
+   T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-STREAM */;
    v4 = ecl_fixnum(cl_read_byte(1, T5));
-   T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    T6 = cl_ash(ecl_make_uint8_t(v4), T5);
    v3 = ecl_boole(ECL_BOOLIOR,(T4),(T6));
   }
@@ -2179,17 +2178,17 @@ L81:;
  }
  {
   cl_object v3;
-  T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   v3 = ecl_plus(T4,ecl_make_fixnum(8));
   (v2bit_stream)->instance.slots[3]=v3;
  }
  goto L79;
 L80:;
- T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+ T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
  if (!(ecl_number_equalp(T4,ecl_make_fixnum(4)))) { goto L89; }
  {
   cl_object v3;
-  v3 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  v3 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   (v2bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
   (v2bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
   T3 = v3;
@@ -2199,11 +2198,11 @@ L89:;
  {
   cl_object v4;
   T4 = cl_byte(ecl_make_fixnum(4), ecl_make_fixnum(0));
-  T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   v4 = cl_ldb(T4, T5);
   {
    cl_object v5;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
    {
     cl_fixnum v6;
     v6 = -(4);
@@ -2213,7 +2212,7 @@ L89:;
   }
   {
    cl_object v5;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    v5 = ecl_minus(T4,ecl_make_fixnum(4));
    (v2bit_stream)->instance.slots[3]=v5;
   }
@@ -2229,18 +2228,18 @@ L75:;
  T1 = ecl_times(T0,ecl_make_fixnum(32));
  T2 = ecl_plus(ecl_make_fixnum(131),T1);
 L103:;
- T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+ T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
  if (ecl_number_compare(T4,ecl_make_fixnum(5))<0) { goto L105; }
  goto L104;
 L105:;
  {
   cl_object v3;
-  T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   {
    uint8_t v4;
-   T5 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v2bit_stream) /*  BIT-STREAM-STREAM */;
+   T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-STREAM */;
    v4 = ecl_fixnum(cl_read_byte(1, T5));
-   T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    T6 = cl_ash(ecl_make_uint8_t(v4), T5);
    v3 = ecl_boole(ECL_BOOLIOR,(T4),(T6));
   }
@@ -2248,17 +2247,17 @@ L105:;
  }
  {
   cl_object v3;
-  T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   v3 = ecl_plus(T4,ecl_make_fixnum(8));
   (v2bit_stream)->instance.slots[3]=v3;
  }
  goto L103;
 L104:;
- T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+ T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
  if (!(ecl_number_equalp(T4,ecl_make_fixnum(5)))) { goto L113; }
  {
   cl_object v3;
-  v3 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  v3 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   (v2bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
   (v2bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
   T3 = v3;
@@ -2268,11 +2267,11 @@ L113:;
  {
   cl_object v4;
   T4 = cl_byte(ecl_make_fixnum(5), ecl_make_fixnum(0));
-  T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+  T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
   v4 = cl_ldb(T4, T5);
   {
    cl_object v5;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
    {
     cl_fixnum v6;
     v6 = -(5);
@@ -2282,7 +2281,7 @@ L113:;
   }
   {
    cl_object v5;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    v5 = ecl_minus(T4,ecl_make_fixnum(5));
    (v2bit_stream)->instance.slots[3]=v5;
   }
@@ -2331,18 +2330,18 @@ L1:;
    T2 = ecl_times(v5,v7factor);
    T3 = ecl_plus(T1,T2);
 L8:;
-   T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    if (ecl_number_compare(T5,v6extra_bits)<0) { goto L10; }
    goto L9;
 L10:;
    {
     cl_object v8;
-    T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+    T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
     {
      uint8_t v9;
-     T6 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v2bit_stream) /*  BIT-STREAM-STREAM */;
+     T6 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-STREAM */;
      v9 = ecl_fixnum(cl_read_byte(1, T6));
-     T6 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T6 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      T7 = cl_ash(ecl_make_uint8_t(v9), T6);
      v8 = ecl_boole(ECL_BOOLIOR,(T5),(T7));
     }
@@ -2350,17 +2349,17 @@ L10:;
    }
    {
     cl_object v8;
-    T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     v8 = ecl_plus(T5,ecl_make_fixnum(8));
     (v2bit_stream)->instance.slots[3]=v8;
    }
    goto L8;
 L9:;
-   T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    if (!(ecl_number_equalp(T5,v6extra_bits))) { goto L18; }
    {
     cl_object v8;
-    v8 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+    v8 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
     (v2bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
     (v2bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
     T4 = v8;
@@ -2370,18 +2369,18 @@ L18:;
    {
     cl_object v9;
     T5 = cl_byte(v6extra_bits, ecl_make_fixnum(0));
-    T6 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+    T6 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
     v9 = cl_ldb(T5, T6);
     {
      cl_object v10;
-     T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
+     T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v2bit_stream) /*  BIT-STREAM-BITS */;
      T6 = ecl_negate(v6extra_bits);
      v10 = cl_ash(T5, T6);
      (v2bit_stream)->instance.slots[2]=v10;
     }
     {
      cl_object v10;
-     T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v2bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      v10 = ecl_minus(T5,v6extra_bits);
      (v2bit_stream)->instance.slots[3]=v10;
     }
@@ -2406,10 +2405,10 @@ TTL:
   cl_object v5symbol;
   {
    cl_object v6length_count;
-   v6length_count = ecl_function_dispatch(cl_env_copy,VV[118])(1, v3lit_decode_tree) /*  DECODE-TREE-LENGTH-COUNT */;
+   v6length_count = ecl_function_dispatch(cl_env_copy,VV[120])(1, v3lit_decode_tree) /*  DECODE-TREE-LENGTH-COUNT */;
    {
     cl_object v7code_symbols;
-    v7code_symbols = ecl_function_dispatch(cl_env_copy,VV[119])(1, v3lit_decode_tree) /*  DECODE-TREE-CODE-SYMBOLS */;
+    v7code_symbols = ecl_function_dispatch(cl_env_copy,VV[121])(1, v3lit_decode_tree) /*  DECODE-TREE-CODE-SYMBOLS */;
     {
      cl_fixnum v8code;
      v8code = 0;
@@ -2431,18 +2430,18 @@ TTL:
           cl_object v14;
           v14 = ECL_NIL;
 L16:;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (ecl_number_compare(T0,ecl_make_fixnum(1))<0) { goto L18; }
           goto L17;
 L18:;
           {
           cl_object v15;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           uint8_t v16;
-          T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
           v16 = ecl_fixnum(cl_read_byte(1, T1));
-          T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           T2 = cl_ash(ecl_make_uint8_t(v16), T1);
           v15 = ecl_boole(ECL_BOOLIOR,(T0),(T2));
           }
@@ -2450,17 +2449,17 @@ L18:;
           }
           {
           cl_object v15;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v15 = ecl_plus(T0,ecl_make_fixnum(8));
           (v1bit_stream)->instance.slots[3]=v15;
           }
           goto L16;
 L17:;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (!(ecl_number_equalp(T0,ecl_make_fixnum(1)))) { goto L26; }
           {
           cl_object v15;
-          v15 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          v15 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
           (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
           v8code = ecl_fixnum(v15);
@@ -2470,18 +2469,18 @@ L26:;
           {
           cl_object v16;
           T0 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-          T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           v16 = cl_ldb(T0, T1);
           {
           cl_object v17;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           T1 = ecl_negate(ecl_make_fixnum(1));
           v17 = cl_ash(T0, T1);
           (v1bit_stream)->instance.slots[2]=v17;
           }
           {
           cl_object v17;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v17 = ecl_minus(T0,ecl_make_fixnum(1));
           (v1bit_stream)->instance.slots[3]=v17;
           }
@@ -2494,12 +2493,12 @@ L11:;
           if (!((v12length)>=(v11))) { goto L40; }
           goto L12;
 L40:;
-          v13count = ecl_make_int64_t((v6length_count)->vector.self.i64[v12length]);
+          v13count = ecl_make_int32_t((v6length_count)->vector.self.i32[v12length]);
           T0 = ecl_plus(ecl_make_fixnum(v10first),v13count);
           if (!((v8code)<(ecl_fixnum(T0)))) { goto L47; }
           T0 = ecl_minus(ecl_make_fixnum(v8code),ecl_make_fixnum(v10first));
           T1 = ecl_plus(ecl_make_fixnum(v9index),T0);
-          v14 = ecl_make_int64_t((v7code_symbols)->vector.self.i64[ecl_fixnum(T1)]);
+          v14 = ecl_make_int32_t((v7code_symbols)->vector.self.i32[ecl_fixnum(T1)]);
           goto L46;
 L47:;
           v14 = ECL_NIL;
@@ -2510,18 +2509,18 @@ L46:;
 L44:;
           T0 = ecl_times(ecl_make_fixnum(v8code),ecl_make_fixnum(2));
 L53:;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (ecl_number_compare(T2,ecl_make_fixnum(1))<0) { goto L55; }
           goto L54;
 L55:;
           {
           cl_object v15;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           uint8_t v16;
-          T3 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
           v16 = ecl_fixnum(cl_read_byte(1, T3));
-          T3 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           T4 = cl_ash(ecl_make_uint8_t(v16), T3);
           v15 = ecl_boole(ECL_BOOLIOR,(T2),(T4));
           }
@@ -2529,17 +2528,17 @@ L55:;
           }
           {
           cl_object v15;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v15 = ecl_plus(T2,ecl_make_fixnum(8));
           (v1bit_stream)->instance.slots[3]=v15;
           }
           goto L53;
 L54:;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (!(ecl_number_equalp(T2,ecl_make_fixnum(1)))) { goto L63; }
           {
           cl_object v15;
-          v15 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          v15 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
           (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
           T1 = v15;
@@ -2549,18 +2548,18 @@ L63:;
           {
           cl_object v16;
           T2 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-          T3 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           v16 = cl_ldb(T2, T3);
           {
           cl_object v17;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           T3 = ecl_negate(ecl_make_fixnum(1));
           v17 = cl_ash(T2, T3);
           (v1bit_stream)->instance.slots[2]=v17;
           }
           {
           cl_object v17;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v17 = ecl_minus(T2,ecl_make_fixnum(1));
           (v1bit_stream)->instance.slots[3]=v17;
           }
@@ -2591,31 +2590,31 @@ L82:;
   if (!(ecl_number_compare(v5symbol,ecl_make_fixnum(255))<=0)) { goto L86; }
   {
    cl_fixnum v6end;
-   v6end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[97])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
+   v6end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[99])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
    if ((v6end)<(32768)) { goto L89; }
-   T0 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-   T1 = ecl_function_dispatch(cl_env_copy,VV[99])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-STREAM */;
+   T0 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+   T1 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-STREAM */;
    cl_write_sequence(2, T0, T1);
    {
     cl_object v7;
-    v7 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM */;
-    if (!(ecl_eql(v7,VV[24]))) { goto L94; }
+    v7 = ecl_function_dispatch(cl_env_copy,VV[102])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM */;
+    if (!(ecl_eql(v7,VV[25]))) { goto L94; }
     {
-     cl_fixnum v8;
-     T0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
-     T1 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-     v8 = ecl_fixnum(L7update_adler32_checksum(T0, T1, ecl_make_fixnum(32768)));
-     (v2window_stream)->instance.slots[4]=ecl_make_fixnum(v8);
+     unsigned int v8;
+     T0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+     T1 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+     v8 = ecl_to_uint(L7update_adler32_checksum(T0, T1, ecl_make_fixnum(32768)));
+     (v2window_stream)->instance.slots[4]=ecl_make_uint(v8);
      goto L92;
     }
 L94:;
-    if (!(ecl_eql(v7,VV[25]))) { goto L92; }
+    if (!(ecl_eql(v7,VV[26]))) { goto L92; }
     {
-     cl_fixnum v9;
-     T0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
-     T1 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-     v9 = ecl_fixnum(L9update_crc32_checksum(T0, T1, ecl_make_fixnum(32768)));
-     (v2window_stream)->instance.slots[4]=ecl_make_fixnum(v9);
+     unsigned int v9;
+     T0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+     T1 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+     v9 = ecl_to_uint(L9update_crc32_checksum(T0, T1, ecl_make_fixnum(32768)));
+     (v2window_stream)->instance.slots[4]=ecl_make_uint(v9);
     }
    }
 L92:;
@@ -2623,7 +2622,7 @@ L92:;
 L89:;
    {
     cl_object v7;
-    v7 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+    v7 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
     ecl_aset_unsafe(v7,v6end,v5symbol);
    }
    {
@@ -2646,18 +2645,18 @@ L104:;
    T1 = ecl_times(T0,ecl_make_fixnum(2));
    T2 = ecl_plus(ecl_make_fixnum(11),T1);
 L110:;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    if (ecl_number_compare(T4,ecl_make_fixnum(1))<0) { goto L112; }
    goto L111;
 L112:;
    {
     cl_object v10;
-    T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     {
      uint8_t v11;
-     T5 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+     T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
      v11 = ecl_fixnum(cl_read_byte(1, T5));
-     T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      T6 = cl_ash(ecl_make_uint8_t(v11), T5);
      v10 = ecl_boole(ECL_BOOLIOR,(T4),(T6));
     }
@@ -2665,17 +2664,17 @@ L112:;
    }
    {
     cl_object v10;
-    T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     v10 = ecl_plus(T4,ecl_make_fixnum(8));
     (v1bit_stream)->instance.slots[3]=v10;
    }
    goto L110;
 L111:;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    if (!(ecl_number_equalp(T4,ecl_make_fixnum(1)))) { goto L120; }
    {
     cl_object v10;
-    v10 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    v10 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
     (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
     T3 = v10;
@@ -2685,11 +2684,11 @@ L120:;
    {
     cl_object v11;
     T4 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-    T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     v11 = cl_ldb(T4, T5);
     {
      cl_object v12;
-     T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      {
       cl_fixnum v13;
       v13 = -(1);
@@ -2699,7 +2698,7 @@ L120:;
     }
     {
      cl_object v12;
-     T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      v12 = ecl_minus(T4,ecl_make_fixnum(1));
      (v1bit_stream)->instance.slots[3]=v12;
     }
@@ -2714,18 +2713,18 @@ L106:;
    T1 = ecl_times(T0,ecl_make_fixnum(4));
    T2 = ecl_plus(ecl_make_fixnum(19),T1);
 L134:;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    if (ecl_number_compare(T4,ecl_make_fixnum(2))<0) { goto L136; }
    goto L135;
 L136:;
    {
     cl_object v10;
-    T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     {
      uint8_t v11;
-     T5 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+     T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
      v11 = ecl_fixnum(cl_read_byte(1, T5));
-     T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      T6 = cl_ash(ecl_make_uint8_t(v11), T5);
      v10 = ecl_boole(ECL_BOOLIOR,(T4),(T6));
     }
@@ -2733,17 +2732,17 @@ L136:;
    }
    {
     cl_object v10;
-    T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     v10 = ecl_plus(T4,ecl_make_fixnum(8));
     (v1bit_stream)->instance.slots[3]=v10;
    }
    goto L134;
 L135:;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    if (!(ecl_number_equalp(T4,ecl_make_fixnum(2)))) { goto L144; }
    {
     cl_object v10;
-    v10 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    v10 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
     (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
     T3 = v10;
@@ -2753,11 +2752,11 @@ L144:;
    {
     cl_object v11;
     T4 = cl_byte(ecl_make_fixnum(2), ecl_make_fixnum(0));
-    T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     v11 = cl_ldb(T4, T5);
     {
      cl_object v12;
-     T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      {
       cl_fixnum v13;
       v13 = -(2);
@@ -2767,7 +2766,7 @@ L144:;
     }
     {
      cl_object v12;
-     T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      v12 = ecl_minus(T4,ecl_make_fixnum(2));
      (v1bit_stream)->instance.slots[3]=v12;
     }
@@ -2782,18 +2781,18 @@ L130:;
    T1 = ecl_times(T0,ecl_make_fixnum(8));
    T2 = ecl_plus(ecl_make_fixnum(35),T1);
 L158:;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    if (ecl_number_compare(T4,ecl_make_fixnum(3))<0) { goto L160; }
    goto L159;
 L160:;
    {
     cl_object v10;
-    T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     {
      uint8_t v11;
-     T5 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+     T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
      v11 = ecl_fixnum(cl_read_byte(1, T5));
-     T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      T6 = cl_ash(ecl_make_uint8_t(v11), T5);
      v10 = ecl_boole(ECL_BOOLIOR,(T4),(T6));
     }
@@ -2801,17 +2800,17 @@ L160:;
    }
    {
     cl_object v10;
-    T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     v10 = ecl_plus(T4,ecl_make_fixnum(8));
     (v1bit_stream)->instance.slots[3]=v10;
    }
    goto L158;
 L159:;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    if (!(ecl_number_equalp(T4,ecl_make_fixnum(3)))) { goto L168; }
    {
     cl_object v10;
-    v10 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    v10 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
     (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
     T3 = v10;
@@ -2821,11 +2820,11 @@ L168:;
    {
     cl_object v11;
     T4 = cl_byte(ecl_make_fixnum(3), ecl_make_fixnum(0));
-    T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     v11 = cl_ldb(T4, T5);
     {
      cl_object v12;
-     T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      {
       cl_fixnum v13;
       v13 = -(3);
@@ -2835,7 +2834,7 @@ L168:;
     }
     {
      cl_object v12;
-     T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      v12 = ecl_minus(T4,ecl_make_fixnum(3));
      (v1bit_stream)->instance.slots[3]=v12;
     }
@@ -2850,18 +2849,18 @@ L154:;
    T1 = ecl_times(T0,ecl_make_fixnum(16));
    T2 = ecl_plus(ecl_make_fixnum(67),T1);
 L182:;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    if (ecl_number_compare(T4,ecl_make_fixnum(4))<0) { goto L184; }
    goto L183;
 L184:;
    {
     cl_object v10;
-    T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     {
      uint8_t v11;
-     T5 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+     T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
      v11 = ecl_fixnum(cl_read_byte(1, T5));
-     T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      T6 = cl_ash(ecl_make_uint8_t(v11), T5);
      v10 = ecl_boole(ECL_BOOLIOR,(T4),(T6));
     }
@@ -2869,17 +2868,17 @@ L184:;
    }
    {
     cl_object v10;
-    T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     v10 = ecl_plus(T4,ecl_make_fixnum(8));
     (v1bit_stream)->instance.slots[3]=v10;
    }
    goto L182;
 L183:;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    if (!(ecl_number_equalp(T4,ecl_make_fixnum(4)))) { goto L192; }
    {
     cl_object v10;
-    v10 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    v10 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
     (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
     T3 = v10;
@@ -2889,11 +2888,11 @@ L192:;
    {
     cl_object v11;
     T4 = cl_byte(ecl_make_fixnum(4), ecl_make_fixnum(0));
-    T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     v11 = cl_ldb(T4, T5);
     {
      cl_object v12;
-     T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      {
       cl_fixnum v13;
       v13 = -(4);
@@ -2903,7 +2902,7 @@ L192:;
     }
     {
      cl_object v12;
-     T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      v12 = ecl_minus(T4,ecl_make_fixnum(4));
      (v1bit_stream)->instance.slots[3]=v12;
     }
@@ -2918,18 +2917,18 @@ L178:;
    T1 = ecl_times(T0,ecl_make_fixnum(32));
    T2 = ecl_plus(ecl_make_fixnum(131),T1);
 L206:;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    if (ecl_number_compare(T4,ecl_make_fixnum(5))<0) { goto L208; }
    goto L207;
 L208:;
    {
     cl_object v10;
-    T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     {
      uint8_t v11;
-     T5 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+     T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
      v11 = ecl_fixnum(cl_read_byte(1, T5));
-     T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      T6 = cl_ash(ecl_make_uint8_t(v11), T5);
      v10 = ecl_boole(ECL_BOOLIOR,(T4),(T6));
     }
@@ -2937,17 +2936,17 @@ L208:;
    }
    {
     cl_object v10;
-    T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     v10 = ecl_plus(T4,ecl_make_fixnum(8));
     (v1bit_stream)->instance.slots[3]=v10;
    }
    goto L206;
 L207:;
-   T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    if (!(ecl_number_equalp(T4,ecl_make_fixnum(5)))) { goto L216; }
    {
     cl_object v10;
-    v10 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    v10 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
     (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
     T3 = v10;
@@ -2957,11 +2956,11 @@ L216:;
    {
     cl_object v11;
     T4 = cl_byte(ecl_make_fixnum(5), ecl_make_fixnum(0));
-    T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     v11 = cl_ldb(T4, T5);
     {
      cl_object v12;
-     T4 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+     T4 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
      {
       cl_fixnum v13;
       v13 = -(5);
@@ -2971,7 +2970,7 @@ L216:;
     }
     {
      cl_object v12;
-     T4 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+     T4 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
      v12 = ecl_minus(T4,ecl_make_fixnum(5));
      (v1bit_stream)->instance.slots[3]=v12;
     }
@@ -2992,10 +2991,10 @@ L103:;
     cl_object v10;
     {
      cl_object v11length_count;
-     v11length_count = ecl_function_dispatch(cl_env_copy,VV[118])(1, v4dist_decode_tree) /*  DECODE-TREE-LENGTH-COUNT */;
+     v11length_count = ecl_function_dispatch(cl_env_copy,VV[120])(1, v4dist_decode_tree) /*  DECODE-TREE-LENGTH-COUNT */;
      {
       cl_object v12code_symbols;
-      v12code_symbols = ecl_function_dispatch(cl_env_copy,VV[119])(1, v4dist_decode_tree) /*  DECODE-TREE-CODE-SYMBOLS */;
+      v12code_symbols = ecl_function_dispatch(cl_env_copy,VV[121])(1, v4dist_decode_tree) /*  DECODE-TREE-CODE-SYMBOLS */;
       {
        cl_fixnum v13code;
        v13code = 0;
@@ -3017,18 +3016,18 @@ L103:;
           cl_object v19;
           v19 = ECL_NIL;
 L244:;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (ecl_number_compare(T0,ecl_make_fixnum(1))<0) { goto L246; }
           goto L245;
 L246:;
           {
           cl_object v20;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           uint8_t v21;
-          T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
           v21 = ecl_fixnum(cl_read_byte(1, T1));
-          T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           T2 = cl_ash(ecl_make_uint8_t(v21), T1);
           v20 = ecl_boole(ECL_BOOLIOR,(T0),(T2));
           }
@@ -3036,17 +3035,17 @@ L246:;
           }
           {
           cl_object v20;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v20 = ecl_plus(T0,ecl_make_fixnum(8));
           (v1bit_stream)->instance.slots[3]=v20;
           }
           goto L244;
 L245:;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (!(ecl_number_equalp(T0,ecl_make_fixnum(1)))) { goto L254; }
           {
           cl_object v20;
-          v20 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          v20 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
           (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
           v13code = ecl_fixnum(v20);
@@ -3056,11 +3055,11 @@ L254:;
           {
           cl_object v21;
           T0 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-          T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           v21 = cl_ldb(T0, T1);
           {
           cl_object v22;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           cl_fixnum v23;
           v23 = -(1);
@@ -3070,7 +3069,7 @@ L254:;
           }
           {
           cl_object v22;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v22 = ecl_minus(T0,ecl_make_fixnum(1));
           (v1bit_stream)->instance.slots[3]=v22;
           }
@@ -3083,12 +3082,12 @@ L239:;
           if (!((v17length)>=(v16))) { goto L268; }
           goto L240;
 L268:;
-          v18count = ecl_make_int64_t((v11length_count)->vector.self.i64[v17length]);
+          v18count = ecl_make_int32_t((v11length_count)->vector.self.i32[v17length]);
           T0 = ecl_plus(ecl_make_fixnum(v15first),v18count);
           if (!((v13code)<(ecl_fixnum(T0)))) { goto L275; }
           T0 = ecl_minus(ecl_make_fixnum(v13code),ecl_make_fixnum(v15first));
           T1 = ecl_plus(ecl_make_fixnum(v14index),T0);
-          v19 = ecl_make_int64_t((v12code_symbols)->vector.self.i64[ecl_fixnum(T1)]);
+          v19 = ecl_make_int32_t((v12code_symbols)->vector.self.i32[ecl_fixnum(T1)]);
           goto L274;
 L275:;
           v19 = ECL_NIL;
@@ -3099,18 +3098,18 @@ L274:;
 L272:;
           T0 = ecl_times(ecl_make_fixnum(v13code),ecl_make_fixnum(2));
 L281:;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (ecl_number_compare(T2,ecl_make_fixnum(1))<0) { goto L283; }
           goto L282;
 L283:;
           {
           cl_object v20;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           uint8_t v21;
-          T3 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
           v21 = ecl_fixnum(cl_read_byte(1, T3));
-          T3 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           T4 = cl_ash(ecl_make_uint8_t(v21), T3);
           v20 = ecl_boole(ECL_BOOLIOR,(T2),(T4));
           }
@@ -3118,17 +3117,17 @@ L283:;
           }
           {
           cl_object v20;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v20 = ecl_plus(T2,ecl_make_fixnum(8));
           (v1bit_stream)->instance.slots[3]=v20;
           }
           goto L281;
 L282:;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (!(ecl_number_equalp(T2,ecl_make_fixnum(1)))) { goto L291; }
           {
           cl_object v20;
-          v20 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          v20 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
           (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
           T1 = v20;
@@ -3138,11 +3137,11 @@ L291:;
           {
           cl_object v21;
           T2 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-          T3 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           v21 = cl_ldb(T2, T3);
           {
           cl_object v22;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           cl_fixnum v23;
           v23 = -(1);
@@ -3152,7 +3151,7 @@ L291:;
           }
           {
           cl_object v22;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v22 = ecl_minus(T2,ecl_make_fixnum(1));
           (v1bit_stream)->instance.slots[3]=v22;
           }
@@ -3198,18 +3197,18 @@ L309:;
       T2 = ecl_times(v13,v15factor);
       T3 = ecl_plus(T1,T2);
 L316:;
-      T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+      T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
       if (ecl_number_compare(T5,v14extra_bits)<0) { goto L318; }
       goto L317;
 L318:;
       {
        cl_object v16;
-       T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+       T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
        {
         uint8_t v17;
-        T6 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+        T6 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
         v17 = ecl_fixnum(cl_read_byte(1, T6));
-        T6 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+        T6 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
         T7 = cl_ash(ecl_make_uint8_t(v17), T6);
         v16 = ecl_boole(ECL_BOOLIOR,(T5),(T7));
        }
@@ -3217,17 +3216,17 @@ L318:;
       }
       {
        cl_object v16;
-       T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+       T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
        v16 = ecl_plus(T5,ecl_make_fixnum(8));
        (v1bit_stream)->instance.slots[3]=v16;
       }
       goto L316;
 L317:;
-      T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+      T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
       if (!(ecl_number_equalp(T5,v14extra_bits))) { goto L326; }
       {
        cl_object v16;
-       v16 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+       v16 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
        (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
        (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
        T4 = v16;
@@ -3237,18 +3236,18 @@ L326:;
       {
        cl_object v17;
        T5 = cl_byte(v14extra_bits, ecl_make_fixnum(0));
-       T6 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+       T6 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
        v17 = cl_ldb(T5, T6);
        {
         cl_object v18;
-        T5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+        T5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
         T6 = ecl_negate(v14extra_bits);
         v18 = cl_ash(T5, T6);
         (v1bit_stream)->instance.slots[2]=v18;
        }
        {
         cl_object v18;
-        T5 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+        T5 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
         v18 = ecl_minus(T5,v14extra_bits);
         (v1bit_stream)->instance.slots[3]=v18;
        }
@@ -3265,10 +3264,10 @@ L228:;
 L85:;
   {
    cl_object v6length_count;
-   v6length_count = ecl_function_dispatch(cl_env_copy,VV[118])(1, v3lit_decode_tree) /*  DECODE-TREE-LENGTH-COUNT */;
+   v6length_count = ecl_function_dispatch(cl_env_copy,VV[120])(1, v3lit_decode_tree) /*  DECODE-TREE-LENGTH-COUNT */;
    {
     cl_object v7code_symbols;
-    v7code_symbols = ecl_function_dispatch(cl_env_copy,VV[119])(1, v3lit_decode_tree) /*  DECODE-TREE-CODE-SYMBOLS */;
+    v7code_symbols = ecl_function_dispatch(cl_env_copy,VV[121])(1, v3lit_decode_tree) /*  DECODE-TREE-CODE-SYMBOLS */;
     {
      cl_fixnum v8code;
      v8code = 0;
@@ -3290,18 +3289,18 @@ L85:;
           cl_object v14;
           v14 = ECL_NIL;
 L352:;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (ecl_number_compare(T0,ecl_make_fixnum(1))<0) { goto L354; }
           goto L353;
 L354:;
           {
           cl_object v15;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           uint8_t v16;
-          T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
           v16 = ecl_fixnum(cl_read_byte(1, T1));
-          T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           T2 = cl_ash(ecl_make_uint8_t(v16), T1);
           v15 = ecl_boole(ECL_BOOLIOR,(T0),(T2));
           }
@@ -3309,17 +3308,17 @@ L354:;
           }
           {
           cl_object v15;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v15 = ecl_plus(T0,ecl_make_fixnum(8));
           (v1bit_stream)->instance.slots[3]=v15;
           }
           goto L352;
 L353:;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (!(ecl_number_equalp(T0,ecl_make_fixnum(1)))) { goto L362; }
           {
           cl_object v15;
-          v15 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          v15 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
           (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
           v8code = ecl_fixnum(v15);
@@ -3329,11 +3328,11 @@ L362:;
           {
           cl_object v16;
           T0 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-          T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           v16 = cl_ldb(T0, T1);
           {
           cl_object v17;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           cl_fixnum v18;
           v18 = -(1);
@@ -3343,7 +3342,7 @@ L362:;
           }
           {
           cl_object v17;
-          T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v17 = ecl_minus(T0,ecl_make_fixnum(1));
           (v1bit_stream)->instance.slots[3]=v17;
           }
@@ -3356,12 +3355,12 @@ L347:;
           if (!((v12length)>=(v11))) { goto L376; }
           goto L348;
 L376:;
-          v13count = ecl_make_int64_t((v6length_count)->vector.self.i64[v12length]);
+          v13count = ecl_make_int32_t((v6length_count)->vector.self.i32[v12length]);
           T0 = ecl_plus(ecl_make_fixnum(v10first),v13count);
           if (!((v8code)<(ecl_fixnum(T0)))) { goto L383; }
           T0 = ecl_minus(ecl_make_fixnum(v8code),ecl_make_fixnum(v10first));
           T1 = ecl_plus(ecl_make_fixnum(v9index),T0);
-          v14 = ecl_make_int64_t((v7code_symbols)->vector.self.i64[ecl_fixnum(T1)]);
+          v14 = ecl_make_int32_t((v7code_symbols)->vector.self.i32[ecl_fixnum(T1)]);
           goto L382;
 L383:;
           v14 = ECL_NIL;
@@ -3372,18 +3371,18 @@ L382:;
 L380:;
           T0 = ecl_times(ecl_make_fixnum(v8code),ecl_make_fixnum(2));
 L389:;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (ecl_number_compare(T2,ecl_make_fixnum(1))<0) { goto L391; }
           goto L390;
 L391:;
           {
           cl_object v15;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           uint8_t v16;
-          T3 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
           v16 = ecl_fixnum(cl_read_byte(1, T3));
-          T3 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           T4 = cl_ash(ecl_make_uint8_t(v16), T3);
           v15 = ecl_boole(ECL_BOOLIOR,(T2),(T4));
           }
@@ -3391,17 +3390,17 @@ L391:;
           }
           {
           cl_object v15;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v15 = ecl_plus(T2,ecl_make_fixnum(8));
           (v1bit_stream)->instance.slots[3]=v15;
           }
           goto L389;
 L390:;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           if (!(ecl_number_equalp(T2,ecl_make_fixnum(1)))) { goto L399; }
           {
           cl_object v15;
-          v15 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          v15 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
           (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
           T1 = v15;
@@ -3411,11 +3410,11 @@ L399:;
           {
           cl_object v16;
           T2 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-          T3 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T3 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           v16 = cl_ldb(T2, T3);
           {
           cl_object v17;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
           {
           cl_fixnum v18;
           v18 = -(1);
@@ -3425,7 +3424,7 @@ L399:;
           }
           {
           cl_object v17;
-          T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+          T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
           v17 = ecl_minus(T2,ecl_make_fixnum(1));
           (v1bit_stream)->instance.slots[3]=v17;
           }
@@ -3472,18 +3471,18 @@ TTL:
   cl_object v3finalp;
   cl_object v4type;
 L4:;
-  T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   if (ecl_number_compare(T1,ecl_make_fixnum(1))<0) { goto L6; }
   goto L5;
 L6:;
   {
    cl_object v5;
-   T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    {
     uint8_t v6;
-    T2 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+    T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
     v6 = ecl_fixnum(cl_read_byte(1, T2));
-    T2 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T2 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     T3 = cl_ash(ecl_make_uint8_t(v6), T2);
     v5 = ecl_boole(ECL_BOOLIOR,(T1),(T3));
    }
@@ -3491,17 +3490,17 @@ L6:;
   }
   {
    cl_object v5;
-   T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    v5 = ecl_plus(T1,ecl_make_fixnum(8));
    (v1bit_stream)->instance.slots[3]=v5;
   }
   goto L4;
 L5:;
-  T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   if (!(ecl_number_equalp(T1,ecl_make_fixnum(1)))) { goto L14; }
   {
    cl_object v5;
-   v5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   v5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
    (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
    T0 = v5;
@@ -3511,11 +3510,11 @@ L14:;
   {
    cl_object v6;
    T1 = cl_byte(ecl_make_fixnum(1), ecl_make_fixnum(0));
-   T2 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   T2 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    v6 = cl_ldb(T1, T2);
    {
     cl_object v7;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     {
      cl_fixnum v8;
      v8 = -(1);
@@ -3525,7 +3524,7 @@ L14:;
    }
    {
     cl_object v7;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     v7 = ecl_minus(T1,ecl_make_fixnum(1));
     (v1bit_stream)->instance.slots[3]=v7;
    }
@@ -3538,18 +3537,18 @@ L2:;
    v3finalp = (v5)?ECL_NIL:ECL_T;
   }
 L26:;
-  T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   if (ecl_number_compare(T0,ecl_make_fixnum(2))<0) { goto L28; }
   goto L27;
 L28:;
   {
    cl_object v5;
-   T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    {
     uint8_t v6;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
     v6 = ecl_fixnum(cl_read_byte(1, T1));
-    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     T2 = cl_ash(ecl_make_uint8_t(v6), T1);
     v5 = ecl_boole(ECL_BOOLIOR,(T0),(T2));
    }
@@ -3557,17 +3556,17 @@ L28:;
   }
   {
    cl_object v5;
-   T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+   T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
    v5 = ecl_plus(T0,ecl_make_fixnum(8));
    (v1bit_stream)->instance.slots[3]=v5;
   }
   goto L26;
 L27:;
-  T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+  T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
   if (!(ecl_number_equalp(T0,ecl_make_fixnum(2)))) { goto L36; }
   {
    cl_object v5;
-   v5 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   v5 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    (v1bit_stream)->instance.slots[2]=ecl_make_fixnum(0);
    (v1bit_stream)->instance.slots[3]=ecl_make_fixnum(0);
    v4type = v5;
@@ -3577,11 +3576,11 @@ L36:;
   {
    cl_object v6;
    T0 = cl_byte(ecl_make_fixnum(2), ecl_make_fixnum(0));
-   T1 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+   T1 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
    v6 = cl_ldb(T0, T1);
    {
     cl_object v7;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[113])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[115])(1, v1bit_stream) /*  BIT-STREAM-BITS */;
     {
      cl_fixnum v8;
      v8 = -(2);
@@ -3591,7 +3590,7 @@ L36:;
    }
    {
     cl_object v7;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[114])(1, v1bit_stream) /*  BIT-STREAM-BIT-COUNT */;
     v7 = ecl_minus(T0,ecl_make_fixnum(2));
     (v1bit_stream)->instance.slots[3]=v7;
    }
@@ -3606,11 +3605,11 @@ L24:;
    cl_object v6nlen;
    {
     uint8_t v7;
-    T0 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+    T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
     v7 = ecl_fixnum(cl_read_byte(1, T0));
     {
      uint8_t v8;
-     T0 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+     T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
      v8 = ecl_fixnum(cl_read_byte(1, T0));
      T0 = ecl_ash(ecl_make_uint8_t(v8),8);
      v5len = ecl_boole(ECL_BOOLIOR,(ecl_make_uint8_t(v7)),(T0));
@@ -3619,11 +3618,11 @@ L24:;
    T0 = cl_byte(ecl_make_fixnum(16), ecl_make_fixnum(0));
    {
     uint8_t v7;
-    T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+    T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
     v7 = ecl_fixnum(cl_read_byte(1, T1));
     {
      uint8_t v8;
-     T1 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+     T1 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
      v8 = ecl_fixnum(cl_read_byte(1, T1));
      T1 = ecl_ash(ecl_make_uint8_t(v8),8);
      T2 = ecl_boole(ECL_BOOLIOR,(ecl_make_uint8_t(v7)),(T1));
@@ -3642,35 +3641,35 @@ L57:;
 L60:;
     {
      uint8_t v8;
-     T0 = ecl_function_dispatch(cl_env_copy,VV[110])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
+     T0 = ecl_function_dispatch(cl_env_copy,VV[112])(1, v1bit_stream) /*  BIT-STREAM-STREAM */;
      v8 = ecl_fixnum(cl_read_byte(1, T0));
      {
       cl_fixnum v9end;
-      v9end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[97])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
+      v9end = ecl_fixnum(ecl_function_dispatch(cl_env_copy,VV[99])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER-END */);
       if ((v9end)<(32768)) { goto L66; }
-      T0 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-      T1 = ecl_function_dispatch(cl_env_copy,VV[99])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-STREAM */;
+      T0 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+      T1 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-STREAM */;
       cl_write_sequence(2, T0, T1);
       {
        cl_object v10;
-       v10 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM */;
-       if (!(ecl_eql(v10,VV[24]))) { goto L71; }
+       v10 = ecl_function_dispatch(cl_env_copy,VV[102])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM */;
+       if (!(ecl_eql(v10,VV[25]))) { goto L71; }
        {
-        cl_fixnum v11;
-        T0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
-        T1 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-        v11 = ecl_fixnum(L7update_adler32_checksum(T0, T1, ecl_make_fixnum(32768)));
-        (v2window_stream)->instance.slots[4]=ecl_make_fixnum(v11);
+        unsigned int v11;
+        T0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+        T1 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+        v11 = ecl_to_uint(L7update_adler32_checksum(T0, T1, ecl_make_fixnum(32768)));
+        (v2window_stream)->instance.slots[4]=ecl_make_uint(v11);
         goto L69;
        }
 L71:;
-       if (!(ecl_eql(v10,VV[25]))) { goto L69; }
+       if (!(ecl_eql(v10,VV[26]))) { goto L69; }
        {
-        cl_fixnum v12;
-        T0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
-        T1 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
-        v12 = ecl_fixnum(L9update_crc32_checksum(T0, T1, ecl_make_fixnum(32768)));
-        (v2window_stream)->instance.slots[4]=ecl_make_fixnum(v12);
+        unsigned int v12;
+        T0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+        T1 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+        v12 = ecl_to_uint(L9update_crc32_checksum(T0, T1, ecl_make_fixnum(32768)));
+        (v2window_stream)->instance.slots[4]=ecl_make_uint(v12);
        }
       }
 L69:;
@@ -3678,7 +3677,7 @@ L69:;
 L66:;
       {
        cl_object v10;
-       v10 = ecl_function_dispatch(cl_env_copy,VV[98])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
+       v10 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v2window_stream) /*  SLIDING-WINDOW-STREAM-BUFFER */;
        ecl_aset_unsafe(v10,v9end,ecl_make_uint8_t(v8));
       }
       {
@@ -3698,7 +3697,7 @@ L82:;
   }
 L47:;
   if (!((v4type)==(ecl_make_fixnum(1)))) { goto L84; }
-  L25decode_huffman_block(v1bit_stream, v2window_stream, ECL_SYM_VAL(cl_env_copy,VV[55]), ECL_SYM_VAL(cl_env_copy,VV[56]));
+  L25decode_huffman_block(v1bit_stream, v2window_stream, ECL_SYM_VAL(cl_env_copy,VV[56]), ECL_SYM_VAL(cl_env_copy,VV[57]));
   goto L46;
 L84:;
   if (!((v4type)==(ecl_make_fixnum(2)))) { goto L86; }
@@ -3722,7 +3721,7 @@ L86:;
   cl_error(5, VV[1], ECL_SYM("FORMAT-CONTROL",1240), _ecl_static_9, ECL_SYM("FORMAT-ARGUMENTS",1239), T0);
   goto L46;
 L89:;
-  si_ecase_error(v4type, VV[65]);
+  si_ecase_error(v4type, VV[66]);
 L46:;
   value0 = Null(v3finalp)?ECL_T:ECL_NIL;
   cl_env_copy->nvalues = 1;
@@ -3928,7 +3927,7 @@ TTL:
   cl_env_copy->nvalues = 1;
   return value0;
 L2:;
-  value0 = ecl_plus(v2time,ecl_make_fixnum(2208988800));
+  value0 = ecl_plus(v2time,VV[74]);
   cl_env_copy->nvalues = 1;
   return value0;
  }
@@ -4057,17 +4056,17 @@ static cl_object L36inflate_stream(cl_narg narg, cl_object v1input_stream, cl_ob
   T0 = ecl_make_fixnum(0);
   goto L2;
 L3:;
-  if (!(ecl_eql(v3checksum,VV[25]))) { goto L6; }
+  if (!(ecl_eql(v3checksum,VV[26]))) { goto L6; }
   T0 = ecl_make_fixnum(0);
   goto L2;
 L6:;
-  if (!(ecl_eql(v3checksum,VV[24]))) { goto L8; }
+  if (!(ecl_eql(v3checksum,VV[25]))) { goto L8; }
   T0 = ecl_make_fixnum(1);
   goto L2;
 L8:;
-  T0 = si_ecase_error(v3checksum, VV[81]);
+  T0 = si_ecase_error(v3checksum, VV[83]);
 L2:;
-  v4window_stream = L10make_sliding_window_stream(6, ECL_SYM("STREAM",1313), v2output_stream, VV[78], v3checksum, VV[79], T0);
+  v4window_stream = L10make_sliding_window_stream(6, ECL_SYM("STREAM",1313), v2output_stream, VV[80], v3checksum, VV[81], T0);
   {
    cl_object v5bit_stream;
    v5bit_stream = L14make_bit_stream(2, ECL_SYM("STREAM",1313), v1input_stream);
@@ -4079,7 +4078,7 @@ L13:;
 L12:;
    L12sliding_window_stream_flush(v4window_stream);
    if (Null(v3checksum)) { goto L16; }
-   value0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v4window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
+   value0 = ecl_function_dispatch(cl_env_copy,VV[103])(1, v4window_stream) /*  SLIDING-WINDOW-STREAM-CHECKSUM-VALUE */;
    return value0;
 L16:;
    value0 = ECL_NIL;
@@ -4139,12 +4138,12 @@ L6:;
    cl_object v9;
    cl_object v10;
    if (Null(v3check_checksum)) { goto L10; }
-   T0 = VV[24];
+   T0 = VV[25];
    goto L9;
 L10:;
    T0 = ECL_NIL;
 L9:;
-   v9 = L36inflate_stream(4, v1input_stream, v2output_stream, VV[78], T0);
+   v9 = L36inflate_stream(4, v1input_stream, v2output_stream, VV[80], T0);
    v10 = L29parse_zlib_footer(v1input_stream);
    if (Null(v3check_checksum)) { goto L13; }
    if (ecl_number_equalp(v10,v9)) { goto L13; }
@@ -4198,12 +4197,12 @@ L2:;
    cl_object v9;
    cl_object v10;
    if (Null(v3check_checksum)) { goto L6; }
-   T0 = VV[25];
+   T0 = VV[26];
    goto L5;
 L6:;
    T0 = ECL_NIL;
 L5:;
-   v9 = L36inflate_stream(4, v1input_stream, v2output_stream, VV[78], T0);
+   v9 = L36inflate_stream(4, v1input_stream, v2output_stream, VV[80], T0);
    v10 = L35parse_gzip_footer(v1input_stream);
    if (Null(v3check_checksum)) { goto L9; }
    if (ecl_number_equalp(v10,v9)) { goto L9; }
@@ -4228,7 +4227,7 @@ static cl_object L39gunzip(cl_object volatile v1input_file, cl_object volatile v
 TTL:
  {
   volatile cl_object v3input;
-  v3input = cl_open(3, v1input_file, ECL_SYM("ELEMENT-TYPE",1224), VV[32]);
+  v3input = cl_open(3, v1input_file, ECL_SYM("ELEMENT-TYPE",1224), VV[33]);
   {
    volatile bool unwinding = FALSE;
    cl_index v4=ECL_STACK_INDEX(cl_env_copy),v5;
@@ -4244,7 +4243,7 @@ TTL:
      v6 = _ecl_inner_frame;
      {
       volatile cl_object v7output;
-      v7output = cl_open(7, v2output_file, ECL_SYM("DIRECTION",1218), ECL_SYM("OUTPUT",1282), ECL_SYM("IF-EXISTS",1245), ECL_SYM("SUPERSEDE",1314), ECL_SYM("ELEMENT-TYPE",1224), VV[32]);
+      v7output = cl_open(7, v2output_file, ECL_SYM("DIRECTION",1218), ECL_SYM("OUTPUT",1282), ECL_SYM("IF-EXISTS",1245), ECL_SYM("SUPERSEDE",1314), ECL_SYM("ELEMENT-TYPE",1224), VV[33]);
       {
        volatile bool unwinding = FALSE;
        cl_index v8=ECL_STACK_INDEX(cl_env_copy),v9;
@@ -4303,7 +4302,7 @@ L20:;
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _ecl4N1I9dXpmctk9_KnwtVE21(cl_object flag)
+ECL_DLLEXPORT void _ecl6WSZmSZ7_zqGxWE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -4324,10 +4323,10 @@ ECL_DLLEXPORT void _ecl4N1I9dXpmctk9_KnwtVE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_ecl4N1I9dXpmctk9_KnwtVE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_ecl6WSZmSZ7_zqGxWE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
- ecl_function_dispatch(cl_env_copy,VV[86])(10, _ecl_static_0, ECL_NIL, ECL_NIL, VVtemp[0], ECL_NIL, ECL_NIL, VVtemp[1], ECL_NIL, ECL_NIL, ECL_NIL) /*  DODEFPACKAGE */;
+ ecl_function_dispatch(cl_env_copy,VV[88])(10, _ecl_static_0, ECL_NIL, ECL_NIL, VVtemp[0], ECL_NIL, ECL_NIL, VVtemp[1], ECL_NIL, ECL_NIL, ECL_NIL) /*  DODEFPACKAGE */;
  si_select_package(_ecl_static_0);
  (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[2]) /*  MAPC */;
  clos_load_defclass(VV[0], VVtemp[3], ECL_NIL, ECL_NIL);
@@ -4367,76 +4366,76 @@ ECL_DLLEXPORT void _ecl4N1I9dXpmctk9_KnwtVE21(cl_object flag)
  si_Xmake_constant(VV[4], ecl_make_fixnum(1));
  si_Xmake_constant(VV[5], ecl_make_fixnum(65521));
  (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[7]) /*  MAPC */;
- ecl_cmp_defun(VV[87]);                           /*  UPDATE-ADLER32-CHECKSUM */
+ ecl_cmp_defun(VV[89]);                           /*  UPDATE-ADLER32-CHECKSUM */
  si_Xmake_constant(VV[7], ecl_make_fixnum(0));
- si_Xmake_constant(VV[8], ecl_make_fixnum(3988292384));
- (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[8]) /*  MAPC */;
- ecl_cmp_defun(VV[88]);                           /*  GENERATE-CRC32-TABLE */
+ si_Xmake_constant(VV[8], VVtemp[8]);
  (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[9]) /*  MAPC */;
+ ecl_cmp_defun(VV[90]);                           /*  GENERATE-CRC32-TABLE */
+ (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[10]) /*  MAPC */;
  VV[10]= L8generate_crc32_table();
- ecl_cmp_defun(VV[89]);                           /*  UPDATE-CRC32-CHECKSUM */
- si_Xmake_constant(VV[12], ecl_make_fixnum(32768));
- si_define_structure(15, VV[13], _ecl_static_3, ECL_NIL, ECL_NIL, VVtemp[10], VVtemp[11], VV[14], ECL_NIL, ECL_NIL, ECL_NIL, VVtemp[12], ecl_make_fixnum(5), ECL_NIL, ECL_NIL, VV[15]);
- VV[22]= cl_find_class(1, VV[13]);
- ecl_cmp_defun(VV[90]);                           /*  MAKE-SLIDING-WINDOW-STREAM */
- (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[13]) /*  MAPC */;
- ecl_cmp_defun(VV[96]);                           /*  SLIDING-WINDOW-STREAM-WRITE-BYTE */
- ecl_cmp_defun(VV[102]);                          /*  SLIDING-WINDOW-STREAM-FLUSH */
- ecl_cmp_defun(VV[103]);                          /*  SLIDING-WINDOW-STREAM-COPY-BYTES */
- si_define_structure(15, VV[29], _ecl_static_4, ECL_NIL, ECL_NIL, VVtemp[14], VVtemp[15], VV[30], ECL_NIL, ECL_NIL, ECL_NIL, VVtemp[16], ecl_make_fixnum(4), ECL_NIL, ECL_NIL, VV[31]);
- VV[37]= cl_find_class(1, VV[29]);
- ecl_cmp_defun(VV[104]);                          /*  MAKE-BIT-STREAM */
- (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[17]) /*  MAPC */;
- ecl_cmp_defun(VV[109]);                          /*  BIT-STREAM-GET-BYTE */
+ ecl_cmp_defun(VV[91]);                           /*  UPDATE-CRC32-CHECKSUM */
+ si_Xmake_constant(VV[13], ecl_make_fixnum(32768));
+ si_define_structure(15, VV[14], _ecl_static_3, ECL_NIL, ECL_NIL, VVtemp[11], VVtemp[12], VV[15], ECL_NIL, ECL_NIL, ECL_NIL, VVtemp[13], ecl_make_fixnum(5), ECL_NIL, ECL_NIL, VV[16]);
+ VV[23]= cl_find_class(1, VV[14]);
+ ecl_cmp_defun(VV[92]);                           /*  MAKE-SLIDING-WINDOW-STREAM */
+ (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[14]) /*  MAPC */;
+ ecl_cmp_defun(VV[98]);                           /*  SLIDING-WINDOW-STREAM-WRITE-BYTE */
+ ecl_cmp_defun(VV[104]);                          /*  SLIDING-WINDOW-STREAM-FLUSH */
+ ecl_cmp_defun(VV[105]);                          /*  SLIDING-WINDOW-STREAM-COPY-BYTES */
+ si_define_structure(15, VV[30], _ecl_static_4, ECL_NIL, ECL_NIL, VVtemp[15], VVtemp[16], VV[31], ECL_NIL, ECL_NIL, ECL_NIL, VVtemp[17], ecl_make_fixnum(4), ECL_NIL, ECL_NIL, VV[32]);
+ VV[38]= cl_find_class(1, VV[30]);
+ ecl_cmp_defun(VV[106]);                          /*  MAKE-BIT-STREAM */
  (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[18]) /*  MAPC */;
- ecl_cmp_defun(VV[111]);                          /*  BIT-STREAM-READ-BITS */
+ ecl_cmp_defun(VV[111]);                          /*  BIT-STREAM-GET-BYTE */
  (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[19]) /*  MAPC */;
- ecl_cmp_defun(VV[114]);                          /*  BIT-STREAM-COPY-BLOCK */
- si_define_structure(15, VV[42], _ecl_static_6, ECL_NIL, ECL_NIL, VVtemp[20], VVtemp[21], VV[43], ECL_NIL, ECL_NIL, ECL_NIL, VVtemp[22], ecl_make_fixnum(2), ECL_NIL, ECL_NIL, VV[44]);
- VV[48]= cl_find_class(1, VV[42]);
- ecl_cmp_defun(VV[115]);                          /*  MAKE-DECODE-TREE */
- ecl_cmp_defun(VV[116]);                          /*  MAKE-HUFFMAN-DECODE-TREE */
- (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[23]) /*  MAPC */;
- ecl_cmp_defun(VV[117]);                          /*  READ-HUFFMAN-CODE */
+ ecl_cmp_defun(VV[113]);                          /*  BIT-STREAM-READ-BITS */
+ (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[20]) /*  MAPC */;
+ ecl_cmp_defun(VV[116]);                          /*  BIT-STREAM-COPY-BLOCK */
+ si_define_structure(15, VV[43], _ecl_static_6, ECL_NIL, ECL_NIL, VVtemp[21], VVtemp[22], VV[44], ECL_NIL, ECL_NIL, ECL_NIL, VVtemp[23], ecl_make_fixnum(2), ECL_NIL, ECL_NIL, VV[45]);
+ VV[49]= cl_find_class(1, VV[43]);
+ ecl_cmp_defun(VV[117]);                          /*  MAKE-DECODE-TREE */
+ ecl_cmp_defun(VV[118]);                          /*  MAKE-HUFFMAN-DECODE-TREE */
+ (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[24]) /*  MAPC */;
+ ecl_cmp_defun(VV[119]);                          /*  READ-HUFFMAN-CODE */
  {
   cl_object T0, T1, T2, T3, T4;
- si_Xmake_special(VV[55]);
+ si_Xmake_special(VV[56]);
  T0 = cl_make_sequence(4, ECL_SYM("VECTOR",898), ecl_make_fixnum(144), ECL_SYM("INITIAL-ELEMENT",1251), ecl_make_fixnum(8));
  T1 = cl_make_sequence(4, ECL_SYM("VECTOR",898), ecl_make_fixnum(112), ECL_SYM("INITIAL-ELEMENT",1251), ecl_make_fixnum(9));
  T2 = cl_make_sequence(4, ECL_SYM("VECTOR",898), ecl_make_fixnum(24), ECL_SYM("INITIAL-ELEMENT",1251), ecl_make_fixnum(7));
  T3 = cl_make_sequence(4, ECL_SYM("VECTOR",898), ecl_make_fixnum(8), ECL_SYM("INITIAL-ELEMENT",1251), ecl_make_fixnum(8));
  T4 = cl_concatenate(5, ECL_SYM("VECTOR",898), T0, T1, T2, T3);
- ECL_SETQ(cl_env_copy,VV[55],L19make_huffman_decode_tree(T4));
+ ECL_SETQ(cl_env_copy,VV[56],L19make_huffman_decode_tree(T4));
  }
  {
   cl_object T0;
- si_Xmake_special(VV[56]);
- T0 = cl_make_sequence(4, ECL_SYM("VECTOR",898), ecl_make_fixnum(32), ECL_SYM("INITIAL-ELEMENT",1251), ecl_make_fixnum(5));
- ECL_SETQ(cl_env_copy,VV[56],L19make_huffman_decode_tree(T0));
- }
  si_Xmake_special(VV[57]);
- ECL_SETQ(cl_env_copy,VV[57],VVtemp[24]);
- ecl_cmp_defun(VV[120]);                          /*  DECODE-CODE-LENGTH-ENTRIES */
- ecl_cmp_defun(VV[121]);                          /*  DECODE-HUFFMAN-TABLES */
- (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[25]) /*  MAPC */;
- ecl_cmp_defun(VV[122]);                          /*  DECODE-LENGTH-ENTRY */
+ T0 = cl_make_sequence(4, ECL_SYM("VECTOR",898), ecl_make_fixnum(32), ECL_SYM("INITIAL-ELEMENT",1251), ecl_make_fixnum(5));
+ ECL_SETQ(cl_env_copy,VV[57],L19make_huffman_decode_tree(T0));
+ }
+ si_Xmake_special(VV[58]);
+ ECL_SETQ(cl_env_copy,VV[58],VVtemp[25]);
+ ecl_cmp_defun(VV[122]);                          /*  DECODE-CODE-LENGTH-ENTRIES */
+ ecl_cmp_defun(VV[123]);                          /*  DECODE-HUFFMAN-TABLES */
  (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[26]) /*  MAPC */;
- ecl_cmp_defun(VV[123]);                          /*  DECODE-DISTANCE-ENTRY */
- ecl_cmp_defun(VV[124]);                          /*  DECODE-HUFFMAN-BLOCK */
- ecl_cmp_defun(VV[125]);                          /*  DECODE-BLOCK    */
- ecl_cmp_defun(VV[126]);                          /*  PARSE-ZLIB-HEADER */
- ecl_cmp_defun(VV[127]);                          /*  PARSE-ZLIB-CHECKSUM */
- ecl_cmp_defun(VV[128]);                          /*  PARSE-ZLIB-FOOTER */
- si_Xmake_constant(VV[70], ecl_make_fixnum(31));
- si_Xmake_constant(VV[71], ecl_make_fixnum(139));
- ecl_cmp_defun(VV[129]);                          /*  PARSE-GZIP-HEADER */
- ecl_cmp_defun(VV[130]);                          /*  PARSE-GZIP-MTIME */
- ecl_cmp_defun(VV[131]);                          /*  PARSE-GZIP-EXTRA */
- ecl_cmp_defun(VV[132]);                          /*  PARSE-GZIP-STRING */
- ecl_cmp_defun(VV[133]);                          /*  PARSE-GZIP-CHECKSUM */
- ecl_cmp_defun(VV[134]);                          /*  PARSE-GZIP-FOOTER */
- ecl_cmp_defun(VV[135]);                          /*  INFLATE-STREAM  */
- ecl_cmp_defun(VV[136]);                          /*  INFLATE-ZLIB-STREAM */
- ecl_cmp_defun(VV[138]);                          /*  INFLATE-GZIP-STREAM */
- ecl_cmp_defun(VV[139]);                          /*  GUNZIP          */
+ ecl_cmp_defun(VV[124]);                          /*  DECODE-LENGTH-ENTRY */
+ (cl_env_copy->function=(ECL_SYM("MAPC",543)->symbol.gfdef))->cfun.entry(2, ECL_SYM("PROCLAIM",666), VVtemp[27]) /*  MAPC */;
+ ecl_cmp_defun(VV[125]);                          /*  DECODE-DISTANCE-ENTRY */
+ ecl_cmp_defun(VV[126]);                          /*  DECODE-HUFFMAN-BLOCK */
+ ecl_cmp_defun(VV[127]);                          /*  DECODE-BLOCK    */
+ ecl_cmp_defun(VV[128]);                          /*  PARSE-ZLIB-HEADER */
+ ecl_cmp_defun(VV[129]);                          /*  PARSE-ZLIB-CHECKSUM */
+ ecl_cmp_defun(VV[130]);                          /*  PARSE-ZLIB-FOOTER */
+ si_Xmake_constant(VV[71], ecl_make_fixnum(31));
+ si_Xmake_constant(VV[72], ecl_make_fixnum(139));
+ ecl_cmp_defun(VV[131]);                          /*  PARSE-GZIP-HEADER */
+ ecl_cmp_defun(VV[132]);                          /*  PARSE-GZIP-MTIME */
+ ecl_cmp_defun(VV[133]);                          /*  PARSE-GZIP-EXTRA */
+ ecl_cmp_defun(VV[134]);                          /*  PARSE-GZIP-STRING */
+ ecl_cmp_defun(VV[135]);                          /*  PARSE-GZIP-CHECKSUM */
+ ecl_cmp_defun(VV[136]);                          /*  PARSE-GZIP-FOOTER */
+ ecl_cmp_defun(VV[137]);                          /*  INFLATE-STREAM  */
+ ecl_cmp_defun(VV[138]);                          /*  INFLATE-ZLIB-STREAM */
+ ecl_cmp_defun(VV[140]);                          /*  INFLATE-GZIP-STREAM */
+ ecl_cmp_defun(VV[141]);                          /*  GUNZIP          */
 }

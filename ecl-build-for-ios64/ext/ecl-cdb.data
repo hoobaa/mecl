@@ -1,14 +1,15 @@
 static const char compiler_data_text[] = 
 "ecl-cdb::cdb ecl-cdb::copy-cdb ecl-cdb::cdb-p 0 ecl-cdb::make-cdb ecl-cdb::read-"
- "word ecl-cdb::write-word ecl-cdb::write-vector (unsigned-byte 8) ecl-cdb::to-cdb"
- "-hash :tables :temporary-pathname ecl-cdb::%make-cdb ecl-cdb::close-cdb ecl-cdb:"
- ":with-output-to-cdb ecl-cdb::add-record ecl-cdb::dump-table ecl-cdb::dump-cdb ec"
- "l-cdb::close-cdb ecl-cdb::cdb-error ecl-cdb::values-coincide ecl-cdb::lookup-cdb"
- " ecl-cdb::map-cdb :ecl-cdb si::dodefpackage 0 :stream :pathname :word-buffer :ta"
- "bles :temporary-pathname 0 0 0 0 0 0 0 ecl-cdb::cdb-stream ecl-cdb::cdb-tables 0"
- " 0 0 ecl-cdb::cdb-pathname ecl-cdb::cdb-temporary-pathname 0 0 0 0 (\"CL\") (\"WITH"
- "-OUTPUT-TO-CDB\" \"ADD-RECORD\" \"LOOKUP-CDB\") (stream pathname ecl-cdb::word-buffer"
- " ecl-cdb::tables ecl-cdb::temporary-pathname) ((stream nil t nil 0 nil) (pathnam"
- "e nil t nil 1 nil) (ecl-cdb::word-buffer nil t nil 2 nil) (ecl-cdb::tables nil t"
- " nil 3 nil) (ecl-cdb::temporary-pathname nil t nil 4 nil)) (ecl-cdb::make-cdb) ";
-#define compiler_data_text_size 959
+ "word ecl-cdb::write-word ecl-cdb::write-vector (unsigned-byte 8) 4294967295 ecl-"
+ "cdb::to-cdb-hash :tables :temporary-pathname ecl-cdb::%make-cdb ecl-cdb::close-c"
+ "db ecl-cdb::with-output-to-cdb ecl-cdb::add-record ecl-cdb::dump-table ecl-cdb::"
+ "dump-cdb ecl-cdb::close-cdb ecl-cdb::cdb-error ecl-cdb::values-coincide ecl-cdb:"
+ ":lookup-cdb ecl-cdb::map-cdb :ecl-cdb si::dodefpackage 0 :stream :pathname :word"
+ "-buffer :tables :temporary-pathname 0 0 0 0 0 0 0 ecl-cdb::cdb-stream ecl-cdb::c"
+ "db-tables 0 0 0 ecl-cdb::cdb-pathname ecl-cdb::cdb-temporary-pathname 0 0 0 0 (\""
+ "CL\") (\"WITH-OUTPUT-TO-CDB\" \"ADD-RECORD\" \"LOOKUP-CDB\") (stream pathname ecl-cdb::"
+ "word-buffer ecl-cdb::tables ecl-cdb::temporary-pathname) ((stream nil t nil 0 ni"
+ "l) (pathname nil t nil 1 nil) (ecl-cdb::word-buffer nil t nil 2 nil) (ecl-cdb::t"
+ "ables nil t nil 3 nil) (ecl-cdb::temporary-pathname nil t nil 4 nil)) (ecl-cdb::"
+ "make-cdb) ";
+#define compiler_data_text_size 970

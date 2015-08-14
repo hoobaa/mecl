@@ -1,4 +1,0 @@
-static const char compiler_data_text[] = 
-"c::safe-system c::save-directory c::with-current-directory c::safe-run-program 0"
- " 0 0 0 0 0 0 c::split-program-options 0 c::cmpnote 0 0 0 0 ";
-#define compiler_data_text_size 139

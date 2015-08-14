@@ -108,7 +108,7 @@
 #define ECL_CLOS_STREAMS 1
 
 /* Stack grows downwards						*/
-/* #undef ECL_DOWN_STACK */
+#define ECL_DOWN_STACK 1
 
 /* We have libffi and can use it                                        */
 /* #undef HAVE_LIBFFI */
@@ -140,8 +140,8 @@
 #define ecl_int32_t int32_t
 #define ecl_uint64_t uint64_t
 #define ecl_int64_t int64_t
-/* #undef ecl_long_long_t */
-/* #undef ecl_ulong_long_t */
+#define ecl_long_long_t long long
+#define ecl_ulong_long_t unsigned long long
 
 /*
  * C TYPES AND SYSTEM LIMITS
@@ -155,16 +155,16 @@
  * use autoconf to guess the following values.
  */
 #define ECL_INT_BITS		32
-#define ECL_LONG_BITS		32
-#define FIXNUM_BITS		32
+#define ECL_LONG_BITS		64
+#define FIXNUM_BITS		64
 #define MOST_POSITIVE_FIXNUM	((cl_fixnum)536870911L)
 #define MOST_NEGATIVE_FIXNUM	((cl_fixnum)-536870912L)
 #define MOST_POSITIVE_FIXNUM_VAL 536870911L
 #define MOST_NEGATIVE_FIXNUM_VAL -536870912L
 
-typedef int cl_fixnum;
-typedef unsigned int cl_index;
-typedef unsigned int cl_hashkey;
+typedef long cl_fixnum;
+typedef unsigned long cl_index;
+typedef unsigned long cl_hashkey;
 
 /*
  * The character type
@@ -420,7 +420,7 @@ typedef unsigned char ecl_base_char;
 #define HAVE_SYS_WAIT_H 1
 #define HAVE_SYS_MMAN_H 1
 /* size of long long            					*/
-/* #undef ECL_LONG_LONG_BITS */
+#define ECL_LONG_LONG_BITS 64
 /* existence of char **environ         					*/
 #define HAVE_ENVIRON 1
 /* existence of pointer -> function name functions                      */
