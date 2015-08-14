@@ -797,7 +797,7 @@ static cl_object LC24__g112(cl_narg narg, cl_object v1object, cl_object v2dep, .
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _eclcJosSlb7_xl9xWE21(cl_object flag)
+ECL_DLLEXPORT void _ecloXDyXt9wisGp9_35EcYE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -818,7 +818,7 @@ ECL_DLLEXPORT void _eclcJosSlb7_xl9xWE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_eclcJosSlb7_xl9xWE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_ecloXDyXt9wisGp9_35EcYE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);

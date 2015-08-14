@@ -514,8 +514,16 @@ ecl_string_eq(cl_object x, cl_object y)
 }
 
 
-static void test(cl_object string1, cl_object string2) {
+void test_at_string(cl_object string1, cl_object string2) {
         printf(">>>>FUCKFUCK:%d:%d\n", string1->string.t, string2->string.t);
+}
+
+void test3_at_string(cl_narg narg, cl_object string1, cl_object string2) {
+        printf("sizeof narg(%d) sizeof ptr(%d)\n", sizeof(cl_narg), sizeof(cl_object));
+        printf(">>>>FUCKFUCK:%d:%d:%d\n", narg, string1->string.t, string2->string.t);
+}
+void test5_at_string(int a, int b) {
+        printf("order-at-string:%d:%d\n", a, b);
 }
 
 @(defun string_equal (string1 string2 &key (start1 ecl_make_fixnum(0)) end1
@@ -524,7 +532,7 @@ static void test(cl_object string1, cl_object string2) {
         cl_index_pair p;
 	int output;
 @
-  printf("FUCK:%d, %d", string1->string.t, string2->string.t);
+  printf("FUCK-string-equal:%d, %d\n", string1->string.t, string2->string.t);
 	string1 = cl_string(string1);
 	string2 = cl_string(string2); // this is fuckin string2->string.t == \xf4 (must be 10)
 	p = ecl_vector_start_end(@[string=], string1, start1, end1);

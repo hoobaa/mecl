@@ -362,31 +362,9 @@ L1:;
   return value0;
  }
 }
-/*	local function LONG-FLOAT                                     */
-/*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC9long_float(cl_narg narg, ...)
-{
- const cl_env_ptr cl_env_copy = ecl_process_env();
- cl_object value0;
- ecl_cs_check(cl_env_copy,value0);
- {
-  cl_object v1args;
-  ecl_va_list args; ecl_va_start(args,narg,narg,0);
-  v1args = cl_grab_rest_args(args);
-  ecl_va_end(args);
-  if (Null(v1args)) { goto L1; }
-  value0 = CONS(ECL_SYM("DOUBLE-FLOAT",315),v1args);
-  cl_env_copy->nvalues = 1;
-  return value0;
-L1:;
-  value0 = ECL_SYM("DOUBLE-FLOAT",315);
-  cl_env_copy->nvalues = 1;
-  return value0;
- }
-}
 /*	local function MOD                                            */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC10mod(cl_object v1n)
+static cl_object LC9mod(cl_object v1n)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -401,7 +379,7 @@ TTL:
 }
 /*	local function SIGNED-BYTE                                    */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC11signed_byte(cl_narg narg, ...)
+static cl_object LC10signed_byte(cl_narg narg, ...)
 {
  cl_object T0, T1, T2, T3, T4, T5;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -442,7 +420,7 @@ L2:;
 }
 /*	local function UNSIGNED-BYTE                                  */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC12unsigned_byte(cl_narg narg, ...)
+static cl_object LC11unsigned_byte(cl_narg narg, ...)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -479,7 +457,7 @@ L2:;
 }
 /*	local function VECTOR                                         */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC13vector(cl_narg narg, ...)
+static cl_object LC12vector(cl_narg narg, ...)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -513,7 +491,7 @@ static cl_object LC13vector(cl_narg narg, ...)
 }
 /*	local function STRING                                         */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC14string(cl_narg narg, ...)
+static cl_object LC13string(cl_narg narg, ...)
 {
  cl_object T0, T1, T2, T3;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -548,7 +526,7 @@ L2:;
 }
 /*	local function BASE-STRING                                    */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC15base_string(cl_narg narg, ...)
+static cl_object LC14base_string(cl_narg narg, ...)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -580,7 +558,7 @@ L2:;
 }
 /*	local function EXTENDED-STRING                                */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC16extended_string(cl_narg narg, ...)
+static cl_object LC15extended_string(cl_narg narg, ...)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -612,7 +590,7 @@ L2:;
 }
 /*	local function BIT-VECTOR                                     */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC17bit_vector(cl_narg narg, ...)
+static cl_object LC16bit_vector(cl_narg narg, ...)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -644,7 +622,7 @@ L2:;
 }
 /*	local function SIMPLE-VECTOR                                  */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC18simple_vector(cl_narg narg, ...)
+static cl_object LC17simple_vector(cl_narg narg, ...)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -676,7 +654,7 @@ L2:;
 }
 /*	local function SIMPLE-STRING                                  */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC19simple_string(cl_narg narg, ...)
+static cl_object LC18simple_string(cl_narg narg, ...)
 {
  cl_object T0, T1, T2, T3;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -711,7 +689,7 @@ L2:;
 }
 /*	local function SIMPLE-BASE-STRING                             */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC20simple_base_string(cl_narg narg, ...)
+static cl_object LC19simple_base_string(cl_narg narg, ...)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -743,7 +721,7 @@ L2:;
 }
 /*	local function SIMPLE-BIT-VECTOR                              */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC21simple_bit_vector(cl_narg narg, ...)
+static cl_object LC20simple_bit_vector(cl_narg narg, ...)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -775,7 +753,7 @@ L2:;
 }
 /*	function definition for SIMPLE-ARRAY-P                        */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L22simple_array_p(cl_object v1x)
+static cl_object L21simple_array_p(cl_object v1x)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -798,7 +776,7 @@ L2:;
 }
 /*	function definition for COMPLEX-ARRAY-P                       */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L23complex_array_p(cl_object v1x)
+static cl_object L22complex_array_p(cl_object v1x)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -967,7 +945,7 @@ L2:;
 }
 /*	function definition for IN-INTERVAL-P                         */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L24in_interval_p(cl_object v1x, cl_object v2interval)
+static cl_object L23in_interval_p(cl_object v1x, cl_object v2interval)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -1052,7 +1030,7 @@ L28:;
 }
 /*	function definition for ERROR-TYPE-SPECIFIER                  */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L25error_type_specifier(cl_object v1type)
+static cl_object L24error_type_specifier(cl_object v1type)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -1065,7 +1043,7 @@ TTL:
 }
 /*	function definition for MATCH-DIMENSIONS                      */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L26match_dimensions(cl_object v1array, cl_object v2pat)
+static cl_object L25match_dimensions(cl_object v1array, cl_object v2pat)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -1189,7 +1167,7 @@ L16:;
    value0 = si_subclassp(2, T0, v2type);
    return value0;
 L21:;
-   L25error_type_specifier(v2type);
+   L24error_type_specifier(v2type);
 L5:;
    if (!((v4tp)==(ECL_SYM("EQL",334)))) { goto L28; }
    goto L25;
@@ -1313,7 +1291,7 @@ L85:;
 L82:;
    if (!((v4tp)==(ECL_SYM("INTEGER",437)))) { goto L87; }
    if (!(ECL_FIXNUMP(v1object)||ECL_BIGNUMP(v1object))) { goto L90; }
-   value0 = L24in_interval_p(v1object, v5i);
+   value0 = L23in_interval_p(v1object, v5i);
    return value0;
 L90:;
    value0 = ECL_NIL;
@@ -1322,7 +1300,7 @@ L90:;
 L87:;
    if (!((v4tp)==(ECL_SYM("RATIONAL",687)))) { goto L92; }
    if (Null(cl_rationalp(v1object))) { goto L95; }
-   value0 = L24in_interval_p(v1object, v5i);
+   value0 = L23in_interval_p(v1object, v5i);
    return value0;
 L95:;
    value0 = ECL_NIL;
@@ -1331,7 +1309,7 @@ L95:;
 L92:;
    if (!((v4tp)==(ECL_SYM("FLOAT",374)))) { goto L97; }
    if (!(floatp(v1object))) { goto L100; }
-   value0 = L24in_interval_p(v1object, v5i);
+   value0 = L23in_interval_p(v1object, v5i);
    return value0;
 L100:;
    value0 = ECL_NIL;
@@ -1344,7 +1322,7 @@ L97:;
    goto L106;
 L107:;
 L106:;
-   value0 = L24in_interval_p(v1object, v5i);
+   value0 = L23in_interval_p(v1object, v5i);
    return value0;
 L105:;
    value0 = ECL_NIL;
@@ -1363,32 +1341,33 @@ L111:;
 L110:;
    T0 = cl_type_of(v1object);
    if (!((T0)==(ECL_SYM("SINGLE-FLOAT",778)))) { goto L118; }
-   value0 = L24in_interval_p(v1object, v5i);
+   value0 = L23in_interval_p(v1object, v5i);
    return value0;
 L118:;
    value0 = ECL_NIL;
    cl_env_copy->nvalues = 1;
    return value0;
 L109:;
-   if (!((v4tp)==(ECL_SYM("DOUBLE-FLOAT",315)))) { goto L125; }
-   goto L122;
-   goto L123;
-L125:;
-   goto L123;
-L123:;
-   if (!((v4tp)==(ECL_SYM("LONG-FLOAT",508)))) { goto L120; }
-   goto L121;
-L122:;
-L121:;
+   if (!((v4tp)==(ECL_SYM("DOUBLE-FLOAT",315)))) { goto L120; }
    T0 = cl_type_of(v1object);
-   if (!((T0)==(ECL_SYM("DOUBLE-FLOAT",315)))) { goto L129; }
-   value0 = L24in_interval_p(v1object, v5i);
+   if (!((T0)==(ECL_SYM("DOUBLE-FLOAT",315)))) { goto L124; }
+   value0 = L23in_interval_p(v1object, v5i);
+   return value0;
+L124:;
+   value0 = ECL_NIL;
+   cl_env_copy->nvalues = 1;
+   return value0;
+L120:;
+   if (!((v4tp)==(ECL_SYM("LONG-FLOAT",508)))) { goto L126; }
+   T0 = cl_type_of(v1object);
+   if (!((T0)==(ECL_SYM("LONG-FLOAT",508)))) { goto L129; }
+   value0 = L23in_interval_p(v1object, v5i);
    return value0;
 L129:;
    value0 = ECL_NIL;
    cl_env_copy->nvalues = 1;
    return value0;
-L120:;
+L126:;
    if (!((v4tp)==(ECL_SYM("COMPLEX",241)))) { goto L131; }
    if (Null(cl_complexp(v1object))) { goto L134; }
    value0 = ecl_make_bool(v5i==ECL_NIL);
@@ -1464,7 +1443,7 @@ L147:;
    if (Null(si_base_string_p(v1object))) { goto L168; }
    value0 = ecl_make_bool(v5i==ECL_NIL);
    if ((value0)!=ECL_NIL) { goto L171; }
-   value0 = L26match_dimensions(v1object, v5i);
+   value0 = L25match_dimensions(v1object, v5i);
    return value0;
 L171:;
    cl_env_copy->nvalues = 1;
@@ -1478,7 +1457,7 @@ L165:;
    if (!(ECL_STRINGP(v1object))) { goto L176; }
    value0 = ecl_make_bool(v5i==ECL_NIL);
    if ((value0)!=ECL_NIL) { goto L179; }
-   value0 = L26match_dimensions(v1object, v5i);
+   value0 = L25match_dimensions(v1object, v5i);
    return value0;
 L179:;
    cl_env_copy->nvalues = 1;
@@ -1492,7 +1471,7 @@ L173:;
    if (!(ECL_BIT_VECTOR_P(v1object))) { goto L184; }
    value0 = ecl_make_bool(v5i==ECL_NIL);
    if ((value0)!=ECL_NIL) { goto L187; }
-   value0 = L26match_dimensions(v1object, v5i);
+   value0 = L25match_dimensions(v1object, v5i);
    return value0;
 L187:;
    cl_env_copy->nvalues = 1;
@@ -1507,7 +1486,7 @@ L181:;
    if (Null(cl_simple_string_p(v1object))) { goto L192; }
    value0 = ecl_make_bool(v5i==ECL_NIL);
    if ((value0)!=ECL_NIL) { goto L196; }
-   value0 = L26match_dimensions(v1object, v5i);
+   value0 = L25match_dimensions(v1object, v5i);
    return value0;
 L196:;
    cl_env_copy->nvalues = 1;
@@ -1521,7 +1500,7 @@ L189:;
    if (Null(cl_simple_string_p(v1object))) { goto L201; }
    value0 = ecl_make_bool(v5i==ECL_NIL);
    if ((value0)!=ECL_NIL) { goto L204; }
-   value0 = L26match_dimensions(v1object, v5i);
+   value0 = L25match_dimensions(v1object, v5i);
    return value0;
 L204:;
    cl_env_copy->nvalues = 1;
@@ -1535,7 +1514,7 @@ L198:;
    if (Null(cl_simple_bit_vector_p(v1object))) { goto L209; }
    value0 = ecl_make_bool(v5i==ECL_NIL);
    if ((value0)!=ECL_NIL) { goto L212; }
-   value0 = L26match_dimensions(v1object, v5i);
+   value0 = L25match_dimensions(v1object, v5i);
    return value0;
 L212:;
    cl_env_copy->nvalues = 1;
@@ -1549,7 +1528,7 @@ L206:;
    if (Null(cl_simple_vector_p(v1object))) { goto L217; }
    value0 = ecl_make_bool(v5i==ECL_NIL);
    if ((value0)!=ECL_NIL) { goto L220; }
-   value0 = L26match_dimensions(v1object, v5i);
+   value0 = L25match_dimensions(v1object, v5i);
    return value0;
 L220:;
    cl_env_copy->nvalues = 1;
@@ -1560,7 +1539,7 @@ L217:;
    return value0;
 L214:;
    if (!((v4tp)==(ECL_SYM("COMPLEX-ARRAY",1773)))) { goto L222; }
-   if (Null(L23complex_array_p(v1object))) { goto L225; }
+   if (Null(L22complex_array_p(v1object))) { goto L225; }
    if (ecl_endp(v5i)) { goto L228; }
    T0 = ecl_car(v5i);
    if ((T0)==(ECL_SYM("*",18))) { goto L228; }
@@ -1575,7 +1554,7 @@ L227:;
    value0 = ecl_make_bool(ecl_endp(T0));
    if ((value0)!=ECL_NIL) { goto L232; }
    T0 = ecl_cadr(v5i);
-   value0 = L26match_dimensions(v1object, T0);
+   value0 = L25match_dimensions(v1object, T0);
    return value0;
 L232:;
    cl_env_copy->nvalues = 1;
@@ -1586,7 +1565,7 @@ L225:;
    return value0;
 L222:;
    if (!((v4tp)==(ECL_SYM("SIMPLE-ARRAY",763)))) { goto L234; }
-   if (Null(L22simple_array_p(v1object))) { goto L237; }
+   if (Null(L21simple_array_p(v1object))) { goto L237; }
    if (ecl_endp(v5i)) { goto L240; }
    T0 = ecl_car(v5i);
    if ((T0)==(ECL_SYM("*",18))) { goto L240; }
@@ -1601,7 +1580,7 @@ L239:;
    value0 = ecl_make_bool(ecl_endp(T0));
    if ((value0)!=ECL_NIL) { goto L244; }
    T0 = ecl_cadr(v5i);
-   value0 = L26match_dimensions(v1object, T0);
+   value0 = L25match_dimensions(v1object, T0);
    return value0;
 L244:;
    cl_env_copy->nvalues = 1;
@@ -1627,7 +1606,7 @@ L251:;
    value0 = ecl_make_bool(ecl_endp(T0));
    if ((value0)!=ECL_NIL) { goto L256; }
    T0 = ecl_cadr(v5i);
-   value0 = L26match_dimensions(v1object, T0);
+   value0 = L25match_dimensions(v1object, T0);
    return value0;
 L256:;
    cl_env_copy->nvalues = 1;
@@ -1644,7 +1623,7 @@ L246:;
    return value0;
 L258:;
    if (!(ECL_CONSP(v5i))) { goto L260; }
-   value0 = L25error_type_specifier(v2type);
+   value0 = L24error_type_specifier(v2type);
    return value0;
 L260:;
    v6c = cl_find_class(2, v2type, ECL_NIL);
@@ -1653,7 +1632,7 @@ L260:;
    value0 = si_subclassp(2, T0, v6c);
    return value0;
 L262:;
-   value0 = L25error_type_specifier(v2type);
+   value0 = L24error_type_specifier(v2type);
    return value0;
   }
  }
@@ -1733,7 +1712,7 @@ L18:;
 }
 /*	function definition for NORMALIZE-TYPE                        */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L27normalize_type(cl_object v1type)
+static cl_object L26normalize_type(cl_object v1type)
 {
  cl_object T0, T1, T2, T3;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -1759,14 +1738,14 @@ L6:;
    cl_env_copy->values[0] = v1type;
    return cl_env_copy->values[0];
 L4:;
-   if (Null(ecl_function_dispatch(cl_env_copy,VV[88])(1, v1type) /*  CLASSP */)) { goto L11; }
+   if (Null(ecl_function_dispatch(cl_env_copy,VV[84])(1, v1type) /*  CLASSP */)) { goto L11; }
    cl_env_copy->nvalues = 2;
    cl_env_copy->values[1] = ECL_NIL;
    cl_env_copy->values[0] = v1type;
    return cl_env_copy->values[0];
 L11:;
    if (!(ECL_ATOM(v1type))) { goto L13; }
-   value0 = L25error_type_specifier(v1type);
+   value0 = L24error_type_specifier(v1type);
    return value0;
 L13:;
    v2tp = ecl_car(v1type);
@@ -1797,7 +1776,7 @@ L24:;
 }
 /*	function definition for EXPAND-DEFTYPE                        */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L28expand_deftype(cl_object v1type)
+static cl_object L27expand_deftype(cl_object v1type)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -1841,7 +1820,7 @@ L8:;
 }
 /*	function definition for ERROR-COERCE                          */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L29error_coerce(cl_object v1object, cl_object v2type)
+static cl_object L28error_coerce(cl_object v1object, cl_object v2type)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -1872,7 +1851,7 @@ TTL:
 L2:;
    {
     cl_object v4;
-    v4 = L28expand_deftype(v2type);
+    v4 = L27expand_deftype(v2type);
     value0 = ecl_make_bool(ECL_SYMBOLP(v4));
     if ((value0)!=ECL_NIL) { goto L10; }
     value0 = si_of_class_p(2, v4, ECL_SYM("CLASS",933));
@@ -1884,7 +1863,7 @@ L10:;
     goto L8;
 L8:;
     if (ecl_unlikely(!((T0)!=ECL_NIL)))
-         FEwrong_type_argument(VV[44],v4);
+         FEwrong_type_argument(VV[43],v4);
     v2type = v4;
    }
    if (!(ECL_ATOM(v2type))) { goto L13; }
@@ -1952,7 +1931,7 @@ L44:;
    return value0;
 L46:;
    if (!((v2type)==(ECL_SYM("LONG-FLOAT",508)))) { goto L48; }
-   value0 = ecl_make_double_float(ecl_to_double(v1object));
+   value0 = ecl_make_long_float(ecl_to_long_double(v1object));
    cl_env_copy->nvalues = 1;
    return value0;
 L48:;
@@ -1966,7 +1945,7 @@ L50:;
    value0 = si_coerce_to_function(v1object);
    return value0;
 L52:;
-   if (Null(ecl_memql(v2type,VV[47]))) { goto L54; }
+   if (Null(ecl_memql(v2type,VV[46]))) { goto L54; }
    value0 = cl_concatenate(2, v2type, v1object);
    return value0;
 L54:;
@@ -1978,7 +1957,7 @@ L57:;
    value0 = cl_concatenate(2, v2type, v1object);
    return value0;
 L56:;
-   value0 = L29error_coerce(v1object, v2type);
+   value0 = L28error_coerce(v1object, v2type);
    return value0;
 L13:;
    v3aux = ecl_car(v2type);
@@ -1998,10 +1977,10 @@ L63:;
    value0 = cl_complex(2, T0, T1);
    return value0;
 L60:;
-   if (Null(ecl_memql(v3aux,VV[48]))) { goto L65; }
+   if (Null(ecl_memql(v3aux,VV[47]))) { goto L65; }
    v3aux = cl_coerce(v1object, v3aux);
    if ((cl_typep(2, v3aux, v2type))!=ECL_NIL) { goto L69; }
-   L29error_coerce(v1object, v2type);
+   L28error_coerce(v1object, v2type);
 L69:;
    value0 = v3aux;
    cl_env_copy->nvalues = 1;
@@ -2025,7 +2004,7 @@ L77:;
 L85:;
    }
    if ((cl_typep(2, v3aux, v2type))!=ECL_NIL) { goto L87; }
-   L29error_coerce(v1object, v2type);
+   L28error_coerce(v1object, v2type);
 L87:;
    value0 = v3aux;
    cl_env_copy->nvalues = 1;
@@ -2039,14 +2018,14 @@ L90:;
    value0 = cl_concatenate(2, v2type, v1object);
    return value0;
 L89:;
-   value0 = L29error_coerce(v1object, v2type);
+   value0 = L28error_coerce(v1object, v2type);
    return value0;
   }
  }
 }
 /*	function definition for NEW-TYPE-TAG                          */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L30new_type_tag()
+static cl_object L29new_type_tag()
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -2055,8 +2034,8 @@ static cl_object L30new_type_tag()
 TTL:
   {
    cl_object v1;
-   v1 = ecl_symbol_value(VV[50]);
-   cl_set(VV[50],cl_ash(ecl_symbol_value(VV[50]), ecl_make_fixnum(1)));
+   v1 = ecl_symbol_value(VV[49]);
+   cl_set(VV[49],cl_ash(ecl_symbol_value(VV[49]), ecl_make_fixnum(1)));
    value0 = v1;
    cl_env_copy->nvalues = 1;
    return value0;
@@ -2065,7 +2044,7 @@ TTL:
 }
 /*	function definition for FIND-REGISTERED-TAG                   */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L31find_registered_tag(cl_narg narg, cl_object v1type, ...)
+static cl_object L30find_registered_tag(cl_narg narg, cl_object v1type, ...)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2090,7 +2069,7 @@ static cl_object L31find_registered_tag(cl_narg narg, cl_object v1type, ...)
    cl_object v3pos;
    {
     cl_object v4;
-    v4 = ecl_symbol_value(VV[53]);
+    v4 = ecl_symbol_value(VV[52]);
     goto L6;
 L5:;
     {
@@ -2132,18 +2111,18 @@ L22:;
 }
 /*	function definition for MAYBE-SAVE-TYPES                      */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L32maybe_save_types()
+static cl_object L31maybe_save_types()
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
  ecl_cs_check(cl_env_copy,value0);
  {
 TTL:
-  if (Null(ecl_symbol_value(VV[49]))) { goto L1; }
-  cl_set(VV[49],ECL_NIL);
-  cl_set(VV[53],cl_copy_tree(ecl_symbol_value(VV[53])));
-  cl_set(VV[51],cl_copy_tree(ecl_symbol_value(VV[51])));
-  value0 = ecl_symbol_value(VV[51]);
+  if (Null(ecl_symbol_value(VV[48]))) { goto L1; }
+  cl_set(VV[48],ECL_NIL);
+  cl_set(VV[52],cl_copy_tree(ecl_symbol_value(VV[52])));
+  cl_set(VV[50],cl_copy_tree(ecl_symbol_value(VV[50])));
+  value0 = ecl_symbol_value(VV[50]);
   cl_env_copy->nvalues = 1;
   return value0;
 L1:;
@@ -2154,7 +2133,7 @@ L1:;
 }
 /*	function definition for UPDATE-TYPES                          */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L33update_types(cl_object v1type_mask, cl_object v2new_tag)
+static cl_object L32update_types(cl_object v1type_mask, cl_object v2new_tag)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2162,10 +2141,10 @@ static cl_object L33update_types(cl_object v1type_mask, cl_object v2new_tag)
  ecl_cs_check(cl_env_copy,value0);
  {
 TTL:
-  L32maybe_save_types();
+  L31maybe_save_types();
   {
    cl_object v3;
-   v3 = ecl_symbol_value(VV[53]);
+   v3 = ecl_symbol_value(VV[52]);
    goto L5;
 L4:;
    {
@@ -2195,7 +2174,7 @@ L15:;
 }
 /*	function definition for FIND-TYPE-BOUNDS                      */
 /*	optimize speed 1, debug 1, space 1, safety 0                  */
-static cl_object L34find_type_bounds(cl_object v1type, cl_object v2in_our_family_p, cl_object v3type___, cl_object v4minimize_super)
+static cl_object L33find_type_bounds(cl_object v1type, cl_object v2in_our_family_p, cl_object v3type___, cl_object v4minimize_super)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2215,7 +2194,7 @@ L4:;
 L3:;
   {
    cl_object v8;
-   v8 = ECL_SYM_VAL(cl_env_copy,VV[53]);
+   v8 = ECL_SYM_VAL(cl_env_copy,VV[52]);
    goto L10;
 L9:;
    {
@@ -2266,18 +2245,18 @@ L33:;
 }
 /*	function definition for REGISTER-TYPE                         */
 /*	optimize speed 1, debug 1, space 1, safety 0                  */
-static cl_object L35register_type(cl_object v1type, cl_object v2in_our_family_p, cl_object v3type___)
+static cl_object L34register_type(cl_object v1type, cl_object v2in_our_family_p, cl_object v3type___)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
 TTL:
- value0 = L31find_registered_tag(1, v1type);
+ value0 = L30find_registered_tag(1, v1type);
  if ((value0)!=ECL_NIL) { goto L2; }
  {
   cl_object v5;                                   /*  TAG-SUPER       */
   cl_object v6;                                   /*  TAG-SUB         */
-  value0 = L34find_type_bounds(v1type, v2in_our_family_p, v3type___, ECL_NIL);
+  value0 = L33find_type_bounds(v1type, v2in_our_family_p, v3type___, ECL_NIL);
   v5 = value0;
   {
    const int v7 = cl_env_copy->nvalues;
@@ -2287,11 +2266,11 @@ TTL:
   }
   {
    cl_object v7tag;
-   v7tag = L30new_type_tag();
+   v7tag = L29new_type_tag();
    T0 = ecl_boole(ECL_BOOLANDC2,(v5),(v6));
-   L33update_types(T0, v7tag);
+   L32update_types(T0, v7tag);
    v7tag = ecl_boole(ECL_BOOLIOR,(v7tag),(v6));
-   value0 = L39push_type(v1type, v7tag);
+   value0 = L38push_type(v1type, v7tag);
    return value0;
   }
  }
@@ -2301,7 +2280,7 @@ L2:;
 }
 /*	function definition for REGISTER-MEMBER-TYPE                  */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L36register_member_type(cl_object v1object)
+static cl_object L35register_member_type(cl_object v1object)
 {
  cl_object T0, T1, T2;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2311,7 +2290,7 @@ static cl_object L36register_member_type(cl_object v1object)
 TTL:
   {
    cl_object v2pos;
-   v2pos = ecl_assql(v1object,ecl_symbol_value(VV[51]));
+   v2pos = ecl_assql(v1object,ecl_symbol_value(VV[50]));
    {
     cl_object v3;
     if (Null(v2pos)) { goto L4; }
@@ -2327,24 +2306,24 @@ L2:;
     return value0;
 L6:;
     if ((cl_realp(v1object))!=ECL_NIL) { goto L8; }
-    value0 = L37simple_member_type(v1object);
+    value0 = L36simple_member_type(v1object);
     return value0;
 L8:;
     if (!(floatp(v1object))) { goto L10; }
     if (!(ecl_zerop(v1object))) { goto L10; }
     T0 = cl_float_sign(1, v1object);
     if (!(ecl_minusp(T0))) { goto L13; }
-    value0 = L37simple_member_type(v1object);
+    value0 = L36simple_member_type(v1object);
     return value0;
 L13:;
-    T0 = L38number_member_type(v1object);
+    T0 = L37number_member_type(v1object);
     T1 = ecl_negate(v1object);
-    T2 = L36register_member_type(T1);
+    T2 = L35register_member_type(T1);
     value0 = ecl_boole(ECL_BOOLANDC2,(T0),(T2));
     cl_env_copy->nvalues = 1;
     return value0;
 L10:;
-    value0 = L38number_member_type(v1object);
+    value0 = L37number_member_type(v1object);
     return value0;
    }
   }
@@ -2352,7 +2331,7 @@ L10:;
 }
 /*	function definition for SIMPLE-MEMBER-TYPE                    */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L37simple_member_type(cl_object v1object)
+static cl_object L36simple_member_type(cl_object v1object)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2362,12 +2341,12 @@ static cl_object L37simple_member_type(cl_object v1object)
 TTL:
   {
    cl_object v2tag;
-   v2tag = L30new_type_tag();
-   L32maybe_save_types();
-   cl_set(VV[51],cl_acons(v1object, v2tag, ecl_symbol_value(VV[51])));
+   v2tag = L29new_type_tag();
+   L31maybe_save_types();
+   cl_set(VV[50],cl_acons(v1object, v2tag, ecl_symbol_value(VV[50])));
    {
     cl_object v3;
-    v3 = ecl_symbol_value(VV[53]);
+    v3 = ecl_symbol_value(VV[52]);
     goto L9;
 L8:;
     {
@@ -2400,7 +2379,7 @@ L20:;
 }
 /*	function definition for NUMBER-MEMBER-TYPE                    */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L38number_member_type(cl_object v1object)
+static cl_object L37number_member_type(cl_object v1object)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -2417,9 +2396,9 @@ L2:;
    v2base_type = cl_type_of(v1object);
 L1:;
    v3type = cl_list(3, v2base_type, v1object, v1object);
-   value0 = L31find_registered_tag(1, v3type);
+   value0 = L30find_registered_tag(1, v3type);
    if ((value0)!=ECL_NIL) { goto L6; }
-   value0 = L52register_interval_type(v3type);
+   value0 = L51register_interval_type(v3type);
    return value0;
 L6:;
    cl_env_copy->nvalues = 1;
@@ -2429,7 +2408,7 @@ L6:;
 }
 /*	function definition for PUSH-TYPE                             */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L39push_type(cl_object v1type, cl_object v2tag)
+static cl_object L38push_type(cl_object v1type, cl_object v2tag)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2439,7 +2418,7 @@ static cl_object L39push_type(cl_object v1type, cl_object v2tag)
 TTL:
   {
    cl_object v3;
-   v3 = ecl_symbol_value(VV[51]);
+   v3 = ecl_symbol_value(VV[50]);
    goto L5;
 L4:;
    {
@@ -2458,7 +2437,7 @@ L5:;
 L14:;
   }
   T0 = CONS(v1type,v2tag);
-  cl_set(VV[53],CONS(T0,ecl_symbol_value(VV[53])));
+  cl_set(VV[52],CONS(T0,ecl_symbol_value(VV[52])));
   value0 = v2tag;
   cl_env_copy->nvalues = 1;
   return value0;
@@ -2466,7 +2445,7 @@ L14:;
 }
 /*	function definition for REGISTER-SATISFIES-TYPE               */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L40register_satisfies_type(cl_object v1type)
+static cl_object L39register_satisfies_type(cl_object v1type)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -2475,12 +2454,12 @@ static cl_object L40register_satisfies_type(cl_object v1type)
 TTL:
   cl_env_copy->values[0] = ECL_SYM("SATISFIES",735);
   cl_env_copy->nvalues = 1;
-  cl_throw(VV[57]);
+  cl_throw(VV[56]);
  }
 }
 /*	function definition for REGISTER-CLASS                        */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L43register_class(cl_object v1class)
+static cl_object L42register_class(cl_object v1class)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2488,7 +2467,7 @@ static cl_object L43register_class(cl_object v1class)
  ecl_cs_check(cl_env_copy,value0);
  {
 TTL:
-  value0 = L31find_registered_tag(1, v1class);
+  value0 = L30find_registered_tag(1, v1class);
   if ((value0)!=ECL_NIL) { goto L2; }
   {
    cl_object v2name;
@@ -2496,9 +2475,9 @@ TTL:
    if (Null(v2name)) { goto L7; }
    T0 = cl_find_class(2, v2name, ECL_NIL);
    if (!((v1class)==(T0))) { goto L7; }
-   value0 = L31find_registered_tag(1, v2name);
+   value0 = L30find_registered_tag(1, v2name);
    if ((value0)!=ECL_NIL) { goto L11; }
-   value0 = L57find_built_in_tag(v2name);
+   value0 = L56find_built_in_tag(v2name);
    goto L4;
 L11:;
    goto L4;
@@ -2511,7 +2490,7 @@ L4:;
   if ((ecl_function_dispatch(cl_env_copy,ECL_SYM("CLASS-FINALIZED-P",1491))(1, v1class) /*  CLASS-FINALIZED-P */)!=ECL_NIL) { goto L15; }
   cl_env_copy->values[0] = ECL_NIL;
   cl_env_copy->nvalues = 1;
-  cl_throw(VV[57]);
+  cl_throw(VV[56]);
 L15:;
   value0 = ECL_NIL;
   goto L13;
@@ -2519,15 +2498,15 @@ L13:;
   if ((value0)!=ECL_NIL) { goto L2; }
   {cl_object v2;
    v2 = ECL_NIL;
-   v2 = ecl_make_cfun((cl_objectfn_fixed)LC41__g191,ECL_NIL,Cblock,1);
+   v2 = ecl_make_cfun((cl_objectfn_fixed)LC40__g191,ECL_NIL,Cblock,1);
    T0 = v2;
   }
   {cl_object v2;
    v2 = ECL_NIL;
-   v2 = ecl_make_cfun((cl_objectfn_fixed)LC42__g192,ECL_NIL,Cblock,2);
+   v2 = ecl_make_cfun((cl_objectfn_fixed)LC41__g192,ECL_NIL,Cblock,2);
    T1 = v2;
   }
-  value0 = L35register_type(v1class, T0, T1);
+  value0 = L34register_type(v1class, T0, T1);
   return value0;
 L2:;
   cl_env_copy->nvalues = 1;
@@ -2536,7 +2515,7 @@ L2:;
 }
 /*	local function G191                                           */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC41__g191(cl_object v1c)
+static cl_object LC40__g191(cl_object v1c)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -2555,7 +2534,7 @@ L2:;
 }
 /*	local function G192                                           */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC42__g192(cl_object v1c1, cl_object v2c2)
+static cl_object LC41__g192(cl_object v1c1, cl_object v2c2)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -2580,7 +2559,7 @@ L8:;
 }
 /*	function definition for REGISTER-ARRAY-TYPE                   */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L44register_array_type(cl_object v1type)
+static cl_object L43register_array_type(cl_object v1type)
 {
  cl_object T0, T1, T2;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2592,7 +2571,7 @@ TTL:
    cl_object v3;                                  /*  ARRAY-CLASS     */
    cl_object v4;                                  /*  ELT-TYPE        */
    cl_object v5;                                  /*  DIMENSIONS      */
-   value0 = L46parse_array_type(v1type);
+   value0 = L45parse_array_type(v1type);
    v3 = value0;
    {
     const int v6 = cl_env_copy->nvalues;
@@ -2640,21 +2619,21 @@ L12:;
    }
 L4:;
    T1 = CONS(ECL_SYM("OR",614),T0);
-   value0 = L59canonical_type(T1);
+   value0 = L58canonical_type(T1);
    return value0;
 L2:;
    {
     cl_object v6;
     v1type = cl_list(3, v3, v4, v5);
-    v6 = L31find_registered_tag(1, v1type);
+    v6 = L30find_registered_tag(1, v1type);
     if (Null(v6)) { goto L30; }
     value0 = v6;
     cl_env_copy->nvalues = 1;
     return value0;
 L30:;
-    T0 = (VV[62]->symbol.gfdef);
-    T1 = (VV[59]->symbol.gfdef);
-    value0 = L35register_type(v1type, T0, T1);
+    T0 = (VV[61]->symbol.gfdef);
+    T1 = (VV[58]->symbol.gfdef);
+    value0 = L34register_type(v1type, T0, T1);
     return value0;
    }
   }
@@ -2662,7 +2641,7 @@ L30:;
 }
 /*	function definition for FAST-UPGRADED-ARRAY-ELEMENT-TYPE      */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L45fast_upgraded_array_element_type(cl_object v1type)
+static cl_object L44fast_upgraded_array_element_type(cl_object v1type)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -2687,7 +2666,7 @@ L7:;
    {
     cl_object v3other_type;
     v3other_type = ecl_car(v2);
-    if (Null(L61fast_subtypep(v1type, v3other_type))) { goto L12; }
+    if (Null(L60fast_subtypep(v1type, v3other_type))) { goto L12; }
     value0 = v3other_type;
     cl_env_copy->nvalues = 1;
     return value0;
@@ -2706,7 +2685,7 @@ L16:;
 }
 /*	function definition for PARSE-ARRAY-TYPE                      */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L46parse_array_type(cl_object v1input)
+static cl_object L45parse_array_type(cl_object v1input)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2753,7 +2732,7 @@ L19:;
 L14:;
    T0 = ECL_SYM("*",18);
 L13:;
-   v4elt_type = L45fast_upgraded_array_element_type(T0);
+   v4elt_type = L44fast_upgraded_array_element_type(T0);
    if (Null(v2type)) { goto L26; }
    {
     cl_object v6;
@@ -2781,7 +2760,7 @@ L37:;
    cl_error(2, _ecl_static_8, v1input);
 L42:;
    T0 = ecl_minus(ecl_make_fixnum(64),v5dims);
-   v5dims = ecl_nthcdr(ecl_to_size(T0),VV[58]);
+   v5dims = ecl_nthcdr(ecl_to_size(T0),VV[57]);
    goto L39;
 L40:;
    if (!(ECL_CONSP(v5dims))) { goto L39; }
@@ -2795,7 +2774,7 @@ L48:;
      v7i = ecl_car(v6);
      if ((v7i)==(ECL_SYM("*",18))) { goto L53; }
      if (!(ECL_FIXNUMP(v7i)||ECL_BIGNUMP(v7i))) { goto L57; }
-     if ((cl_L(3, ecl_make_fixnum(-1), v7i, ecl_make_fixnum(536870911)))!=ECL_NIL) { goto L53; }
+     if ((cl_L(3, ecl_make_fixnum(-1), v7i, ecl_make_fixnum(2305843009213693951)))!=ECL_NIL) { goto L53; }
      goto L54;
 L57:;
      goto L54;
@@ -2820,7 +2799,7 @@ L39:;
 }
 /*	function definition for ARRAY-TYPE-<=                         */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L47array_type___(cl_object v1t1, cl_object v2t2)
+static cl_object L46array_type___(cl_object v1t1, cl_object v2t2)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2893,7 +2872,7 @@ L28:;
 }
 /*	function definition for ARRAY-TYPE-P                          */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L48array_type_p(cl_object v1type)
+static cl_object L47array_type_p(cl_object v1type)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -2905,7 +2884,7 @@ TTL:
    cl_object v2;
    v2 = ecl_car(v1type);
    if (!((v2)==(ECL_SYM("COMPLEX-ARRAY",1773)))) { goto L9; }
-   value0 = VV[60];
+   value0 = VV[59];
    goto L7;
 L9:;
    value0 = ECL_NIL;
@@ -2913,7 +2892,7 @@ L9:;
 L7:;
    if ((value0)!=ECL_NIL) { goto L6; }
    if (!((v2)==(ECL_SYM("SIMPLE-ARRAY",763)))) { goto L12; }
-   value0 = VV[61];
+   value0 = VV[60];
    cl_env_copy->nvalues = 1;
    return value0;
 L12:;
@@ -2932,7 +2911,7 @@ L2:;
 }
 /*	function definition for REGISTER-ELEMENTARY-INTERVAL          */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L51register_elementary_interval(cl_object v1type, cl_object v2b)
+static cl_object L50register_elementary_interval(cl_object v1type, cl_object v2b)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -2942,22 +2921,22 @@ static cl_object L51register_elementary_interval(cl_object v1type, cl_object v2b
 TTL:
   v1type = cl_list(2, v1type, v2b);
   T0 = (ECL_SYM("EQUALP",336)->symbol.gfdef);
-  value0 = L31find_registered_tag(2, v1type, T0);
+  value0 = L30find_registered_tag(2, v1type, T0);
   if ((value0)!=ECL_NIL) { goto L4; }
   {
    cl_object v4;                                  /*  TAG-SUPER       */
    cl_object v5;                                  /*  TAG-SUB         */
    {cl_object v6;
     v6 = ECL_NIL;
-    v6 = ecl_make_cfun((cl_objectfn_fixed)LC49__g220,ECL_NIL,Cblock,1);
+    v6 = ecl_make_cfun((cl_objectfn_fixed)LC48__g220,ECL_NIL,Cblock,1);
     T0 = v6;
    }
    {cl_object v6;
     v6 = ECL_NIL;
-    v6 = ecl_make_cfun((cl_objectfn_fixed)LC50__g221,ECL_NIL,Cblock,2);
+    v6 = ecl_make_cfun((cl_objectfn_fixed)LC49__g221,ECL_NIL,Cblock,2);
     T1 = v6;
    }
-   value0 = L34find_type_bounds(v1type, T0, T1, ECL_T);
+   value0 = L33find_type_bounds(v1type, T0, T1, ECL_T);
    v4 = value0;
    {
     const int v6 = cl_env_copy->nvalues;
@@ -2967,11 +2946,11 @@ TTL:
    }
    {
     cl_object v6tag;
-    v6tag = L30new_type_tag();
+    v6tag = L29new_type_tag();
     T0 = ecl_boole(ECL_BOOLANDC2,(v4),(v5));
-    L33update_types(T0, v6tag);
+    L32update_types(T0, v6tag);
     v6tag = ecl_boole(ECL_BOOLIOR,(v6tag),(v5));
-    value0 = L39push_type(v1type, v6tag);
+    value0 = L38push_type(v1type, v6tag);
     return value0;
    }
   }
@@ -2982,7 +2961,7 @@ L4:;
 }
 /*	local function G220                                           */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC49__g220(cl_object v1other_type)
+static cl_object LC48__g220(cl_object v1other_type)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3003,7 +2982,7 @@ L2:;
 }
 /*	local function G221                                           */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object LC50__g221(cl_object v1i1, cl_object v2i2)
+static cl_object LC49__g221(cl_object v1i1, cl_object v2i2)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3016,7 +2995,7 @@ TTL:
   if (!((T0)==(T1))) { goto L2; }
   T0 = ecl_cadr(v2i2);
   T1 = ecl_cadr(v1i1);
-  value0 = L53bounds___(T0, T1);
+  value0 = L52bounds___(T0, T1);
   return value0;
 L2:;
   value0 = ECL_NIL;
@@ -3026,7 +3005,7 @@ L2:;
 }
 /*	function definition for REGISTER-INTERVAL-TYPE                */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L52register_interval_type(cl_object v1interval)
+static cl_object L51register_interval_type(cl_object v1interval)
 {
  cl_object T0, T1, T2;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3108,16 +3087,16 @@ L43:;
    T0 = ecl_one_plus(v5high);
    v5high = ecl_floor1(T0);
 L42:;
-   v6tag_high = L51register_elementary_interval(v3type, v5high);
+   v6tag_high = L50register_elementary_interval(v3type, v5high);
    goto L36;
 L39:;
    if (!(ECL_CONSP(v5high))) { goto L45; }
    T0 = ecl_car(v5high);
-   v6tag_high = L51register_elementary_interval(v3type, T0);
+   v6tag_high = L50register_elementary_interval(v3type, T0);
    goto L36;
 L45:;
    T0 = ecl_list1(v5high);
-   v6tag_high = L51register_elementary_interval(v3type, T0);
+   v6tag_high = L50register_elementary_interval(v3type, T0);
 L36:;
    if ((ECL_SYM("*",18))==(v4low)) { goto L51; }
    if (!((v3type)==(ECL_SYM("INTEGER",437)))) { goto L51; }
@@ -3136,10 +3115,10 @@ L49:;
 L54:;
    T0 = ecl_ceiling1(v4low);
 L48:;
-   v7tag_low = L51register_elementary_interval(v3type, T0);
+   v7tag_low = L50register_elementary_interval(v3type, T0);
    v8tag = ecl_boole(ECL_BOOLANDC2,(v7tag_low),(v6tag_high));
    if ((v5high)==(ECL_SYM("*",18))) { goto L57; }
-   L39push_type(v1interval, v8tag);
+   L38push_type(v1interval, v8tag);
 L57:;
    value0 = v8tag;
    cl_env_copy->nvalues = 1;
@@ -3149,7 +3128,7 @@ L57:;
 }
 /*	function definition for BOUNDS-<=                             */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L53bounds___(cl_object v1b1, cl_object v2b2)
+static cl_object L52bounds___(cl_object v1b1, cl_object v2b2)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3193,7 +3172,7 @@ L9:;
 }
 /*	function definition for BOUNDS-<                              */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L54bounds__(cl_object v1b1, cl_object v2b2)
+static cl_object L53bounds__(cl_object v1b1, cl_object v2b2)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3241,7 +3220,7 @@ L9:;
 }
 /*	function definition for CANONICAL-COMPLEX-TYPE                */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L55canonical_complex_type(cl_object v1real_type)
+static cl_object L54canonical_complex_type(cl_object v1real_type)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -3251,12 +3230,12 @@ TTL:
   if ((v1real_type)==(ECL_SYM("*",18))) { goto L1; }
   cl_upgraded_complex_part_type(1, v1real_type);
 L1:;
-  value0 = L31find_registered_tag(1, VV[65]);
+  value0 = L30find_registered_tag(1, VV[64]);
   if ((value0)!=ECL_NIL) { goto L4; }
   {
    cl_object v2tag;
-   v2tag = L30new_type_tag();
-   value0 = L39push_type(VV[65], v2tag);
+   v2tag = L29new_type_tag();
+   value0 = L38push_type(VV[64], v2tag);
    return value0;
   }
 L4:;
@@ -3266,7 +3245,7 @@ L4:;
 }
 /*	function definition for REGISTER-CONS-TYPE                    */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L56register_cons_type(cl_narg narg, ...)
+static cl_object L55register_cons_type(cl_narg narg, ...)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -3299,13 +3278,13 @@ static cl_object L56register_cons_type(cl_narg narg, ...)
    v3 = ecl_make_fixnum(-1);
    goto L3;
 L4:;
-   v3 = L59canonical_type(v1car_type);
+   v3 = L58canonical_type(v1car_type);
 L3:;
    if (!((v2cdr_type)==(ECL_SYM("*",18)))) { goto L7; }
    v4 = ecl_make_fixnum(-1);
    goto L6;
 L7:;
-   v4 = L59canonical_type(v2cdr_type);
+   v4 = L58canonical_type(v2cdr_type);
 L6:;
    if (ecl_zerop(v3)) { goto L11; }
    if (!(ecl_zerop(v4))) { goto L9; }
@@ -3318,18 +3297,18 @@ L10:;
 L9:;
    if (!(ecl_number_equalp(v3,ecl_make_fixnum(-1)))) { goto L13; }
    if (!(ecl_number_equalp(v4,ecl_make_fixnum(-1)))) { goto L13; }
-   value0 = L59canonical_type(ECL_SYM("CONS",251));
+   value0 = L58canonical_type(ECL_SYM("CONS",251));
    return value0;
 L13:;
    cl_env_copy->values[0] = ECL_SYM("CONS",251);
    cl_env_copy->nvalues = 1;
-   cl_throw(VV[57]);
+   cl_throw(VV[56]);
   }
  }
 }
 /*	function definition for FIND-BUILT-IN-TAG                     */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L57find_built_in_tag(cl_object v1name)
+static cl_object L56find_built_in_tag(cl_object v1name)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -3344,7 +3323,7 @@ TTL:
    cl_env_copy->nvalues = 1;
    return value0;
 L2:;
-   v2record = ecl_gethash_safe(v1name,ecl_symbol_value(VV[67]),v1name);
+   v2record = ecl_gethash_safe(v1name,ecl_symbol_value(VV[66]),v1name);
    if (!((v2record)==(v1name))) { goto L4; }
    value0 = ECL_NIL;
    cl_env_copy->nvalues = 1;
@@ -3369,7 +3348,7 @@ L11:;
     }
     v4tag = ECL_NIL;
     if (Null(v3alias)) { goto L19; }
-    v4tag = L59canonical_type(v3alias);
+    v4tag = L58canonical_type(v3alias);
     goto L18;
 L19:;
     {
@@ -3383,13 +3362,13 @@ L24:;
      v5strict_supertype = value0;
      goto L22;
 L22:;
-     v6strict_supertype_tag = L59canonical_type(v5strict_supertype);
-     v4tag = L30new_type_tag();
+     v6strict_supertype_tag = L58canonical_type(v5strict_supertype);
+     v4tag = L29new_type_tag();
      if ((v5strict_supertype)==(ECL_T)) { goto L18; }
-     L58extend_type_tag(v4tag, v6strict_supertype_tag);
+     L57extend_type_tag(v4tag, v6strict_supertype_tag);
     }
 L18:;
-    value0 = L39push_type(v1name, v4tag);
+    value0 = L38push_type(v1name, v4tag);
     return value0;
    }
   }
@@ -3397,7 +3376,7 @@ L18:;
 }
 /*	function definition for EXTEND-TYPE-TAG                       */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L58extend_type_tag(cl_object v1tag, cl_object v2minimal_supertype_tag)
+static cl_object L57extend_type_tag(cl_object v1tag, cl_object v2minimal_supertype_tag)
 {
  cl_object T0;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3407,7 +3386,7 @@ static cl_object L58extend_type_tag(cl_object v1tag, cl_object v2minimal_superty
 TTL:
   {
    cl_object v3;
-   v3 = ecl_symbol_value(VV[53]);
+   v3 = ecl_symbol_value(VV[52]);
    goto L4;
 L3:;
    {
@@ -3439,9 +3418,9 @@ L15:;
 }
 /*	function definition for CANONICAL-TYPE                        */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L59canonical_type(cl_object v1type)
+static cl_object L58canonical_type(cl_object v1type)
 {
- cl_object T0, T1, T2, T3, T4, T5, T6, T7;
+ cl_object T0, T1, T2, T3, T4, T5, T6, T7, T8, T9;
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
  ecl_cs_check(cl_env_copy,value0);
@@ -3449,7 +3428,7 @@ static cl_object L59canonical_type(cl_object v1type)
 TTL:
   {
    cl_object v2;
-   v2 = L31find_registered_tag(1, v1type);
+   v2 = L30find_registered_tag(1, v1type);
    if (Null(v2)) { goto L2; }
    value0 = v2;
    cl_env_copy->nvalues = 1;
@@ -3475,7 +3454,7 @@ L6:;
 L11:;
     {
      cl_object v4;
-     v4 = L57find_built_in_tag(v1type);
+     v4 = L56find_built_in_tag(v1type);
      if (Null(v4)) { goto L16; }
      value0 = v4;
      cl_env_copy->nvalues = 1;
@@ -3485,12 +3464,12 @@ L16:;
       cl_object v5class;
       v5class = cl_find_class(2, v1type, ECL_NIL);
       if (Null(v5class)) { goto L19; }
-      value0 = L43register_class(v5class);
+      value0 = L42register_class(v5class);
       return value0;
 L19:;
       cl_env_copy->values[0] = ECL_NIL;
       cl_env_copy->nvalues = 1;
-      cl_throw(VV[57]);
+      cl_throw(VV[56]);
      }
     }
    }
@@ -3527,7 +3506,7 @@ L37:;
       }
       if (ecl_unlikely(ECL_ATOM(v11))) FEtype_error_cons(v11);
       T2 = v11;
-      T3 = L59canonical_type(v8);
+      T3 = L58canonical_type(v8);
       v11 = ecl_list1(T3);
       (ECL_CONS_CDR(T2)=v11,T2);
       goto L35;
@@ -3568,7 +3547,7 @@ L63:;
       }
       if (ecl_unlikely(ECL_ATOM(v11))) FEtype_error_cons(v11);
       T2 = v11;
-      T3 = L59canonical_type(v8);
+      T3 = L58canonical_type(v8);
       v11 = ecl_list1(T3);
       (ECL_CONS_CDR(T2)=v11,T2);
       goto L61;
@@ -3583,7 +3562,7 @@ L54:;
 L51:;
     if (!((v6)==(ECL_SYM("NOT",584)))) { goto L77; }
     T0 = ecl_cadr(v1type);
-    T1 = L59canonical_type(T0);
+    T1 = L58canonical_type(T0);
     value0 = ecl_boole(ECL_BOOLXOR,(T1),ecl_make_fixnum(-1));
     cl_env_copy->nvalues = 1;
     return value0;
@@ -3625,7 +3604,7 @@ L97:;
       }
       if (ecl_unlikely(ECL_ATOM(v11))) FEtype_error_cons(v11);
       T2 = v11;
-      T3 = L36register_member_type(v8);
+      T3 = L35register_member_type(v8);
       v11 = ecl_list1(T3);
       (ECL_CONS_CDR(T2)=v11,T2);
       goto L95;
@@ -3639,43 +3618,24 @@ L88:;
     return value0;
 L79:;
     if (!((v6)==(ECL_SYM("SATISFIES",735)))) { goto L111; }
-    value0 = L40register_satisfies_type(v1type);
+    value0 = L39register_satisfies_type(v1type);
     return value0;
 L111:;
-    if (!((v6)==(ECL_SYM("INTEGER",437)))) { goto L118; }
-    goto L115;
-    goto L116;
-L118:;
-    goto L116;
-L116:;
-    if (!((v6)==(ECL_SYM("SINGLE-FLOAT",778)))) { goto L122; }
-    goto L115;
-    goto L120;
-L122:;
-    goto L120;
-L120:;
-    if (!((v6)==(ECL_SYM("DOUBLE-FLOAT",315)))) { goto L126; }
-    goto L115;
-    goto L124;
-L126:;
-    goto L124;
-L124:;
-    if (!((v6)==(ECL_SYM("RATIO",686)))) { goto L113; }
-    goto L114;
-L115:;
-L114:;
-    value0 = L52register_interval_type(v1type);
+    if (Null(ecl_memql(v6,VV[67]))) { goto L113; }
+    value0 = L51register_interval_type(v1type);
     return value0;
 L113:;
-    if (!((v6)==(ECL_SYM("FLOAT",374)))) { goto L129; }
+    if (!((v6)==(ECL_SYM("FLOAT",374)))) { goto L115; }
     T0 = ecl_cdr(v1type);
     T1 = CONS(ECL_SYM("SINGLE-FLOAT",778),T0);
     T2 = ecl_cdr(v1type);
     T3 = CONS(ECL_SYM("DOUBLE-FLOAT",315),T2);
-    v1type = cl_list(3, ECL_SYM("OR",614), T1, T3);
+    T4 = ecl_cdr(v1type);
+    T5 = CONS(ECL_SYM("LONG-FLOAT",508),T4);
+    v1type = cl_list(4, ECL_SYM("OR",614), T1, T3, T5);
     goto TTL;
-L129:;
-    if (!((v6)==(ECL_SYM("REAL",703)))) { goto L134; }
+L115:;
+    if (!((v6)==(ECL_SYM("REAL",703)))) { goto L120; }
     T0 = ecl_cdr(v1type);
     T1 = CONS(ECL_SYM("INTEGER",437),T0);
     T2 = ecl_cdr(v1type);
@@ -3684,115 +3644,117 @@ L129:;
     T5 = CONS(ECL_SYM("SINGLE-FLOAT",778),T4);
     T6 = ecl_cdr(v1type);
     T7 = CONS(ECL_SYM("DOUBLE-FLOAT",315),T6);
-    v1type = cl_list(5, ECL_SYM("OR",614), T1, T3, T5, T7);
+    T8 = ecl_cdr(v1type);
+    T9 = CONS(ECL_SYM("LONG-FLOAT",508),T8);
+    v1type = cl_list(6, ECL_SYM("OR",614), T1, T3, T5, T7, T9);
     goto TTL;
-L134:;
-    if (!((v6)==(ECL_SYM("RATIONAL",687)))) { goto L139; }
+L120:;
+    if (!((v6)==(ECL_SYM("RATIONAL",687)))) { goto L125; }
     T0 = ecl_cdr(v1type);
     T1 = CONS(ECL_SYM("INTEGER",437),T0);
     T2 = ecl_cdr(v1type);
     T3 = CONS(ECL_SYM("RATIO",686),T2);
     v1type = cl_list(3, ECL_SYM("OR",614), T1, T3);
     goto TTL;
-L139:;
-    if (!((v6)==(ECL_SYM("COMPLEX",241)))) { goto L144; }
-    value0 = L57find_built_in_tag(v1type);
-    if ((value0)!=ECL_NIL) { goto L147; }
+L125:;
+    if (!((v6)==(ECL_SYM("COMPLEX",241)))) { goto L130; }
+    value0 = L56find_built_in_tag(v1type);
+    if ((value0)!=ECL_NIL) { goto L133; }
     T0 = ecl_cadr(v1type);
-    value0 = L55canonical_complex_type(T0);
+    value0 = L54canonical_complex_type(T0);
     return value0;
-L147:;
+L133:;
     cl_env_copy->nvalues = 1;
     return value0;
-L144:;
-    if (!((v6)==(ECL_SYM("CONS",251)))) { goto L149; }
-    T0 = (VV[66]->symbol.gfdef);
+L130:;
+    if (!((v6)==(ECL_SYM("CONS",251)))) { goto L135; }
+    T0 = (VV[65]->symbol.gfdef);
     T1 = ecl_cdr(v1type);
     value0 = cl_apply(2, T0, T1);
     return value0;
-L149:;
-    if (!((v6)==(ECL_SYM("ARRAY",96)))) { goto L152; }
+L135:;
+    if (!((v6)==(ECL_SYM("ARRAY",96)))) { goto L138; }
     T0 = ecl_cdr(v1type);
     T1 = CONS(ECL_SYM("COMPLEX-ARRAY",1773),T0);
-    T2 = L44register_array_type(T1);
+    T2 = L43register_array_type(T1);
     T3 = ecl_cdr(v1type);
     T4 = CONS(ECL_SYM("SIMPLE-ARRAY",763),T3);
-    T5 = L44register_array_type(T4);
+    T5 = L43register_array_type(T4);
     value0 = ecl_boole(ECL_BOOLIOR,(T2),(T5));
     cl_env_copy->nvalues = 1;
     return value0;
-L152:;
-    if (!((v6)==(ECL_SYM("COMPLEX-ARRAY",1773)))) { goto L159; }
-    goto L156;
-    goto L157;
-L159:;
-    goto L157;
-L157:;
-    if (!((v6)==(ECL_SYM("SIMPLE-ARRAY",763)))) { goto L154; }
-    goto L155;
-L156:;
-L155:;
-    value0 = L44register_array_type(v1type);
+L138:;
+    if (!((v6)==(ECL_SYM("COMPLEX-ARRAY",1773)))) { goto L145; }
+    goto L142;
+    goto L143;
+L145:;
+    goto L143;
+L143:;
+    if (!((v6)==(ECL_SYM("SIMPLE-ARRAY",763)))) { goto L140; }
+    goto L141;
+L142:;
+L141:;
+    value0 = L43register_array_type(v1type);
     return value0;
-L154:;
-    if (!((v6)==(ECL_SYM("FUNCTION",396)))) { goto L162; }
+L140:;
+    if (!((v6)==(ECL_SYM("FUNCTION",396)))) { goto L148; }
     v1type = ECL_SYM("FUNCTION",396);
     goto TTL;
-L162:;
+L148:;
     {
      cl_object v7expander;
      T0 = ecl_car(v1type);
      v7expander = si_get_sysprop(T0, VV[9]);
-     if (Null(v7expander)) { goto L167; }
+     if (Null(v7expander)) { goto L153; }
      T0 = ecl_cdr(v1type);
      v1type = cl_apply(2, v7expander, T0);
      goto TTL;
-L167:;
+L153:;
      T0 = ecl_car(v1type);
-     if ((ecl_assql(T0,ecl_symbol_value(VV[53])))!=ECL_NIL) { goto L171; }
+     if ((ecl_assql(T0,ecl_symbol_value(VV[52])))!=ECL_NIL) { goto L157; }
      cl_env_copy->values[0] = ECL_NIL;
      cl_env_copy->nvalues = 1;
-     cl_throw(VV[57]);
-L171:;
+     cl_throw(VV[56]);
+L157:;
      value0 = ECL_NIL;
      cl_env_copy->nvalues = 1;
      return value0;
     }
    }
 L22:;
-   if (Null(ecl_function_dispatch(cl_env_copy,VV[88])(1, v1type) /*  CLASSP */)) { goto L174; }
-   value0 = L43register_class(v1type);
+   if (Null(ecl_function_dispatch(cl_env_copy,VV[84])(1, v1type) /*  CLASSP */)) { goto L160; }
+   value0 = L42register_class(v1type);
    return value0;
-L174:;
-   if (Null(cl_fboundp(VV[75]))) { goto L176; }
-   if (Null(ecl_function_dispatch(cl_env_copy,VV[75])(1, v1type) /*  FUNCTION-TYPE-P */)) { goto L176; }
-   value0 = ecl_function_dispatch(cl_env_copy,VV[100])(1, v1type) /*  REGISTER-FUNCTION-TYPE */;
+L160:;
+   if (Null(cl_fboundp(VV[71]))) { goto L162; }
+   if (Null(ecl_function_dispatch(cl_env_copy,VV[71])(1, v1type) /*  FUNCTION-TYPE-P */)) { goto L162; }
+   value0 = ecl_function_dispatch(cl_env_copy,VV[96])(1, v1type) /*  REGISTER-FUNCTION-TYPE */;
    return value0;
-L176:;
-   if (Null(cl_fboundp(VV[76]))) { goto L179; }
-   if (Null(ecl_function_dispatch(cl_env_copy,VV[76])(1, v1type) /*  VALUES-TYPE-P */)) { goto L179; }
-   value0 = ecl_function_dispatch(cl_env_copy,VV[101])(1, v1type) /*  REGISTER-VALUES-TYPE */;
+L162:;
+   if (Null(cl_fboundp(VV[72]))) { goto L165; }
+   if (Null(ecl_function_dispatch(cl_env_copy,VV[72])(1, v1type) /*  VALUES-TYPE-P */)) { goto L165; }
+   value0 = ecl_function_dispatch(cl_env_copy,VV[97])(1, v1type) /*  REGISTER-VALUES-TYPE */;
    return value0;
-L179:;
-   value0 = L25error_type_specifier(v1type);
+L165:;
+   value0 = L24error_type_specifier(v1type);
    return value0;
   }
  }
 }
 /*	function definition for SAFE-CANONICAL-TYPE                   */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L60safe_canonical_type(cl_object volatile v1type)
+static cl_object L59safe_canonical_type(cl_object volatile v1type)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  volatile cl_object value0;
  ecl_cs_check(cl_env_copy,value0);
  {
 TTL:
-  value0 = VV[57];
+  value0 = VV[56];
   if (ecl_frs_push(cl_env_copy,value0)) {         /*  BEGIN CATCH 1   */
    value0 = cl_env_copy->values[0];
   } else {
-   value0 = L59canonical_type(v1type);
+   value0 = L58canonical_type(v1type);
   }
   ecl_frs_pop(cl_env_copy);                       /*  END CATCH 1     */
   return value0;
@@ -3800,7 +3762,7 @@ TTL:
 }
 /*	function definition for FAST-SUBTYPEP                         */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L61fast_subtypep(cl_object v1t1, cl_object v2t2)
+static cl_object L60fast_subtypep(cl_object v1t1, cl_object v2t2)
 {
  cl_object T0, T1, T2;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3817,12 +3779,12 @@ L1:;
   {
    cl_object v3tag1;
    cl_object v4tag2;
-   v3tag1 = L60safe_canonical_type(v1t1);
-   v4tag2 = L60safe_canonical_type(v2t2);
+   v3tag1 = L59safe_canonical_type(v1t1);
+   v4tag2 = L59safe_canonical_type(v2t2);
    if (!(ecl_numberp(v3tag1))) { goto L5; }
    if (!(ecl_numberp(v4tag2))) { goto L5; }
-   T0 = L60safe_canonical_type(v1t1);
-   T1 = L60safe_canonical_type(v2t2);
+   T0 = L59safe_canonical_type(v1t1);
+   T1 = L59safe_canonical_type(v2t2);
    T2 = ecl_boole(ECL_BOOLANDC2,(T0),(T1));
    {
     bool v5;
@@ -3871,8 +3833,8 @@ cl_object cl_subtypep(cl_narg narg, cl_object v1t1, cl_object v2t2, ...)
 L2:;
   if (!(ECL_INSTANCEP(v1t1))) { goto L4; }
   if (!(ECL_INSTANCEP(v2t2))) { goto L4; }
-  if (Null(ecl_function_dispatch(cl_env_copy,VV[88])(1, v1t1) /*  CLASSP */)) { goto L4; }
-  if (Null(ecl_function_dispatch(cl_env_copy,VV[88])(1, v2t2) /*  CLASSP */)) { goto L4; }
+  if (Null(ecl_function_dispatch(cl_env_copy,VV[84])(1, v1t1) /*  CLASSP */)) { goto L4; }
+  if (Null(ecl_function_dispatch(cl_env_copy,VV[84])(1, v2t2) /*  CLASSP */)) { goto L4; }
   T0 = si_subclassp(2, v1t1, v2t2);
   cl_env_copy->nvalues = 2;
   cl_env_copy->values[1] = ECL_T;
@@ -3906,14 +3868,14 @@ L4:;
    cl_env_copy->values[0] = T0;
    return cl_env_copy->values[0];
 L15:;
-   ecl_bds_push(cl_env_copy,VV[50]);              /*  *HIGHEST-TYPE-TAG* */
-   ecl_bds_bind(cl_env_copy,VV[49],ECL_T);        /*  *SAVE-TYPES-DATABASE* */
-   ecl_bds_push(cl_env_copy,VV[51]);              /*  *MEMBER-TYPES*  */
-   ecl_bds_push(cl_env_copy,VV[53]);              /*  *ELEMENTARY-TYPES* */
+   ecl_bds_push(cl_env_copy,VV[49]);              /*  *HIGHEST-TYPE-TAG* */
+   ecl_bds_bind(cl_env_copy,VV[48],ECL_T);        /*  *SAVE-TYPES-DATABASE* */
+   ecl_bds_push(cl_env_copy,VV[50]);              /*  *MEMBER-TYPES*  */
+   ecl_bds_push(cl_env_copy,VV[52]);              /*  *ELEMENTARY-TYPES* */
    {
     cl_object v8;                                 /*  TEST            */
     cl_object v9;                                 /*  CONFIDENT       */
-    value0 = L61fast_subtypep(v1t1, v2t2);
+    value0 = L60fast_subtypep(v1t1, v2t2);
     v8 = value0;
     {
      const int v10 = cl_env_copy->nvalues;
@@ -3941,7 +3903,7 @@ L15:;
 }
 /*	function definition for FAST-TYPE=                            */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L62fast_type_(cl_object v1t1, cl_object v2t2)
+static cl_object L61fast_type_(cl_object v1t1, cl_object v2t2)
 {
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
@@ -3958,12 +3920,12 @@ L1:;
   {
    cl_object v3tag1;
    cl_object v4tag2;
-   v3tag1 = L60safe_canonical_type(v1t1);
-   v4tag2 = L60safe_canonical_type(v2t2);
+   v3tag1 = L59safe_canonical_type(v1t1);
+   v4tag2 = L59safe_canonical_type(v2t2);
    if (!(ecl_numberp(v3tag1))) { goto L5; }
    if (!(ecl_numberp(v4tag2))) { goto L5; }
-   T0 = L60safe_canonical_type(v1t1);
-   T1 = L60safe_canonical_type(v2t2);
+   T0 = L59safe_canonical_type(v1t1);
+   T1 = L59safe_canonical_type(v2t2);
    {
     bool v5;
     v5 = ecl_number_equalp(T0,T1);
@@ -3982,7 +3944,7 @@ L5:;
 }
 /*	function definition for TYPE=                                 */
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
-static cl_object L63type_(cl_object v1t1, cl_object v2t2)
+static cl_object L62type_(cl_object v1t1, cl_object v2t2)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -3993,14 +3955,14 @@ TTL:
    cl_object v3;
    cl_object v4;
    cl_object v5;
-   v3 = ecl_symbol_value(VV[50]);
-   v4 = ecl_symbol_value(VV[51]);
-   v5 = ecl_symbol_value(VV[53]);
-   ecl_bds_bind(cl_env_copy,VV[50],v3);           /*  *HIGHEST-TYPE-TAG* */
-   ecl_bds_bind(cl_env_copy,VV[49],ECL_T);        /*  *SAVE-TYPES-DATABASE* */
-   ecl_bds_bind(cl_env_copy,VV[51],v4);           /*  *MEMBER-TYPES*  */
-   ecl_bds_bind(cl_env_copy,VV[53],v5);           /*  *ELEMENTARY-TYPES* */
-   value0 = L62fast_type_(v1t1, v2t2);
+   v3 = ecl_symbol_value(VV[49]);
+   v4 = ecl_symbol_value(VV[50]);
+   v5 = ecl_symbol_value(VV[52]);
+   ecl_bds_bind(cl_env_copy,VV[49],v3);           /*  *HIGHEST-TYPE-TAG* */
+   ecl_bds_bind(cl_env_copy,VV[48],ECL_T);        /*  *SAVE-TYPES-DATABASE* */
+   ecl_bds_bind(cl_env_copy,VV[50],v4);           /*  *MEMBER-TYPES*  */
+   ecl_bds_bind(cl_env_copy,VV[52],v5);           /*  *ELEMENTARY-TYPES* */
+   value0 = L61fast_type_(v1t1, v2t2);
    ecl_bds_unwind_n(cl_env_copy,4);
    return value0;
   }
@@ -4011,7 +3973,7 @@ TTL:
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _eclyAfyXkZ7_AC5xWE21(cl_object flag)
+ECL_DLLEXPORT void _eclqGeUMgTYTtUr9_Gg9cYE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -4032,21 +3994,21 @@ ECL_DLLEXPORT void _eclyAfyXkZ7_AC5xWE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_eclyAfyXkZ7_AC5xWE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_eclqGeUMgTYTtUr9_Gg9cYE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);
- ecl_cmp_defun(VV[80]);                           /*  CONSTANTLY-T    */
- ecl_cmp_defun(VV[81]);                           /*  CONSTANTLY-NIL  */
+ ecl_cmp_defun(VV[76]);                           /*  CONSTANTLY-T    */
+ ecl_cmp_defun(VV[77]);                           /*  CONSTANTLY-NIL  */
  (void)0; /* No entry created for CONSTANTLY */
  si_Xmake_special(VV[4]);
  cl_set(VV[4],si_make_vector(ECL_T, ecl_make_fixnum(256), ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0)));
  si_Xmake_special(VV[5]);
  cl_set(VV[5],si_make_vector(ECL_T, ecl_make_fixnum(128), ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0)));
- ecl_cmp_defun(VV[82]);                           /*  SUBTYPEP-CLEAR-CACHE */
- ecl_cmp_defun(VV[83]);                           /*  CREATE-TYPE-NAME */
+ ecl_cmp_defun(VV[78]);                           /*  SUBTYPEP-CLEAR-CACHE */
+ ecl_cmp_defun(VV[79]);                           /*  CREATE-TYPE-NAME */
  (void)0; /* No entry created for DO-DEFTYPE */
- ecl_cmp_defmacro(VV[84]);                        /*  DEFTYPE         */
+ ecl_cmp_defmacro(VV[80]);                        /*  DEFTYPE         */
  si_do_deftype(3, ECL_SYM("BOOLEAN",155), VVtemp[0], VVtemp[1]);
  si_do_deftype(3, VV[15], VVtemp[2], VVtemp[3]);
  si_do_deftype(3, ECL_SYM("FIXNUM",372), VVtemp[4], VVtemp[5]);
@@ -4079,142 +4041,133 @@ ECL_DLLEXPORT void _eclyAfyXkZ7_AC5xWE21(cl_object flag)
  }
  si_do_deftype(3, ECL_SYM("SHORT-FLOAT",756), VVtemp[29], T0);
  }
+ si_do_deftype(3, ECL_SYM("BIT",123), VVtemp[30], VVtemp[31]);
  {
   cl_object T0;
  {cl_object v1;
   v1 = ECL_NIL;
-  v1 = ecl_make_cfun_va((cl_objectfn)LC9long_float,ECL_NIL,Cblock);
+  v1 = ecl_make_cfun((cl_objectfn_fixed)LC9mod,ECL_NIL,Cblock,1);
   T0 = v1;
  }
- si_do_deftype(3, ECL_SYM("LONG-FLOAT",508), VVtemp[30], T0);
- }
- si_do_deftype(3, ECL_SYM("BIT",123), VVtemp[31], VVtemp[32]);
- {
-  cl_object T0;
- {cl_object v1;
-  v1 = ECL_NIL;
-  v1 = ecl_make_cfun((cl_objectfn_fixed)LC10mod,ECL_NIL,Cblock,1);
-  T0 = v1;
- }
- si_do_deftype(3, ECL_SYM("MOD",560), VVtemp[33], T0);
+ si_do_deftype(3, ECL_SYM("MOD",560), VVtemp[32], T0);
  }
  {
   cl_object T0;
  {cl_object v1;
   v1 = ECL_NIL;
-  v1 = ecl_make_cfun_va((cl_objectfn)LC11signed_byte,ECL_NIL,Cblock);
+  v1 = ecl_make_cfun_va((cl_objectfn)LC10signed_byte,ECL_NIL,Cblock);
   T0 = v1;
  }
- si_do_deftype(3, ECL_SYM("SIGNED-BYTE",761), VVtemp[34], T0);
+ si_do_deftype(3, ECL_SYM("SIGNED-BYTE",761), VVtemp[33], T0);
  }
  {
   cl_object T0;
  {cl_object v1;
   v1 = ECL_NIL;
-  v1 = ecl_make_cfun_va((cl_objectfn)LC12unsigned_byte,ECL_NIL,Cblock);
+  v1 = ecl_make_cfun_va((cl_objectfn)LC11unsigned_byte,ECL_NIL,Cblock);
   T0 = v1;
  }
- si_do_deftype(3, ECL_SYM("UNSIGNED-BYTE",885), VVtemp[35], T0);
+ si_do_deftype(3, ECL_SYM("UNSIGNED-BYTE",885), VVtemp[34], T0);
  }
- si_do_deftype(3, ECL_SYM("NULL",605), VVtemp[36], VVtemp[37]);
- si_do_deftype(3, ECL_SYM("SEQUENCE",741), VVtemp[38], VVtemp[39]);
- si_do_deftype(3, ECL_SYM("LIST",481), VVtemp[40], VVtemp[41]);
- si_do_deftype(3, VV[19], VVtemp[42], VVtemp[43]);
- si_do_deftype(3, ECL_SYM("PROPERTY-LIST",1658), VVtemp[44], VVtemp[45]);
- si_do_deftype(3, ECL_SYM("ATOM",119), VVtemp[46], VVtemp[47]);
+ si_do_deftype(3, ECL_SYM("NULL",605), VVtemp[35], VVtemp[36]);
+ si_do_deftype(3, ECL_SYM("SEQUENCE",741), VVtemp[37], VVtemp[38]);
+ si_do_deftype(3, ECL_SYM("LIST",481), VVtemp[39], VVtemp[40]);
+ si_do_deftype(3, VV[19], VVtemp[41], VVtemp[42]);
+ si_do_deftype(3, ECL_SYM("PROPERTY-LIST",1658), VVtemp[43], VVtemp[44]);
+ si_do_deftype(3, ECL_SYM("ATOM",119), VVtemp[45], VVtemp[46]);
  {
   cl_object T0;
  {cl_object v1;
   v1 = ECL_NIL;
-  v1 = ecl_make_cfun_va((cl_objectfn)LC13vector,ECL_NIL,Cblock);
+  v1 = ecl_make_cfun_va((cl_objectfn)LC12vector,ECL_NIL,Cblock);
   T0 = v1;
  }
- si_do_deftype(3, ECL_SYM("VECTOR",898), VVtemp[48], T0);
+ si_do_deftype(3, ECL_SYM("VECTOR",898), VVtemp[47], T0);
  }
- si_do_deftype(3, ECL_SYM("EXTENDED-CHAR",346), VVtemp[49], VVtemp[50]);
+ si_do_deftype(3, ECL_SYM("EXTENDED-CHAR",346), VVtemp[48], VVtemp[49]);
  {
   cl_object T0;
  {cl_object v1;
   v1 = ECL_NIL;
-  v1 = ecl_make_cfun_va((cl_objectfn)LC14string,ECL_NIL,Cblock);
+  v1 = ecl_make_cfun_va((cl_objectfn)LC13string,ECL_NIL,Cblock);
   T0 = v1;
  }
- si_do_deftype(3, ECL_SYM("STRING",805), VVtemp[51], T0);
- }
- {
-  cl_object T0;
- {cl_object v1;
-  v1 = ECL_NIL;
-  v1 = ecl_make_cfun_va((cl_objectfn)LC15base_string,ECL_NIL,Cblock);
-  T0 = v1;
- }
- si_do_deftype(3, ECL_SYM("BASE-STRING",121), VVtemp[52], T0);
+ si_do_deftype(3, ECL_SYM("STRING",805), VVtemp[50], T0);
  }
  {
   cl_object T0;
  {cl_object v1;
   v1 = ECL_NIL;
-  v1 = ecl_make_cfun_va((cl_objectfn)LC16extended_string,ECL_NIL,Cblock);
+  v1 = ecl_make_cfun_va((cl_objectfn)LC14base_string,ECL_NIL,Cblock);
   T0 = v1;
  }
- si_do_deftype(3, ECL_SYM("EXTENDED-STRING",1677), VVtemp[53], T0);
+ si_do_deftype(3, ECL_SYM("BASE-STRING",121), VVtemp[51], T0);
  }
  {
   cl_object T0;
  {cl_object v1;
   v1 = ECL_NIL;
-  v1 = ecl_make_cfun_va((cl_objectfn)LC17bit_vector,ECL_NIL,Cblock);
+  v1 = ecl_make_cfun_va((cl_objectfn)LC15extended_string,ECL_NIL,Cblock);
   T0 = v1;
  }
- si_do_deftype(3, ECL_SYM("BIT-VECTOR",134), VVtemp[54], T0);
+ si_do_deftype(3, ECL_SYM("EXTENDED-STRING",1677), VVtemp[52], T0);
  }
  {
   cl_object T0;
  {cl_object v1;
   v1 = ECL_NIL;
-  v1 = ecl_make_cfun_va((cl_objectfn)LC18simple_vector,ECL_NIL,Cblock);
+  v1 = ecl_make_cfun_va((cl_objectfn)LC16bit_vector,ECL_NIL,Cblock);
   T0 = v1;
  }
- si_do_deftype(3, ECL_SYM("SIMPLE-VECTOR",774), VVtemp[55], T0);
+ si_do_deftype(3, ECL_SYM("BIT-VECTOR",134), VVtemp[53], T0);
  }
  {
   cl_object T0;
  {cl_object v1;
   v1 = ECL_NIL;
-  v1 = ecl_make_cfun_va((cl_objectfn)LC19simple_string,ECL_NIL,Cblock);
+  v1 = ecl_make_cfun_va((cl_objectfn)LC17simple_vector,ECL_NIL,Cblock);
   T0 = v1;
  }
- si_do_deftype(3, ECL_SYM("SIMPLE-STRING",771), VVtemp[56], T0);
+ si_do_deftype(3, ECL_SYM("SIMPLE-VECTOR",774), VVtemp[54], T0);
  }
  {
   cl_object T0;
  {cl_object v1;
   v1 = ECL_NIL;
-  v1 = ecl_make_cfun_va((cl_objectfn)LC20simple_base_string,ECL_NIL,Cblock);
+  v1 = ecl_make_cfun_va((cl_objectfn)LC18simple_string,ECL_NIL,Cblock);
   T0 = v1;
  }
- si_do_deftype(3, ECL_SYM("SIMPLE-BASE-STRING",764), VVtemp[57], T0);
+ si_do_deftype(3, ECL_SYM("SIMPLE-STRING",771), VVtemp[55], T0);
  }
  {
   cl_object T0;
  {cl_object v1;
   v1 = ECL_NIL;
-  v1 = ecl_make_cfun_va((cl_objectfn)LC21simple_bit_vector,ECL_NIL,Cblock);
+  v1 = ecl_make_cfun_va((cl_objectfn)LC19simple_base_string,ECL_NIL,Cblock);
   T0 = v1;
  }
- si_do_deftype(3, ECL_SYM("SIMPLE-BIT-VECTOR",765), VVtemp[58], T0);
+ si_do_deftype(3, ECL_SYM("SIMPLE-BASE-STRING",764), VVtemp[56], T0);
  }
- si_do_deftype(3, ECL_SYM("ARRAY-INDEX",1771), VVtemp[59], VVtemp[60]);
- ecl_cmp_defun(VV[85]);                           /*  SIMPLE-ARRAY-P  */
- ecl_cmp_defun(VV[86]);                           /*  COMPLEX-ARRAY-P */
- si_Xmake_constant(VV[30], VVtemp[61]);
+ {
+  cl_object T0;
+ {cl_object v1;
+  v1 = ECL_NIL;
+  v1 = ecl_make_cfun_va((cl_objectfn)LC20simple_bit_vector,ECL_NIL,Cblock);
+  T0 = v1;
+ }
+ si_do_deftype(3, ECL_SYM("SIMPLE-BIT-VECTOR",765), VVtemp[57], T0);
+ }
+ si_do_deftype(3, ECL_SYM("ARRAY-INDEX",1771), VVtemp[58], VVtemp[59]);
+ ecl_cmp_defun(VV[81]);                           /*  SIMPLE-ARRAY-P  */
+ ecl_cmp_defun(VV[82]);                           /*  COMPLEX-ARRAY-P */
+ si_Xmake_constant(VV[30], VVtemp[60]);
  {
   cl_object T0, T1;
  {
   cl_object v1;
   v1 = ecl_symbol_value(VV[30]);
-  goto L109;
-L108:;
+  goto L107;
+L106:;
   {
    cl_object v2l;
    v2l = ecl_car(v1);
@@ -4223,13 +4176,13 @@ L108:;
    si_put_sysprop(T0, VV[31], T1);
   }
   v1 = ecl_cdr(v1);
-L109:;
-  if (Null(v1)) { goto L116; }
-  goto L108;
-L116:;
+L107:;
+  if (Null(v1)) { goto L114; }
+  goto L106;
+L114:;
  }
  }
- si_Xmake_constant(VV[32], VVtemp[62]);
+ si_Xmake_constant(VV[32], VVtemp[61]);
  (void)0; /* No entry created for UPGRADED-ARRAY-ELEMENT-TYPE */
  (void)0; /* No entry created for UPGRADED-COMPLEX-PART-TYPE */
  (void)0; /* No entry created for IN-INTERVAL-P */
@@ -4238,55 +4191,55 @@ L116:;
  (void)0; /* No entry created for TYPEP */
  (void)0; /* No entry created for SUBCLASSP */
  (void)0; /* No entry created for OF-CLASS-P */
- ecl_cmp_defun(VV[87]);                           /*  NORMALIZE-TYPE  */
- ecl_cmp_defun(VV[89]);                           /*  EXPAND-DEFTYPE  */
- ecl_cmp_defun(VV[90]);                           /*  ERROR-COERCE    */
+ ecl_cmp_defun(VV[83]);                           /*  NORMALIZE-TYPE  */
+ ecl_cmp_defun(VV[85]);                           /*  EXPAND-DEFTYPE  */
+ ecl_cmp_defun(VV[86]);                           /*  ERROR-COERCE    */
  (void)0; /* No entry created for COERCE */
+ si_Xmake_special(VV[48]);
+ cl_set(VV[48],ECL_NIL);
  si_Xmake_special(VV[49]);
- cl_set(VV[49],ECL_NIL);
+ cl_set(VV[49],ecl_make_fixnum(1));
  si_Xmake_special(VV[50]);
- cl_set(VV[50],ecl_make_fixnum(1));
+ cl_set(VV[50],ECL_NIL);
  si_Xmake_special(VV[51]);
- cl_set(VV[51],ECL_NIL);
+ cl_set(VV[51],ecl_make_fixnum(1));
  si_Xmake_special(VV[52]);
- cl_set(VV[52],ecl_make_fixnum(1));
- si_Xmake_special(VV[53]);
- cl_set(VV[53],ECL_NIL);
+ cl_set(VV[52],ECL_NIL);
  (void)0; /* No entry created for NEW-TYPE-TAG */
  (void)0; /* No entry created for FIND-REGISTERED-TAG */
  (void)0; /* No entry created for MAYBE-SAVE-TYPES */
- ecl_cmp_defun(VV[91]);                           /*  UPDATE-TYPES    */
+ ecl_cmp_defun(VV[87]);                           /*  UPDATE-TYPES    */
  (void)0; /* No entry created for FIND-TYPE-BOUNDS */
  (void)0; /* No entry created for REGISTER-TYPE */
- ecl_cmp_defun(VV[92]);                           /*  REGISTER-MEMBER-TYPE */
+ ecl_cmp_defun(VV[88]);                           /*  REGISTER-MEMBER-TYPE */
  (void)0; /* No entry created for SIMPLE-MEMBER-TYPE */
- ecl_cmp_defun(VV[93]);                           /*  NUMBER-MEMBER-TYPE */
+ ecl_cmp_defun(VV[89]);                           /*  NUMBER-MEMBER-TYPE */
  (void)0; /* No entry created for PUSH-TYPE */
  (void)0; /* No entry created for REGISTER-SATISFIES-TYPE */
  (void)0; /* No entry created for REGISTER-CLASS */
  (void)0; /* No entry created for REGISTER-ARRAY-TYPE */
  (void)0; /* No entry created for FAST-UPGRADED-ARRAY-ELEMENT-TYPE */
  (void)0; /* No entry created for PARSE-ARRAY-TYPE */
- ecl_cmp_defun(VV[94]);                           /*  ARRAY-TYPE-<=   */
- ecl_cmp_defun(VV[95]);                           /*  ARRAY-TYPE-P    */
+ ecl_cmp_defun(VV[90]);                           /*  ARRAY-TYPE-<=   */
+ ecl_cmp_defun(VV[91]);                           /*  ARRAY-TYPE-P    */
  (void)0; /* No entry created for REGISTER-ELEMENTARY-INTERVAL */
  (void)0; /* No entry created for REGISTER-INTERVAL-TYPE */
- ecl_cmp_defun(VV[96]);                           /*  BOUNDS-<=       */
- ecl_cmp_defun(VV[97]);                           /*  BOUNDS-<        */
+ ecl_cmp_defun(VV[92]);                           /*  BOUNDS-<=       */
+ ecl_cmp_defun(VV[93]);                           /*  BOUNDS-<        */
  (void)0; /* No entry created for CANONICAL-COMPLEX-TYPE */
- ecl_cmp_defun(VV[98]);                           /*  REGISTER-CONS-TYPE */
+ ecl_cmp_defun(VV[94]);                           /*  REGISTER-CONS-TYPE */
  {
   cl_object T0, T1;
  T0 = cl_make_hash_table(4, ECL_SYM("TEST",1316), ECL_SYM("EQ",333), ECL_SYM("SIZE",1308), ecl_make_fixnum(128));
- T1 = si_hash_table_fill(T0, VVtemp[63]);
- si_Xmake_constant(VV[67], T1);
+ T1 = si_hash_table_fill(T0, VVtemp[62]);
+ si_Xmake_constant(VV[66], T1);
  }
  (void)0; /* No entry created for FIND-BUILT-IN-TAG */
  (void)0; /* No entry created for EXTEND-TYPE-TAG */
- ecl_cmp_defun(VV[99]);                           /*  CANONICAL-TYPE  */
- ecl_cmp_defun(VV[102]);                          /*  SAFE-CANONICAL-TYPE */
+ ecl_cmp_defun(VV[95]);                           /*  CANONICAL-TYPE  */
+ ecl_cmp_defun(VV[98]);                           /*  SAFE-CANONICAL-TYPE */
  (void)0; /* No entry created for FAST-SUBTYPEP */
  (void)0; /* No entry created for SUBTYPEP */
  (void)0; /* No entry created for FAST-TYPE= */
- ecl_cmp_defun(VV[103]);                          /*  TYPE=           */
+ ecl_cmp_defun(VV[99]);                           /*  TYPE=           */
 }

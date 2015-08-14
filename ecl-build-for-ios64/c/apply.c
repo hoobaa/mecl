@@ -18,15 +18,28 @@
 
 #include <ecl/ecl.h>
 
+// typedef cl_object (*t_f0)(cl_narg i);
+// typedef cl_object (*t_f1)(cl_narg i,cl_object a0);
+// typedef cl_object (*t_f2)(cl_narg i,cl_object a0,cl_object a1);
+// typedef cl_object (*t_f3)(cl_narg i,cl_object a0,cl_object a1,cl_object a2);
+
+typedef cl_object (*t_f0)(cl_narg );
+typedef cl_object (*t_f1)(cl_narg ,cl_object );
+typedef cl_object (*t_f2)(cl_narg ,cl_object ,cl_object );
+typedef cl_object (*t_f3)(cl_narg ,cl_object ,cl_object ,cl_object );
+
+
 #ifndef ECL_ASM_APPLY
 cl_object
 APPLY(cl_narg n, cl_objectfn fn, cl_object *x)
 {
+  nlogd(">>FUCK APPLY n:%d", n);
+
   switch (n) {
-  case 0:  return (*fn)(n);
-  case 1:  return (*fn)(n, x[0]);
-  case 2:  return (*fn)(n, x[0],x[1]);
-  case 3:  return (*fn)(n, x[0],x[1],x[2]);
+  case 0:  return (*((t_f0)(fn)))(n);
+  case 1:  return (*((t_f1)(fn)))(n, x[0]);
+  case 2:  return (*((t_f2)(fn)))(n, x[0],x[1]);
+  case 3:  return (*((t_f3)(fn)))(n, x[0],x[1],x[2]);
   case 4:  return (*fn)(n, x[0],x[1],x[2],x[3]);
   case 5:  return (*fn)(n, x[0],x[1],x[2],x[3],x[4]);
   case 6:  return (*fn)(n, x[0],x[1],x[2],x[3],x[4],x[5]);

@@ -33,12 +33,12 @@ assert_type_hash_table(cl_object function, cl_narg narg, cl_object p)
 {
         int rc;
         // printf("fuckppp:%d\n", __LINE__);
-        // rc = ((cl_fixnum)(p) & 3);
+        rc = ((cl_fixnum)(p) & 3);
         // printf("fuckppp:%d\n", __LINE__);
-        // rc = ((p)->d.t == t_hashtable);
+        rc = ((p)->d.t == t_hashtable);
 
-        rc = ECL_HASH_TABLE_P(p);
-        printf("fuckp:%d\n", rc);
+        // rc = ECL_HASH_TABLE_P(p);
+        // printf("fuckp:%d\n", rc);
 
 	unlikely_if (!ECL_HASH_TABLE_P(p))
 		FEwrong_type_nth_arg(function, narg, p, ecl_make_fixnum(/*HASH-TABLE*/418));

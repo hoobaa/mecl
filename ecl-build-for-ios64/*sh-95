@@ -1,0 +1,20 @@
+strobolights@nakatanidaisuke839:~/dev/mecl/ecl-build-for-ios64)$ ls
+CROSS-COMPILER*		c/			cross_config		ecl-cdb.asd		ecl-quicklisp.fasc	ios-build.sh*		profile.fasc		serve-event.asd
+CROSS-DPP*		cinit.o			deflate.asd		ecl-cdb.fasc		ecl_min*		libeclmin.a		ql-minitar.asd		serve-event.fasc
+Makefile		clos/			deflate.fasc		ecl-curl.asd		encodings/		lsp/			ql-minitar.fasc		sockets.asd
+asdf.fasc		cmp/			defsystem.asd		ecl-curl.fasc		env.log			modules			rt.asd			sockets.fasc
+bare.lsp		compile.lsp		defsystem.fasc		ecl-help.asd		ext/			new-cmp/		rt.fasc			tests/
+bin/			compile.pre		doc/			ecl-help.fasc		fuck.c			prebuilt-asdf.asd	sb-bsd-sockets.asd	tmp/
+build-stamp		config.status*		ecl/			ecl-quicklisp.asd	fuck.o			profile.asd		sb-bsd-sockets.fasc
+strobolights@nakatanidaisuke839:~/dev/mecl/ecl-build-for-ios64)$ ls
+CROSS-COMPILER*		c/			cross_config		ecl-cdb.asd		ecl-quicklisp.fasc	ios-build.sh*		profile.fasc		serve-event.asd
+CROSS-DPP*		cinit.o			deflate.asd		ecl-cdb.fasc		ecl_min*		libeclmin.a		ql-minitar.asd		serve-event.fasc
+Makefile		clos/			deflate.fasc		ecl-curl.asd		encodings/		lsp/			ql-minitar.fasc		sockets.asd
+asdf.fasc		cmp/			defsystem.asd		ecl-curl.fasc		env.log			modules			rt.asd			sockets.fasc
+bare.lsp		compile.lsp		defsystem.fasc		ecl-help.asd		ext/			new-cmp/		rt.fasc			tests/
+bin/			compile.pre		doc/			ecl-help.fasc		fuck.c			prebuilt-asdf.asd	sb-bsd-sockets.asd	tmp/
+build-stamp		config.status*		ecl/			ecl-quicklisp.asd	fuck.o			profile.asd		sb-bsd-sockets.fasc
+strobolights@nakatanidaisuke839:~/dev/mecl/ecl-build-for-ios64)$   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -I. -I/Users/strobolights/dev/mecl/ecl-build-for-ios64 -I/Users/strobolights/dev/mecl/ecl/src/c -I../ecl/gc -DECL_API -DECL_NO_LEGACY     -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -DAPPLE -I/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/include -D_THREAD_SAFE -Ddarwin -c -I./ fuck.c -o fuck.o
+strobolights@nakatanidaisuke839:~/dev/mecl/ecl-build-for-ios64)$   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -o fuck_exe fuck.o c/all_symbols.o -L./ libecl.a -latomic_ops  -lgmp -lgc -lpthread   -lm ;
+clang: error: no such file or directory: 'libecl.a'
+strobolights@nakatanidaisuke839:~/dev/mecl/ecl-build-for-ios64)$   /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -arch arm64 -D__arm__ -L/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib    -o fuck_exe fuck.o c/all_symbols.o -L./ libeclmin.a -latomic_ops  -lgmp -lgc -lpthread   -lm ;

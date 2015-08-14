@@ -565,7 +565,7 @@ L17:;
 /*	optimize speed 1, debug 1, space 1, safety 2                  */
 static cl_object L7daylight_saving_time_p(cl_object v1universal_time, cl_object v2year)
 {
- cl_object T0, T1, T2, T3;
+ cl_object T0, T1, T2;
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
  ecl_cs_check(cl_env_copy,value0);
@@ -573,31 +573,37 @@ static cl_object L7daylight_saving_time_p(cl_object v1universal_time, cl_object 
 TTL:
   {
    cl_object v3unix_time;
-   v3unix_time = ecl_minus(v1universal_time,VV[4]);
+   v3unix_time = ecl_minus(v1universal_time,ecl_make_fixnum(2208988800));
    if (!(ecl_minusp(v3unix_time))) { goto L3; }
-   if (Null(L3leap_year_p(v2year))) { goto L7; }
-   T0 = VV[5];
-   goto L6;
+   {
+    cl_fixnum v4;
+    if (Null(L3leap_year_p(v2year))) { goto L7; }
+    v4 = 2524521600;
+    goto L6;
 L7:;
-   T0 = VV[6];
+    v4 = 2556144000;
 L6:;
-   T1 = cl_encode_universal_time(7, ecl_make_fixnum(0), ecl_make_fixnum(0), ecl_make_fixnum(0), ecl_make_fixnum(1), ecl_make_fixnum(1), v2year, ecl_make_fixnum(0));
-   T2 = ecl_minus(v1universal_time,T1);
-   T3 = ecl_minus(T2,VV[4]);
-   v3unix_time = ecl_plus(T0,T3);
+    T0 = cl_encode_universal_time(7, ecl_make_fixnum(0), ecl_make_fixnum(0), ecl_make_fixnum(0), ecl_make_fixnum(1), ecl_make_fixnum(1), v2year, ecl_make_fixnum(0));
+    T1 = ecl_minus(v1universal_time,T0);
+    T2 = ecl_minus(T1,ecl_make_fixnum(2208988800));
+    v3unix_time = ecl_plus(ecl_make_fixnum(v4),T2);
+   }
    goto L2;
 L3:;
    if (ECL_FIXNUMP(v3unix_time)) { goto L2; }
-   if (Null(L3leap_year_p(v2year))) { goto L12; }
-   T0 = VV[7];
-   goto L11;
+   {
+    cl_fixnum v4;
+    if (Null(L3leap_year_p(v2year))) { goto L12; }
+    v4 = 4165516800;
+    goto L11;
 L12:;
-   T0 = VV[8];
+    v4 = 4197139200;
 L11:;
-   T1 = cl_encode_universal_time(7, ecl_make_fixnum(0), ecl_make_fixnum(0), ecl_make_fixnum(0), ecl_make_fixnum(1), ecl_make_fixnum(1), v2year, ecl_make_fixnum(0));
-   T2 = ecl_minus(v1universal_time,T1);
-   T3 = ecl_minus(T2,VV[4]);
-   v3unix_time = ecl_plus(T0,T3);
+    T0 = cl_encode_universal_time(7, ecl_make_fixnum(0), ecl_make_fixnum(0), ecl_make_fixnum(0), ecl_make_fixnum(1), ecl_make_fixnum(1), v2year, ecl_make_fixnum(0));
+    T1 = ecl_minus(v1universal_time,T0);
+    T2 = ecl_minus(T1,ecl_make_fixnum(2208988800));
+    v3unix_time = ecl_plus(ecl_make_fixnum(v4),T2);
+   }
 L2:;
    {
     bool v4;
@@ -766,7 +772,7 @@ L21:;
    T1 = cl_list(2, v6iterator, T0);
    T2 = ecl_list1(T1);
    T3 = cl_list(2, ECL_SYM("QUOTE",679), v6iterator);
-   T4 = cl_list(3, ECL_SYM("LIST",481), VV[9], T3);
+   T4 = cl_list(3, ECL_SYM("LIST",481), VV[4], T3);
    T5 = cl_list(3, v6iterator, ECL_NIL, T4);
    T6 = ecl_list1(T5);
    T7 = cl_listX(3, ECL_SYM("MACROLET",521), T6, v3);
@@ -812,7 +818,7 @@ cl_object si_simple_program_error(cl_narg narg, cl_object v1message, ...)
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _eclCn8du6a7_AA6xWE21(cl_object flag)
+ECL_DLLEXPORT void _eclATunWhrIuBer9_SeAcYE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -833,7 +839,7 @@ ECL_DLLEXPORT void _eclCn8du6a7_AA6xWE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_eclCn8du6a7_AA6xWE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_eclATunWhrIuBer9_SeAcYE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);
@@ -842,8 +848,8 @@ ECL_DLLEXPORT void _eclCn8du6a7_AA6xWE21(cl_object flag)
  (void)0; /* No entry created for LOAD-LOGICAL-PATHNAME-TRANSLATIONS */
  si_Xmake_special(VV[0]);
  cl_set(VV[0],ecl_make_fixnum(-1));
- ecl_cmp_defun(VV[12]);                           /*  DO-TIME         */
- ecl_cmp_defmacro(VV[13]);                        /*  TIME            */
+ ecl_cmp_defun(VV[7]);                            /*  DO-TIME         */
+ ecl_cmp_defmacro(VV[8]);                         /*  TIME            */
  (void)0; /* No entry created for LEAP-YEAR-P */
  (void)0; /* No entry created for NUMBER-OF-DAYS-FROM-1900 */
  si_Xmake_constant(VV[3], VVtemp[0]);
@@ -854,8 +860,8 @@ ECL_DLLEXPORT void _eclCn8du6a7_AA6xWE21(cl_object flag)
  (void)0; /* No entry created for DAYLIGHT-SAVING-TIME-P */
  (void)0; /* No entry created for GET-DECODED-TIME */
  (void)0; /* No entry created for ENSURE-DIRECTORIES-EXIST */
- ecl_cmp_defmacro(VV[16]);                        /*  WITH-HASH-TABLE-ITERATOR */
- ecl_cmp_defun(VV[17]);                           /*  SHARP-!-READER  */
- cl_set_dispatch_macro_character(3, CODE_CHAR(35), CODE_CHAR(33), VV[11]);
+ ecl_cmp_defmacro(VV[11]);                        /*  WITH-HASH-TABLE-ITERATOR */
+ ecl_cmp_defun(VV[12]);                           /*  SHARP-!-READER  */
+ cl_set_dispatch_macro_character(3, CODE_CHAR(35), CODE_CHAR(33), VV[6]);
  (void)0; /* No entry created for SIMPLE-PROGRAM-ERROR */
 }

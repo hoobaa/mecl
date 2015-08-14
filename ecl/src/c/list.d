@@ -39,13 +39,53 @@ static cl_object do_assoc(struct cl_test *t, cl_object alist);
 #define KEY(t,x) ((t)->key_c_function)((t),(x))
 #define close_test(t) (void)0
 
+
+extern void test_at_string(cl_object string1, cl_object string2);
+extern void test3_at_string(cl_narg narg, cl_object string1, cl_object string2);
+extern void test5_at_string(int a, int b);
+
+static void test_at_list(cl_object string1, cl_object string2) {
+        printf("sizeof fixnum(%d) long(%d) pointer(%d)\n", sizeof(cl_narg), sizeof(long), sizeof(cl_object));
+        printf(">>>>FUCKFUCK-at-list:%d:%d\n", string1->string.t, string2->string.t);
+}
+static void test3_at_list(cl_narg narg, cl_object string1, cl_object string2) {
+        printf(">>>>FUCKFUCK-at-list:%d:%d:%d\n", narg, string1->string.t, string2->string.t);
+}
+static void test5_at_list(int a, int b) {
+        printf("order-at-list:%d:%d\n", a, b);
+}
+
+typedef cl_object (*t_fuckfn)(cl_narg narg, cl_object a, cl_object b);
+typedef cl_object (*t_fuckfn2)(cl_narg narg, cl_object string1, cl_object string2, ...);
+typedef cl_object (*t_fuckfn3)(cl_narg narg, ...);
+
 static bool
 test_compare(struct cl_test *t, cl_object x)
 {
 	x = KEY(t,x);
 	t->env->function = t->test_function;
-    printf("string tag 1st(%d) 2nd(%d)", t->item_compared->string.t, x->string.t);
-	return t->test_fn(2, t->item_compared, x) != ECL_NIL;
+        
+        printf("string tag 1st(%d) 2nd(%d)\n", t->item_compared->string.t, x->string.t);
+        test5_at_list(1, 10);
+        test5_at_string(1, 10);
+        
+        test_at_list(t->item_compared, x);
+        test_at_string(t->item_compared, x);
+        test3_at_list(1, t->item_compared, x);
+        printf(">>FUCK-CANCER-FROM\n");
+        test3_at_string(1, t->item_compared, x);
+        printf(">>FUCK-CANCER-TO\n");
+        cl_string_equal(2, t->item_compared, x);
+        printf(">>FUCK-CANCER-TO2\n");
+        printf(">>!!!!FUCK-test_fn(%ld) cl_string_equal(%ld)\n", t->test_fn, &cl_string_equal);
+        ((t_fuckfn)(t->test_fn))(2, t->item_compared, x);
+        printf(">>FUCK-CANCER-TO4\n");
+        // t_fuckfn3 fuckfn = &cl_string_equal;
+        // printf(">>FUCK-CANCER-TO3\n");
+        // fuckfn(2, t->item_compared, x);
+        // printf(">>FUCK-CANCER-TO4\n");
+        
+	return ((t_fuckfn)(t->test_fn))(2, t->item_compared, x) != ECL_NIL;
 }
 
 static bool

@@ -61,4 +61,4 @@ ECL_WORKING_ENVIRON=yes
 ###		x86_64-apple-darwin14.4.0
 ### By default we assume that ECL can be accessed from some directory in
 ### the path.
-ECL_TO_RUN=/Users/strobolights/dev/mecl/local-install/host/bin/ecl
+ECL_TO_RUN=/Users/strobolights/dev/mecl/local-install/host64/bin/ecl

@@ -479,20 +479,22 @@ mp_process_preset(cl_narg narg, cl_object process, cl_object function, ...)
 	ecl_va_start(args, function, narg, 2);
 	if (narg < 2)
 		FEwrong_num_arguments(ecl_make_fixnum(/*MP::PROCESS-PRESET*/1407));
-	assert_type_process(process);
+        printf("MP_PROCESS_PRESET1\n");
+	assert_type_process(process); // type error occur
+        printf("MP_PROCESS_PRESET2\n");
 	process->process.function = function;
 	process->process.args = cl_grab_rest_args(args);
 	{
-#line 439
+#line 441
 		const cl_env_ptr the_env = ecl_process_env();
-#line 439
-		#line 439
+#line 441
+		#line 441
 		cl_object __value0 = process;
-#line 439
+#line 441
 		the_env->nvalues = 1;
-#line 439
+#line 441
 		return __value0;
-#line 439
+#line 441
 	}
 
 }
@@ -504,16 +506,16 @@ mp_interrupt_process(cl_object process, cl_object function)
 		FEerror("Cannot interrupt the inactive process ~A", 1, process);
         ecl_interrupt_process(process, function);
 	{
-#line 448
+#line 450
 		const cl_env_ptr the_env = ecl_process_env();
-#line 448
-		#line 448
+#line 450
+		#line 450
 		cl_object __value0 = ECL_T;
-#line 448
+#line 450
 		the_env->nvalues = 1;
-#line 448
+#line 450
 		return __value0;
-#line 448
+#line 450
 	}
 
 }
@@ -563,10 +565,10 @@ mp_process_yield(void)
 {
 	ecl_process_yield();
 	{
-#line 495
+#line 497
 		const cl_env_ptr the_env = ecl_process_env();
 the_env->nvalues = 0; return ECL_NIL;
-#line 495
+#line 497
 	}
 
 }
@@ -658,16 +660,16 @@ mp_process_enable(cl_object process)
 	process->process.start_spinlock = ECL_NIL;
 
 	{
-#line 584
+#line 586
 		const cl_env_ptr the_env = ecl_process_env();
-#line 584
-		#line 584
+#line 586
+		#line 586
 		cl_object __value0 = (ok? process : ECL_NIL);
-#line 584
+#line 586
 		the_env->nvalues = 1;
-#line 584
+#line 586
 		return __value0;
-#line 584
+#line 586
 	}
 
 }
@@ -690,16 +692,16 @@ mp_all_processes(void)
 	/* No race condition here because this list is never destructively
 	 * modified. When we add or remove processes, we create new lists. */
 	{
-#line 604
+#line 606
 		const cl_env_ptr the_env = ecl_process_env();
-#line 604
-		#line 604
+#line 606
+		#line 606
 		cl_object __value0 = ecl_process_list();
-#line 604
+#line 606
 		the_env->nvalues = 1;
-#line 604
+#line 606
 		return __value0;
-#line 604
+#line 606
 	}
 
 }
@@ -709,16 +711,16 @@ mp_process_name(cl_object process)
 {
 	assert_type_process(process);
 	{
-#line 611
+#line 613
 		const cl_env_ptr the_env = ecl_process_env();
-#line 611
-		#line 611
+#line 613
+		#line 613
 		cl_object __value0 = process->process.name;
-#line 611
+#line 613
 		the_env->nvalues = 1;
-#line 611
+#line 613
 		return __value0;
-#line 611
+#line 613
 	}
 
 }
@@ -728,16 +730,16 @@ mp_process_active_p(cl_object process)
 {
 	assert_type_process(process);
 	{
-#line 618
+#line 620
 		const cl_env_ptr the_env = ecl_process_env();
-#line 618
-		#line 618
+#line 620
+		#line 620
 		cl_object __value0 = (process->process.phase? ECL_T : ECL_NIL);
-#line 618
+#line 620
 		the_env->nvalues = 1;
-#line 618
+#line 620
 		return __value0;
-#line 618
+#line 620
 	}
 
 }
@@ -747,16 +749,16 @@ mp_process_whostate(cl_object process)
 {
 	assert_type_process(process);
 	{
-#line 625
+#line 627
 		const cl_env_ptr the_env = ecl_process_env();
-#line 625
-		#line 625
+#line 627
+		#line 627
 		cl_object __value0 = (cl_core.null_string);
-#line 625
+#line 627
 		the_env->nvalues = 1;
-#line 625
+#line 627
 		return __value0;
-#line 625
+#line 627
 	}
 
 }
@@ -806,16 +808,16 @@ mp_process_run_function_wait(cl_narg narg, ...)
                 }
         }
 	{
-#line 672
+#line 674
 		const cl_env_ptr the_env = ecl_process_env();
-#line 672
-		#line 672
+#line 674
+		#line 674
 		cl_object __value0 = process;
-#line 672
+#line 674
 		the_env->nvalues = 1;
-#line 672
+#line 674
 		return __value0;
-#line 672
+#line 674
 	}
 
 }
@@ -835,16 +837,16 @@ mp_get_sigmask(void)
         if (pthread_sigmask(SIG_BLOCK, &no_signals, mask_ptr))
                 FElibc_error("MP:GET-SIGMASK failed in a call to pthread_sigmask", 0);
         {
-#line 689
+#line 691
 	const cl_env_ptr the_env = ecl_process_env();
-#line 689
-	#line 689
+#line 691
+	#line 691
 	cl_object __value0 = data;
-#line 689
+#line 691
 	the_env->nvalues = 1;
-#line 689
+#line 691
 	return __value0;
-#line 689
+#line 691
 }
 
 }
@@ -856,16 +858,16 @@ mp_set_sigmask(cl_object data)
         if (pthread_sigmask(SIG_SETMASK, mask_ptr, NULL))
                 FElibc_error("MP:SET-SIGMASK failed in a call to pthread_sigmask", 0);
         {
-#line 698
+#line 700
 	const cl_env_ptr the_env = ecl_process_env();
-#line 698
-	#line 698
+#line 700
+	#line 700
 	cl_object __value0 = data;
-#line 698
+#line 700
 	the_env->nvalues = 1;
-#line 698
+#line 700
 	return __value0;
-#line 698
+#line 700
 }
 
 }
@@ -879,16 +881,16 @@ mp_block_signals(void)
         cl_object previous = ecl_symbol_value(ECL_SYM("EXT::*INTERRUPTS-ENABLED*",1023));
         ECL_SETQ(the_env, ECL_SYM("EXT::*INTERRUPTS-ENABLED*",1023), ECL_NIL);
         {
-#line 709
+#line 711
 	const cl_env_ptr the_env = ecl_process_env();
-#line 709
-	#line 709
+#line 711
+	#line 711
 	cl_object __value0 = previous;
-#line 709
+#line 711
 	the_env->nvalues = 1;
-#line 709
+#line 711
 	return __value0;
-#line 709
+#line 711
 }
 
 #else
@@ -898,16 +900,16 @@ mp_block_signals(void)
         if (pthread_sigmask(SIG_SETMASK, &all_signals, NULL))
                 FElibc_error("MP:BLOCK-SIGNALS failed in a call to pthread_sigmask",0);
         {
-#line 716
+#line 718
 	const cl_env_ptr the_env = ecl_process_env();
-#line 716
-	#line 716
+#line 718
+	#line 718
 	cl_object __value0 = previous;
-#line 716
+#line 718
 	the_env->nvalues = 1;
-#line 716
+#line 718
 	return __value0;
-#line 716
+#line 718
 }
 
 #endif
@@ -921,16 +923,16 @@ mp_restore_signals(cl_object sigmask)
         ECL_SETQ(the_env, ECL_SYM("EXT::*INTERRUPTS-ENABLED*",1023), sigmask);
         ecl_check_pending_interrupts(the_env);
         {
-#line 727
+#line 729
 	const cl_env_ptr the_env = ecl_process_env();
-#line 727
-	#line 727
+#line 729
+	#line 729
 	cl_object __value0 = sigmask;
-#line 727
+#line 729
 	the_env->nvalues = 1;
-#line 727
+#line 729
 	return __value0;
-#line 727
+#line 729
 }
 
 #else

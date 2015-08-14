@@ -603,7 +603,7 @@ L10:;
       cl_fixnum v10;
       v10 = 0;
       v10 = 0;
-      if (!((v10)<=(536870911))) { goto L27; }
+      if (!((v10)<=(2305843009213693951))) { goto L27; }
       T0 = ecl_make_bool((v10)>=(0));
       goto L19;
 L27:;
@@ -1260,7 +1260,7 @@ L87:;
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _ecll97UBza7_6f5xWE21(cl_object flag)
+ECL_DLLEXPORT void _eclaK2epoTalYHs9_k8AcYE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -1281,7 +1281,7 @@ ECL_DLLEXPORT void _ecll97UBza7_6f5xWE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_ecll97UBza7_6f5xWE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_eclaK2epoTalYHs9_k8AcYE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);

@@ -133,15 +133,15 @@ TTL:
 L1:;
   {
    cl_object v2x;
-   double v3xr;
+   long double v3xr;
    v2x = cl_float(1, v1x);
-   v3xr = ecl_to_double(v2x);
+   v3xr = ecl_to_long_double(v2x);
    if (!(((float)  -1.0    )<=(v3xr))) { goto L5; }
    if (!((v3xr)<=((float)   1.0    ))) { goto L5; }
    {
-    double v4;
-    v4 = asin(v3xr);
-    value0 = cl_float(2, ecl_make_double_float(v4), v2x);
+    long double v4;
+    v4 = asinl(v3xr);
+    value0 = cl_float(2, ecl_make_long_float(v4), v2x);
     return value0;
    }
 L5:;
@@ -196,16 +196,16 @@ TTL:
 L1:;
   {
    cl_object v2x;
-   double v3xr;
+   long double v3xr;
    v2x = cl_float(1, v1x);
-   v3xr = ecl_to_double(v2x);
+   v3xr = ecl_to_long_double(v2x);
    if (!(((float)  -1.0    )<=(v3xr))) { goto L5; }
    if (!((v3xr)<=((float)   1.0    ))) { goto L5; }
    {
-    double v4;
-    v4 = acos(v3xr);
+    long double v4;
+    v4 = acosl(v3xr);
     T0 = cl_float(1, v2x);
-    value0 = cl_float(2, ecl_make_double_float(v4), T0);
+    value0 = cl_float(2, ecl_make_long_float(v4), T0);
     return value0;
    }
 L5:;
@@ -271,10 +271,10 @@ TTL:
   }
 L1:;
   {
-   double v4;
-   v4 = asinh(ecl_to_double(v1x));
+   long double v4;
+   v4 = asinhl(ecl_to_long_double(v1x));
    T0 = cl_float(1, v1x);
-   value0 = cl_float(2, ecl_make_double_float(v4), T0);
+   value0 = cl_float(2, ecl_make_long_float(v4), T0);
    return value0;
   }
  }
@@ -300,10 +300,10 @@ L1:;
    v3xr = ecl_to_double(v2x);
    if (!(((float)   1.0    )<=(v3xr))) { goto L5; }
    {
-    double v4;
-    v4 = acosh(v3xr);
+    long double v4;
+    v4 = acoshl((long double)(v3xr));
     T0 = cl_float(1, v2x);
-    value0 = cl_float(2, ecl_make_double_float(v4), T0);
+    value0 = cl_float(2, ecl_make_long_float(v4), T0);
     return value0;
    }
 L5:;
@@ -364,10 +364,10 @@ L1:;
    if (!(((float)  -1.0    )<=(v3xr))) { goto L5; }
    if (!((v3xr)<=((float)   1.0    ))) { goto L5; }
    {
-    double v4;
-    v4 = atanh(v3xr);
+    long double v4;
+    v4 = atanhl((long double)(v3xr));
     T0 = cl_float(1, v2x);
-    value0 = cl_float(2, ecl_make_double_float(v4), T0);
+    value0 = cl_float(2, ecl_make_long_float(v4), T0);
     return value0;
    }
 L5:;
@@ -454,7 +454,7 @@ cl_object cl_fceiling(cl_narg narg, cl_object v1x, ...)
   {
    int i = 1;
    if (i >= narg) {
-    v2y = _ecl_static_7;
+    v2y = _ecl_static_9;
    } else {
     i++;
     v2y = va_arg(args,cl_object);
@@ -496,7 +496,7 @@ cl_object cl_ftruncate(cl_narg narg, cl_object v1x, ...)
   {
    int i = 1;
    if (i >= narg) {
-    v2y = _ecl_static_7;
+    v2y = _ecl_static_9;
    } else {
     i++;
     v2y = va_arg(args,cl_object);
@@ -538,7 +538,7 @@ cl_object cl_fround(cl_narg narg, cl_object v1x, ...)
   {
    int i = 1;
    if (i >= narg) {
-    v2y = _ecl_static_7;
+    v2y = _ecl_static_9;
    } else {
     i++;
     v2y = va_arg(args,cl_object);
@@ -726,7 +726,7 @@ TTL:
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _ecllqJxvfb7_ux5xWE21(cl_object flag)
+ECL_DLLEXPORT void _eclOnKdKvcLXteh9_uSAcYE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -747,18 +747,18 @@ ECL_DLLEXPORT void _ecllqJxvfb7_ux5xWE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_ecllqJxvfb7_ux5xWE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_eclOnKdKvcLXteh9_uSAcYE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);
  si_Xmake_constant(ECL_SYM("SHORT-FLOAT-EPSILON",757), _ecl_static_1);
  si_Xmake_constant(ECL_SYM("SINGLE-FLOAT-EPSILON",779), _ecl_static_1);
  si_Xmake_constant(ECL_SYM("DOUBLE-FLOAT-EPSILON",316), _ecl_static_2);
- si_Xmake_constant(ECL_SYM("LONG-FLOAT-EPSILON",509), _ecl_static_2);
- si_Xmake_constant(ECL_SYM("SHORT-FLOAT-NEGATIVE-EPSILON",758), _ecl_static_3);
- si_Xmake_constant(ECL_SYM("SINGLE-FLOAT-NEGATIVE-EPSILON",780), _ecl_static_3);
- si_Xmake_constant(ECL_SYM("DOUBLE-FLOAT-NEGATIVE-EPSILON",317), _ecl_static_4);
- si_Xmake_constant(ECL_SYM("LONG-FLOAT-NEGATIVE-EPSILON",510), _ecl_static_4);
+ si_Xmake_constant(ECL_SYM("LONG-FLOAT-EPSILON",509), _ecl_static_3);
+ si_Xmake_constant(ECL_SYM("SHORT-FLOAT-NEGATIVE-EPSILON",758), _ecl_static_4);
+ si_Xmake_constant(ECL_SYM("SINGLE-FLOAT-NEGATIVE-EPSILON",780), _ecl_static_4);
+ si_Xmake_constant(ECL_SYM("DOUBLE-FLOAT-NEGATIVE-EPSILON",317), _ecl_static_5);
+ si_Xmake_constant(ECL_SYM("LONG-FLOAT-NEGATIVE-EPSILON",510), _ecl_static_6);
  {
   cl_object T0;
  {
@@ -812,12 +812,12 @@ ECL_DLLEXPORT void _ecllqJxvfb7_ux5xWE21(cl_object flag)
   {
    cl_object v2a;
    {
-    double v3;
-    v3 = ecl_to_double(ecl_make_fixnum(1));
+    long double v3;
+    v3 = ecl_to_long_double(ecl_make_fixnum(1));
     {
-     double v4;
-     v4 = ecl_to_double(cl_core.singlefloat_zero);
-     v2a = ecl_divide(ecl_make_double_float(v3),ecl_make_double_float(v4));
+     long double v4;
+     v4 = ecl_to_long_double(cl_core.singlefloat_zero);
+     v2a = ecl_divide(ecl_make_long_float(v3),ecl_make_long_float(v4));
     }
    }
    si_Xmake_constant(ECL_SYM("LONG-FLOAT-POSITIVE-INFINITY",1709), v2a);
@@ -827,7 +827,7 @@ ECL_DLLEXPORT void _ecllqJxvfb7_ux5xWE21(cl_object flag)
   si_trap_fpe(v1bits, ECL_T);
  }
  }
- si_Xmake_constant(VV[0], _ecl_static_5);
+ si_Xmake_constant(VV[0], _ecl_static_7);
  (void)0; /* No entry created for ISQRT */
  (void)0; /* No entry created for PHASE */
  (void)0; /* No entry created for SIGNUM */

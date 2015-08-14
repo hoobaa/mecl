@@ -293,7 +293,7 @@ L3:;
     cl_object v8sv;
     value0 = ecl_symbol_value(ECL_SYM("*PRINT-LENGTH*",50));
     if ((value0)!=ECL_NIL) { goto L14; }
-    v5 = ecl_make_fixnum(536870911);
+    v5 = ecl_make_fixnum(2305843009213693951);
     goto L12;
 L14:;
     v5 = value0;
@@ -345,7 +345,7 @@ L11:;
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _ecldElwZMb7_xV9xWE21(cl_object flag)
+ECL_DLLEXPORT void _eclENZkQW83YBXs9_qoDcYE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -366,7 +366,7 @@ ECL_DLLEXPORT void _ecldElwZMb7_xV9xWE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_ecldElwZMb7_xV9xWE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_eclENZkQW83YBXs9_qoDcYE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);

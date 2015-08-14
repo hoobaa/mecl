@@ -58,18 +58,21 @@ static cl_object L3write_word(cl_object v1byte, cl_object v2stream)
  cl_object T0, T1;
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
- unsigned int v3byte;
- v3byte = ecl_to_uint(v1byte);
+ cl_fixnum v3byte;
+ v3byte = ecl_fixnum(v1byte);
 TTL:
- T0 = ecl_boole(ECL_BOOLAND,(ecl_make_fixnum(255)),(ecl_make_uint(v3byte)));
- cl_write_byte(T0, v2stream);
- T0 = ecl_ash(ecl_make_uint(v3byte),-8);
+ {
+  cl_fixnum v4;
+  v4 = ((255) & (v3byte));
+  cl_write_byte(ecl_make_fixnum(v4), v2stream);
+ }
+ T0 = ecl_ash(ecl_make_fixnum(v3byte),-8);
  T1 = ecl_boole(ECL_BOOLAND,(ecl_make_fixnum(255)),(T0));
  cl_write_byte(T1, v2stream);
- T0 = ecl_ash(ecl_make_uint(v3byte),-16);
+ T0 = ecl_ash(ecl_make_fixnum(v3byte),-16);
  T1 = ecl_boole(ECL_BOOLAND,(ecl_make_fixnum(255)),(T0));
  cl_write_byte(T1, v2stream);
- T0 = ecl_ash(ecl_make_uint(v3byte),-24);
+ T0 = ecl_ash(ecl_make_fixnum(v3byte),-24);
  T1 = ecl_boole(ECL_BOOLAND,(ecl_make_fixnum(255)),(T0));
  value0 = cl_write_byte(T1, v2stream);
  return value0;
@@ -211,7 +214,7 @@ L31:;
     T0 = cl_logand(2, ecl_make_fixnum(134217727), v2h);
     T1 = cl_ash(T0, ecl_make_fixnum(5));
     T2 = ecl_plus(T1,v2h);
-    T3 = ecl_boole(ECL_BOOLAND,(VV[9]),(T2));
+    T3 = ecl_boole(ECL_BOOLAND,(ecl_make_fixnum(4294967295)),(T2));
     v2h = ecl_boole(ECL_BOOLXOR,(T3),(ecl_make_uint8_t(v3byte)));
     goto L18;
 L19:;
@@ -251,7 +254,7 @@ L13:;
    }
    T0 = si_make_vector(ECL_T, ecl_make_fixnum(256), ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
    T1 = si_fill_array_with_elt(T0, ECL_NIL, ecl_make_fixnum(0), ECL_NIL);
-   value0 = L1make_cdb(8, ECL_SYM("STREAM",1313), v3stream, ECL_SYM("PATHNAME",1285), v1cdb_pathname, VV[11], T1, VV[12], v2temporary_pathname);
+   value0 = L1make_cdb(8, ECL_SYM("STREAM",1313), v3stream, ECL_SYM("PATHNAME",1285), v1cdb_pathname, VV[10], T1, VV[11], v2temporary_pathname);
    return value0;
 L2:;
    value0 = cl_error(2, _ecl_static_2, v2temporary_pathname);
@@ -318,10 +321,10 @@ L22:;
    si_dm_too_many_arguments(v1);
 L27:;
    T0 = ecl_list1(v6cdb);
-   T1 = cl_list(3, VV[13], v7cdb_pathname, v8temporary_pathname);
+   T1 = cl_list(3, VV[12], v7cdb_pathname, v8temporary_pathname);
    T2 = cl_list(3, ECL_SYM("SETF",750), v6cdb, T1);
    T3 = cl_listX(3, ECL_SYM("PROGN",671), T2, v3);
-   T4 = cl_list(2, VV[14], v6cdb);
+   T4 = cl_list(2, VV[13], v6cdb);
    T5 = cl_list(3, ECL_SYM("UNWIND-PROTECT",888), T3, T4);
    value0 = cl_list(3, ECL_SYM("LET",477), T0, T5);
    return value0;
@@ -344,14 +347,14 @@ TTL:
    cl_object v6stream;
    v4hash_key = L5to_cdb_hash(v1key);
    v5table_index = ecl_boole(ECL_BOOLAND,(ecl_make_fixnum(255)),(v4hash_key));
-   v6stream = ecl_function_dispatch(cl_env_copy,VV[39])(1, v3cdb) /*  CDB-STREAM */;
+   v6stream = ecl_function_dispatch(cl_env_copy,VV[38])(1, v3cdb) /*  CDB-STREAM */;
    {
     cl_object v7;
     cl_object v8;
     cl_object v9;
     T0 = cl_file_position(1, v6stream);
     v7 = CONS(v4hash_key,T0);
-    v8 = ecl_function_dispatch(cl_env_copy,VV[40])(1, v3cdb) /*  CDB-TABLES */;
+    v8 = ecl_function_dispatch(cl_env_copy,VV[39])(1, v3cdb) /*  CDB-TABLES */;
     {
      cl_fixnum v10;
      if (ecl_unlikely((ecl_fixnum(v5table_index))>=(v8)->vector.dim))
@@ -452,9 +455,9 @@ L34:;
         v9disp = ecl_one_plus(v9disp);
         goto L26;
 L27:;
-        (v4vector)->vector.self.b32[ecl_fixnum(v10i)]= ecl_to_uint(v5hash_key);
+        (v4vector)->vector.self.b32[ecl_fixnum(v10i)]= ecl_fixnum(v5hash_key);
         T0 = ecl_one_plus(v10i);
-        (v4vector)->vector.self.b32[ecl_fixnum(T0)]= ecl_to_uint(v6pos);
+        (v4vector)->vector.self.b32[ecl_fixnum(T0)]= ecl_fixnum(v6pos);
        }
       }
      }
@@ -485,7 +488,7 @@ TTL:
   {
    cl_object v2stream;
    cl_object v3index;
-   v2stream = ecl_function_dispatch(cl_env_copy,VV[39])(1, v1cdb) /*  CDB-STREAM */;
+   v2stream = ecl_function_dispatch(cl_env_copy,VV[38])(1, v1cdb) /*  CDB-STREAM */;
    v3index = si_make_vector(ECL_SYM("BYTE32",1332), ecl_make_fixnum(512), ECL_NIL, ECL_NIL, ECL_NIL, ecl_make_fixnum(0));
    {
     cl_object v4;
@@ -493,7 +496,7 @@ TTL:
     cl_object v6;
     cl_fixnum v7;
     cl_fixnum v8;
-    v4 = ecl_function_dispatch(cl_env_copy,VV[40])(1, v1cdb) /*  CDB-TABLES */;
+    v4 = ecl_function_dispatch(cl_env_copy,VV[39])(1, v1cdb) /*  CDB-TABLES */;
     v5table = ECL_NIL;
     if (ecl_unlikely(!ECL_VECTORP(v4))) FEtype_error_vector(v4);
     v6 = v4;
@@ -531,7 +534,7 @@ L11:;
            FEwrong_index(ECL_NIL,v3index,-1,ecl_make_fixnum(v9i),(v3index)->vector.dim);
       v10 = v9i;
       T0 = cl_file_position(1, v2stream);
-      (v3index)->vector.self.b32[v10]= ecl_to_uint(T0);
+      (v3index)->vector.self.b32[v10]= ecl_fixnum(T0);
      }
      {
       cl_fixnum v10;
@@ -543,7 +546,7 @@ L11:;
        v10 = ecl_fixnum(v11);
       }
       T0 = L9dump_table(v5table, v2stream);
-      (v3index)->vector.self.b32[v10]= ecl_to_uint(T0);
+      (v3index)->vector.self.b32[v10]= ecl_fixnum(T0);
      }
      if (!((v7)>=(v8))) { goto L35; }
      goto L12;
@@ -589,13 +592,13 @@ static cl_object L11close_cdb(cl_object v1cdb)
 TTL:
   {
    cl_object v2stream;
-   v2stream = ecl_function_dispatch(cl_env_copy,VV[39])(1, v1cdb) /*  CDB-STREAM */;
+   v2stream = ecl_function_dispatch(cl_env_copy,VV[38])(1, v1cdb) /*  CDB-STREAM */;
    if (Null(cl_open_stream_p(v2stream))) { goto L2; }
    L10dump_cdb(v1cdb);
    cl_close(1, v2stream);
-   if (Null(ecl_function_dispatch(cl_env_copy,VV[44])(1, v1cdb) /*  CDB-PATHNAME */)) { goto L6; }
-   T0 = ecl_function_dispatch(cl_env_copy,VV[45])(1, v1cdb) /*  CDB-TEMPORARY-PATHNAME */;
-   T1 = ecl_function_dispatch(cl_env_copy,VV[44])(1, v1cdb) /*  CDB-PATHNAME */;
+   if (Null(ecl_function_dispatch(cl_env_copy,VV[43])(1, v1cdb) /*  CDB-PATHNAME */)) { goto L6; }
+   T0 = ecl_function_dispatch(cl_env_copy,VV[44])(1, v1cdb) /*  CDB-TEMPORARY-PATHNAME */;
+   T1 = ecl_function_dispatch(cl_env_copy,VV[43])(1, v1cdb) /*  CDB-PATHNAME */;
    value0 = cl_rename_file(2, T0, T1);
    return value0;
 L6:;
@@ -999,7 +1002,7 @@ L76:;
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _ecl3UKqEgb7_QbCxWE21(cl_object flag)
+ECL_DLLEXPORT void _eclwpCfb5iQzLVh9_AX9eYE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -1020,27 +1023,27 @@ ECL_DLLEXPORT void _ecl3UKqEgb7_QbCxWE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_ecl3UKqEgb7_QbCxWE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_eclwpCfb5iQzLVh9_AX9eYE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
- ecl_function_dispatch(cl_env_copy,VV[25])(10, _ecl_static_0, ECL_NIL, ECL_NIL, VVtemp[0], ECL_NIL, ECL_NIL, VVtemp[1], ECL_NIL, ECL_NIL, ECL_NIL) /*  DODEFPACKAGE */;
+ ecl_function_dispatch(cl_env_copy,VV[24])(10, _ecl_static_0, ECL_NIL, ECL_NIL, VVtemp[0], ECL_NIL, ECL_NIL, VVtemp[1], ECL_NIL, ECL_NIL, ECL_NIL) /*  DODEFPACKAGE */;
  si_select_package(_ecl_static_0);
  si_define_structure(15, VV[0], _ecl_static_1, ECL_NIL, ECL_NIL, VVtemp[2], VVtemp[3], VV[1], ECL_NIL, ECL_NIL, ECL_NIL, VVtemp[4], ecl_make_fixnum(5), ECL_NIL, ECL_NIL, VV[2]);
  VV[3]= cl_find_class(1, VV[0]);
- ecl_cmp_defun(VV[26]);                           /*  MAKE-CDB        */
- ecl_cmp_defun(VV[32]);                           /*  READ-WORD       */
- ecl_cmp_defun(VV[33]);                           /*  WRITE-WORD      */
- ecl_cmp_defun(VV[34]);                           /*  WRITE-VECTOR    */
- ecl_cmp_defun(VV[35]);                           /*  TO-CDB-HASH     */
- ecl_cmp_defun(VV[36]);                           /*  %MAKE-CDB       */
- ecl_cmp_defmacro(VV[37]);                        /*  WITH-OUTPUT-TO-CDB */
- ecl_cmp_defun(VV[38]);                           /*  ADD-RECORD      */
- ecl_cmp_defun(VV[41]);                           /*  DUMP-TABLE      */
- ecl_cmp_defun(VV[42]);                           /*  DUMP-CDB        */
- ecl_cmp_defun(VV[43]);                           /*  CLOSE-CDB       */
- ecl_cmp_defun(VV[46]);                           /*  CDB-ERROR       */
- ecl_cmp_defun(VV[47]);                           /*  VALUES-COINCIDE */
- ecl_cmp_defun(VV[48]);                           /*  LOOKUP-CDB      */
- ecl_cmp_defun(VV[49]);                           /*  MAP-CDB         */
- cl_provide(VV[24]);
+ ecl_cmp_defun(VV[25]);                           /*  MAKE-CDB        */
+ ecl_cmp_defun(VV[31]);                           /*  READ-WORD       */
+ ecl_cmp_defun(VV[32]);                           /*  WRITE-WORD      */
+ ecl_cmp_defun(VV[33]);                           /*  WRITE-VECTOR    */
+ ecl_cmp_defun(VV[34]);                           /*  TO-CDB-HASH     */
+ ecl_cmp_defun(VV[35]);                           /*  %MAKE-CDB       */
+ ecl_cmp_defmacro(VV[36]);                        /*  WITH-OUTPUT-TO-CDB */
+ ecl_cmp_defun(VV[37]);                           /*  ADD-RECORD      */
+ ecl_cmp_defun(VV[40]);                           /*  DUMP-TABLE      */
+ ecl_cmp_defun(VV[41]);                           /*  DUMP-CDB        */
+ ecl_cmp_defun(VV[42]);                           /*  CLOSE-CDB       */
+ ecl_cmp_defun(VV[45]);                           /*  CDB-ERROR       */
+ ecl_cmp_defun(VV[46]);                           /*  VALUES-COINCIDE */
+ ecl_cmp_defun(VV[47]);                           /*  LOOKUP-CDB      */
+ ecl_cmp_defun(VV[48]);                           /*  MAP-CDB         */
+ cl_provide(VV[23]);
 }

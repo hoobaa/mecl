@@ -433,7 +433,9 @@ mp_process_preset(cl_narg narg, cl_object process, cl_object function, ...)
 	ecl_va_start(args, function, narg, 2);
 	if (narg < 2)
 		FEwrong_num_arguments(@[mp::process-preset]);
-	assert_type_process(process);
+        printf("MP_PROCESS_PRESET1\n");
+	assert_type_process(process); // type error occur
+        printf("MP_PROCESS_PRESET2\n");
 	process->process.function = function;
 	process->process.args = cl_grab_rest_args(args);
 	@(return process)

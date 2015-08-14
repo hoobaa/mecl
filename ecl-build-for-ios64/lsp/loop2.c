@@ -5687,7 +5687,7 @@ L187:;
       v29new_type = ECL_SYM("DOUBLE-FLOAT",315);
       goto L180;
 L189:;
-      if (!(ECL_DOUBLE_FLOAT_P(v30))) { goto L191; }
+      if (!(ECL_LONG_FLOAT_P(v30))) { goto L191; }
       v29new_type = ECL_SYM("LONG-FLOAT",508);
       goto L180;
 L191:;
@@ -6079,7 +6079,7 @@ TTL:
 #ifdef __cplusplus
 extern "C"
 #endif
-ECL_DLLEXPORT void _eclRuMWDWa7_Rp6xWE21(cl_object flag)
+ECL_DLLEXPORT void _ecl4Y7b9al0l0sl9_vMBcYE21(cl_object flag)
 {
  const cl_env_ptr cl_env_copy = ecl_process_env();
  cl_object value0;
@@ -6100,7 +6100,7 @@ ECL_DLLEXPORT void _eclRuMWDWa7_Rp6xWE21(cl_object flag)
  #ifdef ECL_DYNAMIC_VV
  VV = Cblock->cblock.data;
  #endif
- Cblock->cblock.data_text = "@EcLtAg:_eclRuMWDWa7_Rp6xWE21@";
+ Cblock->cblock.data_text = "@EcLtAg:_ecl4Y7b9al0l0sl9_vMBcYE21@";
  VVtemp = Cblock->cblock.temp_data;
  ECL_DEFINE_SETF_FUNCTIONS
  si_select_package(_ecl_static_0);
