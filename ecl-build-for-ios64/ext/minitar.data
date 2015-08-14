@@ -1,0 +1,9 @@
+static const char compiler_data_text[] = 
+"ql-minitar::make-block-buffer ql-minitar::skip-n-blocks ql-minitar::ascii-subseq"
+ " ql-minitar::block-asciiz-string ql-minitar::prefix ql-minitar::name ql-minitar:"
+ ":payload-size (unsigned-byte 8) ql-minitar::nth-block :symlink :long-name :globa"
+ "l-header :unsupported ql-minitar::payload-type ql-minitar::full-path ql-minitar:"
+ ":save-file 0 0 0 ql-minitar::unpack-tarball ql-minitar::contents si::dodefpackag"
+ "e 0 0 0 0 0 0 0 0 0 0 0 0 :directory 0 (\"CL\") (\"TARBALL-CONTENTS\" \"UNPACK-TARBAL"
+ "L\") ";
+#define compiler_data_text_size 484

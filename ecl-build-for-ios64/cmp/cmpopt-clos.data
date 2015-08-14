@@ -1,0 +1,6 @@
+static const char compiler_data_text[] = 
+"c::clos-compiler-macro-expand c::generic-function-macro-expand c::optional-type-"
+ "check (declare (optimize speed (safety 0))) c::optimizable-slot-reader c::optimi"
+ "zable-slot-writer c::optimizable-slot-accessor 0 0 clos::class-sealedp c::cmpnot"
+ "e 0 0 c::policy-inline-slot-access (standard-generic-function t) (c::g c::whole) ";
+#define compiler_data_text_size 321

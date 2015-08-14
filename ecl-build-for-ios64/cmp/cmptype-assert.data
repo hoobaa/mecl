@@ -1,0 +1,17 @@
+static const char compiler_data_text[] = 
+":args c::c1compiler-typecase 0 0 c::c2compiler-typecase c::+simple-type-assertio"
+ "ns+ (:object) (:one-liner nil) ((:bool :object :object) :void \"if (ecl_unlikely("
+ "!(#0)))\n         FEwrong_type_argument(#1,#2);\" :one-liner nil) c::simple-type-a"
+ "ssertion #1=#:%asserted-value (declare (:read-only #1#)) c::expand-type-assertio"
+ "n #2=#:%checked-value (declare (:read-only #2#)) c::*cmp-env* c::c1checked-value"
+ " c::c2checked-value c::optional-type-assertion c::type-assertion 0 c::c1vref c::"
+ "var-type c::c1progn c::c1form-primary-type c::type-or c::make-c1form* 0 c::c2exp"
+ "r 0 0 c::special-variable-p c::symbol-macro-p 0 c::trivial-type-p c::policy-type"
+ "-assertions c::values-type-primary-type c::policy-evaluate-forms c::cmp-eval c::"
+ "cmpwarn c::c1expr c::type-and c::cmpnote 0 0 0 ((cons . \"if (ecl_unlikely(ECL_AT"
+ "OM(#0))) FEtype_error_cons(#0);\") (array . \"if (ecl_unlikely(!ECL_ARRAYP(#0))) F"
+ "Etype_error_array(#0);\") (list . \"if (ecl_unlikely(!ECL_LISTP(#0))) FEtype_error"
+ "_list(#0);\") (sequence . \"if (ecl_unlikely(!(ECL_LISTP(#0) || ECL_VECTORP(#0))))"
+ "\n           FEtype_error_sequence(#0);\") (vector . \"if (ecl_unlikely(!ECL_VECTOR"
+ "P(#0))) FEtype_error_vector(#0);\")) ";
+#define compiler_data_text_size 1156

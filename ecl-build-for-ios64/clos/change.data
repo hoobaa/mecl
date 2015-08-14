@@ -1,0 +1,12 @@
+static const char compiler_data_text[] = 
+"clos::update-instance 0 0 :before :after clos::valid-keywords-from-methods clos:"
+ ":check-initargs clos::class-size 0 clos::forward-referenced-class-p 0 :direct-su"
+ "perclasses :direct-slots clos::canonical-slot-to-direct-slot 0 clos::check-direc"
+ "t-superclasses 0 0 clos::finalize-unless-forward 0 (standard-object standard-obj"
+ "ect) (clos::old-data clos::new-data &rest clos::initargs) (standard-object clos:"
+ ":std-class) (ext::instance clos::new-class &rest clos::initargs) (class t) (stan"
+ "dard-object t t t) (ext::instance clos::added-slots clos::discarded-slots clos::"
+ "property-list &rest clos::initargs) (class &rest clos::initargs) (class) (class "
+ "&rest clos::initargs &key (clos::direct-superclasses nil clos::direct-superclass"
+ "es-p) (clos::direct-slots nil clos::direct-slots-p)) ";
+#define compiler_data_text_size 773

@@ -1,0 +1,12 @@
+static const char compiler_data_text[] = 
+"c::*compiler-output1* c::var c::wt1 c::*compiler-output2* c::wt-h1 c::wt c::wt-h"
+ " c::wt-nl-h c::princ-h c::wt-nl c::wt-nl1 c::+max-depth+ c::+c-newline-indent-st"
+ "rings+ c::*opened-c-braces* c::wt-nl-indent c::wt-open-brace c::wt-nl-open-brace"
+ " c::wt-nl-close-many-braces c::wt-nl-close-brace ((c::*opened-c-braces* (1+ c::*"
+ "opened-c-braces*))) c::with-indentation c::wt-go c::wt-label c::wt-filtered-comm"
+ "ent c::do-wt-comment c::wt-comment c::wt-comment-nl c::*wt-string-size* c::encod"
+ "e-string c::wt-filtered-data :one-liner c::c-filtered-string 0 c::wt-var c::wt-l"
+ "oc 0 0 0 0 0 0 0 0 0 0 0 c::baboon 0 0 0 0 0 0 0 0 0 0 :one-liner :external-form"
+ "at 0 #A(t (11) (\"\n\" \"\n \" \"\n  \" \"\n   \" \"\n    \" \"\n     \" \"\n      \" \"\n       \" \"\n  "
+ "      \" \"\n         \" \"\n          \")) ";
+#define compiler_data_text_size 757

@@ -1,0 +1,6 @@
+static const char compiler_data_text[] = 
+"si::read-evaluated-form :report-function :interactive-function si::*condition-re"
+ "starts* :read-only check-type assert si::case-failure :possibilities ecase 0 0 c"
+ "case typecase etypecase ctypecase 0 si::make-restart si::coerce-to-condition 0 0"
+ " 0 0 0 0 0 ";
+#define compiler_data_text_size 251

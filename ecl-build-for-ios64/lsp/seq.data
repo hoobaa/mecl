@@ -1,0 +1,14 @@
+static const char compiler_data_text[] = 
+"0 0 0 0 0 0 0 0 0 0 0 ((nil) (list . list) (string . character) ((vector nil)) ("
+ "(vector base-char) . base-char) ((vector character) . character) ((vector bit) ."
+ " bit) ((vector ext::byte8) . ext::byte8) ((vector ext::integer8) . ext::integer8"
+ ") ((vector ext::byte16) . ext::byte16) ((vector ext::integer16) . ext::integer16"
+ ") ((vector ext::byte32) . ext::byte32) ((vector ext::integer32) . ext::integer32"
+ ") ((vector ext::byte64) . ext::byte64) ((vector ext::integer64) . ext::integer64"
+ ") ((vector single-float) . single-float) ((vector double-float) . double-float) "
+ "((vector t) . t)) si::closest-sequence-type si::make-seq-iterator si::seq-iterat"
+ "or-ref si::seq-iterator-set si::seq-iterator-next si::seq-iterator-list-pop si::"
+ "coerce-to-list si::index `(vector ,si::elt-type (,length)) si::output si::coerce"
+ "-to-vector :initial-value si::every* 0 :initial-element 0 0 0 0 0 0 0 si::simple"
+ "-array-p 0 ";
+#define compiler_data_text_size 891

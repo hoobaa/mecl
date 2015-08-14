@@ -1,0 +1,9 @@
+static const char compiler_data_text[] = 
+"si::structure-type-error (or list vector) si::structure-access si::typed-structu"
+ "re-name si::.structure-constructor-class. (vector t) :read-only :unknown (:metac"
+ "lass structure-class) si::obj (si::obj stream 0) (si::obj stream) si::defstruct-"
+ "form si::is-a-structure si::structure-include si::structure-type si::structure-n"
+ "amed si::structure-offset si::structure-constructors si::*keep-documentation* si"
+ "::define-structure 0 0 0 0 (vector symbol) (:compile-toplevel :load-toplevel) (:"
+ "execute) defstruct 0 si::closest-sequence-type 0 0 ";
+#define compiler_data_text_size 531

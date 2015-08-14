@@ -1,0 +1,8 @@
+static const char compiler_data_text[] = 
+"c::*cmpinclude* c::*cc* c::*ld* c::*ranlib* c::*ar* c::*cc-flags* c::*cc-optimiz"
+ "e* c::*ld-format* c::*cc-format* :msvc :nacl c::*ld-flags* c::+shared-library-pr"
+ "efix+ c::+shared-library-extension+ c::+shared-library-format+ c::+static-librar"
+ "y-prefix+ c::+static-library-extension+ c::+static-library-format+ c::+object-fi"
+ "le-extension+ c::+executable-file-format+ c::*ecl-include-directory* c::*ecl-lib"
+ "rary-directory* c::*ld-rpath* ";
+#define compiler_data_text_size 430

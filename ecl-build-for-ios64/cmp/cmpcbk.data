@@ -1,0 +1,16 @@
+static const char compiler_data_text[] = 
+"c::*callbacks* (:one-liner t) c::c1-defcallback c::+foreign-elt-type-codes+ c::f"
+ "oreign-elt-type-code 0 0 0 0 c::t3-defcallback 0 c::cmperr c::add-object c::c1ex"
+ "pr 0 0 ffi::%convert-to-arg-type c::rep-type-name c::wt-nl-h c::wt-nl1 c::wt-h c"
+ "::wt c::wt-nl-open-brace c::wt-nl c::wt-nl-close-brace ((:char . \"ECL_FFI_CHAR\")"
+ " (:unsigned-char . \"ECL_FFI_UNSIGNED_CHAR\") (:byte . \"ECL_FFI_BYTE\") (:unsigned-"
+ "byte . \"ECL_FFI_UNSIGNED_BYTE\") (:short . \"ECL_FFI_SHORT\") (:unsigned-short . \"E"
+ "CL_FFI_UNSIGNED_SHORT\") (:int . \"ECL_FFI_INT\") (:unsigned-int . \"ECL_FFI_UNSIGNE"
+ "D_INT\") (:long . \"ECL_FFI_LONG\") (:unsigned-long . \"ECL_FFI_UNSIGNED_LONG\") (:in"
+ "t16-t . \"ECL_FFI_INT16_T\") (:uint16-t . \"ECL_FFI_UINT16_T\") (:int32-t . \"ECL_FFI"
+ "_INT32_T\") (:uint32-t . \"ECL_FFI_UINT32_T\") (:int64-t . \"ECL_FFI_INT64_T\") (:uin"
+ "t64-t . \"ECL_FFI_UINT64_T\") (:long-long . \"ECL_FFI_LONG_LONG\") (:unsigned-long-l"
+ "ong . \"ECL_FFI_UNSIGNED_LONG_LONG\") (:pointer-void . \"ECL_FFI_POINTER_VOID\") (:c"
+ "string . \"ECL_FFI_CSTRING\") (:object . \"ECL_FFI_OBJECT\") (:float . \"ECL_FFI_FLOA"
+ "T\") (:double . \"ECL_FFI_DOUBLE\") (:void . \"ECL_FFI_VOID\")) ";
+#define compiler_data_text_size 1099

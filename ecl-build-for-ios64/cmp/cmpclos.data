@@ -1,0 +1,7 @@
+static const char compiler_data_text[] = 
+"c::maybe-optimize-generic-function c::precompute-applicable-methods c::find-slot"
+ "-accessors c::maybe-optimize-slot-accessor c::try-optimize-slot-reader c::try-op"
+ "timize-slot-writer 0 c::policy-inline-slot-access 0 c::c1form-type 0 0 c::cmpwar"
+ "n clos::generic-function-spec-list 0 c::c1expr clos::safe-slot-definition-locati"
+ "on 0 ";
+#define compiler_data_text_size 325

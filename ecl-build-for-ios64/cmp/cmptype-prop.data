@@ -1,0 +1,6 @@
+static const char compiler_data_text[] = 
+"c::*cmp-env* c::*p0-dispatch-table* (values &rest t) c::infer-arg-and-return-typ"
+ "es 0 0 0 0 c::c1form c::enforce-types c::propagate-types c::def-type-propagator "
+ "c::copy-type-propagator 0 c::location-primary-type c::get-arg-types c::get-retur"
+ "n-type 0 c::cmpwarn c::type-and c::cmpwarn-style c::cmp-env-optimization 0 0 0 ";
+#define compiler_data_text_size 319

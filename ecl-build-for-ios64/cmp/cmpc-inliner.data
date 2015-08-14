@@ -1,0 +1,14 @@
+static const char compiler_data_text[] = 
+"c::inlined-arg-loc c::inlined-arg-type c::inlined-arg-rep-type c::*cinline-dispa"
+ "tch-table* c::define-c-inliner c::apply-inliner c::default-c-inliner c::any c::*"
+ "c2-dispatch-table* c::*destination* c::inline-function c::apply-inline-info :boo"
+ "l c::choose-inline-info :inline-unsafe :inline-safe :inline-always c::should-be-"
+ "inlined (fixnum double-float single-float long-float) c::to-fixnum-float-type c:"
+ ":maximum-float-type 0 0 c::fixnum-float c::inline-info c::inline-type-matches 0 "
+ "0 0 c::loc-representation-type 0 0 0 0 c::inline-possible 0 c::inline-info-arg-t"
+ "ypes c::inline-info-return-rep-type c::inline-info-return-type c::inline-info-na"
+ "me c::function-may-have-side-effects c::inline-info-expansion c::inline-info-one"
+ "-liner c::produce-inline-loc 0 c::type>= c::safe-compile c::cmp-env-optimization"
+ " c::cmpwarn-style 0 0 0 c::inline-info-multiple-values c::inline-info-exact-retu"
+ "rn-type c::policy-assume-right-type ";
+#define compiler_data_text_size 916

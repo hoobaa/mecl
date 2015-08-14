@@ -175,7 +175,9 @@ main(int argc, char **args)
 	cl_object top_level, features;
 
 	/* This should be always the first call */
+        printf("%s:%d\n", __FILE__, __LINE__);
 	cl_boot(argc, args);
+        printf("%s:%d\n", __FILE__, __LINE__);
 
 	/* We are computing unnormalized numbers at some point */
 	si_trap_fpe(ECL_T, ECL_NIL);

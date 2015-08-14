@@ -1,1 +1,0 @@
-/Users/strobolights/dev/mecl/ecl/src/gmp/mpn/generic/get_str.c

@@ -1,0 +1,17 @@
+static const char compiler_data_text[] = 
+"c::*permanent-objects* c::data-permanent-storage-size c::*temporary-objects* c::"
+ "data-temporary-storage-size c::data-size c::data-init c::*load-objects* c::data-"
+ "get-all-objects c::*wt-string-size* c::data-dump-array c::*compile-in-constants*"
+ " c::data-c-dump c::data-binary-dump c::wt-data-begin c::wt-data-end :duplicate :"
+ "permanent c::data-empty-loc c::*cmp-env* c::*compiler-phase* c::t1 c::*make-form"
+ "s* c::make-form :args c::init-form c::add-load-form c::*permanent-data* :used-p "
+ ":permanent-p c::add-object c::add-symbol c::add-keywords :one-liner c::static-ba"
+ "se-string-builder c::static-single-float-builder c::static-double-float-builder "
+ "c::static-long-float-builder c::static-rational-builder c::static-constant-deleg"
+ "ate c::static-complex-builder c::static-constant-builder c::static-constant-expr"
+ "ession c::*use-static-constants-p* c::*static-constants* c::add-static-constant "
+ "c::wt-vv-index c::set-vv-index c::vv c::wt-vv c::set-vv c::vv-type 0 0 0 0 0 c::"
+ "vv-used-p 0 0 c::wt-filtered-data 0 0 0 0 0 c::cmperr c::c1expr c::make-c1form* "
+ "0 c::make-vv 0 0 0 0 0 0 0 0 0 0 0 0 0 c::wt 0 c::wt-nl c::wt-coerce-loc 0 c::vv"
+ "-location c::vv-permanent-p 0 0 c::vv-value ";
+#define compiler_data_text_size 1164

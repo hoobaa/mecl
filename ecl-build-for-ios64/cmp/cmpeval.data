@@ -1,0 +1,20 @@
+static const char compiler_data_text[] = 
+":args :only-small-values c::*c1-dispatch-table* :always c::*current-form* c::c1e"
+ "xpr c::*c1nil* c::c1nil c::*c1t* c::c1t c::*inline-max-depth* c::c1call :safe c:"
+ ":call-local :sp-change :side-effects c::call-global c::c1call-global c::pure c::"
+ "c1call-constant-fold c::*compile-file-position* c::*current-toplevel-form* c::*c"
+ "mp-env* c::*c2-dispatch-table* c::c2expr c::*unwind-exit* c::*exit* c::*lcl* c::"
+ "*temp* c::c2expr* c::c1with-backend c::c1progn c::*lex* c::*destination* c::tras"
+ "h c::c2progn c::c1args* c::*compiler-temps* 0 0 0 0 c::compiler 'let si::define-"
+ "inline-function c::chk-symbol-macrolet c::object-type c::add-symbol c::make-c1fo"
+ "rm* c::c1constant-value c::c1var c::cmperr c::c1funcall 0 c::c1form-p 0 0 0 c::c"
+ "mp-macro-function c::cmp-expand-macro c::unoptimized-long-call c::local-function"
+ "-ref c::inline-possible c::cmp-expand-compiler-macro c::clos-compiler-macro-expa"
+ "nd c::declared-inline-p c::cmp-env-optimization c::cmpnote c::fun-lambda-express"
+ "ion c::get-local-return-type c::get-local-arg-types c::and-form-type 0 c::functi"
+ "on-may-change-sp c::function-may-have-side-effects c::propagate-types 0 c::polic"
+ "y-evaluate-forms c::c1form-constant-p 0 c::c1form-file c::c1form-file-position c"
+ "::c1form-toplevel-form c::c1form-form c::c1form-env c::c1form-name c::c1form-arg"
+ "s 0 c::next-label c::wt-label 0 0 c::t1/c1expr c::c1form-type 0 0 0 (c::tmp0 c::"
+ "tmp1 c::tmp2 c::tmp3 c::tmp4 c::tmp5 c::tmp6 c::tmp7 c::tmp8 c::tmp9) ";
+#define compiler_data_text_size 1430

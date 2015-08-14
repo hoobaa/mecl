@@ -76,11 +76,8 @@ bin/ecl$(EXE): ecl_min$(EXE) compile.lsp ecl/external.h build-stamp $(top_srcdir
 	fi
 
 ecl_min$(EXE): $(LIBRARIES) .gdbinit @LIBPREFIX@eclmin.@LIBEXT@
-	if [ -f CROSS-COMPILER ]; then \
-		touch $@; \
-	else \
-		$(CC) $(LDFLAGS) -o $@ cinit.o c/all_symbols.o -L./ @LIBPREFIX@eclmin.@LIBEXT@ $(CORE_LIBS) $(FASL_LIBS) $(LIBS);\
-	fi
+	$(CC) $(LDFLAGS) -o $@ cinit.o c/all_symbols.o -L./ @LIBPREFIX@eclmin.@LIBEXT@ $(CORE_LIBS) $(FASL_LIBS) $(LIBS);
+
 mini_ecl: ecl_min$(EXE) bare2.lsp
 	(echo '#!/bin/sh'; echo './ecl_min bare2.lsp') > $@
 	chmod +x $@
@@ -219,7 +216,8 @@ uninstall:
 	$(RM) -f $(DESTDIR)$(mandir)/man$(manext)/ecl-config.$(manext)
 
 clean: mostlyclean
-	$(RM) -r *
+	# $(RM) -r *
+
 mostlyclean: clean_lisp
 	(cd tests && $(MAKE) clean)
 	for i in $(SUBDIRS); do (test -d $$i && cd $$i && $(MAKE) clean); done

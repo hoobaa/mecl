@@ -1,0 +1,16 @@
+static const char compiler_data_text[] = 
+"si::arglist si::with-clean-symbols si::hash-eq (:compile-toplevel :load-toplevel"
+ " :execute) (make-array 1024 :element-type t :adjustable nil) (nil (make-array 10"
+ "24 :element-type t :adjustable nil)) c::hash (type #1=(integer 0 1023) c::hash) "
+ "(array t (*)) (pop (ext::truly-the cons elt)) (first (ext::truly-the cons elt)) "
+ "c::output (c::output) c::defun-cached c::defun-equal-cached c::*env-var-name-cac"
+ "he* c::env-var-name-empty-cache #1# c::env-var-name c::*lex-env-var-name-cache* "
+ "c::lex-env-var-name-empty-cache c::lex-env-var-name c::same-fname-p (incf c::*ne"
+ "xt-cmacro*) c::next-cmacro c::*last-label* c::next-label c::next-label* c::label"
+ "p c::*exit* c::maybe-next-label c::maybe-wt-label (c::next-label) c::*unwind-exi"
+ "t* c::wt-label c::with-exit-label (c::maybe-next-label) c::with-optional-exit-la"
+ "bel c::lcl c::*lcl* c::next-lcl c::*next-cfun* c::next-cfun c::*temp* c::*max-te"
+ "mp* c::next-temp c::*level* c::*lex* c::*max-lex* c::next-lex c::*env* c::*max-e"
+ "nv* c::next-env (declare (optimize (safety 0))) c::reckless 0 0 0 0 0 0 0 0 0 0 "
+ "0 0 0 0 0 0 c::lisp-to-c-name 0 0 0 0 0 ";
+#define compiler_data_text_size 1080

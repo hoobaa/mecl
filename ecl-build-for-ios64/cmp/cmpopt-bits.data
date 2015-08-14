@@ -1,0 +1,7 @@
+static const char compiler_data_text[] = 
+"c::ldb1 c::shift c::*cinline-dispatch-table* (:object :fixnum) (:object) c::*p0-"
+ "dispatch-table* ((unsigned-byte 8) fixnum) c::result-type c::policy-assume-right"
+ "-type c::inlined-arg-type c::lisp-type->rep-type c::inlined-arg-loc c::loc-immed"
+ "iate-value c::c-integer-rep-type-p c::produce-inline-loc c::c-integer-rep-type-b"
+ "its ";
+#define compiler_data_text_size 324

@@ -1,0 +1,3 @@
+static const char compiler_data_text[] = 
+"si::imag-one ";
+#define compiler_data_text_size 13

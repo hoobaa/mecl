@@ -522,7 +522,9 @@ cl_boot(int argc, char **argv)
 	GC_disable();
 	env = _ecl_alloc_env(0);
 #ifdef ECL_THREADS
+        printf("1:%s:%d\n", __FILE__, __LINE__);
         init_threads(env);
+        printf("2:%s:%d\n", __FILE__, __LINE__);
 #else
 	cl_env_p = env;
 #endif

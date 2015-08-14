@@ -1,0 +1,16 @@
+static const char compiler_data_text[] = 
+":args c::c1if c::fmla-not (member t nil) c::c1not c::fmla-and c::c1and c::fmla-o"
+ "r :initial-value c::c1or c::*destination* c::trash c::*unwind-exit* c::jump-fals"
+ "e c::jump-true c::c2if :bool ((:bool) (:bool) \"(#0)==ECL_NIL\" nil t) ((:object) "
+ "(:bool) \"(#0)!=ECL_NIL\" nil t) ((:bool) (:object) \"(#0)?ECL_NIL:ECL_T\" nil t) (("
+ ":object) (:object) \"Null(#0)?ECL_T:ECL_NIL\" nil t) c::negate-argument c::*temp* "
+ "c::*inline-blocks* c::c2fmla-not c::jump-true-destination-p c::jump-false-destin"
+ "ation-p c::c2fmla-and c::value0 c::c2fmla-or c::*opened-c-braces* c::set-jump-tr"
+ "ue c::set-jump-false 0 c::check-args-number c::c1expr c::c1form-constant-p c::c1"
+ "form-type c::values-type-or c::make-c1form* 0 0 c::c1t c::c1args* c::c1form-prim"
+ "ary-type c::type-or 0 c::c1nil 0 c::c1form-name c::maybe-next-label c::c2expr* c"
+ "::c2expr c::maybe-wt-label c::next-label c::wt-label 0 c::loc-representation-typ"
+ "e c::produce-inline-loc 0 c::emit-inline-form c::unwind-exit c::close-inline-blo"
+ "cks 0 0 0 0 0 c::loc-immediate-value-p c::wt-nl c::wt-coerce-loc c::wt c::unwind"
+ "-no-exit c::wt-go c::wt-nl-close-brace 0 ";
+#define compiler_data_text_size 1081

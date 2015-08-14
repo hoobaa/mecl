@@ -1,0 +1,14 @@
+static const char compiler_data_text[] = 
+"c::any c::member-type (fixnum short-float single-float double-float long-float s"
+ "ymbol null) 0 0 0 0 0 0 0 c::object-type c::valid-type-specifier c::known-type-p"
+ " c::trivial-type-p c::*type-and-cache* c::type-and-empty-cache si::*highest-type"
+ "-tag* si::*save-types-database* si::*member-types* si::*elementary-types* (integ"
+ "er 0 1023) c::type-and c::values-number-from-type c::*values-type-primary-type-c"
+ "ache* c::values-type-primary-type-empty-cache c::values-type-primary-type c::*va"
+ "lues-type-to-n-types-cache* c::values-type-to-n-types-empty-cache c::values-type"
+ "-to-n-types c::split-values-type c::*values-type-or-cache* c::values-type-or-emp"
+ "ty-cache (values &rest t) c::values-type-or c::*values-type-and-cache* c::values"
+ "-type-and-empty-cache c::values-type-and c::*type-or-cache* c::type-or-empty-cac"
+ "he c::type-or c::type>= 0 0 0 0 0 0 0 si::safe-canonical-type c::cmpwarn c::cmpn"
+ "ote 0 0 0 c::cmperr 0 0 0 0 0 0 0 0 0 0 (deftype c::any nil 't) ";
+#define compiler_data_text_size 944

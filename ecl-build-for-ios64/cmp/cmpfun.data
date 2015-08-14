@@ -1,0 +1,5 @@
+static const char compiler_data_text[] = 
+"0 0 #'apply c::c1form c::c1apply c::result-type 0 c::check-args-number c::optimi"
+ "ze-funcall/apply-lambda c::c1funcall c::get-return-type 0 c::c1expr c::c1form-pr"
+ "imary-type ";
+#define compiler_data_text_size 171

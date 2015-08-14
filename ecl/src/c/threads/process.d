@@ -737,10 +737,13 @@ mp_restore_signals(cl_object sigmask)
 void
 init_threads(cl_env_ptr env)
 {
+        printf("%s:%d\n", __FILE__, __LINE__);
 	cl_object process;
 	pthread_t main_thread;
 
 	cl_core.processes = OBJNULL;
+
+        printf("%s:%d\n", __FILE__, __LINE__);
 
 	/* We have to set the environment before any allocation takes place,
 	 * so that the interrupt handling code works. */
@@ -752,6 +755,8 @@ init_threads(cl_env_ptr env)
 # endif
 #endif
 	ecl_set_process_env(env);
+
+        printf("%s:%d\n", __FILE__, __LINE__);
 
 #ifdef ECL_WINDOWS_THREADS
 	{
@@ -765,8 +770,13 @@ init_threads(cl_env_ptr env)
 			DUPLICATE_SAME_ACCESS);
 	}
 #else
+        printf("main1>>>>%d\n", __LINE__);
 	main_thread = pthread_self();
+        printf("main2>>>>%d\n", __LINE__);
 #endif
+
+        printf("%s:%d\n", __FILE__, __LINE__);
+
 	process = ecl_alloc_object(t_process);
 	process->process.phase = ECL_PROCESS_ACTIVE;
 	process->process.name = @'si::top-level';
@@ -781,6 +791,8 @@ init_threads(cl_env_ptr env)
 
 	env->own_process = process;
 
+        printf("%s:%d\n", __FILE__, __LINE__);
+
 	{
 		cl_object v = si_make_vector(ECL_T, /* Element type */
 					   ecl_make_fixnum(256), /* Size */
@@ -793,4 +805,6 @@ init_threads(cl_env_ptr env)
 		cl_core.error_lock = ecl_make_lock(@'mp::error-lock', 1);
 		cl_core.global_env_lock = ecl_make_rwlock(@'ext::package-lock');
 	}
+        
+        printf(">>>>%d\n", __LINE__);
 }

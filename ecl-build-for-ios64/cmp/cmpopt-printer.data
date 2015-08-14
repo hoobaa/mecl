@@ -1,0 +1,8 @@
+static const char compiler_data_text[] = 
+"0 0 ((:object) :object \"_ecl_stream_or_default_output(#0)\" :one-liner t) c::prin"
+ "ter-default-stream ((:wchar :object) :wchar \"ecl_princ_char(#0,#1)\" :one-liner t"
+ ") (:object) (:one-liner t) ((:object :object) :object \"ecl_princ(#0,#1)\" :one-li"
+ "ner t) ((:object) :object \"ecl_terpri(#0)\" :one-liner t) ((:object :object) :obj"
+ "ect \"ecl_print(#0,#1)\" :one-liner t) ((:object :object) :object \"ecl_prin1(#0,#1"
+ ")\" :one-liner t) 0 c::cmp-eval c::cmpwarn c::c-inline-safe-string ";
+#define compiler_data_text_size 466

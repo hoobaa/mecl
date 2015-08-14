@@ -1,0 +1,19 @@
+static const char compiler_data_text[] = 
+"clos::*method-size* clos::*early-methods* clos::*add-method-argument-declaration"
+ "s* clos::*clos-booted* clos::method-class clos::generic-function-method-class cl"
+ "os::install-method defmethod clos::maybe-remove-block (clos::.combined-method-ar"
+ "gs. clos::*next-methods*) (declare (special clos::.combined-method-args. clos::*"
+ "next-methods*)) clos::simplify-lambda (&allow-other-keys) si::no-check-type clos"
+ "::make-method-lambda ((clos::.closed-combined-method-args. (if (listp clos::.com"
+ "bined-method-args.) clos::.combined-method-args. (apply #'list clos::.combined-m"
+ "ethod-args.))) (clos::.next-methods. clos::*next-methods*)) ((call-next-method ("
+ "&rest clos::args) (unless clos::.next-methods. (error \"No next method\")) (funcal"
+ "l (car clos::.next-methods.) (or clos::args clos::.closed-combined-method-args.)"
+ " (rest clos::.next-methods.))) (next-method-p nil clos::.next-methods.)) clos::a"
+ "dd-call-next-method-closure clos::environment-contains-closure clos::legal-gener"
+ "ic-function-name-p clos::extract-lambda-list clos::extract-specializer-names (&o"
+ "ptional &rest &key &allow-other-keys &aux) clos::compute-method-keywords make-me"
+ "thod clos::method-p add-method find-method with-accessors clos::slot-index 0 0 0"
+ " 0 0 0 0 0 0 0 0 0 0 0 clos::compute-g-f-spec-list clos::set-generic-function-di"
+ "spatch 0 clos::eql-specializer-flag 0 ";
+#define compiler_data_text_size 1318

@@ -1,0 +1,15 @@
+static const char compiler_data_text[] = 
+"c::*cmp-env-root* c::cmp-env-root c::*cmp-env* c::cmp-env-copy c::cmp-env-variab"
+ "les c::cmp-env-functions :cleanup c::cmp-env-cleanups 0 c::global 0 c::cmp-env-r"
+ "egister-var :warn :kind c::cmp-env-declare-special c::cmp-env-add-declaration c:"
+ ":cmp-env-extend-declaration c::cmp-env-register-function c::cmp-env-register-glo"
+ "bal-macro c::cmp-env-register-macro c::cmp-env-register-ftype c::cmp-env-registe"
+ "r-symbol-macro c::cmp-env-register-block c::cmp-env-register-tag c::cmp-env-regi"
+ "ster-cleanup c::cb c::lb c::cmp-env-search-function c::cmp-env-search-variables "
+ "c::cmp-env-search-block c::cmp-env-search-tag c::cmp-env-search-symbol-macro c::"
+ "cmp-env-search-var c::cmp-env-search-macro c::cmp-env-search-ftype c::cmp-env-ma"
+ "rk c::cmp-env-new-variables c::cmp-env-search-declaration 0 c::add-default-optim"
+ "izations 0 0 0 0 0 c::var-name c::var-kind 0 c::c1make-global-variable 0 0 0 c::"
+ "fun-name 0 0 0 0 0 c::blk-name 0 0 0 c::baboon 0 0 0 0 0 0 0 c::same-fname-p 0 0"
+ " c::var-p 0 ";
+#define compiler_data_text_size 972

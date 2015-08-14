@@ -1,0 +1,21 @@
+static const char compiler_data_text[] = 
+"c::trash c::tmp-destination c::precise-loc-type 0 0 c::value0 0 0 c::va-arg 0 c:"
+ ":cl-va-arg 0 (c::vv c::vv-temp c::fixnum-value c::character-value c::double-floa"
+ "t-value c::single-float-value c::long-float-value c::keyvars) c::loc-in-c1form-m"
+ "ovable-p c::call (c::call . #1=(c::call-normal . #2=(c::call-indirect))) c::call"
+ "-normal #1# c::call-indirect #2# c::uses-values c::fixnum-value 0 c::long-float-"
+ "value 0 c::double-float-value 0 c::single-float-value 0 c::character-value c::lo"
+ "c-immediate-value-p c::loc-immediate-value c::unknown-location c::*wt-loc-dispat"
+ "ch-table* c::wt-loc :not-found c::wt-loc c::*exit* (return c::return-fixnum c::r"
+ "eturn-character c::return-single-float c::return-double-float c::return-long-flo"
+ "at c::return-object) c::last-call-p c::wt-lcl c::wt-lcl-loc c::wt-temp c::wt-num"
+ "ber c::wt-character c::wt-value c::wt-keyvars c::wt-the (special . #3=(c::global"
+ ")) c::global #3# c::bind c::loc-refers-to-special c::value c::values-loc c::set-"
+ "loc c::*destination* c::set-unknown-loc c::*set-loc-dispatch-table* c::set-loc c"
+ "::set-the-loc c::set-values-loc c::set-value0-loc c::set-return-loc c::loc-with-"
+ "side-effects-p c::set-trash-loc 0 0 c::loc-type 0 c::vv-p c::baboon 0 0 c::vv-va"
+ "lue 0 0 0 c::wt c::var-p c::wt-var c::wt-vv 0 0 0 0 0 0 0 0 0 0 c::var-kind 0 0 "
+ "0 c::set-var c::set-vv c::wt-nl c::loc-representation-type c::wt-coerce-loc 0 0 "
+ "0 0 0 c::global-var-p c::policy-global-var-checking c::policy-global-function-ch"
+ "ecking 0 ";
+#define compiler_data_text_size 1449

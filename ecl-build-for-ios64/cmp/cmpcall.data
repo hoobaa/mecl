@@ -1,0 +1,22 @@
+static const char compiler_data_text[] = 
+"c::with-stack c::stack-push c::unoptimized-long-call :sp-change :side-effects :a"
+ "rgs c::unoptimized-funcall c::c1funcall c::*inline-blocks* c::*temp* c::c2funcal"
+ "l c::*global-funs* c::*destination* c::c2call-global c::lfun c::*in-all-symbols-"
+ "functions* c::call-global-loc c::call-normal c::call-loc c::*compiler-declared-g"
+ "lobals* :global :cfun :lambda :minarg :maxarg c::call-exported-function-loc c::c"
+ "all-indirect c::call-unknown-global-loc c::var c::maybe-save-value c::*text-for-"
+ "lexical-level* c::*text-for-closure* c::env-var-name c::wt-stack-pointer c::*aux"
+ "-closure* c::wt-call c::wt-call-indirect c::closure c::lexical c::anonymous c::w"
+ "t-call-normal 0 0 c::c1expr c::c1args* c::make-c1form* 0 c::check-args-number c:"
+ ":optimize-funcall/apply-lambda c::cmp-macro-function c::cmp-expand-macro c::c1ca"
+ "ll c::cmperr 0 c::c1form-primary-type c::policy-assume-right-type c::inline-args"
+ " c::unwind-exit c::close-inline-blocks 0 c::fun-name c::same-fname-p c::c2try-ta"
+ "il-recursive-call c::loc-type 0 c::fun-global c::inline-possible c::type-and c::"
+ "apply-inliner c::policy-use-direct-c-call c::fun-p c::get-proclaimed-narg 0 c::c"
+ "oerce-locs 0 c::wt-nl-h c::wt-h1 c::make-fun 0 c::add-symbol 0 c::c1form-name c:"
+ ":c1form-args c::var-changed-in-form-list c::make-temp-var c::c2expr* 0 0 c::wt 0"
+ " c::wt-comment 0 0 c::fun-cfun c::baboon c::fun-minarg c::fun-maxarg c::fun-clos"
+ "ure c::environment-accessor c::fun-level c::fun-needs-narg (\"lex0\" \"lex1\" \"lex2\""
+ " \"lex3\" \"lex4\" \"lex5\" \"lex6\" \"lex7\" \"lex8\" \"lex9\") (\"env0\" \"env1\" \"env2\" \"env3\" "
+ "\"env4\" \"env5\" \"env6\" \"env7\" \"env8\" \"env9\") ";
+#define compiler_data_text_size 1563

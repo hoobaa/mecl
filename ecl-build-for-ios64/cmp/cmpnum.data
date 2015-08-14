@@ -1,0 +1,17 @@
+static const char compiler_data_text[] = 
+"c::simple-program-error :format-error c::simplify-arithmetic (fixnum integer rat"
+ "ional single-float double-float long-float float real number) (fixnum integer ra"
+ "tional single-float double-float long-float float real) c::maximum-number-type c"
+ "::ensure-number-type c::ensure-nonrational-type :only-real c::ensure-real-type :"
+ "integer-result c::arithmetic-propagator c::*p0-dispatch-table* (:object :object)"
+ " (:object) c::inline-binop c::inline-arith-unop c::*cinline-dispatch-table* (c::"
+ "fixnum-value 0) (c::fixnum-value 1) (real 0 *) ((fixnum integer 0 23058430092136"
+ "93951) (integer integer 0 *) (rational rational 0 *) (short-float short-float 0 "
+ "*) (single-float single-float 0 *) (double-float double-float 0 *) (long-float l"
+ "ong-float 0 *) (real real 0 *) (number real 0 *)) (integer 0 2305843009213693951"
+ ") ((integer 0 2305843009213693951)) ((integer 0 *)) (integer 0 *) 0 0 :only-real"
+ " :integer-result c::type>= 0 0 0 0 c::copy-type-propagator 0 c::policy-assume-ri"
+ "ght-type c::c-number-type-p c::inlined-arg-type c::lisp-type->rep-type c::produc"
+ "e-inline-loc 0 c::inlined-arg-loc c::save-inline-loc (+ -) (sin tan cosh sinh ta"
+ "nh exp) ";
+#define compiler_data_text_size 1128

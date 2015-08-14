@@ -1,0 +1,23 @@
+static const char compiler_data_text[] = 
+":delete-methods clos::associate-methods-to-gfun defgeneric 0 0 0 :declarations ("
+ "&optional &rest &key &allow-other-keys &aux &whole &environment &body) (speed sp"
+ "ace compilation-speed debug safety) clos::valid-declaration-p clos::lambda-list-"
+ "required-arguments :anonymous (or null string) clos::methods :method-from-defgen"
+ "eric-p clos::associate-methods-to-gfun :environment clos::*clos-booted* ensure-g"
+ "eneric-function 0 0 0 :name :lambda-list :argument-precedence-order :documentati"
+ "on :declarations :method-class 0 0 clos::set-generic-function-dispatch clos::con"
+ "gruent-lambda-p clos::compute-g-f-spec-list clos::update-dependents 0 clos::meth"
+ "od-plist 0 :method-class :generic-function-class :delete-methods 0 clos::legal-g"
+ "eneric-function-name-p (generic-function t) (clos::gfun clos::slot-names &rest c"
+ "los::initargs &key (clos::name nil) (clos::lambda-list nil clos::l-l-p) (clos::a"
+ "rgument-precedence-order nil clos::a-o-p) (documentation nil) (clos::declaration"
+ "s nil) (clos::method-class (find-class 'method)) &aux (clos::gfun-name (if (slot"
+ "-boundp clos::gfun 'clos::name) (slot-value clos::gfun 'clos::name) (or clos::na"
+ "me :anonymous)))) (standard-generic-function t) (clos::gfun clos::slot-names &re"
+ "st clos::initargs) (clos::gfun clos::name &rest clos::args &key (clos::method-cl"
+ "ass 'standard-method clos::method-class-p) (clos::generic-function-class (class-"
+ "of clos::gfun)) (clos::delete-methods nil)) (null t) (clos::gfun clos::name &res"
+ "t clos::args &key (clos::method-class 'standard-method clos::method-class-p) (cl"
+ "os::generic-function-class 'standard-generic-function) (clos::delete-methods nil"
+ ")) ";
+#define compiler_data_text_size 1603
