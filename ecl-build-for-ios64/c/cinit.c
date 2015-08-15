@@ -29,6 +29,13 @@
  * called instead.
  */
 
+void objdump(cl_object obj){
+        nlogd("------------------------------");
+        int t = ecl_t_of(obj);
+        nlogd("objt(%d)", t);
+        nlogd("------------------------------");
+}
+
 extern cl_object
 cl_upgraded_array_element_type(cl_narg narg, cl_object type, ...)
 {
@@ -122,16 +129,16 @@ extern cl_object
 cl_set_difference(cl_narg narg, cl_object l1, cl_object l2, ...)
 {
         {
-#line 123
+#line 130
 	const cl_env_ptr the_env = ecl_process_env();
-#line 123
-	#line 123
+#line 130
+	#line 130
 	cl_object __value0 = l1;
-#line 123
+#line 130
 	the_env->nvalues = 1;
-#line 123
+#line 130
 	return __value0;
-#line 123
+#line 130
 }
 
 }
@@ -146,16 +153,16 @@ extern cl_object
 si_find_relative_package(cl_narg narg, cl_object package, ...)
 {
 	{
-#line 135
+#line 142
 		const cl_env_ptr the_env = ecl_process_env();
-#line 135
-		#line 135
+#line 142
+		#line 142
 		cl_object __value0 = ECL_NIL;
-#line 135
+#line 142
 		the_env->nvalues = 1;
-#line 135
+#line 142
 		return __value0;
-#line 135
+#line 142
 	}
 ;
 }
@@ -175,8 +182,8 @@ static cl_object si_simple_toplevel ()
 
 	/* Simple minded top level loop */
         ECL_CATCH_ALL_BEGIN(env) {
-                writestr_stream(";*** Lisp core booted ****\n"
-                                "ECL (Embeddable Common Lisp)\n",
+                writestr_stream(";*** Lisp core booted !! ****\n"
+                                "ECL (Embeddable Common Lisp aaaa )\n",
                                 output);
                 ecl_force_output(output);
                 for (i = 1; i<ecl_fixnum(si_argc()); i++) {
@@ -184,14 +191,18 @@ static cl_object si_simple_toplevel ()
                         cl_load(1, arg);
                 }
                 while (1) {
-                        writestr_stream("\n> ", output);
+                        writestr_stream("\n>> ", output);
+                        nlogd("---- read befor");
                         sentence = cl_read(3, ECL_NIL, ECL_NIL, OBJNULL);
+                        nlogd("---- sentence");
+                        objdump(sentence);
+
                         if (sentence == OBJNULL)
                                 {
-#line 165
+#line 176
 	const cl_env_ptr the_env = ecl_process_env();
 the_env->nvalues = 0; return ECL_NIL;
-#line 165
+#line 176
 }
 ;
 			sentence = si_eval_with_env(1, sentence);

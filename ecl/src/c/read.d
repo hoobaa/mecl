@@ -116,6 +116,9 @@ ecl_read_object_non_recursive(cl_object in)
 
 	ecl_bds_bind(env, @'si::*sharp-eq-context*', ECL_NIL);
 	ecl_bds_bind(env, @'si::*backq-level*', ecl_make_fixnum(0));
+
+        nlogd(">>@ecl_read_object_non_recursive");
+
 	x = ecl_read_object(in);
 	if (!Null(ECL_SYM_VAL(env, @'si::*sharp-eq-context*')))
 		x = patch_sharp(x);
@@ -165,6 +168,8 @@ static cl_object
 ecl_read_object_with_delimiter(cl_object in, int delimiter, int flags,
                                enum ecl_chattrib a)
 {
+        nlogd(">>@ecl_read_object_with_delimiter");
+
 	cl_object x, token;
 	int c, base;
 	cl_object p;
@@ -180,19 +185,32 @@ ecl_read_object_with_delimiter(cl_object in, int delimiter, int flags,
 	bool suppress = read_suppress;
 	if (a != cat_constituent) {
 		c = 0;
+                nlogd(">>");
 		goto LOOP;
 	}
 BEGIN:
 	do {
+                nlogd(">>1--");
+                int cancer = ECL_ANSI_STREAM_P(in);
+                // (ECL_IMMEDIATE(o) == 0 && ((o)->d.t == t_stream))
+                nlogd(">>new cacnce 0");
+                nlogd(">>new cacnce (%d)", cancer);
+                //nlogd(">>1 ANSI_STREAM_P(%d) ECL_IMMEDIATE(%d) t(%d)", cancer, ECL_IMMEDIATE(in), ((in)->d.t));
+                nlogd(">>new cacnce 1");
 		c = ecl_read_char(in);
+                nlogd(">>1.1");
 		if (c == delimiter) {
+                        nlogd(">>2");
                         the_env->nvalues = 0;
 			return OBJNULL;
                 }
-		if (c == EOF)
+		if (c == EOF) {
+                        nlogd(">>3");
 			FEend_of_file(in);
+                }
 		a = ecl_readtable_get(rtbl, c, &x);
 	} while (a == cat_whitespace);
+        
 	if ((a == cat_terminating || a == cat_non_terminating) &&
             (flags != ECL_READ_ONLY_TOKEN)) {
 		cl_object o;
@@ -212,12 +230,14 @@ BEGIN:
                 }
 		return o;
 	}
-LOOP:
+        
+ LOOP:
 	p = escape_list = ECL_NIL;
 	upcase = count = length = 0;
 	external_symbol = colon = 0;
 	token = si_get_buffer_string();
 	for (;;) {
+                nlogd(">>");
 		if (c == ':' && (flags != ECL_READ_ONLY_TOKEN) &&
                     a == cat_constituent) {
 			colon++;
@@ -1485,6 +1505,7 @@ stream_or_default_input(cl_object stream)
 @
 	strm = stream_or_default_input(strm);
 	if (Null(recursivep)) {
+                nlogd(">>>non_recursive");
 		x = ecl_read_object_non_recursive(strm);
 	} else {
 		x = ecl_read_object(strm);

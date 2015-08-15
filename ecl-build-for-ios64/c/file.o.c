@@ -4876,16 +4876,29 @@ duplicate_dispatch_table(const struct ecl_file_ops *ops)
 	return new_ops;
 }
 
+// #define stream_dispatch_table
+
+#define _stream_dispatch_table(strm) do {               \
+                nlogd(">>stream_dispatch_table");       \
+                _stream_dispatch_table(strm);           \
+        } while (0)
+
 const struct ecl_file_ops *
 stream_dispatch_table(cl_object strm)
 {
+        nlogd(">>stream_dispatch_table 1");
 #ifdef ECL_CLOS_STREAMS
+        // nlogd(">>CLOS-STREAM :YES");
 	if (ECL_INSTANCEP(strm)) {
+                nlogd(">>stream_dispatch_table 2");
 		return &clos_stream_ops;
 	}
 #endif
-	if (!ECL_ANSI_STREAM_P(strm))
+	if (!ECL_ANSI_STREAM_P(strm)) {
+                nlogd(">>stream_dispatch_table 3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< CANCER");
 		FEwrong_type_argument(ecl_make_fixnum(/*STREAM*/799), strm);
+        }
+        nlogd(">>stream_dispatch_table 4");
 	return (const struct ecl_file_ops *)strm->stream.ops;
 }
 
@@ -4904,7 +4917,13 @@ ecl_write_byte8(cl_object strm, unsigned char *c, cl_index n)
 ecl_character
 ecl_read_char(cl_object strm)
 {
-	return stream_dispatch_table(strm)->read_char(strm);
+        nlogd(">>ecl_read_char1 ---------------------------------------- strm(%ld)", strm);
+        struct ecl_file_ops *ops = stream_dispatch_table(strm);
+        nlogd(">>ops(%ld)", ops);
+        //ecl_character a = ((ecl_character(*)(cl_object strm))((ops)->read_char))(strm);
+        ecl_character a = ((ops)->read_char)(strm);
+        nlogd(">>ecl_read_char2 ----------------------------------------");
+	return a;
 }
 
 ecl_character
@@ -5077,16 +5096,16 @@ cl_file_string_length(cl_object stream, cl_object string)
 #ifdef ECL_CLOS_STREAMS
 	if (ECL_INSTANCEP(stream)) {
 		{
-#line 4718
+#line 4737
 			const cl_env_ptr the_env = ecl_process_env();
-#line 4718
-			#line 4718
+#line 4737
+			#line 4737
 			cl_object __value0 = ECL_NIL;
-#line 4718
+#line 4737
 			the_env->nvalues = 1;
-#line 4718
+#line 4737
 			return __value0;
-#line 4718
+#line 4737
 		}
 
 	}
@@ -5098,16 +5117,16 @@ cl_file_string_length(cl_object stream, cl_object string)
 		stream = BROADCAST_STREAM_LIST(stream);
 		if (Null(stream)) {
 			{
-#line 4727
+#line 4746
 				const cl_env_ptr the_env = ecl_process_env();
-#line 4727
-				#line 4727
+#line 4746
+				#line 4746
 				cl_object __value0 = ecl_make_fixnum(1);
-#line 4727
+#line 4746
 				the_env->nvalues = 1;
-#line 4727
+#line 4746
 				return __value0;
-#line 4727
+#line 4746
 			}
 ;
 		} else {
@@ -5135,16 +5154,16 @@ cl_file_string_length(cl_object stream, cl_object string)
                 FEwrong_type_nth_arg(ecl_make_fixnum(/*FILE-STRING-LENGTH*/359), 2, string, ecl_make_fixnum(/*STRING*/805));
 	}
 	{
-#line 4752
+#line 4771
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4752
-		#line 4752
+#line 4771
+		#line 4771
 		cl_object __value0 = ecl_make_fixnum(l);
-#line 4752
+#line 4771
 		the_env->nvalues = 1;
-#line 4752
+#line 4771
 		return __value0;
-#line 4752
+#line 4771
 	}
 
 }
@@ -5200,16 +5219,16 @@ si_do_write_sequence(cl_object seq, cl_object stream, cl_object s, cl_object e)
 	}
  OUTPUT:
 	{
-#line 4805
+#line 4824
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4805
-		#line 4805
+#line 4824
+		#line 4824
 		cl_object __value0 = seq;
-#line 4805
+#line 4824
 		the_env->nvalues = 1;
-#line 4805
+#line 4824
 		return __value0;
-#line 4805
+#line 4824
 	}
 ;
 }
@@ -5270,16 +5289,16 @@ si_do_read_sequence(cl_object seq, cl_object stream, cl_object s, cl_object e)
 	}
  OUTPUT:
 	{
-#line 4863
+#line 4882
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4863
-		#line 4863
+#line 4882
+		#line 4882
 		cl_object __value0 = ecl_make_fixnum(start);
-#line 4863
+#line 4882
 		the_env->nvalues = 1;
-#line 4863
+#line 4882
 		return __value0;
-#line 4863
+#line 4882
 	}
 
 }
@@ -5292,16 +5311,16 @@ cl_object
 si_file_column(cl_object strm)
 {
 	{
-#line 4873
+#line 4892
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4873
-		#line 4873
+#line 4892
+		#line 4892
 		cl_object __value0 = ecl_make_fixnum(ecl_file_column(strm));
-#line 4873
+#line 4892
 		the_env->nvalues = 1;
-#line 4873
+#line 4892
 		return __value0;
-#line 4873
+#line 4892
 	}
 
 }
@@ -5310,46 +5329,46 @@ cl_object
 cl_file_length(cl_object strm)
 {
 	{
-#line 4879
+#line 4898
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4879
-		#line 4879
+#line 4898
+		#line 4898
 		cl_object __value0 = ecl_file_length(strm);
-#line 4879
+#line 4898
 		the_env->nvalues = 1;
-#line 4879
+#line 4898
 		return __value0;
-#line 4879
+#line 4898
 	}
 
 }
 
-#line 4882
+#line 4901
 cl_object cl_file_position(cl_narg narg, cl_object file_stream, ...)
 {
-#line 4882
+#line 4901
 
 	cl_object output;
-#line 4885
+#line 4904
 	const cl_env_ptr the_env = ecl_process_env();
-#line 4885
+#line 4904
 	cl_object position;
-#line 4885
+#line 4904
 	va_list ARGS;
 	va_start(ARGS, file_stream);
-#line 4885
+#line 4904
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(357));
-#line 4885
+#line 4904
 	if (narg > 1) {
-#line 4885
+#line 4904
 		position = va_arg(ARGS,cl_object);
-#line 4885
+#line 4904
 	} else {
-#line 4885
+#line 4904
 		position = ECL_NIL;
-#line 4885
+#line 4904
 	}
-#line 4885
+#line 4904
 	if (Null(position)) {
 		output = ecl_file_position(file_stream);
 	} else {
@@ -5361,14 +5380,14 @@ cl_object cl_file_position(cl_narg narg, cl_object file_stream, ...)
 		output = ecl_file_position_set(file_stream, position);
 	}
 	{
-#line 4895
-		#line 4895
+#line 4914
+		#line 4914
 		cl_object __value0 = output;
-#line 4895
+#line 4914
 		the_env->nvalues = 1;
-#line 4895
+#line 4914
 		return __value0;
-#line 4895
+#line 4914
 	}
 
 }
@@ -5377,16 +5396,16 @@ cl_object
 cl_input_stream_p(cl_object strm)
 {
 	{
-#line 4901
+#line 4920
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4901
-		#line 4901
+#line 4920
+		#line 4920
 		cl_object __value0 = (ecl_input_stream_p(strm) ? ECL_T : ECL_NIL);
-#line 4901
+#line 4920
 		the_env->nvalues = 1;
-#line 4901
+#line 4920
 		return __value0;
-#line 4901
+#line 4920
 	}
 
 }
@@ -5395,16 +5414,16 @@ cl_object
 cl_output_stream_p(cl_object strm)
 {
 	{
-#line 4907
+#line 4926
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4907
-		#line 4907
+#line 4926
+		#line 4926
 		cl_object __value0 = (ecl_output_stream_p(strm) ? ECL_T : ECL_NIL);
-#line 4907
+#line 4926
 		the_env->nvalues = 1;
-#line 4907
+#line 4926
 		return __value0;
-#line 4907
+#line 4926
 	}
 
 }
@@ -5413,16 +5432,16 @@ cl_object
 cl_interactive_stream_p(cl_object strm)
 {
 	{
-#line 4913
+#line 4932
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4913
-		#line 4913
+#line 4932
+		#line 4932
 		cl_object __value0 = (stream_dispatch_table(strm)->interactive_p(strm)? ECL_T : ECL_NIL);
-#line 4913
+#line 4932
 		the_env->nvalues = 1;
-#line 4913
+#line 4932
 		return __value0;
-#line 4913
+#line 4932
 	}
 
 }
@@ -5441,16 +5460,16 @@ cl_open_stream_p(cl_object strm)
 	unlikely_if (!ECL_ANSI_STREAM_P(strm))
                 FEwrong_type_only_arg(ECL_SYM("OPEN-STREAM-P",612), strm, ECL_SYM("STREAM",799));
 	{
-#line 4929
+#line 4948
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4929
-		#line 4929
+#line 4948
+		#line 4948
 		cl_object __value0 = (strm->stream.closed ? ECL_NIL : ECL_T);
-#line 4929
+#line 4948
 		the_env->nvalues = 1;
-#line 4929
+#line 4948
 		return __value0;
-#line 4929
+#line 4948
 	}
 
 }
@@ -5459,16 +5478,16 @@ cl_object
 cl_stream_element_type(cl_object strm)
 {
 	{
-#line 4935
+#line 4954
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4935
-		#line 4935
+#line 4954
+		#line 4954
 		cl_object __value0 = ecl_stream_element_type(strm);
-#line 4935
+#line 4954
 		the_env->nvalues = 1;
-#line 4935
+#line 4954
 		return __value0;
-#line 4935
+#line 4954
 	}
 
 }
@@ -5493,16 +5512,16 @@ cl_stream_external_format(cl_object strm)
 	}
 	output = strm->stream.format;
 	{
-#line 4957
+#line 4976
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4957
-		#line 4957
+#line 4976
+		#line 4976
 		cl_object __value0 = output;
-#line 4957
+#line 4976
 		the_env->nvalues = 1;
-#line 4957
+#line 4976
 		return __value0;
-#line 4957
+#line 4976
 	}
 
 }
@@ -5516,16 +5535,16 @@ cl_streamp(cl_object strm)
 	}
 #endif
 	{
-#line 4968
+#line 4987
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4968
-		#line 4968
+#line 4987
+		#line 4987
 		cl_object __value0 = (ECL_ANSI_STREAM_P(strm) ? ECL_T : ECL_NIL);
-#line 4968
+#line 4987
 		the_env->nvalues = 1;
-#line 4968
+#line 4987
 		return __value0;
-#line 4968
+#line 4987
 	}
 
 }
@@ -5543,16 +5562,16 @@ si_copy_stream(cl_object in, cl_object out)
 	}
 	ecl_force_output(out);
 	{
-#line 4983
+#line 5002
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4983
-		#line 4983
+#line 5002
+		#line 5002
 		cl_object __value0 = ECL_T;
-#line 4983
+#line 5002
 		the_env->nvalues = 1;
-#line 4983
+#line 5002
 		return __value0;
-#line 4983
+#line 5002
 	}
 
 }
@@ -5715,17 +5734,17 @@ ecl_open_stream(cl_object fn, enum ecl_smmode smm, cl_object if_exists,
 	return output;
 }
 
-#line 5151
+#line 5170
 cl_object cl_open(cl_narg narg, cl_object filename, ...)
 {
-#line 5151
+#line 5170
 
 	enum ecl_smmode smm;
 	int flags = 0;
 	cl_fixnum byte_size;
-#line 5156
+#line 5175
 	const cl_env_ptr the_env = ecl_process_env();
-#line 5156
+#line 5175
 	static cl_object KEYS[6] = {(cl_object)(cl_symbols+1218), (cl_object)(cl_symbols+1224), (cl_object)(cl_symbols+1245), (cl_object)(cl_symbols+1244), (cl_object)(cl_symbols+1236), (cl_object)(cl_symbols+1324)};
 	cl_object direction;
 	cl_object element_type;
@@ -5735,76 +5754,76 @@ cl_object cl_open(cl_narg narg, cl_object filename, ...)
 	bool idnesp;
 	cl_object external_format;
 	cl_object cstream;
-#line 5156
+#line 5175
 	cl_object strm;
-#line 5156
+#line 5175
 	cl_object KEY_VARS[12];
-#line 5156
+#line 5175
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, filename, narg, 1);
-#line 5156
+#line 5175
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(611));
-#line 5156
+#line 5175
 	cl_parse_key(ARGS, 6, KEYS, KEY_VARS, NULL, 0);
-#line 5156
+#line 5175
 	if (KEY_VARS[6]==ECL_NIL) {
-#line 5156
+#line 5175
 	  direction = ECL_SYM(":INPUT",1254);
 	} else {
-#line 5156
+#line 5175
 	  direction = KEY_VARS[0];
 	}
-#line 5156
+#line 5175
 	if (KEY_VARS[7]==ECL_NIL) {
-#line 5156
+#line 5175
 	  element_type = ECL_SYM("CHARACTER",222);
 	} else {
-#line 5156
+#line 5175
 	  element_type = KEY_VARS[1];
 	}
-#line 5156
+#line 5175
 	if (KEY_VARS[8]==ECL_NIL) {
-#line 5156
+#line 5175
 	  if_exists = ECL_NIL;
-#line 5156
+#line 5175
 	  iesp = FALSE;
 	} else {
-#line 5156
+#line 5175
 	  iesp = TRUE;
-#line 5156
+#line 5175
 	  if_exists = KEY_VARS[2];
 	}
-#line 5156
+#line 5175
 	if (KEY_VARS[9]==ECL_NIL) {
-#line 5156
+#line 5175
 	  if_does_not_exist = ECL_NIL;
-#line 5156
+#line 5175
 	  idnesp = FALSE;
 	} else {
-#line 5156
+#line 5175
 	  idnesp = TRUE;
-#line 5156
+#line 5175
 	  if_does_not_exist = KEY_VARS[3];
 	}
-#line 5156
+#line 5175
 	if (KEY_VARS[10]==ECL_NIL) {
-#line 5156
+#line 5175
 	  external_format = ECL_SYM(":DEFAULT",1215);
 	} else {
-#line 5156
+#line 5175
 	  external_format = KEY_VARS[4];
 	}
-#line 5156
+#line 5175
 	if (KEY_VARS[11]==ECL_NIL) {
-#line 5156
+#line 5175
 	  cstream = ECL_T;
 	} else {
-#line 5156
+#line 5175
 	  cstream = KEY_VARS[5];
 	}
-#line 5156
+#line 5175
 	strm = ECL_NIL;
-#line 5156
+#line 5175
 	/* INV: ecl_open_stream() checks types */
 	if (direction == ECL_SYM(":INPUT",1254)) {
 		smm = ecl_smm_input;
@@ -5850,56 +5869,56 @@ cl_object cl_open(cl_narg narg, cl_object filename, ...)
 	strm = ecl_open_stream(filename, smm, if_exists, if_does_not_exist,
 			       byte_size, flags, external_format);
 	{
-#line 5200
-		#line 5200
+#line 5219
+		#line 5219
 		cl_object __value0 = strm;
-#line 5200
+#line 5219
 		the_env->nvalues = 1;
-#line 5200
+#line 5219
 		return __value0;
-#line 5200
+#line 5219
 	}
 
 }
 
 
-#line 5204
+#line 5223
 cl_object cl_close(cl_narg narg, cl_object strm, ...)
 {
-#line 5204
+#line 5223
 
-#line 5206
+#line 5225
 	const cl_env_ptr the_env = ecl_process_env();
-#line 5206
+#line 5225
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1195)};
 	cl_object abort;
-#line 5206
+#line 5225
 	cl_object KEY_VARS[2];
-#line 5206
+#line 5225
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, strm, narg, 1);
-#line 5206
+#line 5225
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(228));
-#line 5206
+#line 5225
 	cl_parse_key(ARGS, 1, KEYS, KEY_VARS, NULL, 0);
-#line 5206
+#line 5225
 	if (KEY_VARS[1]==ECL_NIL) {
-#line 5206
+#line 5225
 	  abort = ECL_NIL;
 	} else {
-#line 5206
+#line 5225
 	  abort = KEY_VARS[0];
 	}
-#line 5206
+#line 5225
 	{
-#line 5206
-		#line 5206
+#line 5225
+		#line 5225
 		cl_object __value0 = stream_dispatch_table(strm)->close(strm);
-#line 5206
+#line 5225
 		the_env->nvalues = 1;
-#line 5206
+#line 5225
 		return __value0;
-#line 5206
+#line 5225
 	}
 ;
 }

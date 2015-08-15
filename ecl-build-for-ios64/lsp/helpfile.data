@@ -1,8 +1,0 @@
-static const char compiler_data_text[] = 
-"si::*keep-documentation* si::new-documentation-pool si::record-cons si::record-f"
- "ield si::set-record-field si::rem-record-field ext::annotate ext::remove-annotat"
- "ion :all ext::get-annotation si::dump-documentation si::setf-documentation si::g"
- "et-documentation si::set-documentation si::expand-set-documentation si::make-dsp"
- "ec ext::optional-annotation 'ext::location 0 0 0 ext::default-annotation-logic 0"
- " 0 0 0 0 0 0 0 si::search-help-file 0 si::dump-help-file 0 0 0 0 0 0 ";
-#define compiler_data_text_size 469

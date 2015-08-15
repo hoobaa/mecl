@@ -5,7 +5,8 @@ open(STDOUT, '>', "apply.d");
 my $up = 64;
 
 print <<"END";
-  #include <ecl/ecl.h>
+/* -*- mode: c; c-basic-offset: 8 -*- */
+#include <ecl/ecl.h>
 END
 
 for (my $i=0; $i<=$up; $i++) {
@@ -17,14 +18,14 @@ for (my $i=0; $i<=$up; $i++) {
 }
 ##############################
 print <<"END";
-  #ifndef ECL_ASM_APPLY
-  cl_object
-  APPLY(cl_narg n, cl_objectfn fn, cl_object *x)
-  {
+
+#ifndef ECL_ASM_APPLY
+cl_object
+APPLY(cl_narg n, cl_objectfn fn, cl_object *x)
+{
     nlogd(">>FUCK APPLY n:%d", n);
-  
+
     switch (n) {
-   
 END
 
 for (my $i=0; $i<=63; $i++) {
@@ -36,7 +37,7 @@ for (my $i=0; $i<=63; $i++) {
 }
 
 print <<"END";
-  default: return (*fn)(n, x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
+    default: return (*fn)(n, x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
                         x[8],x[9],x[10],x[11],x[12],x[13],x[14],
                         x[15],x[16],x[17],x[18],x[19],x[20],x[21],
                         x[22],x[23],x[24],x[25],x[26],x[27],x[28],
@@ -46,7 +47,9 @@ print <<"END";
                         x[50],x[51],x[52],x[53],x[54],x[55],x[56],
                         x[57],x[58],x[59],x[60],x[61],x[62],x[63]);
     }
-  }
+}
+
+
 END
 ##############################
 printf("typedef cl_object (*t_ff0)();\n");
@@ -59,10 +62,10 @@ for (my $i=1; $i<=$up; $i++) {
 }
 ##############################
 print <<"END";
-  cl_object
-  APPLY_fixed(cl_narg n, cl_object (*fn)(), cl_object *x)
-  {
 
+cl_object
+APPLY_fixed(cl_narg n, cl_object (*fn)(), cl_object *x)
+{
     nlogd(">>FUCK APPLY-fixed n:%d", n);
     switch (n) {
 
@@ -80,7 +83,8 @@ print <<"END";
     default:
   	  FEprogram_error_noreturn("Too many arguments", 0);
     }
-  }
-  #endif
+}
+#endif
+
 END
 ##############################

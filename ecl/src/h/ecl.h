@@ -99,3 +99,5 @@ typedef void (*ecl_init_function_t)(cl_object block);
         } while (0)
 
 #endif /* ECL_H */
+
+extern void objdump(cl_object obj);

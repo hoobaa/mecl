@@ -135,6 +135,9 @@ ecl_read_object_non_recursive(cl_object in)
 
 	ecl_bds_bind(env, ECL_SYM("SI::*SHARP-EQ-CONTEXT*",1031), ECL_NIL);
 	ecl_bds_bind(env, ECL_SYM("SI::*BACKQ-LEVEL*",1012), ecl_make_fixnum(0));
+
+        nlogd(">>ecl-read-object-non-recursive");
+
 	x = ecl_read_object(in);
 	if (!Null(ECL_SYM_VAL(env, ECL_SYM("SI::*SHARP-EQ-CONTEXT*",1031))))
 		x = patch_sharp(x);
@@ -184,6 +187,8 @@ static cl_object
 ecl_read_object_with_delimiter(cl_object in, int delimiter, int flags,
                                enum ecl_chattrib a)
 {
+        nlogd(">>ecl-read-object-with-delimiter");
+
 	cl_object x, token;
 	int c, base;
 	cl_object p;
@@ -199,19 +204,32 @@ ecl_read_object_with_delimiter(cl_object in, int delimiter, int flags,
 	bool suppress = read_suppress;
 	if (a != cat_constituent) {
 		c = 0;
+                nlogd(">>");
 		goto LOOP;
 	}
 BEGIN:
 	do {
+                nlogd(">>1--");
+                int cancer = ECL_ANSI_STREAM_P(in);
+                // (ECL_IMMEDIATE(o) == 0 && ((o)->d.t == t_stream))
+                nlogd(">>new cacnce 0");
+                nlogd(">>new cacnce (%d)", cancer);
+                //nlogd(">>1 ANSI_STREAM_P(%d) ECL_IMMEDIATE(%d) t(%d)", cancer, ECL_IMMEDIATE(in), ((in)->d.t));
+                nlogd(">>new cacnce 1");
 		c = ecl_read_char(in);
+                nlogd(">>1.1");
 		if (c == delimiter) {
+                        nlogd(">>2");
                         the_env->nvalues = 0;
 			return OBJNULL;
                 }
-		if (c == EOF)
+		if (c == EOF) {
+                        nlogd(">>3");
 			FEend_of_file(in);
+                }
 		a = ecl_readtable_get(rtbl, c, &x);
 	} while (a == cat_whitespace);
+        
 	if ((a == cat_terminating || a == cat_non_terminating) &&
             (flags != ECL_READ_ONLY_TOKEN)) {
 		cl_object o;
@@ -231,12 +249,14 @@ BEGIN:
                 }
 		return o;
 	}
-LOOP:
+        
+ LOOP:
 	p = escape_list = ECL_NIL;
 	upcase = count = length = 0;
 	external_symbol = colon = 0;
 	token = si_get_buffer_string();
 	for (;;) {
+                nlogd(">>");
 		if (c == ':' && (flags != ECL_READ_ONLY_TOKEN) &&
                     a == cat_constituent) {
 			colon++;
@@ -461,16 +481,16 @@ left_parenthesis_reader(cl_object in, cl_object character)
 {
 	const char c = ')';
 	{
-#line 444
+#line 464
 		const cl_env_ptr the_env = ecl_process_env();
-#line 444
-		#line 444
+#line 464
+		#line 464
 		cl_object __value0 = do_read_delimited_list(c, in, 0);
-#line 444
+#line 464
 		the_env->nvalues = 1;
-#line 444
+#line 464
 		return __value0;
-#line 444
+#line 464
 	}
 
 }
@@ -515,30 +535,30 @@ cl_object backquote_reader(cl_object in, cl_object c)
 	ECL_SETQ(the_env, ECL_SYM("SI::*BACKQ-LEVEL*",1012), ecl_make_fixnum(backq_level));
 #if 0
 	{
-#line 486
+#line 506
 		const cl_env_ptr the_env = ecl_process_env();
-#line 486
-		#line 486
+#line 506
+		#line 506
 		cl_object __value0 = cl_macroexpand_1(2, cl_list(2, ECL_SYM("SI::QUASIQUOTE",1471), in), ECL_NIL);
-#line 486
+#line 506
 		the_env->nvalues = 1;
-#line 486
+#line 506
 		return __value0;
-#line 486
+#line 506
 	}
 ;
 #else
 	{
-#line 488
+#line 508
 		const cl_env_ptr the_env = ecl_process_env();
-#line 488
-		#line 488
+#line 508
+		#line 508
 		cl_object __value0 = cl_list(2,ECL_SYM("SI::QUASIQUOTE",1471),in);
-#line 488
+#line 508
 		the_env->nvalues = 1;
-#line 488
+#line 508
 		return __value0;
-#line 488
+#line 508
 	}
 
 #endif
@@ -601,16 +621,16 @@ double_quote_reader(cl_object in, cl_object c)
 		output = cl_copy_seq(token);
 	si_put_buffer_string(token);
 	{
-#line 548
+#line 568
 		const cl_env_ptr the_env = ecl_process_env();
-#line 548
-		#line 548
+#line 568
+		#line 568
 		cl_object __value0 = output;
-#line 548
+#line 568
 		the_env->nvalues = 1;
-#line 548
+#line 568
 		return __value0;
-#line 548
+#line 568
 	}
 
 }
@@ -665,16 +685,16 @@ single_quote_reader(cl_object in, cl_object c)
 	unlikely_if (c == OBJNULL)
 		FEend_of_file(in);
 	{
-#line 600
+#line 620
 		const cl_env_ptr the_env = ecl_process_env();
-#line 600
-		#line 600
+#line 620
+		#line 620
 		cl_object __value0 = cl_list(2, ECL_SYM("QUOTE",679), c);
-#line 600
+#line 620
 		the_env->nvalues = 1;
-#line 600
+#line 620
 		return __value0;
-#line 600
+#line 620
 	}
 
 }
@@ -684,10 +704,10 @@ void_reader(cl_object in, cl_object c)
 {
 	/*  no result  */
 	{
-#line 607
+#line 627
 		const cl_env_ptr the_env = ecl_process_env();
 the_env->nvalues = 0; return ECL_NIL;
-#line 607
+#line 627
 	}
 
 }
@@ -702,10 +722,10 @@ semicolon_reader(cl_object in, cl_object c)
 	while (auxc != '\n' && auxc != EOF);
 	/*  no result  */
 	{
-#line 619
+#line 639
 		const cl_env_ptr the_env = ecl_process_env();
 the_env->nvalues = 0; return ECL_NIL;
-#line 619
+#line 639
 	}
 
 }
@@ -727,16 +747,16 @@ sharp_C_reader(cl_object in, cl_object c, cl_object d)
 		FEend_of_file(in);
 	if (read_suppress)
 		{
-#line 638
+#line 658
 			const cl_env_ptr the_env = ecl_process_env();
-#line 638
-			#line 638
+#line 658
+			#line 658
 			cl_object __value0 = ECL_NIL;
-#line 638
+#line 658
 			the_env->nvalues = 1;
-#line 638
+#line 658
 			return __value0;
-#line 638
+#line 658
 		}
 ;
 	unlikely_if (!ECL_CONSP(x) || ecl_length(x) != 2)
@@ -757,16 +777,16 @@ sharp_C_reader(cl_object in, cl_object c, cl_object d)
 		x = ecl_make_complex(real, imag);
 	}
 	{
-#line 656
+#line 676
 		const cl_env_ptr the_env = ecl_process_env();
-#line 656
-		#line 656
+#line 676
+		#line 676
 		cl_object __value0 = x;
-#line 656
+#line 676
 		the_env->nvalues = 1;
-#line 656
+#line 676
 		return __value0;
-#line 656
+#line 676
 	}
 
 }
@@ -816,16 +836,16 @@ sharp_single_quote_reader(cl_object in, cl_object c, cl_object d)
 		c = cl_list(2, ECL_SYM("FUNCTION",396), c);
 	}
 	{
-#line 703
+#line 723
 		const cl_env_ptr the_env = ecl_process_env();
-#line 703
-		#line 703
+#line 723
+		#line 723
 		cl_object __value0 = c;
-#line 703
+#line 723
 		the_env->nvalues = 1;
-#line 703
+#line 723
 		return __value0;
-#line 703
+#line 723
 	}
 
 }
@@ -844,16 +864,16 @@ sharp_Y_reader(cl_object in, cl_object c, cl_object d)
         }
 	if (read_suppress) {
 		{
-#line 719
+#line 739
 			const cl_env_ptr the_env = ecl_process_env();
-#line 719
-			#line 719
+#line 739
+			#line 739
 			cl_object __value0 = ECL_NIL;
-#line 719
+#line 739
 			the_env->nvalues = 1;
-#line 719
+#line 739
 			return __value0;
-#line 719
+#line 739
 		}
 ;
         }
@@ -869,16 +889,16 @@ sharp_Y_reader(cl_object in, cl_object c, cl_object d)
 		rv->bclosure.lex = ECL_CONS_CAR(x);
                 rv->bclosure.entry = _ecl_bclosure_dispatch_vararg;
 		{
-#line 732
+#line 752
 			const cl_env_ptr the_env = ecl_process_env();
-#line 732
-			#line 732
+#line 752
+			#line 752
 			cl_object __value0 = rv;
-#line 732
+#line 752
 			the_env->nvalues = 1;
-#line 732
+#line 752
 			return __value0;
-#line 732
+#line 752
 		}
 ;
 	}
@@ -922,16 +942,16 @@ sharp_Y_reader(cl_object in, cl_object c, cl_object d)
 
         rv->bytecodes.entry = _ecl_bytecodes_dispatch_vararg;
         {
-#line 773
+#line 793
 	const cl_env_ptr the_env = ecl_process_env();
-#line 773
-	#line 773
+#line 793
+	#line 793
 	cl_object __value0 = rv;
-#line 773
+#line 793
 	the_env->nvalues = 1;
-#line 773
+#line 793
 	return __value0;
-#line 773
+#line 793
 }
 ;
 }
@@ -1012,16 +1032,16 @@ sharp_left_parenthesis_reader(cl_object in, cl_object c, cl_object d)
 		}
 	}
 	{
-#line 851
+#line 871
 		const cl_env_ptr the_env = ecl_process_env();
-#line 851
-		#line 851
+#line 871
+		#line 871
 		cl_object __value0 = v;
-#line 851
+#line 871
 		the_env->nvalues = 1;
-#line 851
+#line 871
 		return __value0;
-#line 851
+#line 871
 	}
 
 }
@@ -1039,16 +1059,16 @@ sharp_asterisk_reader(cl_object in, cl_object c, cl_object d)
 	if (read_suppress) {
 		read_constituent(in);
 		{
-#line 866
+#line 886
 			const cl_env_ptr the_env = ecl_process_env();
-#line 866
-			#line 866
+#line 886
+			#line 886
 			cl_object __value0 = ECL_NIL;
-#line 866
+#line 886
 			the_env->nvalues = 1;
-#line 866
+#line 886
 			return __value0;
-#line 866
+#line 886
 		}
 
 	}
@@ -1094,16 +1114,16 @@ sharp_asterisk_reader(cl_object in, cl_object c, cl_object d)
 	}
 	ECL_STACK_POP_N_UNSAFE(env, dimcount);
 	{
-#line 909
+#line 929
 		const cl_env_ptr the_env = ecl_process_env();
-#line 909
-		#line 909
+#line 929
+		#line 929
 		cl_object __value0 = x;
-#line 909
+#line 929
 		the_env->nvalues = 1;
-#line 909
+#line 929
 		return __value0;
-#line 909
+#line 929
 	}
 
 }
@@ -1164,16 +1184,16 @@ M:
 	}
 	si_put_buffer_string(token);
 	{
-#line 967
+#line 987
 		const cl_env_ptr the_env = ecl_process_env();
-#line 967
-		#line 967
+#line 987
+		#line 987
 		cl_object __value0 = output;
-#line 967
+#line 987
 		the_env->nvalues = 1;
-#line 967
+#line 987
 		return __value0;
-#line 967
+#line 987
 	}
 
 }
@@ -1188,16 +1208,16 @@ sharp_dot_reader(cl_object in, cl_object c, cl_object d)
 		FEend_of_file(in);
 	if (read_suppress)
 		{
-#line 979
+#line 999
 			const cl_env_ptr the_env = ecl_process_env();
-#line 979
-			#line 979
+#line 999
+			#line 999
 			cl_object __value0 = ECL_NIL;
-#line 979
+#line 999
 			the_env->nvalues = 1;
-#line 979
+#line 999
 			return __value0;
-#line 979
+#line 999
 		}
 ;
 	unlikely_if (ecl_symbol_value(ECL_SYM("*READ-EVAL*",63)) == ECL_NIL)
@@ -1207,16 +1227,16 @@ sharp_dot_reader(cl_object in, cl_object c, cl_object d)
         c = patch_sharp(c);
 	c = si_eval_with_env(1, c);
 	{
-#line 986
+#line 1006
 		const cl_env_ptr the_env = ecl_process_env();
-#line 986
-		#line 986
+#line 1006
+		#line 1006
 		cl_object __value0 = c;
-#line 986
+#line 1006
 		the_env->nvalues = 1;
-#line 986
+#line 1006
 		return __value0;
-#line 986
+#line 1006
 	}
 
 }
@@ -1252,16 +1272,16 @@ sharp_B_reader(cl_object in, cl_object c, cl_object d)
 	if(d != ECL_NIL && !read_suppress)
 		extra_argument('B', in, d);
 	{
-#line 1019
+#line 1039
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1019
-		#line 1019
+#line 1039
+		#line 1039
 		cl_object __value0 = (read_number(in, 2, ECL_CODE_CHAR('B')));
-#line 1019
+#line 1039
 		the_env->nvalues = 1;
-#line 1019
+#line 1039
 		return __value0;
-#line 1019
+#line 1039
 	}
 
 }
@@ -1272,16 +1292,16 @@ sharp_O_reader(cl_object in, cl_object c, cl_object d)
 	if(d != ECL_NIL && !read_suppress)
 		extra_argument('O', in, d);
 	{
-#line 1027
+#line 1047
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1027
-		#line 1027
+#line 1047
+		#line 1047
 		cl_object __value0 = (read_number(in, 8, ECL_CODE_CHAR('O')));
-#line 1027
+#line 1047
 		the_env->nvalues = 1;
-#line 1027
+#line 1047
 		return __value0;
-#line 1027
+#line 1047
 	}
 
 }
@@ -1292,16 +1312,16 @@ sharp_X_reader(cl_object in, cl_object c, cl_object d)
 	if(d != ECL_NIL && !read_suppress)
 		extra_argument('X', in, d);
 	{
-#line 1035
+#line 1055
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1035
-		#line 1035
+#line 1055
+		#line 1055
 		cl_object __value0 = (read_number(in, 16, ECL_CODE_CHAR('X')));
-#line 1035
+#line 1055
 		the_env->nvalues = 1;
-#line 1035
+#line 1055
 		return __value0;
-#line 1035
+#line 1055
 	}
 
 }
@@ -1321,16 +1341,16 @@ sharp_R_reader(cl_object in, cl_object c, cl_object d)
                 }
 	}
 	{
-#line 1052
+#line 1072
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1052
-		#line 1052
+#line 1072
+		#line 1072
 		cl_object __value0 = (read_number(in, radix, ECL_CODE_CHAR('R')));
-#line 1052
+#line 1072
 		the_env->nvalues = 1;
-#line 1052
+#line 1072
 		return __value0;
-#line 1052
+#line 1072
 	}
 
 }
@@ -1346,10 +1366,10 @@ sharp_eq_reader(cl_object in, cl_object c, cl_object d)
 	cl_object sharp_eq_context = ECL_SYM_VAL(the_env, ECL_SYM("SI::*SHARP-EQ-CONTEXT*",1031));
 
 	if (read_suppress) {
-#line 1065
+#line 1085
 		const cl_env_ptr the_env = ecl_process_env();
 the_env->nvalues = 0; return ECL_NIL;
-#line 1065
+#line 1085
 	}
 ;
 	unlikely_if (Null(d)) {
@@ -1376,16 +1396,16 @@ sharp_sharp_reader(cl_object in, cl_object c, cl_object d)
 
 	if (read_suppress)
                 {
-#line 1089
+#line 1109
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1089
-	#line 1089
+#line 1109
+	#line 1109
 	cl_object __value0 = ECL_NIL;
-#line 1089
+#line 1109
 	the_env->nvalues = 1;
-#line 1089
+#line 1109
 	return __value0;
-#line 1089
+#line 1109
 }
 ;
 	unlikely_if (Null(d)) {
@@ -1396,16 +1416,16 @@ sharp_sharp_reader(cl_object in, cl_object c, cl_object d)
                 FEreader_error("#~D# is undefined.", in, 1, d);
         }
         {
-#line 1097
+#line 1117
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1097
-	#line 1097
+#line 1117
+	#line 1117
 	cl_object __value0 = pair;
-#line 1097
+#line 1117
 	the_env->nvalues = 1;
-#line 1097
+#line 1117
 	return __value0;
-#line 1097
+#line 1117
 }
 
 }
@@ -1625,10 +1645,10 @@ sharp_vertical_bar_reader(cl_object in, cl_object ch, cl_object d)
 		}
 	}
 	{
-#line 1314
+#line 1334
 		const cl_env_ptr the_env = ecl_process_env();
 the_env->nvalues = 0; return ECL_NIL;
-#line 1314
+#line 1334
 	}
 
 	/*  no result  */
@@ -1656,16 +1676,16 @@ sharp_P_reader(cl_object in, cl_object c, cl_object d)
 		d = cl_parse_namestring(3, d, ECL_NIL, ECL_NIL);
 	}
 	{
-#line 1339
+#line 1359
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1339
-		#line 1339
+#line 1359
+		#line 1359
 		cl_object __value0 = d;
-#line 1339
+#line 1359
 		the_env->nvalues = 1;
-#line 1339
+#line 1359
 		return __value0;
-#line 1339
+#line 1359
 	}
 
 }
@@ -1684,16 +1704,16 @@ sharp_dollar_reader(cl_object in, cl_object c, cl_object d)
 	rs = ecl_alloc_object(t_random);
 	rs->random.value = c;
 	{
-#line 1355
+#line 1375
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1355
-		#line 1355
+#line 1375
+		#line 1375
 		cl_object __value0 = rs;
-#line 1355
+#line 1375
 		the_env->nvalues = 1;
-#line 1355
+#line 1375
 		return __value0;
-#line 1355
+#line 1375
 	}
 
 }
@@ -1823,70 +1843,71 @@ stream_or_default_input(cl_object stream)
 	return stream;
 }
 
-#line 1483
+#line 1503
 cl_object cl_read(cl_narg narg, ...)
 {
-#line 1483
+#line 1503
 
 	cl_object x;
-#line 1486
+#line 1506
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1486
+#line 1506
 	cl_object strm;
-#line 1486
+#line 1506
 	cl_object eof_errorp;
-#line 1486
+#line 1506
 	cl_object eof_value;
-#line 1486
+#line 1506
 	cl_object recursivep;
-#line 1486
+#line 1506
 	va_list ARGS;
 	va_start(ARGS, narg);
-#line 1486
+#line 1506
 	if (ecl_unlikely(narg < 0|| narg > 4)) FEwrong_num_arguments(ecl_make_fixnum(690));
-#line 1486
+#line 1506
 	if (narg > 0) {
-#line 1486
+#line 1506
 		strm = va_arg(ARGS,cl_object);
-#line 1486
+#line 1506
 	} else {
-#line 1486
+#line 1506
 		strm = ECL_NIL;
-#line 1486
+#line 1506
 	}
-#line 1486
+#line 1506
 	if (narg > 1) {
-#line 1486
+#line 1506
 		eof_errorp = va_arg(ARGS,cl_object);
-#line 1486
+#line 1506
 	} else {
-#line 1486
+#line 1506
 		eof_errorp = ECL_T;
-#line 1486
+#line 1506
 	}
-#line 1486
+#line 1506
 	if (narg > 2) {
-#line 1486
+#line 1506
 		eof_value = va_arg(ARGS,cl_object);
-#line 1486
+#line 1506
 	} else {
-#line 1486
+#line 1506
 		eof_value = ECL_NIL;
-#line 1486
+#line 1506
 	}
-#line 1486
+#line 1506
 	if (narg > 3) {
-#line 1486
+#line 1506
 		recursivep = va_arg(ARGS,cl_object);
-#line 1486
+#line 1506
 	} else {
-#line 1486
+#line 1506
 		recursivep = ECL_NIL;
-#line 1486
+#line 1506
 	}
-#line 1486
+#line 1506
 	strm = stream_or_default_input(strm);
 	if (Null(recursivep)) {
+                nlogd(">>>non_recursive");
 		x = ecl_read_object_non_recursive(strm);
 	} else {
 		x = ecl_read_object(strm);
@@ -1894,14 +1915,14 @@ cl_object cl_read(cl_narg narg, ...)
 	if (x == OBJNULL) {
 		if (Null(eof_errorp))
 			{
-#line 1494
-				#line 1494
+#line 1515
+				#line 1515
 				cl_object __value0 = eof_value;
-#line 1494
+#line 1515
 				the_env->nvalues = 1;
-#line 1494
+#line 1515
 				return __value0;
-#line 1494
+#line 1515
 			}
 
 		FEend_of_file(strm);
@@ -1915,80 +1936,80 @@ cl_object cl_read(cl_narg narg, ...)
 		}
 	}
 	{
-#line 1505
-		#line 1505
+#line 1526
+		#line 1526
 		cl_object __value0 = x;
-#line 1505
+#line 1526
 		the_env->nvalues = 1;
-#line 1505
+#line 1526
 		return __value0;
-#line 1505
+#line 1526
 	}
 
 }
 
-#line 1512
+#line 1533
 cl_object cl_read_preserving_whitespace(cl_narg narg, ...)
 {
-#line 1512
+#line 1533
 
 	cl_object x;
-#line 1515
+#line 1536
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1515
+#line 1536
 	cl_object strm;
-#line 1515
+#line 1536
 	cl_object eof_errorp;
-#line 1515
+#line 1536
 	cl_object eof_value;
-#line 1515
+#line 1536
 	cl_object recursivep;
-#line 1515
+#line 1536
 	va_list ARGS;
 	va_start(ARGS, narg);
-#line 1515
+#line 1536
 	if (ecl_unlikely(narg < 0|| narg > 4)) FEwrong_num_arguments(ecl_make_fixnum(697));
-#line 1515
+#line 1536
 	if (narg > 0) {
-#line 1515
+#line 1536
 		strm = va_arg(ARGS,cl_object);
-#line 1515
+#line 1536
 	} else {
-#line 1515
+#line 1536
 		strm = ECL_NIL;
-#line 1515
+#line 1536
 	}
-#line 1515
+#line 1536
 	if (narg > 1) {
-#line 1515
+#line 1536
 		eof_errorp = va_arg(ARGS,cl_object);
-#line 1515
+#line 1536
 	} else {
-#line 1515
+#line 1536
 		eof_errorp = ECL_T;
-#line 1515
+#line 1536
 	}
-#line 1515
+#line 1536
 	if (narg > 2) {
-#line 1515
+#line 1536
 		eof_value = va_arg(ARGS,cl_object);
-#line 1515
+#line 1536
 	} else {
-#line 1515
+#line 1536
 		eof_value = ECL_NIL;
-#line 1515
+#line 1536
 	}
-#line 1515
+#line 1536
 	if (narg > 3) {
-#line 1515
+#line 1536
 		recursivep = va_arg(ARGS,cl_object);
-#line 1515
+#line 1536
 	} else {
-#line 1515
+#line 1536
 		recursivep = ECL_NIL;
-#line 1515
+#line 1536
 	}
-#line 1515
+#line 1536
 	strm = stream_or_default_input(strm);
 	if (Null(recursivep)) {
 		x = ecl_read_object_non_recursive(strm);
@@ -1998,27 +2019,27 @@ cl_object cl_read_preserving_whitespace(cl_narg narg, ...)
 	if (x == OBJNULL) {
 		if (Null(eof_errorp))
 			{
-#line 1523
-				#line 1523
+#line 1544
+				#line 1544
 				cl_object __value0 = eof_value;
-#line 1523
+#line 1544
 				the_env->nvalues = 1;
-#line 1523
+#line 1544
 				return __value0;
-#line 1523
+#line 1544
 			}
 
 		FEend_of_file(strm);
 	}
 	{
-#line 1526
-		#line 1526
+#line 1547
+		#line 1547
 		cl_object __value0 = x;
-#line 1526
+#line 1547
 		the_env->nvalues = 1;
-#line 1526
+#line 1547
 		return __value0;
-#line 1526
+#line 1547
 	}
 
 }
@@ -2066,45 +2087,45 @@ do_read_delimited_list(int d, cl_object in, bool proper_list)
 	} while (1);
 }
 
-#line 1572
+#line 1593
 cl_object cl_read_delimited_list(cl_narg narg, cl_object d, ...)
 {
-#line 1572
+#line 1593
 
 	cl_object l;
 	int delimiter;
-#line 1576
+#line 1597
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1576
+#line 1597
 	cl_object strm;
-#line 1576
+#line 1597
 	cl_object recursivep;
-#line 1576
+#line 1597
 	va_list ARGS;
 	va_start(ARGS, d);
-#line 1576
+#line 1597
 	if (ecl_unlikely(narg < 1|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(694));
-#line 1576
+#line 1597
 	if (narg > 1) {
-#line 1576
+#line 1597
 		strm = va_arg(ARGS,cl_object);
-#line 1576
+#line 1597
 	} else {
-#line 1576
+#line 1597
 		strm = ECL_NIL;
-#line 1576
+#line 1597
 	}
-#line 1576
+#line 1597
 	if (narg > 2) {
-#line 1576
+#line 1597
 		recursivep = va_arg(ARGS,cl_object);
-#line 1576
+#line 1597
 	} else {
-#line 1576
+#line 1597
 		recursivep = ECL_NIL;
-#line 1576
+#line 1597
 	}
-#line 1576
+#line 1597
 	delimiter = ecl_char_code(d);
 	strm = stream_or_default_input(strm);
 	if (!Null(recursivep)) {
@@ -2118,81 +2139,81 @@ cl_object cl_read_delimited_list(cl_narg narg, cl_object d, ...)
 		ecl_bds_unwind_n(the_env, 2);
 	}
 	{
-#line 1588
-		#line 1588
+#line 1609
+		#line 1609
 		cl_object __value0 = l;
-#line 1588
+#line 1609
 		the_env->nvalues = 1;
-#line 1588
+#line 1609
 		return __value0;
-#line 1588
+#line 1609
 	}
 
 }
 
-#line 1591
+#line 1612
 cl_object cl_read_line(cl_narg narg, ...)
 {
-#line 1591
+#line 1612
 
 	int c;
 	cl_object token, value0, value1;
-#line 1595
+#line 1616
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1595
+#line 1616
 	cl_object strm;
-#line 1595
+#line 1616
 	cl_object eof_errorp;
-#line 1595
+#line 1616
 	cl_object eof_value;
-#line 1595
+#line 1616
 	cl_object recursivep;
-#line 1595
+#line 1616
 	va_list ARGS;
 	va_start(ARGS, narg);
-#line 1595
+#line 1616
 	if (ecl_unlikely(narg < 0|| narg > 4)) FEwrong_num_arguments(ecl_make_fixnum(696));
-#line 1595
+#line 1616
 	if (narg > 0) {
-#line 1595
+#line 1616
 		strm = va_arg(ARGS,cl_object);
-#line 1595
+#line 1616
 	} else {
-#line 1595
+#line 1616
 		strm = ECL_NIL;
-#line 1595
+#line 1616
 	}
-#line 1595
+#line 1616
 	if (narg > 1) {
-#line 1595
+#line 1616
 		eof_errorp = va_arg(ARGS,cl_object);
-#line 1595
+#line 1616
 	} else {
-#line 1595
+#line 1616
 		eof_errorp = ECL_T;
-#line 1595
+#line 1616
 	}
-#line 1595
+#line 1616
 	if (narg > 2) {
-#line 1595
+#line 1616
 		eof_value = va_arg(ARGS,cl_object);
-#line 1595
+#line 1616
 	} else {
-#line 1595
+#line 1616
 		eof_value = ECL_NIL;
-#line 1595
+#line 1616
 	}
-#line 1595
+#line 1616
 	if (narg > 3) {
-#line 1595
+#line 1616
 		recursivep = va_arg(ARGS,cl_object);
-#line 1595
+#line 1616
 	} else {
-#line 1595
+#line 1616
 		recursivep = ECL_NIL;
-#line 1595
+#line 1616
 	}
-#line 1595
+#line 1616
 	strm = stream_or_default_input(strm);
 #ifdef ECL_CLOS_STREAMS
         if (!ECL_ANSI_STREAM_P(strm)) {
@@ -2234,85 +2255,85 @@ cl_object cl_read_line(cl_narg narg, ...)
 	si_put_buffer_string(token);
  OUTPUT:
 	{
-#line 1635
-		#line 1635
+#line 1656
+		#line 1656
 		cl_object __value0 = value0;
-#line 1635
+#line 1656
 		cl_object __value1 = value1;
-#line 1635
+#line 1656
 		the_env->nvalues = 2;
-#line 1635
+#line 1656
 		the_env->values[1] = __value1;
-#line 1635
+#line 1656
 		return __value0;
-#line 1635
+#line 1656
 	}
 
 }
 
-#line 1638
+#line 1659
 cl_object cl_read_char(cl_narg narg, ...)
 {
-#line 1638
+#line 1659
 
 	int c;
 	cl_object output;
-#line 1642
+#line 1663
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1642
+#line 1663
 	cl_object strm;
-#line 1642
+#line 1663
 	cl_object eof_errorp;
-#line 1642
+#line 1663
 	cl_object eof_value;
-#line 1642
+#line 1663
 	cl_object recursivep;
-#line 1642
+#line 1663
 	va_list ARGS;
 	va_start(ARGS, narg);
-#line 1642
+#line 1663
 	if (ecl_unlikely(narg < 0|| narg > 4)) FEwrong_num_arguments(ecl_make_fixnum(692));
-#line 1642
+#line 1663
 	if (narg > 0) {
-#line 1642
+#line 1663
 		strm = va_arg(ARGS,cl_object);
-#line 1642
+#line 1663
 	} else {
-#line 1642
+#line 1663
 		strm = ECL_NIL;
-#line 1642
+#line 1663
 	}
-#line 1642
+#line 1663
 	if (narg > 1) {
-#line 1642
+#line 1663
 		eof_errorp = va_arg(ARGS,cl_object);
-#line 1642
+#line 1663
 	} else {
-#line 1642
+#line 1663
 		eof_errorp = ECL_T;
-#line 1642
+#line 1663
 	}
-#line 1642
+#line 1663
 	if (narg > 2) {
-#line 1642
+#line 1663
 		eof_value = va_arg(ARGS,cl_object);
-#line 1642
+#line 1663
 	} else {
-#line 1642
+#line 1663
 		eof_value = ECL_NIL;
-#line 1642
+#line 1663
 	}
-#line 1642
+#line 1663
 	if (narg > 3) {
-#line 1642
+#line 1663
 		recursivep = va_arg(ARGS,cl_object);
-#line 1642
+#line 1663
 	} else {
-#line 1642
+#line 1663
 		recursivep = ECL_NIL;
-#line 1642
+#line 1663
 	}
-#line 1642
+#line 1663
 	strm = stream_or_default_input(strm);
 	c = ecl_read_char(strm);
 	if (c != EOF)
@@ -2322,134 +2343,134 @@ cl_object cl_read_char(cl_narg narg, ...)
 	else
 		FEend_of_file(strm);
 	{
-#line 1650
-		#line 1650
+#line 1671
+		#line 1671
 		cl_object __value0 = output;
-#line 1650
+#line 1671
 		the_env->nvalues = 1;
-#line 1650
+#line 1671
 		return __value0;
-#line 1650
+#line 1671
 	}
 
 }
 
-#line 1653
+#line 1674
 cl_object cl_unread_char(cl_narg narg, cl_object c, ...)
 {
-#line 1653
+#line 1674
 
-#line 1655
+#line 1676
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1655
+#line 1676
 	cl_object strm;
-#line 1655
+#line 1676
 	va_list ARGS;
 	va_start(ARGS, c);
-#line 1655
+#line 1676
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(884));
-#line 1655
+#line 1676
 	if (narg > 1) {
-#line 1655
+#line 1676
 		strm = va_arg(ARGS,cl_object);
-#line 1655
+#line 1676
 	} else {
-#line 1655
+#line 1676
 		strm = ECL_NIL;
-#line 1655
+#line 1676
 	}
-#line 1655
+#line 1676
 	/* INV: unread_char() checks the type `c' */
 	strm = stream_or_default_input(strm);
 	ecl_unread_char(ecl_char_code(c), strm);
 	{
-#line 1658
-		#line 1658
+#line 1679
+		#line 1679
 		cl_object __value0 = ECL_NIL;
-#line 1658
+#line 1679
 		the_env->nvalues = 1;
-#line 1658
+#line 1679
 		return __value0;
-#line 1658
+#line 1679
 	}
 
 }
 
-#line 1661
+#line 1682
 cl_object cl_peek_char(cl_narg narg, ...)
 {
-#line 1661
+#line 1682
 
 	int c;
 	cl_object rtbl = ecl_current_readtable();
-#line 1665
+#line 1686
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1665
+#line 1686
 	cl_object peek_type;
-#line 1665
+#line 1686
 	cl_object strm;
-#line 1665
+#line 1686
 	cl_object eof_errorp;
-#line 1665
+#line 1686
 	cl_object eof_value;
-#line 1665
+#line 1686
 	cl_object recursivep;
-#line 1665
+#line 1686
 	va_list ARGS;
 	va_start(ARGS, narg);
-#line 1665
+#line 1686
 	if (ecl_unlikely(narg < 0|| narg > 5)) FEwrong_num_arguments(ecl_make_fixnum(639));
-#line 1665
+#line 1686
 	if (narg > 0) {
-#line 1665
+#line 1686
 		peek_type = va_arg(ARGS,cl_object);
-#line 1665
+#line 1686
 	} else {
-#line 1665
+#line 1686
 		peek_type = ECL_NIL;
-#line 1665
+#line 1686
 	}
-#line 1665
+#line 1686
 	if (narg > 1) {
-#line 1665
+#line 1686
 		strm = va_arg(ARGS,cl_object);
-#line 1665
+#line 1686
 	} else {
-#line 1665
+#line 1686
 		strm = ECL_NIL;
-#line 1665
+#line 1686
 	}
-#line 1665
+#line 1686
 	if (narg > 2) {
-#line 1665
+#line 1686
 		eof_errorp = va_arg(ARGS,cl_object);
-#line 1665
+#line 1686
 	} else {
-#line 1665
+#line 1686
 		eof_errorp = ECL_T;
-#line 1665
+#line 1686
 	}
-#line 1665
+#line 1686
 	if (narg > 3) {
-#line 1665
+#line 1686
 		eof_value = va_arg(ARGS,cl_object);
-#line 1665
+#line 1686
 	} else {
-#line 1665
+#line 1686
 		eof_value = ECL_NIL;
-#line 1665
+#line 1686
 	}
-#line 1665
+#line 1686
 	if (narg > 4) {
-#line 1665
+#line 1686
 		recursivep = va_arg(ARGS,cl_object);
-#line 1665
+#line 1686
 	} else {
-#line 1665
+#line 1686
 		recursivep = ECL_NIL;
-#line 1665
+#line 1686
 	}
-#line 1665
+#line 1686
 	strm = stream_or_default_input(strm);
 	c = ecl_peek_char(strm);
 	if (c != EOF && !Null(peek_type)) {
@@ -2482,119 +2503,119 @@ cl_object cl_peek_char(cl_narg narg, ...)
 		FEend_of_file(strm);
 	}
 	{
-#line 1696
-		#line 1696
+#line 1717
+		#line 1717
 		cl_object __value0 = eof_value;
-#line 1696
+#line 1717
 		the_env->nvalues = 1;
-#line 1696
+#line 1717
 		return __value0;
-#line 1696
+#line 1717
 	}
 
 }
 
-#line 1699
+#line 1720
 cl_object cl_listen(cl_narg narg, ...)
 {
-#line 1699
+#line 1720
 
-#line 1701
+#line 1722
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1701
+#line 1722
 	cl_object strm;
-#line 1701
+#line 1722
 	va_list ARGS;
 	va_start(ARGS, narg);
-#line 1701
+#line 1722
 	if (ecl_unlikely(narg < 0|| narg > 1)) FEwrong_num_arguments(ecl_make_fixnum(485));
-#line 1701
+#line 1722
 	if (narg > 0) {
-#line 1701
+#line 1722
 		strm = va_arg(ARGS,cl_object);
-#line 1701
+#line 1722
 	} else {
-#line 1701
+#line 1722
 		strm = ECL_NIL;
-#line 1701
+#line 1722
 	}
-#line 1701
+#line 1722
 	strm = stream_or_default_input(strm);
 	{
-#line 1702
-		#line 1702
+#line 1723
+		#line 1723
 		cl_object __value0 = ((ecl_listen_stream(strm) == ECL_LISTEN_AVAILABLE)? ECL_T : ECL_NIL);
-#line 1702
+#line 1723
 		the_env->nvalues = 1;
-#line 1702
+#line 1723
 		return __value0;
-#line 1702
+#line 1723
 	}
 
 }
 
-#line 1705
+#line 1726
 cl_object cl_read_char_no_hang(cl_narg narg, ...)
 {
-#line 1705
+#line 1726
 
 	int f;
-#line 1708
+#line 1729
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1708
+#line 1729
 	cl_object strm;
-#line 1708
+#line 1729
 	cl_object eof_errorp;
-#line 1708
+#line 1729
 	cl_object eof_value;
-#line 1708
+#line 1729
 	cl_object recursivep;
-#line 1708
+#line 1729
 	va_list ARGS;
 	va_start(ARGS, narg);
-#line 1708
+#line 1729
 	if (ecl_unlikely(narg < 0|| narg > 4)) FEwrong_num_arguments(ecl_make_fixnum(693));
-#line 1708
+#line 1729
 	if (narg > 0) {
-#line 1708
+#line 1729
 		strm = va_arg(ARGS,cl_object);
-#line 1708
+#line 1729
 	} else {
-#line 1708
+#line 1729
 		strm = ECL_NIL;
-#line 1708
+#line 1729
 	}
-#line 1708
+#line 1729
 	if (narg > 1) {
-#line 1708
+#line 1729
 		eof_errorp = va_arg(ARGS,cl_object);
-#line 1708
+#line 1729
 	} else {
-#line 1708
+#line 1729
 		eof_errorp = ECL_T;
-#line 1708
+#line 1729
 	}
-#line 1708
+#line 1729
 	if (narg > 2) {
-#line 1708
+#line 1729
 		eof_value = va_arg(ARGS,cl_object);
-#line 1708
+#line 1729
 	} else {
-#line 1708
+#line 1729
 		eof_value = ECL_NIL;
-#line 1708
+#line 1729
 	}
-#line 1708
+#line 1729
 	if (narg > 3) {
-#line 1708
+#line 1729
 		recursivep = va_arg(ARGS,cl_object);
-#line 1708
+#line 1729
 	} else {
-#line 1708
+#line 1729
 		recursivep = ECL_NIL;
-#line 1708
+#line 1729
 	}
-#line 1708
+#line 1729
 	strm = stream_or_default_input(strm);
 #ifdef ECL_CLOS_STREAMS
 	if (!ECL_ANSI_STREAM_P(strm)) {
@@ -2603,14 +2624,14 @@ cl_object cl_read_char_no_hang(cl_narg narg, ...)
 		if (output == ECL_SYM(":EOF",1228))
 			goto END_OF_FILE;
 		{
-#line 1715
-			#line 1715
+#line 1736
+			#line 1736
 			cl_object __value0 = output;
-#line 1715
+#line 1736
 			the_env->nvalues = 1;
-#line 1715
+#line 1736
 			return __value0;
-#line 1715
+#line 1736
 		}
 ;
 	}
@@ -2620,27 +2641,27 @@ cl_object cl_read_char_no_hang(cl_narg narg, ...)
 		int c = ecl_read_char(strm);
 		if (c != EOF) {
 			{
-#line 1722
-				#line 1722
+#line 1743
+				#line 1743
 				cl_object __value0 = ECL_CODE_CHAR(c);
-#line 1722
+#line 1743
 				the_env->nvalues = 1;
-#line 1722
+#line 1743
 				return __value0;
-#line 1722
+#line 1743
 			}
 ;
 		}
 	} else if (f == ECL_LISTEN_NO_CHAR) {
 		{
-#line 1725
-			#line 1725
+#line 1746
+			#line 1746
 			cl_object __value0 = ECL_NIL;
-#line 1725
+#line 1746
 			the_env->nvalues = 1;
-#line 1725
+#line 1746
 			return __value0;
-#line 1725
+#line 1746
 		}
 ;
 	}
@@ -2648,165 +2669,165 @@ cl_object cl_read_char_no_hang(cl_narg narg, ...)
   END_OF_FILE:
 	if (Null(eof_errorp))
 		{
-#line 1730
-			#line 1730
+#line 1751
+			#line 1751
 			cl_object __value0 = eof_value;
-#line 1730
+#line 1751
 			the_env->nvalues = 1;
-#line 1730
+#line 1751
 			return __value0;
-#line 1730
+#line 1751
 		}
 
 	else
 		FEend_of_file(strm);
 }
 
-#line 1735
+#line 1756
 cl_object cl_clear_input(cl_narg narg, ...)
 {
-#line 1735
+#line 1756
 
-#line 1737
+#line 1758
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1737
+#line 1758
 	cl_object strm;
-#line 1737
+#line 1758
 	va_list ARGS;
 	va_start(ARGS, narg);
-#line 1737
+#line 1758
 	if (ecl_unlikely(narg < 0|| narg > 1)) FEwrong_num_arguments(ecl_make_fixnum(226));
-#line 1737
+#line 1758
 	if (narg > 0) {
-#line 1737
+#line 1758
 		strm = va_arg(ARGS,cl_object);
-#line 1737
+#line 1758
 	} else {
-#line 1737
+#line 1758
 		strm = ECL_NIL;
-#line 1737
+#line 1758
 	}
-#line 1737
+#line 1758
 	strm = stream_or_default_input(strm);
 	ecl_clear_input(strm);
 	{
-#line 1739
-		#line 1739
+#line 1760
+		#line 1760
 		cl_object __value0 = ECL_NIL;
-#line 1739
+#line 1760
 		the_env->nvalues = 1;
-#line 1739
+#line 1760
 		return __value0;
-#line 1739
+#line 1760
 	}
 
 }
 
-#line 1742
+#line 1763
 cl_object cl_read_byte(cl_narg narg, cl_object binary_input_stream, ...)
 {
-#line 1742
+#line 1763
 
 	cl_object c;
-#line 1745
+#line 1766
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1745
+#line 1766
 	cl_object eof_errorp;
-#line 1745
+#line 1766
 	cl_object eof_value;
-#line 1745
+#line 1766
 	va_list ARGS;
 	va_start(ARGS, binary_input_stream);
-#line 1745
+#line 1766
 	if (ecl_unlikely(narg < 1|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(691));
-#line 1745
+#line 1766
 	if (narg > 1) {
-#line 1745
+#line 1766
 		eof_errorp = va_arg(ARGS,cl_object);
-#line 1745
+#line 1766
 	} else {
-#line 1745
+#line 1766
 		eof_errorp = ECL_T;
-#line 1745
+#line 1766
 	}
-#line 1745
+#line 1766
 	if (narg > 2) {
-#line 1745
+#line 1766
 		eof_value = va_arg(ARGS,cl_object);
-#line 1745
+#line 1766
 	} else {
-#line 1745
+#line 1766
 		eof_value = ECL_NIL;
-#line 1745
+#line 1766
 	}
-#line 1745
+#line 1766
 	c = ecl_read_byte(binary_input_stream);
 	if (c == ECL_NIL) {
 		if (Null(eof_errorp))
 			{
-#line 1748
-				#line 1748
+#line 1769
+				#line 1769
 				cl_object __value0 = eof_value;
-#line 1748
+#line 1769
 				the_env->nvalues = 1;
-#line 1748
+#line 1769
 				return __value0;
-#line 1748
+#line 1769
 			}
 
 		else
 			FEend_of_file(binary_input_stream);
 	}
 	{
-#line 1752
-		#line 1752
+#line 1773
+		#line 1773
 		cl_object __value0 = c;
-#line 1752
+#line 1773
 		the_env->nvalues = 1;
-#line 1752
+#line 1773
 		return __value0;
-#line 1752
+#line 1773
 	}
 
 }
 
-#line 1755
+#line 1776
 cl_object cl_read_sequence(cl_narg narg, cl_object sequence, cl_object stream, ...)
 {
-#line 1755
+#line 1776
 
-#line 1757
+#line 1778
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1757
+#line 1778
 	static cl_object KEYS[2] = {(cl_object)(cl_symbols+1310), (cl_object)(cl_symbols+1225)};
 	cl_object start;
 	cl_object end;
-#line 1757
+#line 1778
 	cl_object KEY_VARS[4];
-#line 1757
+#line 1778
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, stream, narg, 2);
-#line 1757
+#line 1778
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(698));
-#line 1757
+#line 1778
 	cl_parse_key(ARGS, 2, KEYS, KEY_VARS, NULL, 0);
-#line 1757
+#line 1778
 	if (KEY_VARS[2]==ECL_NIL) {
-#line 1757
+#line 1778
 	  start = ecl_make_fixnum(0);
 	} else {
-#line 1757
+#line 1778
 	  start = KEY_VARS[0];
 	}
-#line 1757
+#line 1778
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 1757
+#line 1778
 	  end = ECL_NIL;
 	} else {
-#line 1757
+#line 1778
 	  end = KEY_VARS[1];
 	}
-#line 1757
+#line 1778
 #ifdef ECL_CLOS_STREAMS
 	if (!ECL_ANSI_STREAM_P(stream))
 		return funcall(5, ECL_SYM("GRAY::STREAM-READ-SEQUENCE",1638), stream, sequence, start, end);
@@ -2816,57 +2837,57 @@ cl_object cl_read_sequence(cl_narg narg, cl_object sequence, cl_object stream, .
 }
 
 
-#line 1766
+#line 1787
 cl_object cl_copy_readtable(cl_narg narg, ...)
 {
-#line 1766
+#line 1787
 
-#line 1768
+#line 1789
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1768
+#line 1789
 	cl_object from;
-#line 1768
+#line 1789
 	cl_object to;
-#line 1768
+#line 1789
 	va_list ARGS;
 	va_start(ARGS, narg);
-#line 1768
+#line 1789
 	if (ecl_unlikely(narg < 0|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(259));
-#line 1768
+#line 1789
 	if (narg > 0) {
-#line 1768
+#line 1789
 		from = va_arg(ARGS,cl_object);
-#line 1768
+#line 1789
 	} else {
-#line 1768
+#line 1789
 		from = ecl_current_readtable();
-#line 1768
+#line 1789
 	}
-#line 1768
+#line 1789
 	if (narg > 1) {
-#line 1768
+#line 1789
 		to = va_arg(ARGS,cl_object);
-#line 1768
+#line 1789
 	} else {
-#line 1768
+#line 1789
 		to = ECL_NIL;
-#line 1768
+#line 1789
 	}
-#line 1768
+#line 1789
 	if (Null(from)) {
 		to = ecl_copy_readtable(cl_core.standard_readtable, to);
 	} else {
 		to = ecl_copy_readtable(from, to);
 	}
 	{
-#line 1773
-		#line 1773
+#line 1794
+		#line 1794
 		cl_object __value0 = to;
-#line 1773
+#line 1794
 		the_env->nvalues = 1;
-#line 1773
+#line 1794
 		return __value0;
-#line 1773
+#line 1794
 	}
 
 }
@@ -2882,16 +2903,16 @@ cl_readtable_case(cl_object r)
 	case ecl_case_preserve: r = ECL_SYM(":PRESERVE",1288);
 	}
 	{
-#line 1786
+#line 1807
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1786
-		#line 1786
+#line 1807
+		#line 1807
 		cl_object __value0 = r;
-#line 1786
+#line 1807
 		the_env->nvalues = 1;
-#line 1786
+#line 1807
 		return __value0;
-#line 1786
+#line 1807
 	}
 
 }
@@ -2926,16 +2947,16 @@ si_readtable_case_set(cl_object r, cl_object mode)
                                      mode, ecl_read_from_cstring(type));
 	}
 	{
-#line 1818
+#line 1839
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1818
-		#line 1818
+#line 1839
+		#line 1839
 		cl_object __value0 = mode;
-#line 1818
+#line 1839
 		the_env->nvalues = 1;
-#line 1818
+#line 1839
 		return __value0;
-#line 1818
+#line 1839
 	}
 
 }
@@ -2944,16 +2965,16 @@ cl_object
 cl_readtablep(cl_object readtable)
 {
 	{
-#line 1824
+#line 1845
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1824
-		#line 1824
+#line 1845
+		#line 1845
 		cl_object __value0 = (ECL_READTABLEP(readtable) ? ECL_T : ECL_NIL);
-#line 1824
+#line 1845
 		the_env->nvalues = 1;
-#line 1824
+#line 1845
 		return __value0;
-#line 1824
+#line 1845
 	}
 
 }
@@ -3017,46 +3038,46 @@ ecl_invalid_character_p(int c)
 	return (c <= 32) || (c == 127);
 }
 
-#line 1888
+#line 1909
 cl_object cl_set_syntax_from_char(cl_narg narg, cl_object tochr, cl_object fromchr, ...)
 {
-#line 1888
+#line 1909
 
 	enum ecl_chattrib cat;
 	cl_object dispatch;
 	cl_fixnum fc, tc;
-#line 1893
+#line 1914
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1893
+#line 1914
 	cl_object tordtbl;
-#line 1893
+#line 1914
 	cl_object fromrdtbl;
-#line 1893
+#line 1914
 	va_list ARGS;
 	va_start(ARGS, fromchr);
-#line 1893
+#line 1914
 	if (ecl_unlikely(narg < 2|| narg > 4)) FEwrong_num_arguments(ecl_make_fixnum(749));
-#line 1893
+#line 1914
 	if (narg > 2) {
-#line 1893
+#line 1914
 		tordtbl = va_arg(ARGS,cl_object);
-#line 1893
+#line 1914
 	} else {
-#line 1893
+#line 1914
 		tordtbl = ecl_current_readtable();
-#line 1893
+#line 1914
 	}
-#line 1893
+#line 1914
 	if (narg > 3) {
-#line 1893
+#line 1914
 		fromrdtbl = va_arg(ARGS,cl_object);
-#line 1893
+#line 1914
 	} else {
-#line 1893
+#line 1914
 		fromrdtbl = ECL_NIL;
-#line 1893
+#line 1914
 	}
-#line 1893
+#line 1914
         if (tordtbl->readtable.locked) {
                 error_locked_readtable(tordtbl);
         }
@@ -3073,162 +3094,162 @@ cl_object cl_set_syntax_from_char(cl_narg narg, cl_object tochr, cl_object fromc
 	}
 	ecl_readtable_set(tordtbl, tc, cat, dispatch);
 	{
-#line 1908
-		#line 1908
+#line 1929
+		#line 1929
 		cl_object __value0 = ECL_T;
-#line 1908
+#line 1929
 		the_env->nvalues = 1;
-#line 1908
+#line 1929
 		return __value0;
-#line 1908
+#line 1929
 	}
 
 }
 
-#line 1912
+#line 1933
 cl_object cl_set_macro_character(cl_narg narg, cl_object c, cl_object function, ...)
 {
-#line 1912
+#line 1933
 
-#line 1914
+#line 1935
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1914
+#line 1935
 	cl_object non_terminating_p;
-#line 1914
+#line 1935
 	cl_object readtable;
-#line 1914
+#line 1935
 	va_list ARGS;
 	va_start(ARGS, function);
-#line 1914
+#line 1935
 	if (ecl_unlikely(narg < 2|| narg > 4)) FEwrong_num_arguments(ecl_make_fixnum(747));
-#line 1914
+#line 1935
 	if (narg > 2) {
-#line 1914
+#line 1935
 		non_terminating_p = va_arg(ARGS,cl_object);
-#line 1914
+#line 1935
 	} else {
-#line 1914
+#line 1935
 		non_terminating_p = ECL_NIL;
-#line 1914
+#line 1935
 	}
-#line 1914
+#line 1935
 	if (narg > 3) {
-#line 1914
+#line 1935
 		readtable = va_arg(ARGS,cl_object);
-#line 1914
+#line 1935
 	} else {
-#line 1914
+#line 1935
 		readtable = ecl_current_readtable();
-#line 1914
+#line 1935
 	}
-#line 1914
+#line 1935
 	ecl_readtable_set(readtable, ecl_char_code(c),
 			  Null(non_terminating_p)?
 			  cat_terminating :
 			  cat_non_terminating,
 			  function);
 	{
-#line 1919
-		#line 1919
+#line 1940
+		#line 1940
 		cl_object __value0 = ECL_T;
-#line 1919
+#line 1940
 		the_env->nvalues = 1;
-#line 1919
+#line 1940
 		return __value0;
-#line 1919
+#line 1940
 	}
 
 }
 
-#line 1922
+#line 1943
 cl_object cl_get_macro_character(cl_narg narg, cl_object c, ...)
 {
-#line 1922
+#line 1943
 
 	enum ecl_chattrib cat;
 	cl_object dispatch;
-#line 1926
+#line 1947
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1926
+#line 1947
 	cl_object readtable;
-#line 1926
+#line 1947
 	va_list ARGS;
 	va_start(ARGS, c);
-#line 1926
+#line 1947
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(407));
-#line 1926
+#line 1947
 	if (narg > 1) {
-#line 1926
+#line 1947
 		readtable = va_arg(ARGS,cl_object);
-#line 1926
+#line 1947
 	} else {
-#line 1926
+#line 1947
 		readtable = ecl_current_readtable();
-#line 1926
+#line 1947
 	}
-#line 1926
+#line 1947
 	if (Null(readtable))
 		readtable = cl_core.standard_readtable;
 	cat = ecl_readtable_get(readtable, ecl_char_code(c), &dispatch);
         if (ECL_HASH_TABLE_P(dispatch))
 		dispatch = cl_core.dispatch_reader;
 	{
-#line 1931
-		#line 1931
+#line 1952
+		#line 1952
 		cl_object __value0 = dispatch;
-#line 1931
+#line 1952
 		cl_object __value1 = ((cat == cat_non_terminating)? ECL_T : ECL_NIL);
-#line 1931
+#line 1952
 		the_env->nvalues = 2;
-#line 1931
+#line 1952
 		the_env->values[1] = __value1;
-#line 1931
+#line 1952
 		return __value0;
-#line 1931
+#line 1952
 	}
 
 }
 
-#line 1935
+#line 1956
 cl_object cl_make_dispatch_macro_character(cl_narg narg, cl_object chr, ...)
 {
-#line 1935
+#line 1956
 
 	enum ecl_chattrib cat;
 	cl_object table;
 	int c;
-#line 1940
+#line 1961
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1940
+#line 1961
 	cl_object non_terminating_p;
-#line 1940
+#line 1961
 	cl_object readtable;
-#line 1940
+#line 1961
 	va_list ARGS;
 	va_start(ARGS, chr);
-#line 1940
+#line 1961
 	if (ecl_unlikely(narg < 1|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(526));
-#line 1940
+#line 1961
 	if (narg > 1) {
-#line 1940
+#line 1961
 		non_terminating_p = va_arg(ARGS,cl_object);
-#line 1940
+#line 1961
 	} else {
-#line 1940
+#line 1961
 		non_terminating_p = ECL_NIL;
-#line 1940
+#line 1961
 	}
-#line 1940
+#line 1961
 	if (narg > 2) {
-#line 1940
+#line 1961
 		readtable = va_arg(ARGS,cl_object);
-#line 1940
+#line 1961
 	} else {
-#line 1940
+#line 1961
 		readtable = ecl_current_readtable();
-#line 1940
+#line 1961
 	}
-#line 1940
+#line 1961
         assert_type_readtable(ecl_make_fixnum(/*MAKE-DISPATCH-MACRO-CHARACTER*/526), 3, readtable);
 	c = ecl_char_code(chr);
 	cat = Null(non_terminating_p)? cat_terminating : cat_non_terminating;
@@ -3237,45 +3258,45 @@ cl_object cl_make_dispatch_macro_character(cl_narg narg, cl_object chr, ...)
                                     cl_core.rehash_threshold);
 	ecl_readtable_set(readtable, c, cat, table);
 	{
-#line 1947
-		#line 1947
+#line 1968
+		#line 1968
 		cl_object __value0 = ECL_T;
-#line 1947
+#line 1968
 		the_env->nvalues = 1;
-#line 1947
+#line 1968
 		return __value0;
-#line 1947
+#line 1968
 	}
 
 }
 
-#line 1951
+#line 1972
 cl_object cl_set_dispatch_macro_character(cl_narg narg, cl_object dspchr, cl_object subchr, cl_object fnc, ...)
 {
-#line 1951
+#line 1972
 
 	cl_object table;
 	cl_fixnum subcode;
-#line 1955
+#line 1976
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1955
+#line 1976
 	cl_object readtable;
-#line 1955
+#line 1976
 	va_list ARGS;
 	va_start(ARGS, fnc);
-#line 1955
+#line 1976
 	if (ecl_unlikely(narg < 3|| narg > 4)) FEwrong_num_arguments(ecl_make_fixnum(745));
-#line 1955
+#line 1976
 	if (narg > 3) {
-#line 1955
+#line 1976
 		readtable = va_arg(ARGS,cl_object);
-#line 1955
+#line 1976
 	} else {
-#line 1955
+#line 1976
 		readtable = ecl_current_readtable();
-#line 1955
+#line 1976
 	}
-#line 1955
+#line 1976
         assert_type_readtable(ecl_make_fixnum(/*SET-DISPATCH-MACRO-CHARACTER*/745), 4, readtable);
 	ecl_readtable_get(readtable, ecl_char_code(dspchr), &table);
         unlikely_if (readtable->readtable.locked) {
@@ -3301,45 +3322,45 @@ cl_object cl_set_dispatch_macro_character(cl_narg narg, cl_object dspchr, cl_obj
 		_ecl_sethash(ECL_CODE_CHAR(subcode), table, fnc);
 	}
 	{
-#line 1979
-		#line 1979
+#line 2000
+		#line 2000
 		cl_object __value0 = ECL_T;
-#line 1979
+#line 2000
 		the_env->nvalues = 1;
-#line 1979
+#line 2000
 		return __value0;
-#line 1979
+#line 2000
 	}
 
 }
 
-#line 1983
+#line 2004
 cl_object cl_get_dispatch_macro_character(cl_narg narg, cl_object dspchr, cl_object subchr, ...)
 {
-#line 1983
+#line 2004
 
 	cl_object table;
 	cl_fixnum c;
-#line 1987
+#line 2008
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1987
+#line 2008
 	cl_object readtable;
-#line 1987
+#line 2008
 	va_list ARGS;
 	va_start(ARGS, subchr);
-#line 1987
+#line 2008
 	if (ecl_unlikely(narg < 2|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(404));
-#line 1987
+#line 2008
 	if (narg > 2) {
-#line 1987
+#line 2008
 		readtable = va_arg(ARGS,cl_object);
-#line 1987
+#line 2008
 	} else {
-#line 1987
+#line 2008
 		readtable = ecl_current_readtable();
-#line 1987
+#line 2008
 	}
-#line 1987
+#line 2008
 	if (Null(readtable)) {
 		readtable = cl_core.standard_readtable;
 	}
@@ -3355,25 +3376,25 @@ cl_object cl_get_dispatch_macro_character(cl_narg narg, cl_object dspchr, cl_obj
 	   not allowed to turn digits into dispatch macro characters */
 	if (ecl_digitp(c, 10) >= 0)
 		{
-#line 2001
-			#line 2001
+#line 2022
+			#line 2022
 			cl_object __value0 = ECL_NIL;
-#line 2001
+#line 2022
 			the_env->nvalues = 1;
-#line 2001
+#line 2022
 			return __value0;
-#line 2001
+#line 2022
 		}
 
 	{
-#line 2002
-		#line 2002
+#line 2023
+		#line 2023
 		cl_object __value0 = ecl_gethash_safe(subchr, table, ECL_NIL);
-#line 2002
+#line 2023
 		the_env->nvalues = 1;
-#line 2002
+#line 2023
 		return __value0;
-#line 2002
+#line 2023
 	}
 
 }
@@ -3382,60 +3403,60 @@ cl_object
 si_standard_readtable()
 {
 	{
-#line 2008
+#line 2029
 		const cl_env_ptr the_env = ecl_process_env();
-#line 2008
-		#line 2008
+#line 2029
+		#line 2029
 		cl_object __value0 = cl_core.standard_readtable;
-#line 2008
+#line 2029
 		the_env->nvalues = 1;
-#line 2008
+#line 2029
 		return __value0;
-#line 2008
+#line 2029
 	}
 
 }
 
-#line 2011
+#line 2032
 cl_object si_readtable_lock(cl_narg narg, cl_object r, ...)
 {
-#line 2011
+#line 2032
 
 	cl_object output;
-#line 2014
+#line 2035
 	const cl_env_ptr the_env = ecl_process_env();
-#line 2014
+#line 2035
 	cl_object yesno;
-#line 2014
+#line 2035
 	va_list ARGS;
 	va_start(ARGS, r);
-#line 2014
+#line 2035
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(1719));
-#line 2014
+#line 2035
 	if (narg > 1) {
-#line 2014
+#line 2035
 		yesno = va_arg(ARGS,cl_object);
-#line 2014
+#line 2035
 	} else {
-#line 2014
+#line 2035
 		yesno = ECL_NIL;
-#line 2014
+#line 2035
 	}
-#line 2014
+#line 2035
 	assert_type_readtable(ecl_make_fixnum(/*EXT::READTABLE-LOCK*/1719), 1, r);
         output = (r->readtable.locked)? ECL_T : ECL_NIL;
 	if (narg > 1) {
                 r->readtable.locked = !Null(yesno);
         }
         {
-#line 2019
-	#line 2019
+#line 2040
+	#line 2040
 	cl_object __value0 = output;
-#line 2019
+#line 2040
 	the_env->nvalues = 1;
-#line 2019
+#line 2040
 	return __value0;
-#line 2019
+#line 2040
 }
 
 }

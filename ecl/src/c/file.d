@@ -4515,16 +4515,29 @@ duplicate_dispatch_table(const struct ecl_file_ops *ops)
 	return new_ops;
 }
 
+// #define stream_dispatch_table
+
+#define _stream_dispatch_table(strm) do {               \
+                nlogd(">>stream_dispatch_table");       \
+                _stream_dispatch_table(strm);           \
+        } while (0)
+
 const struct ecl_file_ops *
 stream_dispatch_table(cl_object strm)
 {
+        nlogd(">>stream_dispatch_table 1");
 #ifdef ECL_CLOS_STREAMS
+        // nlogd(">>CLOS-STREAM :YES");
 	if (ECL_INSTANCEP(strm)) {
+                nlogd(">>stream_dispatch_table 2");
 		return &clos_stream_ops;
 	}
 #endif
-	if (!ECL_ANSI_STREAM_P(strm))
+	if (!ECL_ANSI_STREAM_P(strm)) {
+                nlogd(">>stream_dispatch_table 3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< CANCER");
 		FEwrong_type_argument(@[stream], strm);
+        }
+        nlogd(">>stream_dispatch_table 4");
 	return (const struct ecl_file_ops *)strm->stream.ops;
 }
 
@@ -4543,7 +4556,13 @@ ecl_write_byte8(cl_object strm, unsigned char *c, cl_index n)
 ecl_character
 ecl_read_char(cl_object strm)
 {
-	return stream_dispatch_table(strm)->read_char(strm);
+        nlogd(">>ecl_read_char1 ---------------------------------------- strm(%ld)", strm);
+        struct ecl_file_ops *ops = stream_dispatch_table(strm);
+        nlogd(">>ops(%ld)", ops);
+        //ecl_character a = ((ecl_character(*)(cl_object strm))((ops)->read_char))(strm);
+        ecl_character a = ((ops)->read_char)(strm);
+        nlogd(">>ecl_read_char2 ----------------------------------------");
+	return a;
 }
 
 ecl_character

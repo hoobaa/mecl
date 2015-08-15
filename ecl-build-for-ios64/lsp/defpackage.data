@@ -1,6 +1,0 @@
-static const char compiler_data_text[] = 
-"(or symbol string character) (:documentation :size :nicknames :shadow :shadowing"
- "-import-from :use :import-from :intern :export :export-from) (:size :documentati"
- "on) :shadowing-import-from (eval compile load) si::dodefpackage defpackage (:ext"
- "ernal) si::dodefpackage 0 0 0 ";
-#define compiler_data_text_size 270

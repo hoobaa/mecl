@@ -28,6 +28,13 @@
  * called instead.
  */
 
+void objdump(cl_object obj){
+        nlogd("------------------------------");
+        int t = ecl_t_of(obj);
+        nlogd("objt(%d)", t);
+        nlogd("------------------------------");
+}
+
 extern cl_object
 cl_upgraded_array_element_type(cl_narg narg, cl_object type, ...)
 {
@@ -150,8 +157,8 @@ static cl_object si_simple_toplevel ()
 
 	/* Simple minded top level loop */
         ECL_CATCH_ALL_BEGIN(env) {
-                writestr_stream(";*** Lisp core booted ****\n"
-                                "ECL (Embeddable Common Lisp)\n",
+                writestr_stream(";*** Lisp core booted !! ****\n"
+                                "ECL (Embeddable Common Lisp aaaa )\n",
                                 output);
                 ecl_force_output(output);
                 for (i = 1; i<ecl_fixnum(si_argc()); i++) {
@@ -159,8 +166,12 @@ static cl_object si_simple_toplevel ()
                         cl_load(1, arg);
                 }
                 while (1) {
-                        writestr_stream("\n> ", output);
+                        writestr_stream("\n>> ", output);
+                        nlogd("---- read befor");
                         sentence = @read(3, ECL_NIL, ECL_NIL, OBJNULL);
+                        nlogd("---- sentence");
+                        objdump(sentence);
+
                         if (sentence == OBJNULL)
                                 @(return);
 			sentence = si_eval_with_env(1, sentence);

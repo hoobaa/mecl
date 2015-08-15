@@ -1,8 +1,0 @@
-static const char compiler_data_text[] = 
-"clos::safe-slot-definition-location clos::*clos-booted* #:foo clos::safe-add-met"
- "hod clos::direct-slots 0 0 0 clos::allocation :slot-definition :generic-function"
- " :qualifiers (clos::object) :specializers clos::*early-methods* (clos::value clo"
- "s::object) clos::readers (clos::self) clos::writers (clos::value clos::self) clo"
- "s::std-class-generate-accessors clos::std-class clos::slots clos::direct-subclas"
- "ses 0 0 0 0 0 clos::wrapped-method-function ";
-#define compiler_data_text_size 444

@@ -1,3 +1,0 @@
-static const char compiler_data_text[] = 
-"si::sockets ";
-#define compiler_data_text_size 12

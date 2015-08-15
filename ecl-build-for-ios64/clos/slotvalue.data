@@ -1,8 +1,0 @@
-static const char compiler_data_text[] = 
-"clos::prototype clos::slots 0 clos::class-id (class) (clos::std-class t t) (clas"
- "s clos::self clos::slotd) (setf clos::slot-value-using-class) (t clos::std-class"
- " t t) (clos::val class clos::self clos::slotd) (class ext::instance clos::slotd)"
- " (t t t t) (class clos::object clos::slot-name clos::operation &optional clos::n"
- "ew-value) (t t t) (class clos::object clos::slot-name) (null t t) (class clos::o"
- "bject clos::slot-index) (setf class-name) (t class) (clos::new-value class) ";
-#define compiler_data_text_size 476

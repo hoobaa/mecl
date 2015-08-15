@@ -1,5 +1,6 @@
 #line 1 "/Users/strobolights/dev/mecl/ecl/src/c/apply.d"
-  #include <ecl/ecl.h>
+/* -*- mode: c; c-basic-offset: 8 -*- */
+#include <ecl/ecl.h>
 typedef cl_object (*t_f0)(cl_narg);
 typedef cl_object (*t_f1)(cl_narg,cl_object);
 typedef cl_object (*t_f2)(cl_narg,cl_object,cl_object);
@@ -65,14 +66,14 @@ typedef cl_object (*t_f61)(cl_narg,cl_object,cl_object,cl_object,cl_object,cl_ob
 typedef cl_object (*t_f62)(cl_narg,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
 typedef cl_object (*t_f63)(cl_narg,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
 typedef cl_object (*t_f64)(cl_narg,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
-  #ifndef ECL_ASM_APPLY
-  cl_object
-  APPLY(cl_narg n, cl_objectfn fn, cl_object *x)
-  {
+
+#ifndef ECL_ASM_APPLY
+cl_object
+APPLY(cl_narg n, cl_objectfn fn, cl_object *x)
+{
     nlogd(">>FUCK APPLY n:%d", n);
-  
+
     switch (n) {
-   
     case 0: return (*((t_f0)(fn)))(n);
     case 1: return (*((t_f1)(fn)))(n,x[0]);
     case 2: return (*((t_f2)(fn)))(n,x[0],x[1]);
@@ -137,7 +138,7 @@ typedef cl_object (*t_f64)(cl_narg,cl_object,cl_object,cl_object,cl_object,cl_ob
     case 61: return (*((t_f61)(fn)))(n,x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54],x[55],x[56],x[57],x[58],x[59],x[60]);
     case 62: return (*((t_f62)(fn)))(n,x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54],x[55],x[56],x[57],x[58],x[59],x[60],x[61]);
     case 63: return (*((t_f63)(fn)))(n,x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],x[8],x[9],x[10],x[11],x[12],x[13],x[14],x[15],x[16],x[17],x[18],x[19],x[20],x[21],x[22],x[23],x[24],x[25],x[26],x[27],x[28],x[29],x[30],x[31],x[32],x[33],x[34],x[35],x[36],x[37],x[38],x[39],x[40],x[41],x[42],x[43],x[44],x[45],x[46],x[47],x[48],x[49],x[50],x[51],x[52],x[53],x[54],x[55],x[56],x[57],x[58],x[59],x[60],x[61],x[62]);
-  default: return (*fn)(n, x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
+    default: return (*fn)(n, x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7],
                         x[8],x[9],x[10],x[11],x[12],x[13],x[14],
                         x[15],x[16],x[17],x[18],x[19],x[20],x[21],
                         x[22],x[23],x[24],x[25],x[26],x[27],x[28],
@@ -147,7 +148,9 @@ typedef cl_object (*t_f64)(cl_narg,cl_object,cl_object,cl_object,cl_object,cl_ob
                         x[50],x[51],x[52],x[53],x[54],x[55],x[56],
                         x[57],x[58],x[59],x[60],x[61],x[62],x[63]);
     }
-  }
+}
+
+
 typedef cl_object (*t_ff0)();
 typedef cl_object (*t_ff1)(cl_object);
 typedef cl_object (*t_ff2)(cl_object,cl_object);
@@ -213,11 +216,32 @@ typedef cl_object (*t_ff61)(cl_object,cl_object,cl_object,cl_object,cl_object,cl
 typedef cl_object (*t_ff62)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
 typedef cl_object (*t_ff63)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
 typedef cl_object (*t_ff64)(cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object,cl_object);
-  cl_object
-  APPLY_fixed(cl_narg n, cl_object (*fn)(), cl_object *x)
-  {
 
+cl_object
+APPLY_fixed(cl_narg n, cl_object (*fn)(), cl_object *x)
+{
     nlogd(">>FUCK APPLY-fixed n:%d", n);
+    if (n == 3) {
+            nlogd(">>HUHUHU");
+            nlogd("x:%ld", x);
+            nlogd("*x:%ld", *x);
+            x++;
+            nlogd("*x:%ld", *x);
+            // nlogd("x:%d", (*x)->d.t);
+            nlogd(">>>>>>>>>>>>>");
+            nlogd("0:%d", x[0]->d.t);
+            if (ecl_t_of(x[0]) == t_symbol) {
+                    cl_object name = x[0]->symbol.name;
+                    nlogd(">>namet(%d)", name->d.t);
+                    nlogd(">>namedisplay(%s)", name->base_string.self);
+            }
+            nlogd(">>>>>>>>>>>>>");
+
+
+            nlogd("1:%d", x[1]->d.t);
+            nlogd("2:%d", x[2]->d.t);
+            nlogd(">>HAHAHA");
+    }
     switch (n) {
 
     case 0:  return (*fn)();
@@ -288,5 +312,6 @@ typedef cl_object (*t_ff64)(cl_object,cl_object,cl_object,cl_object,cl_object,cl
     default:
   	  FEprogram_error_noreturn("Too many arguments", 0);
     }
-  }
-  #endif
+}
+#endif
+
