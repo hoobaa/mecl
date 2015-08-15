@@ -1,0 +1,5 @@
+static const char compiler_data_text[] = 
+"si::*dump-defun-definitions* si::*dump-defmacro-definitions* si::%dolist-var (fi"
+ "rst si::%dolist-var) ((setq si::%dolist-var (si::cons-cdr si::%dolist-var))) si:"
+ ":%dotimes-var 0 0 (nil) :and :or :not si::sharp-+-reader si::sharp---reader 0 0 ";
+#define compiler_data_text_size 240

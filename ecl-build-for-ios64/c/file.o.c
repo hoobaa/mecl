@@ -524,6 +524,7 @@ generic_read_vector(cl_object strm, cl_object data, cl_index start, cl_index end
 	if (start >= end)
 		return start;
 	expected_type = ecl_stream_element_type(strm);
+        nlogd(">>");
 	ops = stream_dispatch_table(strm);
 	if (expected_type == ECL_SYM("BASE-CHAR",120) || expected_type == ECL_SYM("CHARACTER",222)) {
 		ecl_character (*read_char)(cl_object) = ops->read_char;			
@@ -1451,16 +1452,16 @@ si_make_string_output_stream_from_string(cl_object s)
 	}
 #endif
 	{
-#line 1452
+#line 1453
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1452
-		#line 1452
+#line 1453
+		#line 1453
 		cl_object __value0 = strm;
-#line 1452
+#line 1453
 		the_env->nvalues = 1;
-#line 1452
+#line 1453
 		return __value0;
-#line 1452
+#line 1453
 	}
 
 }
@@ -1478,35 +1479,35 @@ ecl_make_string_output_stream(cl_index line_length, int extended)
 	return si_make_string_output_stream_from_string(s);
 }
 
-#line 1468
+#line 1469
 cl_object cl_make_string_output_stream(cl_narg narg, ...)
 {
-#line 1468
+#line 1469
 
 	int extended = 0;
-#line 1471
+#line 1472
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1471
+#line 1472
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1224)};
 	cl_object element_type;
-#line 1471
+#line 1472
 	cl_object KEY_VARS[2];
-#line 1471
+#line 1472
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, narg, narg, 0);
-#line 1471
+#line 1472
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(536));
-#line 1471
+#line 1472
 	cl_parse_key(ARGS, 1, KEYS, KEY_VARS, NULL, 0);
-#line 1471
+#line 1472
 	if (KEY_VARS[1]==ECL_NIL) {
-#line 1471
+#line 1472
 	  element_type = ECL_SYM("CHARACTER",222);
 	} else {
-#line 1471
+#line 1472
 	  element_type = KEY_VARS[0];
 	}
-#line 1471
+#line 1472
 	if (element_type == ECL_SYM("BASE-CHAR",120)) {
 		(void)0;
 	} else if (element_type == ECL_SYM("CHARACTER",222)) {
@@ -1524,14 +1525,14 @@ cl_object cl_make_string_output_stream(cl_narg narg, ...)
 			1, element_type);
 	}
 	{
-#line 1487
-		#line 1487
+#line 1488
+		#line 1488
 		cl_object __value0 = ecl_make_string_output_stream(128, extended);
-#line 1487
+#line 1488
 		the_env->nvalues = 1;
-#line 1487
+#line 1488
 		return __value0;
-#line 1487
+#line 1488
 	}
 
 }
@@ -1546,16 +1547,16 @@ cl_get_output_stream_string(cl_object strm)
 	strng = cl_copy_seq(STRING_OUTPUT_STRING(strm));
 	STRING_OUTPUT_STRING(strm)->base_string.fillp = 0;
 	{
-#line 1499
+#line 1500
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1499
-		#line 1499
+#line 1500
+		#line 1500
 		cl_object __value0 = strng;
-#line 1499
+#line 1500
 		the_env->nvalues = 1;
-#line 1499
+#line 1500
 		return __value0;
-#line 1499
+#line 1500
 	}
 
 }
@@ -1678,6 +1679,7 @@ ecl_make_string_input_stream(cl_object strng, cl_index istart, cl_index iend)
 	cl_object strm;
 
 	strm = alloc_stream();
+        nlogd(">>");
 	strm->stream.ops = duplicate_dispatch_table(&str_in_ops);
 	strm->stream.mode = (short)ecl_smm_string_input;
 	STRING_INPUT_STRING(strm) = strng;
@@ -1701,55 +1703,55 @@ ecl_make_string_input_stream(cl_object strng, cl_index istart, cl_index iend)
 	return strm;
 }
 
-#line 1643
+#line 1645
 cl_object cl_make_string_input_stream(cl_narg narg, cl_object strng, ...)
 {
-#line 1643
+#line 1645
 
         cl_index_pair p;
-#line 1646
+#line 1648
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1646
+#line 1648
 	cl_object istart;
-#line 1646
+#line 1648
 	cl_object iend;
-#line 1646
+#line 1648
 	va_list ARGS;
 	va_start(ARGS, strng);
-#line 1646
+#line 1648
 	if (ecl_unlikely(narg < 1|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(535));
-#line 1646
+#line 1648
 	if (narg > 1) {
-#line 1646
+#line 1648
 		istart = va_arg(ARGS,cl_object);
-#line 1646
+#line 1648
 	} else {
-#line 1646
+#line 1648
 		istart = ecl_make_fixnum(0);
-#line 1646
+#line 1648
 	}
-#line 1646
+#line 1648
 	if (narg > 2) {
-#line 1646
+#line 1648
 		iend = va_arg(ARGS,cl_object);
-#line 1646
+#line 1648
 	} else {
-#line 1646
+#line 1648
 		iend = ECL_NIL;
-#line 1646
+#line 1648
 	}
-#line 1646
+#line 1648
 	strng = cl_string(strng);
         p = ecl_vector_start_end(ecl_make_fixnum(/*MAKE-STRING-INPUT-STREAM*/535), strng, istart, iend);
 	{
-#line 1648
-		#line 1648
+#line 1650
+		#line 1650
 		cl_object __value0 = (ecl_make_string_input_stream(strng, p.start, p.end));
-#line 1648
+#line 1650
 		the_env->nvalues = 1;
-#line 1648
+#line 1650
 		return __value0;
-#line 1648
+#line 1650
 	}
 
 }
@@ -1811,6 +1813,7 @@ two_way_peek_char(cl_object strm)
 static cl_index
 two_way_read_vector(cl_object strm, cl_object data, cl_index start, cl_index n)
 {
+        nlogd(">>");
 	strm = TWO_WAY_STREAM_INPUT(strm);
 	return stream_dispatch_table(strm)->read_vector(strm, data, start, n);
 }
@@ -1818,6 +1821,7 @@ two_way_read_vector(cl_object strm, cl_object data, cl_index start, cl_index n)
 static cl_index
 two_way_write_vector(cl_object strm, cl_object data, cl_index start, cl_index n)
 {
+        nlogd(">>");
 	strm = TWO_WAY_STREAM_OUTPUT(strm);
 	return stream_dispatch_table(strm)->write_vector(strm, data, start, n);
 }
@@ -1929,16 +1933,16 @@ cl_make_two_way_stream(cl_object istrm, cl_object ostrm)
 	TWO_WAY_STREAM_INPUT(strm) = istrm;
 	TWO_WAY_STREAM_OUTPUT(strm) = ostrm;
 	{
-#line 1825
+#line 1829
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1825
-		#line 1825
+#line 1829
+		#line 1829
 		cl_object __value0 = strm;
-#line 1825
+#line 1829
 		the_env->nvalues = 1;
-#line 1825
+#line 1829
 		return __value0;
-#line 1825
+#line 1829
 	}
 
 }
@@ -1950,16 +1954,16 @@ cl_two_way_stream_input_stream(cl_object strm)
 		FEwrong_type_only_arg(ecl_make_fixnum(/*TWO-WAY-STREAM-INPUT-STREAM*/867),
                                       strm, ecl_make_fixnum(/*TWO-WAY-STREAM*/866));
 	{
-#line 1834
+#line 1838
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1834
-		#line 1834
+#line 1838
+		#line 1838
 		cl_object __value0 = TWO_WAY_STREAM_INPUT(strm);
-#line 1834
+#line 1838
 		the_env->nvalues = 1;
-#line 1834
+#line 1838
 		return __value0;
-#line 1834
+#line 1838
 	}
 ;
 }
@@ -1971,16 +1975,16 @@ cl_two_way_stream_output_stream(cl_object strm)
 		FEwrong_type_only_arg(ecl_make_fixnum(/*TWO-WAY-STREAM-OUTPUT-STREAM*/868),
                                       strm, ecl_make_fixnum(/*TWO-WAY-STREAM*/866));
 	{
-#line 1843
+#line 1847
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1843
-		#line 1843
+#line 1847
+		#line 1847
 		cl_object __value0 = TWO_WAY_STREAM_OUTPUT(strm);
-#line 1843
+#line 1847
 		the_env->nvalues = 1;
-#line 1843
+#line 1847
 		return __value0;
-#line 1843
+#line 1847
 	}
 
 }
@@ -2133,21 +2137,21 @@ const struct ecl_file_ops broadcast_ops = {
 	broadcast_close
 };
 
-#line 1994
+#line 1998
 cl_object cl_make_broadcast_stream(cl_narg narg, ...)
 {
-#line 1994
+#line 1998
 
 	cl_object x, streams;
 	int i;
-#line 1998
+#line 2002
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1998
+#line 2002
 	ecl_va_list ap;
 	ecl_va_start(ap, narg, narg, 0);
-#line 1998
+#line 2002
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(523));
-#line 1998
+#line 2002
 	streams = ECL_NIL;
 	for (i = 0; i < narg; i++) {
 		x = ecl_va_arg(ap);
@@ -2161,14 +2165,14 @@ cl_object cl_make_broadcast_stream(cl_narg narg, ...)
 	x->stream.mode = (short)ecl_smm_broadcast;
 	BROADCAST_STREAM_LIST(x) = cl_nreverse(streams);
 	{
-#line 2010
-		#line 2010
+#line 2014
+		#line 2014
 		cl_object __value0 = x;
-#line 2010
+#line 2014
 		the_env->nvalues = 1;
-#line 2010
+#line 2014
 		return __value0;
-#line 2010
+#line 2014
 	}
 
 }
@@ -2354,16 +2358,16 @@ cl_make_echo_stream(cl_object strm1, cl_object strm2)
 	ECHO_STREAM_INPUT(strm) = strm1;
 	ECHO_STREAM_OUTPUT(strm) = strm2;
 	{
-#line 2193
+#line 2197
 		const cl_env_ptr the_env = ecl_process_env();
-#line 2193
-		#line 2193
+#line 2197
+		#line 2197
 		cl_object __value0 = strm;
-#line 2193
+#line 2197
 		the_env->nvalues = 1;
-#line 2193
+#line 2197
 		return __value0;
-#line 2193
+#line 2197
 	}
 
 }
@@ -2375,16 +2379,16 @@ cl_echo_stream_input_stream(cl_object strm)
 		FEwrong_type_only_arg(ecl_make_fixnum(/*ECHO-STREAM-INPUT-STREAM*/323),
                                       strm, ecl_make_fixnum(/*ECHO-STREAM*/322));
 	{
-#line 2202
+#line 2206
 		const cl_env_ptr the_env = ecl_process_env();
-#line 2202
-		#line 2202
+#line 2206
+		#line 2206
 		cl_object __value0 = ECHO_STREAM_INPUT(strm);
-#line 2202
+#line 2206
 		the_env->nvalues = 1;
-#line 2202
+#line 2206
 		return __value0;
-#line 2202
+#line 2206
 	}
 
 }
@@ -2396,16 +2400,16 @@ cl_echo_stream_output_stream(cl_object strm)
 		FEwrong_type_only_arg(ecl_make_fixnum(/*ECHO-STREAM-OUTPUT-STREAM*/324),
                                       strm, ecl_make_fixnum(/*ECHO-STREAM*/322));
 	{
-#line 2211
+#line 2215
 		const cl_env_ptr the_env = ecl_process_env();
-#line 2211
-		#line 2211
+#line 2215
+		#line 2215
 		cl_object __value0 = ECHO_STREAM_OUTPUT(strm);
-#line 2211
+#line 2215
 		the_env->nvalues = 1;
-#line 2211
+#line 2215
 		return __value0;
-#line 2211
+#line 2215
 	}
 
 }
@@ -2521,21 +2525,21 @@ const struct ecl_file_ops concatenated_ops = {
 	concatenated_close
 };
 
-#line 2325
+#line 2329
 cl_object cl_make_concatenated_stream(cl_narg narg, ...)
 {
-#line 2325
+#line 2329
 
 	cl_object x, streams;
 	int i;
-#line 2329
+#line 2333
 	const cl_env_ptr the_env = ecl_process_env();
-#line 2329
+#line 2333
 	ecl_va_list ap;
 	ecl_va_start(ap, narg, narg, 0);
-#line 2329
+#line 2333
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(525));
-#line 2329
+#line 2333
 	streams = ECL_NIL;
 	for (i = 0; i < narg; i++) {
 		x = ecl_va_arg(ap);
@@ -2553,14 +2557,14 @@ cl_object cl_make_concatenated_stream(cl_narg narg, ...)
 	x->stream.ops = duplicate_dispatch_table(&concatenated_ops);
 	CONCATENATED_STREAM_LIST(x) = cl_nreverse(streams);
 	{
-#line 2345
-		#line 2345
+#line 2349
+		#line 2349
 		cl_object __value0 = x;
-#line 2345
+#line 2349
 		the_env->nvalues = 1;
-#line 2345
+#line 2349
 		return __value0;
-#line 2345
+#line 2349
 	}
 
 }
@@ -2629,6 +2633,7 @@ synonym_peek_char(cl_object strm)
 static cl_index
 synonym_read_vector(cl_object strm, cl_object data, cl_index start, cl_index n)
 {
+        nlogd(">>");
 	strm = SYNONYM_STREAM_STREAM(strm);
 	return stream_dispatch_table(strm)->read_vector(strm, data, start, n);
 }
@@ -2762,16 +2767,16 @@ cl_make_synonym_stream(cl_object sym)
 	x->stream.mode = (short)ecl_smm_synonym;
 	SYNONYM_STREAM_SYMBOL(x) = sym;
 	{
-#line 2544
+#line 2549
 		const cl_env_ptr the_env = ecl_process_env();
-#line 2544
-		#line 2544
+#line 2549
+		#line 2549
 		cl_object __value0 = x;
-#line 2544
+#line 2549
 		the_env->nvalues = 1;
-#line 2544
+#line 2549
 		return __value0;
-#line 2544
+#line 2549
 	}
 
 }
@@ -2783,16 +2788,16 @@ cl_synonym_stream_symbol(cl_object strm)
 		FEwrong_type_only_arg(ecl_make_fixnum(/*SYNONYM-STREAM-SYMBOL*/849),
                                       strm, ecl_make_fixnum(/*SYNONYM-STREAM*/848));
 	{
-#line 2553
+#line 2558
 		const cl_env_ptr the_env = ecl_process_env();
-#line 2553
-		#line 2553
+#line 2558
+		#line 2558
 		cl_object __value0 = SYNONYM_STREAM_SYMBOL(strm);
-#line 2553
+#line 2558
 		the_env->nvalues = 1;
-#line 2553
+#line 2558
 		return __value0;
-#line 2553
+#line 2558
 	}
 
 }
@@ -3513,10 +3518,10 @@ si_stream_external_format_set(cl_object stream, cl_object format)
                 FEerror("Cannot change external format of stream ~A", 1, stream);
         }
         {
-#line 3271
+#line 3276
 	const cl_env_ptr the_env = ecl_process_env();
 the_env->nvalues = 0; return ECL_NIL;
-#line 3271
+#line 3276
 }
 
 }
@@ -3884,391 +3889,392 @@ const struct ecl_file_ops input_stream_ops = {
  * WINSOCK STREAMS  
  */
 
-#if defined(ECL_WSOCK)
-
-#define winsock_stream_element_type io_file_element_type
-
-static cl_index
-winsock_stream_read_byte8(cl_object strm, unsigned char *c, cl_index n)
-{
-	cl_index len = 0;
-
-	unlikely_if (strm->stream.byte_stack != ECL_NIL) {
-		return consume_byte_stack(strm, c, n);
-	}
-	if(n > 0) {
-		SOCKET s = (SOCKET)IO_FILE_DESCRIPTOR(strm);
-		unlikely_if (INVALID_SOCKET == s) {
-			wrong_file_handler(strm);
-		} else {
-			ecl_disable_interrupts();
-			len = recv(s, c, n, 0);
-			unlikely_if (len == SOCKET_ERROR)
-				wsock_error("Cannot read bytes from Windows "
-                                            "socket ~S.~%~A", strm);
-			ecl_enable_interrupts();
-		}
-	}
-	return (len > 0) ? len : EOF;
-}
-
-static cl_index
-winsock_stream_write_byte8(cl_object strm, unsigned char *c, cl_index n)
-{
-	cl_index out = 0;
-	unsigned char *endp;
-	unsigned char *p;
-	SOCKET s = (SOCKET)IO_FILE_DESCRIPTOR(strm);
-	unlikely_if (INVALID_SOCKET == s) {
-		wrong_file_handler(strm);
-	} else {
-		ecl_disable_interrupts();
-		do {
-			cl_index res = send(s, c + out, n, 0);
-			unlikely_if (res == SOCKET_ERROR) {
-				wsock_error("Cannot write bytes to Windows"
-                                            " socket ~S.~%~A", strm);
-				break; /* stop writing */
-			} else {			
-				out += res;
-				n -= res;
-			}
-		} while (n > 0);
-		ecl_enable_interrupts();
-	}
-	return out;
-}
-
-static int
-winsock_stream_listen(cl_object strm) 
-{
-	SOCKET s;
-	unlikely_if (strm->stream.byte_stack != ECL_NIL) {
-		return ECL_LISTEN_AVAILABLE;
-	}
-	s = (SOCKET)IO_FILE_DESCRIPTOR(strm);
-	unlikely_if (INVALID_SOCKET == s) {
-		wrong_file_handler(strm);
-	}
-	{
-		struct timeval tv = { 0, 0 };
-		fd_set fds;
-		cl_index result;
-			
-		FD_ZERO( &fds );
-		FD_SET(s, &fds);
-		ecl_disable_interrupts();
-		result = select( 0, &fds, NULL, NULL,  &tv );
-		unlikely_if (result == SOCKET_ERROR)
-			wsock_error("Cannot listen on Windows "
-				    "socket ~S.~%~A", strm );
-		ecl_enable_interrupts();
-		return ( result > 0 
-			 ? ECL_LISTEN_AVAILABLE 
-			 : ECL_LISTEN_NO_CHAR );
-	}
-}
-
-static void
-winsock_stream_clear_input(cl_object strm)
-{
-	while (winsock_stream_listen(strm) == ECL_LISTEN_AVAILABLE) {
-		eformat_read_char(strm);
-	}
-}
-
-static cl_object
-winsock_stream_close(cl_object strm)
-{
-	SOCKET s = (SOCKET) IO_FILE_DESCRIPTOR(strm);
-	int failed;
-	ecl_disable_interrupts();
-	failed = closesocket(s);
-	ecl_enable_interrupts();
-	unlikely_if (failed < 0)
-		cannot_close(strm);
-	IO_FILE_DESCRIPTOR(strm) = (int)INVALID_SOCKET;
-	return generic_close(strm);
-}
-
-const struct ecl_file_ops winsock_stream_io_ops = {
-	winsock_stream_write_byte8,
-	winsock_stream_read_byte8,
-
-	generic_write_byte,
-	generic_read_byte,
-
-	eformat_read_char,
-	eformat_write_char,
-	eformat_unread_char,
-	generic_peek_char,
-
-	generic_read_vector,
-	generic_write_vector,
-
-	winsock_stream_listen,
-	winsock_stream_clear_input,
-	generic_void,
-	generic_void,
-	generic_void,
-
-	generic_always_true, /* input_p */
-	generic_always_true, /* output_p */
-	generic_always_false,
-	winsock_stream_element_type,
-
-	not_a_file_stream,
-	not_implemented_get_position,
-	not_implemented_set_position,
-	generic_column,
-
-	winsock_stream_close
-};
-
-const struct ecl_file_ops winsock_stream_output_ops = {
-	winsock_stream_write_byte8,
-	not_input_read_byte8,
-
-	generic_write_byte,
-	not_input_read_byte,
-
-	not_input_read_char,
-	eformat_write_char,
-	not_input_unread_char,
-	generic_peek_char,
-
-	generic_read_vector,
-	generic_write_vector,
-
-	not_input_listen,
-	not_input_clear_input,
-	generic_void,
-	generic_void,
-	generic_void,
-
-	generic_always_false, /* input_p */
-	generic_always_true, /* output_p */
-	generic_always_false,
-	winsock_stream_element_type,
-
-	not_a_file_stream,
-	not_implemented_get_position,
-	not_implemented_set_position,
-	generic_column,
-
-	winsock_stream_close
-};
-
-const struct ecl_file_ops winsock_stream_input_ops = {
-	not_output_write_byte8,
-	winsock_stream_read_byte8,
-
-	not_output_write_byte,
-	generic_read_byte,
-
-	eformat_read_char,
-	not_output_write_char,
-	eformat_unread_char,
-	generic_peek_char,
-
-	generic_read_vector,
-	generic_write_vector,
-
-	winsock_stream_listen,
-	winsock_stream_clear_input,
-	not_output_clear_output,
-	not_output_finish_output,
-	not_output_force_output,
-
-	generic_always_true, /* input_p */
-	generic_always_false, /* output_p */
-	generic_always_false,
-	winsock_stream_element_type,
-
-	not_a_file_stream,
-	not_implemented_get_position,
-	not_implemented_set_position,
-	generic_column,
-
-	winsock_stream_close
-};
-#endif
-
-/**********************************************************************
- * WINCONSOLE STREAM
- */
-
-#if defined(ECL_MS_WINDOWS_HOST)
-
-#define wcon_stream_element_type io_file_element_type
-
-static cl_index
-wcon_stream_read_byte8(cl_object strm, unsigned char *c, cl_index n)
-{
-	unlikely_if (strm->stream.byte_stack != ECL_NIL) {
-		return consume_byte_stack(strm, c, n);
-	} else {
-		cl_index len = 0;
-		cl_env_ptr the_env = ecl_process_env();
-		HANDLE h = (HANDLE)IO_FILE_DESCRIPTOR(strm);
-		DWORD nchars;
-		unsigned char aux[4];
-		for (len = 0; len < n; ) {
-			int i, ok;
-			ecl_disable_interrupts_env(the_env);
-			ok = ReadConsole(h, &aux, 1, &nchars, NULL);
-			ecl_enable_interrupts_env(the_env);
-			unlikely_if (!ok) {
-				FEwin32_error("Cannot read from console", 0);
-			}
-			for (i = 0; i < nchars; i++) {
-				if (len < n) {
-					c[len++] = aux[i];
-				} else {
-					strm->stream.byte_stack =
-						ecl_nconc(strm->stream.byte_stack,
-							  ecl_list1(ecl_make_fixnum(aux[i])));
-				}
-			}
-		}
-		return (len > 0) ? len : EOF;
-	}
-}
-
-static cl_index
-wcon_stream_write_byte8(cl_object strm, unsigned char *c, cl_index n)
-{
-	HANDLE h = (HANDLE)IO_FILE_DESCRIPTOR(strm);
-	DWORD nchars;
-	unlikely_if(!WriteConsole(h, c, n, &nchars, NULL)) {
-		FEwin32_error("Cannot write to console.", 0);
-	}
-	return nchars;
-}
-
-static int
-wcon_stream_listen(cl_object strm) 
-{
-	HANDLE h = (HANDLE)IO_FILE_DESCRIPTOR(strm);
-	INPUT_RECORD aux;
-	DWORD nevents;
-	do {
-		unlikely_if(!PeekConsoleInput(h, &aux, 1, &nevents))
-			FEwin32_error("Cannot read from console.", 0);
-		if (nevents == 0)
-			return 0;
-		if (aux.EventType == KEY_EVENT)
-			return 1;
-		unlikely_if(!ReadConsoleInput(h, &aux, 1, &nevents))
-			FEwin32_error("Cannot read from console.", 0);
-	} while (1);
-}
-
-static void
-wcon_stream_clear_input(cl_object strm)
-{
-	FlushConsoleInputBuffer((HANDLE)IO_FILE_DESCRIPTOR(strm));
-}
-
-static void
-wcon_stream_force_output(cl_object strm)
-{
-	DWORD nchars;
-	WriteConsole((HANDLE)IO_FILE_DESCRIPTOR(strm), 0, 0, &nchars, NULL);
-}
-
-const struct ecl_file_ops wcon_stream_io_ops = {
-	wcon_stream_write_byte8,
-	wcon_stream_read_byte8,
-
-	generic_write_byte,
-	generic_read_byte,
-
-	eformat_read_char,
-	eformat_write_char,
-	eformat_unread_char,
-	generic_peek_char,
-
-	generic_read_vector,
-	generic_write_vector,
-
-	wcon_stream_listen,
-	wcon_stream_clear_input,
-	generic_void,
-	wcon_stream_force_output,
-	wcon_stream_force_output,
-
-	generic_always_true, /* input_p */
-	generic_always_true, /* output_p */
-	generic_always_false,
-	wcon_stream_element_type,
-
-	not_a_file_stream,
-	not_implemented_get_position,
-	not_implemented_set_position,
-	generic_column,
-
-	generic_close,
-};
-
-#define CONTROL_Z 26
-
-static cl_object
-maybe_make_windows_console_FILE(cl_object fname, FILE *f, enum ecl_smmode smm,
-				cl_fixnum byte_size, int flags,
-				cl_object external_format)
-{
-	int desc = fileno(f);
-	cl_object output;
-	if (isatty(desc)) {
-		output = ecl_make_stream_from_FILE
-			(fname,
-			 (void*)_get_osfhandle(desc),
-			 ecl_smm_io_wcon,
-			 byte_size, flags,
-			 external_format);
-		output->stream.eof_char = CONTROL_Z;
-	} else {
-		output = ecl_make_stream_from_FILE
-			(fname, f, smm, byte_size, flags,
-			 external_format);
-	}
-	return output;
-}
-
-static cl_object
-maybe_make_windows_console_fd(cl_object fname, int desc, enum ecl_smmode smm,
-			      cl_fixnum byte_size, int flags,
-			      cl_object external_format)
-{
-	cl_object output;
-	if (isatty(desc)) {
-		output = ecl_make_stream_from_FILE
-			(fname,
-			 (void*)_get_osfhandle(desc),
-			 ecl_smm_io_wcon,
-			 byte_size, flags,
-			 external_format);
-		output->stream.eof_char = CONTROL_Z;
-	} else {
-		/* Windows changes the newline characters for \r\n
-		 * even when using read()/write() */
-		if (ecl_option_values[ECL_OPT_USE_SETMODE_ON_FILES]) {
-			_setmode(desc, _O_BINARY);
-		} else {
-			external_format = ECL_CONS_CDR(external_format);
-		}
-		output = ecl_make_file_stream_from_fd
-			(fname, desc, smm,
-			 byte_size, flags,
-			 external_format);
-	}
-	return output;
-}
-#else
+// #if defined(ECL_WSOCK)
+// 
+// #define winsock_stream_element_type io_file_element_type
+// 
+// static cl_index
+// winsock_stream_read_byte8(cl_object strm, unsigned char *c, cl_index n)
+// {
+// 	cl_index len = 0;
+// 
+// 	unlikely_if (strm->stream.byte_stack != ECL_NIL) {
+// 		return consume_byte_stack(strm, c, n);
+// 	}
+// 	if(n > 0) {
+// 		SOCKET s = (SOCKET)IO_FILE_DESCRIPTOR(strm);
+// 		unlikely_if (INVALID_SOCKET == s) {
+// 			wrong_file_handler(strm);
+// 		} else {
+// 			ecl_disable_interrupts();
+// 			len = recv(s, c, n, 0);
+// 			unlikely_if (len == SOCKET_ERROR)
+// 				wsock_error("Cannot read bytes from Windows "
+//                                             "socket ~S.~%~A", strm);
+// 			ecl_enable_interrupts();
+// 		}
+// 	}
+// 	return (len > 0) ? len : EOF;
+// }
+// 
+// static cl_index
+// winsock_stream_write_byte8(cl_object strm, unsigned char *c, cl_index n)
+// {
+// 	cl_index out = 0;
+// 	unsigned char *endp;
+// 	unsigned char *p;
+// 	SOCKET s = (SOCKET)IO_FILE_DESCRIPTOR(strm);
+// 	unlikely_if (INVALID_SOCKET == s) {
+// 		wrong_file_handler(strm);
+// 	} else {
+// 		ecl_disable_interrupts();
+// 		do {
+// 			cl_index res = send(s, c + out, n, 0);
+// 			unlikely_if (res == SOCKET_ERROR) {
+// 				wsock_error("Cannot write bytes to Windows"
+//                                             " socket ~S.~%~A", strm);
+// 				break; /* stop writing */
+// 			} else {			
+// 				out += res;
+// 				n -= res;
+// 			}
+// 		} while (n > 0);
+// 		ecl_enable_interrupts();
+// 	}
+// 	return out;
+// }
+// 
+// static int
+// winsock_stream_listen(cl_object strm) 
+// {
+// 	SOCKET s;
+// 	unlikely_if (strm->stream.byte_stack != ECL_NIL) {
+// 		return ECL_LISTEN_AVAILABLE;
+// 	}
+// 	s = (SOCKET)IO_FILE_DESCRIPTOR(strm);
+// 	unlikely_if (INVALID_SOCKET == s) {
+// 		wrong_file_handler(strm);
+// 	}
+// 	{
+// 		struct timeval tv = { 0, 0 };
+// 		fd_set fds;
+// 		cl_index result;
+// 			
+// 		FD_ZERO( &fds );
+// 		FD_SET(s, &fds);
+// 		ecl_disable_interrupts();
+// 		result = select( 0, &fds, NULL, NULL,  &tv );
+// 		unlikely_if (result == SOCKET_ERROR)
+// 			wsock_error("Cannot listen on Windows "
+// 				    "socket ~S.~%~A", strm );
+// 		ecl_enable_interrupts();
+// 		return ( result > 0 
+// 			 ? ECL_LISTEN_AVAILABLE 
+// 			 : ECL_LISTEN_NO_CHAR );
+// 	}
+// }
+// 
+// static void
+// winsock_stream_clear_input(cl_object strm)
+// {
+// 	while (winsock_stream_listen(strm) == ECL_LISTEN_AVAILABLE) {
+// 		eformat_read_char(strm);
+// 	}
+// }
+// 
+// static cl_object
+// winsock_stream_close(cl_object strm)
+// {
+// 	SOCKET s = (SOCKET) IO_FILE_DESCRIPTOR(strm);
+// 	int failed;
+// 	ecl_disable_interrupts();
+// 	failed = closesocket(s);
+// 	ecl_enable_interrupts();
+// 	unlikely_if (failed < 0)
+// 		cannot_close(strm);
+// 	IO_FILE_DESCRIPTOR(strm) = (int)INVALID_SOCKET;
+// 	return generic_close(strm);
+// }
+// 
+// const struct ecl_file_ops winsock_stream_io_ops = {
+// 	winsock_stream_write_byte8,
+// 	winsock_stream_read_byte8,
+// 
+// 	generic_write_byte,
+// 	generic_read_byte,
+// 
+// 	eformat_read_char,
+// 	eformat_write_char,
+// 	eformat_unread_char,
+// 	generic_peek_char,
+// 
+// 	generic_read_vector,
+// 	generic_write_vector,
+// 
+// 	winsock_stream_listen,
+// 	winsock_stream_clear_input,
+// 	generic_void,
+// 	generic_void,
+// 	generic_void,
+// 
+// 	generic_always_true, /* input_p */
+// 	generic_always_true, /* output_p */
+// 	generic_always_false,
+// 	winsock_stream_element_type,
+// 
+// 	not_a_file_stream,
+// 	not_implemented_get_position,
+// 	not_implemented_set_position,
+// 	generic_column,
+// 
+// 	winsock_stream_close
+// };
+// 
+// const struct ecl_file_ops winsock_stream_output_ops = {
+// 	winsock_stream_write_byte8,
+// 	not_input_read_byte8,
+// 
+// 	generic_write_byte,
+// 	not_input_read_byte,
+// 
+// 	not_input_read_char,
+// 	eformat_write_char,
+// 	not_input_unread_char,
+// 	generic_peek_char,
+// 
+// 	generic_read_vector,
+// 	generic_write_vector,
+// 
+// 	not_input_listen,
+// 	not_input_clear_input,
+// 	generic_void,
+// 	generic_void,
+// 	generic_void,
+// 
+// 	generic_always_false, /* input_p */
+// 	generic_always_true, /* output_p */
+// 	generic_always_false,
+// 	winsock_stream_element_type,
+// 
+// 	not_a_file_stream,
+// 	not_implemented_get_position,
+// 	not_implemented_set_position,
+// 	generic_column,
+// 
+// 	winsock_stream_close
+// };
+// 
+// const struct ecl_file_ops winsock_stream_input_ops = {
+// 	not_output_write_byte8,
+// 	winsock_stream_read_byte8,
+// 
+// 	not_output_write_byte,
+// 	generic_read_byte,
+// 
+// 	eformat_read_char,
+// 	not_output_write_char,
+// 	eformat_unread_char,
+// 	generic_peek_char,
+// 
+// 	generic_read_vector,
+// 	generic_write_vector,
+// 
+// 	winsock_stream_listen,
+// 	winsock_stream_clear_input,
+// 	not_output_clear_output,
+// 	not_output_finish_output,
+// 	not_output_force_output,
+// 
+// 	generic_always_true, /* input_p */
+// 	generic_always_false, /* output_p */
+// 	generic_always_false,
+// 	winsock_stream_element_type,
+// 
+// 	not_a_file_stream,
+// 	not_implemented_get_position,
+// 	not_implemented_set_position,
+// 	generic_column,
+// 
+// 	winsock_stream_close
+// };
+// #endif
+// 
+// /**********************************************************************
+//  * WINCONSOLE STREAM
+//  */
+// 
+// #if defined(ECL_MS_WINDOWS_HOST)
+// 
+// #define wcon_stream_element_type io_file_element_type
+// 
+// static cl_index
+// wcon_stream_read_byte8(cl_object strm, unsigned char *c, cl_index n)
+// {
+// 	unlikely_if (strm->stream.byte_stack != ECL_NIL) {
+// 		return consume_byte_stack(strm, c, n);
+// 	} else {
+// 		cl_index len = 0;
+// 		cl_env_ptr the_env = ecl_process_env();
+// 		HANDLE h = (HANDLE)IO_FILE_DESCRIPTOR(strm);
+// 		DWORD nchars;
+// 		unsigned char aux[4];
+// 		for (len = 0; len < n; ) {
+// 			int i, ok;
+// 			ecl_disable_interrupts_env(the_env);
+// 			ok = ReadConsole(h, &aux, 1, &nchars, NULL);
+// 			ecl_enable_interrupts_env(the_env);
+// 			unlikely_if (!ok) {
+// 				FEwin32_error("Cannot read from console", 0);
+// 			}
+// 			for (i = 0; i < nchars; i++) {
+// 				if (len < n) {
+// 					c[len++] = aux[i];
+// 				} else {
+// 					strm->stream.byte_stack =
+// 						ecl_nconc(strm->stream.byte_stack,
+// 							  ecl_list1(ecl_make_fixnum(aux[i])));
+// 				}
+// 			}
+// 		}
+// 		return (len > 0) ? len : EOF;
+// 	}
+// }
+// 
+// static cl_index
+// wcon_stream_write_byte8(cl_object strm, unsigned char *c, cl_index n)
+// {
+// 	HANDLE h = (HANDLE)IO_FILE_DESCRIPTOR(strm);
+// 	DWORD nchars;
+// 	unlikely_if(!WriteConsole(h, c, n, &nchars, NULL)) {
+// 		FEwin32_error("Cannot write to console.", 0);
+// 	}
+// 	return nchars;
+// }
+// 
+// static int
+// wcon_stream_listen(cl_object strm) 
+// {
+// 	HANDLE h = (HANDLE)IO_FILE_DESCRIPTOR(strm);
+// 	INPUT_RECORD aux;
+// 	DWORD nevents;
+// 	do {
+// 		unlikely_if(!PeekConsoleInput(h, &aux, 1, &nevents))
+// 			FEwin32_error("Cannot read from console.", 0);
+// 		if (nevents == 0)
+// 			return 0;
+// 		if (aux.EventType == KEY_EVENT)
+// 			return 1;
+// 		unlikely_if(!ReadConsoleInput(h, &aux, 1, &nevents))
+// 			FEwin32_error("Cannot read from console.", 0);
+// 	} while (1);
+// }
+// 
+// static void
+// wcon_stream_clear_input(cl_object strm)
+// {
+// 	FlushConsoleInputBuffer((HANDLE)IO_FILE_DESCRIPTOR(strm));
+// }
+// 
+// static void
+// wcon_stream_force_output(cl_object strm)
+// {
+// 	DWORD nchars;
+// 	WriteConsole((HANDLE)IO_FILE_DESCRIPTOR(strm), 0, 0, &nchars, NULL);
+// }
+// 
+// const struct ecl_file_ops wcon_stream_io_ops = {
+// 	wcon_stream_write_byte8,
+// 	wcon_stream_read_byte8,
+// 
+// 	generic_write_byte,
+// 	generic_read_byte,
+// 
+// 	eformat_read_char,
+// 	eformat_write_char,
+// 	eformat_unread_char,
+// 	generic_peek_char,
+// 
+// 	generic_read_vector,
+// 	generic_write_vector,
+// 
+// 	wcon_stream_listen,
+// 	wcon_stream_clear_input,
+// 	generic_void,
+// 	wcon_stream_force_output,
+// 	wcon_stream_force_output,
+// 
+// 	generic_always_true, /* input_p */
+// 	generic_always_true, /* output_p */
+// 	generic_always_false,
+// 	wcon_stream_element_type,
+// 
+// 	not_a_file_stream,
+// 	not_implemented_get_position,
+// 	not_implemented_set_position,
+// 	generic_column,
+// 
+// 	generic_close,
+// };
+// 
+// #define CONTROL_Z 26
+// 
+// static cl_object
+// maybe_make_windows_console_FILE(cl_object fname, FILE *f, enum ecl_smmode smm,
+// 				cl_fixnum byte_size, int flags,
+// 				cl_object external_format)
+// {
+// 	int desc = fileno(f);
+// 	cl_object output;
+// 	if (isatty(desc)) {
+// 		output = ecl_make_stream_from_FILE
+// 			(fname,
+// 			 (void*)_get_osfhandle(desc),
+// 			 ecl_smm_io_wcon,
+// 			 byte_size, flags,
+// 			 external_format);
+// 		output->stream.eof_char = CONTROL_Z;
+// 	} else {
+// 		output = ecl_make_stream_from_FILE ///////
+// 			(fname, f, smm, byte_size, flags,
+// 			 external_format);
+// 	}
+// 	return output;
+// }
+// 
+// static cl_object
+// maybe_make_windows_console_fd(cl_object fname, int desc, enum ecl_smmode smm,
+// 			      cl_fixnum byte_size, int flags,
+// 			      cl_object external_format)
+// {
+//         nlogd(">>make_console_fd with thread");
+// 	cl_object output;
+// 	if (isatty(desc)) {
+// 		output = ecl_make_stream_from_FILE
+// 			(fname,
+// 			 (void*)_get_osfhandle(desc),
+// 			 ecl_smm_io_wcon,
+// 			 byte_size, flags,
+// 			 external_format);
+// 		output->stream.eof_char = CONTROL_Z;
+// 	} else {
+// 		/* Windows changes the newline characters for \r\n
+// 		 * even when using read()/write() */
+// 		if (ecl_option_values[ECL_OPT_USE_SETMODE_ON_FILES]) {
+// 			_setmode(desc, _O_BINARY);
+// 		} else {
+// 			external_format = ECL_CONS_CDR(external_format);
+// 		}
+// 		output = ecl_make_file_stream_from_fd
+// 			(fname, desc, smm,
+// 			 byte_size, flags,
+// 			 external_format);
+// 	}
+// 	return output;
+// }
+// #else
 #define maybe_make_windows_console_FILE ecl_make_stream_from_FILE
 #define maybe_make_windows_console_fd ecl_make_file_stream_from_fd
-#endif
+// #endif
 
 cl_object
 si_set_buffering_mode(cl_object stream, cl_object buffer_mode_symbol)
@@ -4301,16 +4307,16 @@ si_set_buffering_mode(cl_object stream, cl_object buffer_mode_symbol)
 			setvbuf(fp, NULL, _IONBF, 0);
 	}
 	{
-#line 4053
+#line 4059
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4053
-		#line 4053
+#line 4059
+		#line 4059
 		cl_object __value0 = stream;
-#line 4053
+#line 4059
 		the_env->nvalues = 1;
-#line 4053
+#line 4059
 		return __value0;
-#line 4053
+#line 4059
 	}
 
 }
@@ -4319,6 +4325,8 @@ cl_object
 ecl_make_stream_from_FILE(cl_object fname, void *f, enum ecl_smmode smm,
 			  cl_fixnum byte_size, int flags, cl_object external_format)
 {
+        nlogd(">>FUCK windows");
+        
 	cl_object stream;
 	stream = alloc_stream();
 	stream->stream.mode = (short)smm;
@@ -4364,6 +4372,8 @@ cl_object
 ecl_make_stream_from_fd(cl_object fname, int fd, enum ecl_smmode smm,
 			cl_fixnum byte_size, int flags, cl_object external_format)
 {
+        nlogd(">>FUCK windows");
+
 	char *mode;			/* file open mode */
 	FILE *fp;			/* file pointer */
 	switch(smm) {
@@ -4468,16 +4478,16 @@ si_file_stream_fd(cl_object s)
 		ecl_internal_error("not a file stream");
 	}
         {
-#line 4208
+#line 4218
 	const cl_env_ptr the_env = ecl_process_env();
-#line 4208
-	#line 4208
+#line 4218
+	#line 4218
 	cl_object __value0 = ret;
-#line 4208
+#line 4218
 	the_env->nvalues = 1;
-#line 4208
+#line 4218
 	return __value0;
-#line 4208
+#line 4218
 }
 ;
 }
@@ -4626,65 +4636,65 @@ make_sequence_input_stream(cl_object vector, cl_index istart, cl_index iend,
 	return strm;
 }
 
-#line 4358
+#line 4368
 cl_object si_make_sequence_input_stream(cl_narg narg, cl_object vector, ...)
 {
-#line 4358
+#line 4368
 
         cl_index_pair p;
-#line 4361
+#line 4371
 	const cl_env_ptr the_env = ecl_process_env();
-#line 4361
+#line 4371
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1310), (cl_object)(cl_symbols+1225), (cl_object)(cl_symbols+1236)};
 	cl_object start;
 	cl_object end;
 	cl_object external_format;
-#line 4361
+#line 4371
 	cl_object KEY_VARS[6];
-#line 4361
+#line 4371
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, vector, narg, 1);
-#line 4361
+#line 4371
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(1926));
-#line 4361
+#line 4371
 	cl_parse_key(ARGS, 3, KEYS, KEY_VARS, NULL, 0);
-#line 4361
+#line 4371
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 4361
+#line 4371
 	  start = ecl_make_fixnum(0);
 	} else {
-#line 4361
+#line 4371
 	  start = KEY_VARS[0];
 	}
-#line 4361
+#line 4371
 	if (KEY_VARS[4]==ECL_NIL) {
-#line 4361
+#line 4371
 	  end = ECL_NIL;
 	} else {
-#line 4361
+#line 4371
 	  end = KEY_VARS[1];
 	}
-#line 4361
+#line 4371
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 4361
+#line 4371
 	  external_format = ECL_NIL;
 	} else {
-#line 4361
+#line 4371
 	  external_format = KEY_VARS[2];
 	}
-#line 4361
+#line 4371
         p = ecl_vector_start_end(ecl_make_fixnum(/*EXT::MAKE-SEQUENCE-INPUT-STREAM*/1926),
                                  vector, start, end);
 	{
-#line 4364
-		#line 4364
+#line 4374
+		#line 4374
 		cl_object __value0 = make_sequence_input_stream(vector, p.start, p.end,
                                             external_format);
-#line 4364
+#line 4374
 		the_env->nvalues = 1;
-#line 4364
+#line 4374
 		return __value0;
-#line 4364
+#line 4374
 	}
 
 }
@@ -4823,43 +4833,43 @@ make_sequence_output_stream(cl_object vector, cl_object external_format)
 	return strm;
 }
 
-#line 4501
+#line 4511
 cl_object si_make_sequence_output_stream(cl_narg narg, cl_object vector, ...)
 {
-#line 4501
+#line 4511
 
-#line 4503
+#line 4513
 	const cl_env_ptr the_env = ecl_process_env();
-#line 4503
+#line 4513
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1236)};
 	cl_object external_format;
-#line 4503
+#line 4513
 	cl_object KEY_VARS[2];
-#line 4503
+#line 4513
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, vector, narg, 1);
-#line 4503
+#line 4513
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(1927));
-#line 4503
+#line 4513
 	cl_parse_key(ARGS, 1, KEYS, KEY_VARS, NULL, 0);
-#line 4503
+#line 4513
 	if (KEY_VARS[1]==ECL_NIL) {
-#line 4503
+#line 4513
 	  external_format = ECL_NIL;
 	} else {
-#line 4503
+#line 4513
 	  external_format = KEY_VARS[0];
 	}
-#line 4503
+#line 4513
 	{
-#line 4503
-		#line 4503
+#line 4513
+		#line 4513
 		cl_object __value0 = make_sequence_output_stream(vector, external_format);
-#line 4503
+#line 4513
 		the_env->nvalues = 1;
-#line 4503
+#line 4513
 		return __value0;
-#line 4503
+#line 4513
 	}
 
 }
@@ -4878,10 +4888,10 @@ duplicate_dispatch_table(const struct ecl_file_ops *ops)
 
 // #define stream_dispatch_table
 
-#define _stream_dispatch_table(strm) do {               \
-                nlogd(">>stream_dispatch_table");       \
-                _stream_dispatch_table(strm);           \
-        } while (0)
+// #define _stream_dispatch_table(strm) do {               \
+//                 nlogd(">>stream_dispatch_table");       \
+//                 _stream_dispatch_table(strm);           \
+//         } while (0)
 
 const struct ecl_file_ops *
 stream_dispatch_table(cl_object strm)
@@ -4898,14 +4908,17 @@ stream_dispatch_table(cl_object strm)
                 nlogd(">>stream_dispatch_table 3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< CANCER");
 		FEwrong_type_argument(ecl_make_fixnum(/*STREAM*/799), strm);
         }
-        nlogd(">>stream_dispatch_table 4");
+        nlogd(">>stream_dispatch_table 4"); 
 	return (const struct ecl_file_ops *)strm->stream.ops;
 }
 
 static cl_index
 ecl_read_byte8(cl_object strm, unsigned char *c, cl_index n)
 {
-	return stream_dispatch_table(strm)->read_byte8(strm, c, n);
+        // nlogd(">>%s", __func__);
+        nlogd(">>");
+        const struct ecl_file_ops *op = stream_dispatch_table(strm);
+        return ((cl_index (*)(cl_object , unsigned char *, cl_index ))(op->read_byte8))(strm, c, n);
 }
 
 static cl_index
@@ -4919,7 +4932,7 @@ ecl_read_char(cl_object strm)
 {
         nlogd(">>ecl_read_char1 ---------------------------------------- strm(%ld)", strm);
         struct ecl_file_ops *ops = stream_dispatch_table(strm);
-        nlogd(">>ops(%ld)", ops);
+        nlogd(">>ops(%ld) ecl_read_byte8(%ld)", ops, &ecl_read_byte8);
         //ecl_character a = ((ecl_character(*)(cl_object strm))((ops)->read_char))(strm);
         ecl_character a = ((ops)->read_char)(strm);
         nlogd(">>ecl_read_char2 ----------------------------------------");
@@ -4938,102 +4951,119 @@ ecl_read_char_noeof(cl_object strm)
 cl_object
 ecl_read_byte(cl_object strm)
 {
+        nlogd(">>");
 	return stream_dispatch_table(strm)->read_byte(strm);
 }
 
 void
 ecl_write_byte(cl_object c, cl_object strm)
 {
+        nlogd(">>");
 	stream_dispatch_table(strm)->write_byte(c, strm);
 }
 
 ecl_character
 ecl_write_char(ecl_character c, cl_object strm)
 {
+        nlogd(">>");
 	return stream_dispatch_table(strm)->write_char(strm, c);
 }
 
 void
 ecl_unread_char(ecl_character c, cl_object strm)
 {
+        nlogd(">>");
 	stream_dispatch_table(strm)->unread_char(strm, c);
 }
 
 int
 ecl_listen_stream(cl_object strm)
 {
+        nlogd(">>");
 	return stream_dispatch_table(strm)->listen(strm);
 }
 
 void
 ecl_clear_input(cl_object strm)
 {
+        nlogd(">>");
 	stream_dispatch_table(strm)->clear_input(strm);
 }
 
 void
 ecl_clear_output(cl_object strm)
 {
+        nlogd(">>");
 	stream_dispatch_table(strm)->clear_output(strm);
 }
 
 void
 ecl_force_output(cl_object strm)
 {
+        nlogd(">>");
 	stream_dispatch_table(strm)->force_output(strm);
 }
 
 void
 ecl_finish_output(cl_object strm)
 {
+        nlogd(">>");
 	stream_dispatch_table(strm)->finish_output(strm);
 }
 
 int
 ecl_file_column(cl_object strm)
 {
+        nlogd(">>");
 	return stream_dispatch_table(strm)->column(strm);
 }
 
 cl_object
 ecl_file_length(cl_object strm)
 {
+        nlogd(">>");
 	return stream_dispatch_table(strm)->length(strm);
 }
 
 cl_object
 ecl_file_position(cl_object strm)
 {
+        nlogd(">>");
 	return stream_dispatch_table(strm)->get_position(strm);
 }
 
 cl_object
 ecl_file_position_set(cl_object strm, cl_object pos)
 {
+        nlogd(">>");
 	return stream_dispatch_table(strm)->set_position(strm, pos);
 }
 
 bool
 ecl_input_stream_p(cl_object strm)
 {
+        nlogd(">>");
 	return stream_dispatch_table(strm)->input_p(strm);
 }
 
 bool
 ecl_output_stream_p(cl_object strm)
 {
+        nlogd(">>");
 	return stream_dispatch_table(strm)->output_p(strm);
 }
 
 cl_object
 ecl_stream_element_type(cl_object strm)
 {
+        nlogd(">>");
 	return stream_dispatch_table(strm)->element_type(strm);
 }
 
 int
 ecl_interactive_stream_p(cl_object strm)
 {
+        nlogd(">>");
 	return stream_dispatch_table(strm)->interactive_p(strm);
 }
 
@@ -5049,6 +5079,7 @@ ecl_interactive_stream_p(cl_object strm)
 ecl_character
 ecl_peek_char(cl_object strm)
 {
+        nlogd(">>");
 	return stream_dispatch_table(strm)->peek_char(strm);
 }
 
@@ -5096,16 +5127,16 @@ cl_file_string_length(cl_object stream, cl_object string)
 #ifdef ECL_CLOS_STREAMS
 	if (ECL_INSTANCEP(stream)) {
 		{
-#line 4737
+#line 4768
 			const cl_env_ptr the_env = ecl_process_env();
-#line 4737
-			#line 4737
+#line 4768
+			#line 4768
 			cl_object __value0 = ECL_NIL;
-#line 4737
+#line 4768
 			the_env->nvalues = 1;
-#line 4737
+#line 4768
 			return __value0;
-#line 4737
+#line 4768
 		}
 
 	}
@@ -5117,16 +5148,16 @@ cl_file_string_length(cl_object stream, cl_object string)
 		stream = BROADCAST_STREAM_LIST(stream);
 		if (Null(stream)) {
 			{
-#line 4746
+#line 4777
 				const cl_env_ptr the_env = ecl_process_env();
-#line 4746
-				#line 4746
+#line 4777
+				#line 4777
 				cl_object __value0 = ecl_make_fixnum(1);
-#line 4746
+#line 4777
 				the_env->nvalues = 1;
-#line 4746
+#line 4777
 				return __value0;
-#line 4746
+#line 4777
 			}
 ;
 		} else {
@@ -5154,16 +5185,16 @@ cl_file_string_length(cl_object stream, cl_object string)
                 FEwrong_type_nth_arg(ecl_make_fixnum(/*FILE-STRING-LENGTH*/359), 2, string, ecl_make_fixnum(/*STRING*/805));
 	}
 	{
-#line 4771
+#line 4802
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4771
-		#line 4771
+#line 4802
+		#line 4802
 		cl_object __value0 = ecl_make_fixnum(l);
-#line 4771
+#line 4802
 		the_env->nvalues = 1;
-#line 4771
+#line 4802
 		return __value0;
-#line 4771
+#line 4802
 	}
 
 }
@@ -5219,16 +5250,16 @@ si_do_write_sequence(cl_object seq, cl_object stream, cl_object s, cl_object e)
 	}
  OUTPUT:
 	{
-#line 4824
+#line 4855
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4824
-		#line 4824
+#line 4855
+		#line 4855
 		cl_object __value0 = seq;
-#line 4824
+#line 4855
 		the_env->nvalues = 1;
-#line 4824
+#line 4855
 		return __value0;
-#line 4824
+#line 4855
 	}
 ;
 }
@@ -5262,6 +5293,7 @@ si_do_read_sequence(cl_object seq, cl_object stream, cl_object s, cl_object e)
 	if (end <= start) {
 		goto OUTPUT;
 	}
+        nlogd(">>");
 	ops = stream_dispatch_table(stream);
 	if (LISTP(seq)) {
 		cl_object elt_type = cl_stream_element_type(stream);
@@ -5289,16 +5321,16 @@ si_do_read_sequence(cl_object seq, cl_object stream, cl_object s, cl_object e)
 	}
  OUTPUT:
 	{
-#line 4882
+#line 4914
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4882
-		#line 4882
+#line 4914
+		#line 4914
 		cl_object __value0 = ecl_make_fixnum(start);
-#line 4882
+#line 4914
 		the_env->nvalues = 1;
-#line 4882
+#line 4914
 		return __value0;
-#line 4882
+#line 4914
 	}
 
 }
@@ -5311,16 +5343,16 @@ cl_object
 si_file_column(cl_object strm)
 {
 	{
-#line 4892
+#line 4924
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4892
-		#line 4892
+#line 4924
+		#line 4924
 		cl_object __value0 = ecl_make_fixnum(ecl_file_column(strm));
-#line 4892
+#line 4924
 		the_env->nvalues = 1;
-#line 4892
+#line 4924
 		return __value0;
-#line 4892
+#line 4924
 	}
 
 }
@@ -5329,46 +5361,46 @@ cl_object
 cl_file_length(cl_object strm)
 {
 	{
-#line 4898
+#line 4930
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4898
-		#line 4898
+#line 4930
+		#line 4930
 		cl_object __value0 = ecl_file_length(strm);
-#line 4898
+#line 4930
 		the_env->nvalues = 1;
-#line 4898
+#line 4930
 		return __value0;
-#line 4898
+#line 4930
 	}
 
 }
 
-#line 4901
+#line 4933
 cl_object cl_file_position(cl_narg narg, cl_object file_stream, ...)
 {
-#line 4901
+#line 4933
 
 	cl_object output;
-#line 4904
+#line 4936
 	const cl_env_ptr the_env = ecl_process_env();
-#line 4904
+#line 4936
 	cl_object position;
-#line 4904
+#line 4936
 	va_list ARGS;
 	va_start(ARGS, file_stream);
-#line 4904
+#line 4936
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(357));
-#line 4904
+#line 4936
 	if (narg > 1) {
-#line 4904
+#line 4936
 		position = va_arg(ARGS,cl_object);
-#line 4904
+#line 4936
 	} else {
-#line 4904
+#line 4936
 		position = ECL_NIL;
-#line 4904
+#line 4936
 	}
-#line 4904
+#line 4936
 	if (Null(position)) {
 		output = ecl_file_position(file_stream);
 	} else {
@@ -5380,14 +5412,14 @@ cl_object cl_file_position(cl_narg narg, cl_object file_stream, ...)
 		output = ecl_file_position_set(file_stream, position);
 	}
 	{
-#line 4914
-		#line 4914
+#line 4946
+		#line 4946
 		cl_object __value0 = output;
-#line 4914
+#line 4946
 		the_env->nvalues = 1;
-#line 4914
+#line 4946
 		return __value0;
-#line 4914
+#line 4946
 	}
 
 }
@@ -5396,16 +5428,16 @@ cl_object
 cl_input_stream_p(cl_object strm)
 {
 	{
-#line 4920
+#line 4952
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4920
-		#line 4920
+#line 4952
+		#line 4952
 		cl_object __value0 = (ecl_input_stream_p(strm) ? ECL_T : ECL_NIL);
-#line 4920
+#line 4952
 		the_env->nvalues = 1;
-#line 4920
+#line 4952
 		return __value0;
-#line 4920
+#line 4952
 	}
 
 }
@@ -5414,16 +5446,16 @@ cl_object
 cl_output_stream_p(cl_object strm)
 {
 	{
-#line 4926
+#line 4958
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4926
-		#line 4926
+#line 4958
+		#line 4958
 		cl_object __value0 = (ecl_output_stream_p(strm) ? ECL_T : ECL_NIL);
-#line 4926
+#line 4958
 		the_env->nvalues = 1;
-#line 4926
+#line 4958
 		return __value0;
-#line 4926
+#line 4958
 	}
 
 }
@@ -5432,16 +5464,16 @@ cl_object
 cl_interactive_stream_p(cl_object strm)
 {
 	{
-#line 4932
+#line 4964
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4932
-		#line 4932
+#line 4964
+		#line 4964
 		cl_object __value0 = (stream_dispatch_table(strm)->interactive_p(strm)? ECL_T : ECL_NIL);
-#line 4932
+#line 4964
 		the_env->nvalues = 1;
-#line 4932
+#line 4964
 		return __value0;
-#line 4932
+#line 4964
 	}
 
 }
@@ -5460,16 +5492,16 @@ cl_open_stream_p(cl_object strm)
 	unlikely_if (!ECL_ANSI_STREAM_P(strm))
                 FEwrong_type_only_arg(ECL_SYM("OPEN-STREAM-P",612), strm, ECL_SYM("STREAM",799));
 	{
-#line 4948
+#line 4980
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4948
-		#line 4948
+#line 4980
+		#line 4980
 		cl_object __value0 = (strm->stream.closed ? ECL_NIL : ECL_T);
-#line 4948
+#line 4980
 		the_env->nvalues = 1;
-#line 4948
+#line 4980
 		return __value0;
-#line 4948
+#line 4980
 	}
 
 }
@@ -5478,16 +5510,16 @@ cl_object
 cl_stream_element_type(cl_object strm)
 {
 	{
-#line 4954
+#line 4986
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4954
-		#line 4954
+#line 4986
+		#line 4986
 		cl_object __value0 = ecl_stream_element_type(strm);
-#line 4954
+#line 4986
 		the_env->nvalues = 1;
-#line 4954
+#line 4986
 		return __value0;
-#line 4954
+#line 4986
 	}
 
 }
@@ -5512,16 +5544,16 @@ cl_stream_external_format(cl_object strm)
 	}
 	output = strm->stream.format;
 	{
-#line 4976
+#line 5008
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4976
-		#line 4976
+#line 5008
+		#line 5008
 		cl_object __value0 = output;
-#line 4976
+#line 5008
 		the_env->nvalues = 1;
-#line 4976
+#line 5008
 		return __value0;
-#line 4976
+#line 5008
 	}
 
 }
@@ -5535,16 +5567,16 @@ cl_streamp(cl_object strm)
 	}
 #endif
 	{
-#line 4987
+#line 5019
 		const cl_env_ptr the_env = ecl_process_env();
-#line 4987
-		#line 4987
+#line 5019
+		#line 5019
 		cl_object __value0 = (ECL_ANSI_STREAM_P(strm) ? ECL_T : ECL_NIL);
-#line 4987
+#line 5019
 		the_env->nvalues = 1;
-#line 4987
+#line 5019
 		return __value0;
-#line 4987
+#line 5019
 	}
 
 }
@@ -5562,16 +5594,16 @@ si_copy_stream(cl_object in, cl_object out)
 	}
 	ecl_force_output(out);
 	{
-#line 5002
+#line 5034
 		const cl_env_ptr the_env = ecl_process_env();
-#line 5002
-		#line 5002
+#line 5034
+		#line 5034
 		cl_object __value0 = ECL_T;
-#line 5002
+#line 5034
 		the_env->nvalues = 1;
-#line 5002
+#line 5034
 		return __value0;
-#line 5002
+#line 5034
 	}
 
 }
@@ -5734,17 +5766,17 @@ ecl_open_stream(cl_object fn, enum ecl_smmode smm, cl_object if_exists,
 	return output;
 }
 
-#line 5170
+#line 5202
 cl_object cl_open(cl_narg narg, cl_object filename, ...)
 {
-#line 5170
+#line 5202
 
 	enum ecl_smmode smm;
 	int flags = 0;
 	cl_fixnum byte_size;
-#line 5175
+#line 5207
 	const cl_env_ptr the_env = ecl_process_env();
-#line 5175
+#line 5207
 	static cl_object KEYS[6] = {(cl_object)(cl_symbols+1218), (cl_object)(cl_symbols+1224), (cl_object)(cl_symbols+1245), (cl_object)(cl_symbols+1244), (cl_object)(cl_symbols+1236), (cl_object)(cl_symbols+1324)};
 	cl_object direction;
 	cl_object element_type;
@@ -5754,76 +5786,76 @@ cl_object cl_open(cl_narg narg, cl_object filename, ...)
 	bool idnesp;
 	cl_object external_format;
 	cl_object cstream;
-#line 5175
+#line 5207
 	cl_object strm;
-#line 5175
+#line 5207
 	cl_object KEY_VARS[12];
-#line 5175
+#line 5207
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, filename, narg, 1);
-#line 5175
+#line 5207
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(611));
-#line 5175
+#line 5207
 	cl_parse_key(ARGS, 6, KEYS, KEY_VARS, NULL, 0);
-#line 5175
+#line 5207
 	if (KEY_VARS[6]==ECL_NIL) {
-#line 5175
+#line 5207
 	  direction = ECL_SYM(":INPUT",1254);
 	} else {
-#line 5175
+#line 5207
 	  direction = KEY_VARS[0];
 	}
-#line 5175
+#line 5207
 	if (KEY_VARS[7]==ECL_NIL) {
-#line 5175
+#line 5207
 	  element_type = ECL_SYM("CHARACTER",222);
 	} else {
-#line 5175
+#line 5207
 	  element_type = KEY_VARS[1];
 	}
-#line 5175
+#line 5207
 	if (KEY_VARS[8]==ECL_NIL) {
-#line 5175
+#line 5207
 	  if_exists = ECL_NIL;
-#line 5175
+#line 5207
 	  iesp = FALSE;
 	} else {
-#line 5175
+#line 5207
 	  iesp = TRUE;
-#line 5175
+#line 5207
 	  if_exists = KEY_VARS[2];
 	}
-#line 5175
+#line 5207
 	if (KEY_VARS[9]==ECL_NIL) {
-#line 5175
+#line 5207
 	  if_does_not_exist = ECL_NIL;
-#line 5175
+#line 5207
 	  idnesp = FALSE;
 	} else {
-#line 5175
+#line 5207
 	  idnesp = TRUE;
-#line 5175
+#line 5207
 	  if_does_not_exist = KEY_VARS[3];
 	}
-#line 5175
+#line 5207
 	if (KEY_VARS[10]==ECL_NIL) {
-#line 5175
+#line 5207
 	  external_format = ECL_SYM(":DEFAULT",1215);
 	} else {
-#line 5175
+#line 5207
 	  external_format = KEY_VARS[4];
 	}
-#line 5175
+#line 5207
 	if (KEY_VARS[11]==ECL_NIL) {
-#line 5175
+#line 5207
 	  cstream = ECL_T;
 	} else {
-#line 5175
+#line 5207
 	  cstream = KEY_VARS[5];
 	}
-#line 5175
+#line 5207
 	strm = ECL_NIL;
-#line 5175
+#line 5207
 	/* INV: ecl_open_stream() checks types */
 	if (direction == ECL_SYM(":INPUT",1254)) {
 		smm = ecl_smm_input;
@@ -5869,56 +5901,56 @@ cl_object cl_open(cl_narg narg, cl_object filename, ...)
 	strm = ecl_open_stream(filename, smm, if_exists, if_does_not_exist,
 			       byte_size, flags, external_format);
 	{
-#line 5219
-		#line 5219
+#line 5251
+		#line 5251
 		cl_object __value0 = strm;
-#line 5219
+#line 5251
 		the_env->nvalues = 1;
-#line 5219
+#line 5251
 		return __value0;
-#line 5219
+#line 5251
 	}
 
 }
 
 
-#line 5223
+#line 5255
 cl_object cl_close(cl_narg narg, cl_object strm, ...)
 {
-#line 5223
+#line 5255
 
-#line 5225
+#line 5257
 	const cl_env_ptr the_env = ecl_process_env();
-#line 5225
+#line 5257
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1195)};
 	cl_object abort;
-#line 5225
+#line 5257
 	cl_object KEY_VARS[2];
-#line 5225
+#line 5257
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, strm, narg, 1);
-#line 5225
+#line 5257
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(228));
-#line 5225
+#line 5257
 	cl_parse_key(ARGS, 1, KEYS, KEY_VARS, NULL, 0);
-#line 5225
+#line 5257
 	if (KEY_VARS[1]==ECL_NIL) {
-#line 5225
+#line 5257
 	  abort = ECL_NIL;
 	} else {
-#line 5225
+#line 5257
 	  abort = KEY_VARS[0];
 	}
-#line 5225
+#line 5257
 	{
-#line 5225
-		#line 5225
+#line 5257
+		#line 5257
 		cl_object __value0 = stream_dispatch_table(strm)->close(strm);
-#line 5225
+#line 5257
 		the_env->nvalues = 1;
-#line 5225
+#line 5257
 		return __value0;
-#line 5225
+#line 5257
 	}
 ;
 }
@@ -6316,17 +6348,17 @@ init_file(void)
 	cl_object aux;
 	cl_object null_stream;
 	cl_object external_format = ECL_NIL;
-#if defined(ECL_MS_WINDOWS_HOST)
-# ifdef ECL_UNICODE
-	external_format = cl_list(2, ECL_SYM(":LATIN-1",1679), ECL_SYM(":CRLF",1690));
-	flags = 0;
-# else
-	external_format = cl_list(2, ECL_SYM(":CRLF",1690), ECL_SYM(":PASS-THROUGH",1767));
-	flags = ECL_STREAM_DEFAULT_FORMAT;
-# endif
-#else
-	flags = ECL_STREAM_DEFAULT_FORMAT;
-#endif
+// #if defined(ECL_MS_WINDOWS_HOST)
+// # ifdef ECL_UNICODE
+// 	external_format = cl_list(2, ECL_SYM(":LATIN-1",1679), ECL_SYM(":CRLF",1690));
+// 	flags = 0;
+// # else
+// 	external_format = cl_list(2, ECL_SYM(":CRLF",1690), ECL_SYM(":PASS-THROUGH",1767));
+// 	flags = ECL_STREAM_DEFAULT_FORMAT;
+// # endif
+// #else
+// 	flags = ECL_STREAM_DEFAULT_FORMAT;
+// #endif
 
 	null_stream = ecl_make_stream_from_FILE(make_constant_base_string("/dev/null"),
 						NULL, ecl_smm_io, 8, flags, external_format);
@@ -6337,6 +6369,7 @@ init_file(void)
         /* We choose C streams by default only when _not_ using threads.
          * The reason is that C streams block on I/O operations. */
 #if !defined(ECL_THREADS)
+        nlogd(">>init_file");
 	standard_input = maybe_make_windows_console_FILE(make_constant_base_string("stdin"),
 							 stdin, ecl_smm_input, 8, flags, external_format);
 	standard_output = maybe_make_windows_console_FILE(make_constant_base_string("stdout"),
@@ -6344,6 +6377,7 @@ init_file(void)
 	error_output = maybe_make_windows_console_FILE(make_constant_base_string("stderr"),
 						       stderr, ecl_smm_output, 8, flags, external_format);
 #else
+        nlogd(">>init_file");
 	standard_input = maybe_make_windows_console_fd(make_constant_base_string("stdin"),
 						       STDIN_FILENO, ecl_smm_input_file, 8, flags,
 						       external_format);

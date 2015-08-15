@@ -1,0 +1,9 @@
+static const char compiler_data_text[] = 
+"clos::lambda-list function-keywords clos::*eql-specializer-lock* clos::*eql-spec"
+ "ializer-hash* clos::intern-eql-specializer 0 :specializers :lambda-list :generic"
+ "-function clos::compute-method-keywords 0 clos::method-keywords 0 0 0 (standard-"
+ "method t) (method clos::slot-names &rest clos::initargs &key (clos::specializers"
+ " nil clos::spec-supplied-p) (clos::lambda-list nil clos::lambda-supplied-p) gene"
+ "ric-function) (clos::specializer method) (clos::spec method) (clos::eql-speciali"
+ "zer method) ";
+#define compiler_data_text_size 492

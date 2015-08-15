@@ -1,0 +1,15 @@
+static const char compiler_data_text[] = 
+"sb-rt::*test* sb-rt::*do-tests-when-defined* sb-rt::*entries* sb-rt::*in-test* s"
+ "b-rt::*debug* sb-rt::*catch-errors* sb-rt::*print-circle-on-failure* sb-rt::*com"
+ "pile-tests* sb-rt::*optimization-settings* sb-rt::*expected-failures* sb-rt::ent"
+ "ry sb-rt::copy-entry sb-rt::make-entry sb-rt::vals sb-rt::defn sb-rt::pending-te"
+ "sts sb-rt::rem-all-tests sb-rt::rem-test sb-rt::get-test sb-rt::get-entry sb-rt:"
+ ":add-entry sb-rt::deftest sb-rt::add-entry sb-rt::report-error sb-rt::do-test sb"
+ "-rt::equalp-with-case sb-rt::do-entry sb-rt::continue-testing sb-rt::do-tests sb"
+ "-rt::do-entries #:rt si::dodefpackage 0 :pend :name :form 0 0 0 sb-rt::pend sb-r"
+ "t::name 0 0 0 0 0 0 0 0 0 0 sb-rt::form 0 0 0 (\"RT\" \"REGRESSION-TEST\" \"RTEST\") ("
+ "\"CL\") (\"*DO-TESTS-WHEN-DEFINED*\" \"*TEST*\" \"CONTINUE-TESTING\" \"DEFTEST\" \"DO-TEST\""
+ " \"DO-TESTS\" \"GET-TEST\" \"PENDING-TESTS\" \"REM-ALL-TESTS\" \"REM-TEST\") (nil) ((safet"
+ "y 3)) (sb-rt::pend sb-rt::name sb-rt::form) ((sb-rt::pend nil t nil 0 nil) (sb-r"
+ "t::name nil t nil 1 nil) (sb-rt::form nil t nil 2 nil)) (sb-rt::make-entry) ";
+#define compiler_data_text_size 1036

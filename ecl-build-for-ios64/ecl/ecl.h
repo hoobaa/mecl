@@ -89,13 +89,17 @@ typedef HANDLE pthread_cond_t; /*Dummy, not really used*/
 
 typedef void (*ecl_init_function_t)(cl_object block);
 
+#define __nfile__ (strrchr(__FILE__,'/')+1)
+
 #include <sys/time.h>
 #define nlogd(format, ...)                                              \
         do {                                                            \
                 struct timeval tv;                                      \
                 gettimeofday(&tv, NULL);                                \
-                dprintf(1,      "(D %ld %s %d (%ld %d) " format ")\n", (size_t)pthread_self(), __FILE__, __LINE__, tv.tv_sec, tv.tv_usec ,## __VA_ARGS__); \
+                dprintf(1,      "(D %ld %s(%d)(%s) (%ld %d) " format ")\n", (size_t)pthread_self(), __nfile__, __LINE__, __func__, tv.tv_sec, tv.tv_usec ,## __VA_ARGS__); \
                 fflush(stdout);                                         \
         } while (0)
 
 #endif /* ECL_H */
+
+extern void objdump(cl_object obj);
