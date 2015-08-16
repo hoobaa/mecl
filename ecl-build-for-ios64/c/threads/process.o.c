@@ -479,22 +479,20 @@ mp_process_preset(cl_narg narg, cl_object process, cl_object function, ...)
 	ecl_va_start(args, function, narg, 2);
 	if (narg < 2)
 		FEwrong_num_arguments(ecl_make_fixnum(/*MP::PROCESS-PRESET*/1407));
-        printf("MP_PROCESS_PRESET1\n");
-	assert_type_process(process); // type error occur
-        printf("MP_PROCESS_PRESET2\n");
+	assert_type_process(process);
 	process->process.function = function;
 	process->process.args = cl_grab_rest_args(args);
 	{
-#line 441
+#line 439
 		const cl_env_ptr the_env = ecl_process_env();
-#line 441
-		#line 441
+#line 439
+		#line 439
 		cl_object __value0 = process;
-#line 441
+#line 439
 		the_env->nvalues = 1;
-#line 441
+#line 439
 		return __value0;
-#line 441
+#line 439
 	}
 
 }
@@ -506,16 +504,16 @@ mp_interrupt_process(cl_object process, cl_object function)
 		FEerror("Cannot interrupt the inactive process ~A", 1, process);
         ecl_interrupt_process(process, function);
 	{
-#line 450
+#line 448
 		const cl_env_ptr the_env = ecl_process_env();
-#line 450
-		#line 450
+#line 448
+		#line 448
 		cl_object __value0 = ECL_T;
-#line 450
+#line 448
 		the_env->nvalues = 1;
-#line 450
+#line 448
 		return __value0;
-#line 450
+#line 448
 	}
 
 }
@@ -565,10 +563,10 @@ mp_process_yield(void)
 {
 	ecl_process_yield();
 	{
-#line 497
+#line 495
 		const cl_env_ptr the_env = ecl_process_env();
 the_env->nvalues = 0; return ECL_NIL;
-#line 497
+#line 495
 	}
 
 }
@@ -660,16 +658,16 @@ mp_process_enable(cl_object process)
 	process->process.start_spinlock = ECL_NIL;
 
 	{
-#line 586
+#line 584
 		const cl_env_ptr the_env = ecl_process_env();
-#line 586
-		#line 586
+#line 584
+		#line 584
 		cl_object __value0 = (ok? process : ECL_NIL);
-#line 586
+#line 584
 		the_env->nvalues = 1;
-#line 586
+#line 584
 		return __value0;
-#line 586
+#line 584
 	}
 
 }
@@ -692,16 +690,16 @@ mp_all_processes(void)
 	/* No race condition here because this list is never destructively
 	 * modified. When we add or remove processes, we create new lists. */
 	{
-#line 606
+#line 604
 		const cl_env_ptr the_env = ecl_process_env();
-#line 606
-		#line 606
+#line 604
+		#line 604
 		cl_object __value0 = ecl_process_list();
-#line 606
+#line 604
 		the_env->nvalues = 1;
-#line 606
+#line 604
 		return __value0;
-#line 606
+#line 604
 	}
 
 }
@@ -711,16 +709,16 @@ mp_process_name(cl_object process)
 {
 	assert_type_process(process);
 	{
-#line 613
+#line 611
 		const cl_env_ptr the_env = ecl_process_env();
-#line 613
-		#line 613
+#line 611
+		#line 611
 		cl_object __value0 = process->process.name;
-#line 613
+#line 611
 		the_env->nvalues = 1;
-#line 613
+#line 611
 		return __value0;
-#line 613
+#line 611
 	}
 
 }
@@ -730,16 +728,16 @@ mp_process_active_p(cl_object process)
 {
 	assert_type_process(process);
 	{
-#line 620
+#line 618
 		const cl_env_ptr the_env = ecl_process_env();
-#line 620
-		#line 620
+#line 618
+		#line 618
 		cl_object __value0 = (process->process.phase? ECL_T : ECL_NIL);
-#line 620
+#line 618
 		the_env->nvalues = 1;
-#line 620
+#line 618
 		return __value0;
-#line 620
+#line 618
 	}
 
 }
@@ -749,16 +747,16 @@ mp_process_whostate(cl_object process)
 {
 	assert_type_process(process);
 	{
-#line 627
+#line 625
 		const cl_env_ptr the_env = ecl_process_env();
-#line 627
-		#line 627
+#line 625
+		#line 625
 		cl_object __value0 = (cl_core.null_string);
-#line 627
+#line 625
 		the_env->nvalues = 1;
-#line 627
+#line 625
 		return __value0;
-#line 627
+#line 625
 	}
 
 }
@@ -808,16 +806,16 @@ mp_process_run_function_wait(cl_narg narg, ...)
                 }
         }
 	{
-#line 674
+#line 672
 		const cl_env_ptr the_env = ecl_process_env();
-#line 674
-		#line 674
+#line 672
+		#line 672
 		cl_object __value0 = process;
-#line 674
+#line 672
 		the_env->nvalues = 1;
-#line 674
+#line 672
 		return __value0;
-#line 674
+#line 672
 	}
 
 }
@@ -837,16 +835,16 @@ mp_get_sigmask(void)
         if (pthread_sigmask(SIG_BLOCK, &no_signals, mask_ptr))
                 FElibc_error("MP:GET-SIGMASK failed in a call to pthread_sigmask", 0);
         {
-#line 691
+#line 689
 	const cl_env_ptr the_env = ecl_process_env();
-#line 691
-	#line 691
+#line 689
+	#line 689
 	cl_object __value0 = data;
-#line 691
+#line 689
 	the_env->nvalues = 1;
-#line 691
+#line 689
 	return __value0;
-#line 691
+#line 689
 }
 
 }
@@ -858,16 +856,16 @@ mp_set_sigmask(cl_object data)
         if (pthread_sigmask(SIG_SETMASK, mask_ptr, NULL))
                 FElibc_error("MP:SET-SIGMASK failed in a call to pthread_sigmask", 0);
         {
-#line 700
+#line 698
 	const cl_env_ptr the_env = ecl_process_env();
-#line 700
-	#line 700
+#line 698
+	#line 698
 	cl_object __value0 = data;
-#line 700
+#line 698
 	the_env->nvalues = 1;
-#line 700
+#line 698
 	return __value0;
-#line 700
+#line 698
 }
 
 }
@@ -881,16 +879,16 @@ mp_block_signals(void)
         cl_object previous = ecl_symbol_value(ECL_SYM("EXT::*INTERRUPTS-ENABLED*",1023));
         ECL_SETQ(the_env, ECL_SYM("EXT::*INTERRUPTS-ENABLED*",1023), ECL_NIL);
         {
-#line 711
+#line 709
 	const cl_env_ptr the_env = ecl_process_env();
-#line 711
-	#line 711
+#line 709
+	#line 709
 	cl_object __value0 = previous;
-#line 711
+#line 709
 	the_env->nvalues = 1;
-#line 711
+#line 709
 	return __value0;
-#line 711
+#line 709
 }
 
 #else
@@ -900,16 +898,16 @@ mp_block_signals(void)
         if (pthread_sigmask(SIG_SETMASK, &all_signals, NULL))
                 FElibc_error("MP:BLOCK-SIGNALS failed in a call to pthread_sigmask",0);
         {
-#line 718
+#line 716
 	const cl_env_ptr the_env = ecl_process_env();
-#line 718
-	#line 718
+#line 716
+	#line 716
 	cl_object __value0 = previous;
-#line 718
+#line 716
 	the_env->nvalues = 1;
-#line 718
+#line 716
 	return __value0;
-#line 718
+#line 716
 }
 
 #endif
@@ -923,16 +921,16 @@ mp_restore_signals(cl_object sigmask)
         ECL_SETQ(the_env, ECL_SYM("EXT::*INTERRUPTS-ENABLED*",1023), sigmask);
         ecl_check_pending_interrupts(the_env);
         {
-#line 729
+#line 727
 	const cl_env_ptr the_env = ecl_process_env();
-#line 729
-	#line 729
+#line 727
+	#line 727
 	cl_object __value0 = sigmask;
-#line 729
+#line 727
 	the_env->nvalues = 1;
-#line 729
+#line 727
 	return __value0;
-#line 729
+#line 727
 }
 
 #else
@@ -947,13 +945,10 @@ mp_restore_signals(cl_object sigmask)
 void
 init_threads(cl_env_ptr env)
 {
-        printf("START:%s:%d\n", __FILE__, __LINE__);
 	cl_object process;
 	pthread_t main_thread;
 
 	cl_core.processes = OBJNULL;
-
-        printf("%s:%d\n", __FILE__, __LINE__);
 
 	/* We have to set the environment before any allocation takes place,
 	 * so that the interrupt handling code works. */
@@ -965,8 +960,6 @@ init_threads(cl_env_ptr env)
 # endif
 #endif
 	ecl_set_process_env(env);
-
-        printf("%s:%d\n", __FILE__, __LINE__);
 
 #ifdef ECL_WINDOWS_THREADS
 	{
@@ -980,13 +973,8 @@ init_threads(cl_env_ptr env)
 			DUPLICATE_SAME_ACCESS);
 	}
 #else
-        printf("main1>>>>%d\n", __LINE__);
 	main_thread = pthread_self();
-        printf("main2>>>>%d\n", __LINE__);
 #endif
-
-        printf("%s:%d\n", __FILE__, __LINE__);
-
 	process = ecl_alloc_object(t_process);
 	process->process.phase = ECL_PROCESS_ACTIVE;
 	process->process.name = ECL_SYM("SI::TOP-LEVEL",1162);
@@ -1001,27 +989,16 @@ init_threads(cl_env_ptr env)
 
 	env->own_process = process;
 
-        printf("FUCK:%s:%d\n", __FILE__, __LINE__);
 	{
 		cl_object v = si_make_vector(ECL_T, /* Element type */
-                                             ecl_make_fixnum(256), /* Size */
-                                             ecl_make_fixnum(0), /* fill pointer */
-                                             ECL_NIL, ECL_NIL, ECL_NIL);
-                printf("1:%s:%d\n", __FILE__, __LINE__);
-		//v->array.self.t[0] = ECL_NIL;
-                printf("5:%s:%d\n", __FILE__, __LINE__);
+					   ecl_make_fixnum(256), /* Size */
+					   ecl_make_fixnum(0), /* fill pointer */
+					   ECL_NIL, ECL_NIL, ECL_NIL);
 		v->vector.self.t[0] = process;
-                printf("10:%s:%d\n", __FILE__, __LINE__);
 		v->vector.fillp = 1;
-                printf("20:%s:%d\n", __FILE__, __LINE__);
 		cl_core.processes = v;
-                printf("50:%s:%d\n", __FILE__, __LINE__);
 		cl_core.global_lock = ecl_make_lock(ECL_SYM("MP::GLOBAL-LOCK",1441), 1);
 		cl_core.error_lock = ecl_make_lock(ECL_SYM("MP::ERROR-LOCK",1442), 1);
 		cl_core.global_env_lock = ecl_make_rwlock(ECL_SYM("EXT::PACKAGE-LOCK",1114));
-                printf("100:%s:%d\n", __FILE__, __LINE__);
 	}
-        
-        // printf(">>>>%d\n", __LINE__);
-        printf("END-INIT_THREADS:%s:%d\n", __FILE__, __LINE__);
 }

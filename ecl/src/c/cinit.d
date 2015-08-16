@@ -1,4 +1,4 @@
-/* -*- mode: c; c-basic-offset: 4 -*- */
+/* -*- mode: c; c-basic-offset: 8 -*- */
 /*
     init.c  -- Lisp Initialization.
 */
@@ -27,13 +27,6 @@
  * actual initialization code, and the compiled function will be
  * called instead.
  */
-
-void objdump(cl_object obj){
-        nlogd("------------------------------");
-        int t = ecl_t_of(obj);
-        nlogd("objt(%d)", t);
-        nlogd("------------------------------");
-}
 
 extern cl_object
 cl_upgraded_array_element_type(cl_narg narg, cl_object type, ...)
@@ -157,8 +150,8 @@ static cl_object si_simple_toplevel ()
 
 	/* Simple minded top level loop */
         ECL_CATCH_ALL_BEGIN(env) {
-                writestr_stream(";*** Lisp core booted !! ****\n"
-                                "ECL (Embeddable Common Lisp aaaa )\n",
+                writestr_stream(";*** Lisp core booted ****\n"
+                                "ECL (Embeddable Common Lisp)\n",
                                 output);
                 ecl_force_output(output);
                 for (i = 1; i<ecl_fixnum(si_argc()); i++) {
@@ -166,12 +159,8 @@ static cl_object si_simple_toplevel ()
                         cl_load(1, arg);
                 }
                 while (1) {
-                        writestr_stream("\n>> ", output);
-                        nlogd("---- read befor");
+                        writestr_stream("\n> ", output);
                         sentence = @read(3, ECL_NIL, ECL_NIL, OBJNULL);
-                        nlogd("---- sentence");
-                        objdump(sentence);
-
                         if (sentence == OBJNULL)
                                 @(return);
 			sentence = si_eval_with_env(1, sentence);
@@ -183,33 +172,6 @@ static cl_object si_simple_toplevel ()
 int
 main(int argc, char **args)
 {
-        {
-                nlogd(">>1");
-                long sum=0;
-                long larg[] = {1,2,3};
-                nsuml(&sum, 2, &larg[0], &larg[1]);
-                nlogd(">>2");
-                printf(">>>>>FUCKSUM:%d\n", sum);
-        }
-        {
-                t_nsuml fn = &nsuml;
-                nlogd(">>1");
-                long sum=0;
-                long larg[] = {1,2,3};
-                fn(&sum, 2, &larg[0], &larg[1]);
-                nlogd(">>2");
-                printf(">>>>>FUCKSUM:%d\n", sum);
-        }
-        {
-                t_nsuml fn = &nsuml;
-                nlogd(">>1");
-                long sum=0;
-                long larg[] = {1,2,3};
-                ((void(*)(long*, long,long*,long*))(fn))(&sum, 2, &larg[0], &larg[1]);
-                nlogd(">>2");
-                printf(">>>>>FUCKSUM:%d\n", sum);
-        }
-
 	cl_object top_level, features;
 
 	/* This should be always the first call */

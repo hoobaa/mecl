@@ -433,9 +433,7 @@ mp_process_preset(cl_narg narg, cl_object process, cl_object function, ...)
 	ecl_va_start(args, function, narg, 2);
 	if (narg < 2)
 		FEwrong_num_arguments(@[mp::process-preset]);
-        printf("MP_PROCESS_PRESET1\n");
-	assert_type_process(process); // type error occur
-        printf("MP_PROCESS_PRESET2\n");
+	assert_type_process(process);
 	process->process.function = function;
 	process->process.args = cl_grab_rest_args(args);
 	@(return process)
@@ -739,13 +737,10 @@ mp_restore_signals(cl_object sigmask)
 void
 init_threads(cl_env_ptr env)
 {
-        printf("START:%s:%d\n", __FILE__, __LINE__);
 	cl_object process;
 	pthread_t main_thread;
 
 	cl_core.processes = OBJNULL;
-
-        printf("%s:%d\n", __FILE__, __LINE__);
 
 	/* We have to set the environment before any allocation takes place,
 	 * so that the interrupt handling code works. */
@@ -757,8 +752,6 @@ init_threads(cl_env_ptr env)
 # endif
 #endif
 	ecl_set_process_env(env);
-
-        printf("%s:%d\n", __FILE__, __LINE__);
 
 #ifdef ECL_WINDOWS_THREADS
 	{
@@ -772,13 +765,8 @@ init_threads(cl_env_ptr env)
 			DUPLICATE_SAME_ACCESS);
 	}
 #else
-        printf("main1>>>>%d\n", __LINE__);
 	main_thread = pthread_self();
-        printf("main2>>>>%d\n", __LINE__);
 #endif
-
-        printf("%s:%d\n", __FILE__, __LINE__);
-
 	process = ecl_alloc_object(t_process);
 	process->process.phase = ECL_PROCESS_ACTIVE;
 	process->process.name = @'si::top-level';
@@ -793,27 +781,16 @@ init_threads(cl_env_ptr env)
 
 	env->own_process = process;
 
-        printf("FUCK:%s:%d\n", __FILE__, __LINE__);
 	{
 		cl_object v = si_make_vector(ECL_T, /* Element type */
-                                             ecl_make_fixnum(256), /* Size */
-                                             ecl_make_fixnum(0), /* fill pointer */
-                                             ECL_NIL, ECL_NIL, ECL_NIL);
-                printf("1:%s:%d\n", __FILE__, __LINE__);
-		//v->array.self.t[0] = ECL_NIL;
-                printf("5:%s:%d\n", __FILE__, __LINE__);
+					   ecl_make_fixnum(256), /* Size */
+					   ecl_make_fixnum(0), /* fill pointer */
+					   ECL_NIL, ECL_NIL, ECL_NIL);
 		v->vector.self.t[0] = process;
-                printf("10:%s:%d\n", __FILE__, __LINE__);
 		v->vector.fillp = 1;
-                printf("20:%s:%d\n", __FILE__, __LINE__);
 		cl_core.processes = v;
-                printf("50:%s:%d\n", __FILE__, __LINE__);
 		cl_core.global_lock = ecl_make_lock(@'mp::global-lock', 1);
 		cl_core.error_lock = ecl_make_lock(@'mp::error-lock', 1);
 		cl_core.global_env_lock = ecl_make_rwlock(@'ext::package-lock');
-                printf("100:%s:%d\n", __FILE__, __LINE__);
 	}
-        
-        // printf(">>>>%d\n", __LINE__);
-        printf("END-INIT_THREADS:%s:%d\n", __FILE__, __LINE__);
 }
