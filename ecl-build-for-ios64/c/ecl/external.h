@@ -267,7 +267,7 @@ extern ECL_API cl_object ecl_cons(cl_object a, cl_object d);
 extern ECL_API cl_object ecl_list1(cl_object a);
 #ifdef GBC_BOEHM
 extern ECL_API cl_object si_gc(cl_narg narg, ...);
-extern ECL_API cl_object si_gc_dump(void);
+extern ECL_API cl_object si_gc_dump(cl_narg narg, ...);
 extern ECL_API cl_object si_gc_stats(cl_object enable);
 extern ECL_API void *ecl_alloc_unprotected(cl_index n);
 extern ECL_API void *ecl_alloc_atomic_unprotected(cl_index n);
@@ -1718,8 +1718,10 @@ extern ECL_API cl_object mp_process_kill(cl_object process);
 extern ECL_API cl_object mp_process_suspend(cl_object process);
 extern ECL_API cl_object mp_process_resume(cl_object process);
 extern ECL_API cl_object mp_process_name(cl_object process);
-extern ECL_API cl_object mp_process_preset _ECL_ARGS((cl_narg narg, cl_object process, cl_object function, ...));
-extern ECL_API cl_object mp_process_run_function _ECL_ARGS((cl_narg narg, cl_object name, cl_object function, ...));
+//extern ECL_API cl_object mp_process_preset _ECL_ARGS((cl_narg narg, cl_object process, cl_object function, ...));
+extern ECL_API cl_object mp_process_preset _ECL_ARGS((cl_narg narg, ...));
+//extern ECL_API cl_object mp_process_run_function _ECL_ARGS((cl_narg narg, cl_object name, cl_object function, ...));
+extern ECL_API cl_object mp_process_run_function _ECL_ARGS((cl_narg narg, ...));
 extern ECL_API cl_object mp_process_run_function_wait _ECL_ARGS((cl_narg narg, ...));
 extern ECL_API cl_object mp_process_whostate(cl_object process);
 extern ECL_API cl_object mp_make_condition_variable(void);
@@ -1988,7 +1990,8 @@ extern ECL_API cl_object cl_encode_universal_time _ECL_ARGS((cl_narg narg, cl_ob
 extern ECL_API cl_object cl_get_decoded_time();
 extern ECL_API cl_object cl_ensure_directories_exist _ECL_ARGS((cl_narg narg, cl_object V1, ...));
 extern ECL_API cl_object si_simple_program_error _ECL_ARGS((cl_narg narg, cl_object format, ...)) ecl_attr_noreturn;
-extern ECL_API cl_object si_signal_simple_error _ECL_ARGS((cl_narg narg, cl_object condition, cl_object continuable, cl_object format, cl_object args, ...));
+//extern ECL_API cl_object si_signal_simple_error _ECL_ARGS((cl_narg narg, cl_object condition, cl_object continuable, cl_object format, cl_object args, ...));
+extern ECL_API cl_object si_signal_simple_error _ECL_ARGS((cl_narg narg, ...));
 
 /* module.lsp */
 

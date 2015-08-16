@@ -451,6 +451,7 @@ struct cl_core_struct cl_core = {
 static void
 maybe_fix_console_stream(cl_object stream)
 {
+        nlogd(">>>");
 	DWORD cp = GetConsoleCP();
 	const char *encoding;
 	cl_object external_format;
@@ -478,13 +479,15 @@ maybe_fix_console_stream(cl_object stream)
 		{65001, "UTF8"},
 		{0,"LATIN-1"}
 	};
-	if (stream->stream.mode != ecl_smm_io_wcon)
+	if (stream->stream.mode != ecl_smm_io_wcon) {
 		return;
-	for (i = 0; known_cp[i].code && known_cp[i].code != cp; i++)
-		{}
-	external_format = cl_list(2, ecl_make_keyword(known_cp[i].name),
-				  @':crlf');
+        }
+	for (i = 0; known_cp[i].code && known_cp[i].code != cp; i++) {
+        }
+	external_format = cl_list(2, ecl_make_keyword(known_cp[i].name), @':crlf');
+        nlogd(">>>");
 	si_stream_external_format_set(stream, external_format);
+        nlogd(">>>");
 	stream->stream.eof_char = 26;
 }
 #endif
@@ -522,9 +525,8 @@ cl_boot(int argc, char **argv)
 	GC_disable();
 	env = _ecl_alloc_env(0);
 #ifdef ECL_THREADS
-        printf("1:%s:%d\n", __FILE__, __LINE__);
         init_threads(env);
-        printf("2:%s:%d\n", __FILE__, __LINE__);
+        nlogd("init_threads done.");
 #else
 	cl_env_p = env;
 #endif
@@ -685,6 +687,7 @@ cl_boot(int argc, char **argv)
 	@si::pathname-translations(2,str_sys,
                                    ecl_list1(cl_list(2,str_star_dot_star,
                                                      str_rel_star_dot_star)));
+        nlogd(">>");
 
 	/*
 	 * Initialize constants (strings, numbers and time).
@@ -713,11 +716,14 @@ cl_boot(int argc, char **argv)
 
 	init_unixtime();
 
+        nlogd(">>");
 	/*
 	 * Initialize I/O subsystem.
 	 */
 	init_file();
 	init_read();
+
+        nlogd(">>");
 
 	ECL_SET(@'*print-case*', @':upcase');
 
@@ -746,9 +752,13 @@ cl_boot(int argc, char **argv)
 		CONS(str_FASC, @'si::load-bytecodes'),
 		CONS(ECL_NIL, @'si::load-source'));
 	ECL_SET(@'ext::*load-hooks*', aux);
+        nlogd(">>");
 	init_error();
+        nlogd(">>");
 	init_macros();
+        nlogd(">>");
 	init_compiler();
+        nlogd(">>");
 
 	/*
 	 * Set up infrastructure for CLOS.
@@ -759,6 +769,7 @@ cl_boot(int argc, char **argv)
                                     cl_core.rehash_size,
                                     cl_core.rehash_threshold));
 #endif
+        nlogd(">>");
 
 	/*
 	 * Features.
@@ -767,12 +778,13 @@ cl_boot(int argc, char **argv)
 	ECL_SET(@'LAMBDA-LIST-KEYWORDS',
 		cl_list(8, @'&optional', @'&rest', @'&key', @'&allow-other-keys',
 			@'&aux', @'&whole', @'&environment', @'&body'));
-
+        nlogd(">>");
         for (i = 0, features = ECL_NIL; feature_names[i].elt.self; i++) {
                 int flag;
                 cl_object name = (cl_object)(feature_names + i);
                 cl_object key = ecl_intern(name, cl_core.keyword_package, &flag);
                 features = CONS(key, features);
+                nlogd(">>");
         }
 
 	ECL_SET(@'*features*', features);
@@ -782,18 +794,32 @@ cl_boot(int argc, char **argv)
 	/* This has to come before init_LSP/CLOS, because we need
 	 * ecl_clear_compiler_properties() to work in init_CLOS(). */
 	ecl_set_option(ECL_OPT_BOOTED, 1);
+        nlogd(">>");
 
 	ecl_init_module(OBJNULL,init_lib_LSP);
 
+        nlogd(">>>>>>>>>>>>>>>>>>>>1");
+
 	if (cl_fboundp(@'ext::make-encoding') != ECL_NIL) {
+                // this part call apply kind of stuff.
+                nlogd(">>>>>>>>>>>>>>>>>>>>2");
 		maybe_fix_console_stream(cl_core.standard_input);
 		maybe_fix_console_stream(cl_core.standard_output);
 		maybe_fix_console_stream(cl_core.error_output);
+
+                nlogd(">>>>>>>>>>>>>>>>>>>>3");
 	}
+        nlogd(">>>>>>>>>>>>>>>>>>>>4");
 
 	/* Jump to top level */
 	ECL_SET(@'*package*', cl_core.user_package);
+
+        nlogd(">>>>>>>>>>>>>>>>>>>>5");
+
 	init_unixint(1);
+
+        nlogd(">>>>>>>>>>>>>>>>>>>>6");
+
 	return 1;
 }
 

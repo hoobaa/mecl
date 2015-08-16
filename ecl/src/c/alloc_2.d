@@ -1372,7 +1372,7 @@ si_gc(cl_narg narg, ...)
 }
 
 cl_object
-si_gc_dump()
+si_gc_dump(cl_narg narg, ...)
 {
 	const cl_env_ptr the_env = ecl_process_env();
 	ecl_disable_interrupts_env(the_env);

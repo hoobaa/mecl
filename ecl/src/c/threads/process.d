@@ -427,12 +427,16 @@ ecl_release_current_thread(void)
 @)
 
 cl_object
-mp_process_preset(cl_narg narg, cl_object process, cl_object function, ...)
+//mp_process_preset(cl_narg narg, cl_object process, cl_object function, ...)
+mp_process_preset(cl_narg narg, ...)
 {
 	ecl_va_list args;
-	ecl_va_start(args, function, narg, 2);
-	if (narg < 2)
+	ecl_va_start(args, narg, narg, 0);
+	if (narg < 2) {
 		FEwrong_num_arguments(@[mp::process-preset]);
+        }
+        cl_object process = ecl_va_arg(args);
+        cl_object function = ecl_va_arg(args);
 	assert_type_process(process);
 	process->process.function = function;
 	process->process.args = cl_grab_rest_args(args);
@@ -637,14 +641,36 @@ mp_process_join(cl_object process)
         return cl_values_list(process->process.exit_values);
 }
 
+// cl_object
+// mp_process_run_function(cl_narg narg, cl_object name, cl_object function, ...)
+// {
+// 	cl_object process;
+// 	ecl_va_list args;
+// 	ecl_va_start(args, function, narg, 2);
+// 	if (narg < 2)
+// 		FEwrong_num_arguments(@[mp::process-run-function]);
+// 	if (CONSP(name)) {
+// 		process = cl_apply(2, @'mp::make-process', name);
+// 	} else {
+// 		process = mp_make_process(2, @':name', name);
+// 	}
+// 	cl_apply(4, @'mp::process-preset', process, function,
+// 		 cl_grab_rest_args(args));
+// 	return mp_process_enable(process);
+// }
+
 cl_object
-mp_process_run_function(cl_narg narg, cl_object name, cl_object function, ...)
+mp_process_run_function(cl_narg narg, ...)
 {
 	cl_object process;
 	ecl_va_list args;
-	ecl_va_start(args, function, narg, 2);
-	if (narg < 2)
+	ecl_va_start(args, narg, narg, 0);
+	if (narg < 2) {
 		FEwrong_num_arguments(@[mp::process-run-function]);
+        }
+        cl_object name = ecl_va_arg(args);
+        cl_object function = ecl_va_arg(args);
+
 	if (CONSP(name)) {
 		process = cl_apply(2, @'mp::make-process', name);
 	} else {
@@ -655,14 +681,17 @@ mp_process_run_function(cl_narg narg, cl_object name, cl_object function, ...)
 	return mp_process_enable(process);
 }
 
+#include <stdio.h>
 cl_object
 mp_process_run_function_wait(cl_narg narg, ...)
 {
 	cl_object process;
 	ecl_va_list args;
+        printf(">>>>>>>A\n");
 	ecl_va_start(args, narg, narg, 0);
-	process = cl_apply(2, @'mp::process-run-function',
-                           cl_grab_rest_args(args));
+        printf(">>>>>>>B\n");
+	process = cl_apply(2, @'mp::process-run-function', cl_grab_rest_args(args));
+        printf(">>>>>>>C\n");
         if (!Null(process)) {
                 ecl_def_ct_single_float(wait, 0.001, static, const);
                 while (process->process.phase < ECL_PROCESS_ACTIVE) {

@@ -1,8 +1,0 @@
-static const char compiler_data_text[] = 
-"ext::copy-external-process ext::external-process-p 0 ext::make-external-process "
- "ext::external-process-status 0 0 ext::external-process-%status ext::external-pro"
- "cess-%code (ext::pid ext::input ext::output (ext::%status :running) (ext::%code "
- "nil)) ((ext::pid nil t nil 0 nil) (ext::input nil t nil 1 nil) (ext::output nil "
- "t nil 2 nil) (ext::%status :running t nil 3 nil) (ext::%code nil t nil 4 nil)) ("
- "(ext::make-external-process nil)) ";
-#define compiler_data_text_size 434

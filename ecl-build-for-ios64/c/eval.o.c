@@ -39,6 +39,7 @@ _ecl_va_sp(cl_narg narg)
 cl_object
 ecl_apply_from_stack_frame(cl_object frame, cl_object x)
 {
+        nlogd(">>ecl_apply_from_stack_frame");
 	cl_object *sp = frame->frame.base;
 	cl_index narg = frame->frame.size;
 	cl_object fun = x;
@@ -136,19 +137,19 @@ cl_funcall(cl_narg narg, cl_object function, ...)
         return output;
 }
 
-#line 138
+#line 139
 cl_object cl_apply(cl_narg narg, cl_object fun, cl_object lastarg, ...)
 {
-#line 138
+#line 139
 
-#line 140
+#line 141
 	const cl_env_ptr the_env = ecl_process_env();
-#line 140
+#line 141
 	ecl_va_list args;
 	ecl_va_start(args, lastarg, narg, 2);
-#line 140
+#line 141
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(89));
-#line 140
+#line 141
 	if (narg == 2 && ecl_t_of(lastarg) == t_frame) {
 		return ecl_apply_from_stack_frame(lastarg, fun);
 	} else {
@@ -187,32 +188,32 @@ cl_eval(cl_object form)
 	return si_eval_with_env(1, form);
 }
 
-#line 178
+#line 179
 cl_object cl_constantp(cl_narg narg, cl_object arg, ...)
 {
-#line 178
+#line 179
 
 	cl_object flag;
-#line 181
+#line 182
 	const cl_env_ptr the_env = ecl_process_env();
-#line 181
+#line 182
 	cl_object env;
-#line 181
+#line 182
 	va_list ARGS;
 	va_start(ARGS, arg);
-#line 181
+#line 182
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(254));
-#line 181
+#line 182
 	if (narg > 1) {
-#line 181
+#line 182
 		env = va_arg(ARGS,cl_object);
-#line 181
+#line 182
 	} else {
-#line 181
+#line 182
 		env = ECL_NIL;
-#line 181
+#line 182
 	}
-#line 181
+#line 182
 	switch (ecl_t_of(arg)) {
 	case t_list:
 		if (Null(arg)) {
@@ -230,14 +231,14 @@ cl_object cl_constantp(cl_narg narg, cl_object arg, ...)
 		flag = ECL_T;
 	}
 	{
-#line 197
-		#line 197
+#line 198
+		#line 198
 		cl_object __value0 = flag;
-#line 197
+#line 198
 		the_env->nvalues = 1;
-#line 197
+#line 198
 		return __value0;
-#line 197
+#line 198
 	}
 
 }

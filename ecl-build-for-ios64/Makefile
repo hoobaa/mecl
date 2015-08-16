@@ -75,7 +75,7 @@ bin/ecl$(EXE): ecl_min$(EXE) compile.lsp ecl/external.h build-stamp $(top_srcdir
 		ECLDIR=`pwd`/ ./ecl_min$(EXE) compile; \
 	fi
 
-ecl_min$(EXE): $(LIBRARIES) .gdbinit libeclmin.a
+ecl_min$(EXE): $(LIBRARIES) .gdbinit libeclmin.a cinit.o
 	$(CC) $(LDFLAGS) -o $@ cinit.o c/all_symbols.o -L./ libeclmin.a $(CORE_LIBS) $(FASL_LIBS) $(LIBS);
 
 mini_ecl: ecl_min$(EXE) bare2.lsp

@@ -1,5 +1,0 @@
-static const char compiler_data_text[] = 
-"with-slots clos::slots clos::std-create-slots-table clos::find-slot-definition c"
- "los::update-instance clos::standard-instance-get clos::standard-instance-set 0 0"
- " 0 0 0 0 0 0 ((notinline clos::update-instance)) (setf slot-value) ";
-#define compiler_data_text_size 227

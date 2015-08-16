@@ -1,8 +1,0 @@
-static const char compiler_data_text[] = 
-"si::sequence-count si::unsafe-funcall1 si::filter-vector si::remove-list :from-e"
- "nd si::delete-list si::remove-duplicates-list si::delete-duplicates-list si::fil"
- "ter-duplicates-vector complement 0 0 :from-end :start :end :key :initial-value :"
- "start1 :end1 :start2 :end2 0 0 :test :test-not :start :end :from-end :count :key"
- " 0 :test :test-not :from-end :start :end :key :test :test-not :start :end :from-"
- "end :key 0 0 0 :from-end :test :test-not :key :start1 :start2 :end1 :end2 0 ";
-#define compiler_data_text_size 476

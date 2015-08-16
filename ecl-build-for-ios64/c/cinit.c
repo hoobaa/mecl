@@ -108,30 +108,35 @@ si_string_to_object(cl_narg narg, cl_object string, ...)
 }
 
 extern cl_object
-si_signal_simple_error(cl_narg narg, cl_object condition, cl_object continuable, cl_object format, cl_object format_args, ...)
+//si_signal_simple_error(cl_narg narg, cl_object condition, cl_object continuable, cl_object format, cl_object format_args, ...)
+si_signal_simple_error(cl_narg narg, ...)
 {
 	ecl_va_list args;
 	cl_object rest;
-	ecl_va_start(args, format_args, narg, 4);
+	ecl_va_start(args, narg, narg, 0);
+        cl_object condition = ecl_va_arg(args);
+        cl_object continuable = ecl_va_arg(args);
+        cl_object format = ecl_va_arg(args);
+        cl_object format_args = ecl_va_arg(args);
+        
 	rest = cl_grab_rest_args(args);
-	return cl_apply(6, ECL_SYM("SI::SIGNAL-SIMPLE-ERROR",1144), condition, continuable,
-			format, format_args, rest);
+	return cl_apply(6, ECL_SYM("SI::SIGNAL-SIMPLE-ERROR",1144), condition, continuable, format, format_args, rest);
 }
 
 extern cl_object
 cl_set_difference(cl_narg narg, cl_object l1, cl_object l2, ...)
 {
         {
-#line 123
+#line 128
 	const cl_env_ptr the_env = ecl_process_env();
-#line 123
-	#line 123
+#line 128
+	#line 128
 	cl_object __value0 = l1;
-#line 123
+#line 128
 	the_env->nvalues = 1;
-#line 123
+#line 128
 	return __value0;
-#line 123
+#line 128
 }
 
 }
@@ -146,16 +151,16 @@ extern cl_object
 si_find_relative_package(cl_narg narg, cl_object package, ...)
 {
 	{
-#line 135
+#line 140
 		const cl_env_ptr the_env = ecl_process_env();
-#line 135
-		#line 135
+#line 140
+		#line 140
 		cl_object __value0 = ECL_NIL;
-#line 135
+#line 140
 		the_env->nvalues = 1;
-#line 135
+#line 140
 		return __value0;
-#line 135
+#line 140
 	}
 ;
 }
@@ -188,10 +193,10 @@ static cl_object si_simple_toplevel ()
                         sentence = cl_read(3, ECL_NIL, ECL_NIL, OBJNULL);
                         if (sentence == OBJNULL)
                                 {
-#line 165
+#line 170
 	const cl_env_ptr the_env = ecl_process_env();
 the_env->nvalues = 0; return ECL_NIL;
-#line 165
+#line 170
 }
 ;
 			sentence = si_eval_with_env(1, sentence);
@@ -200,15 +205,18 @@ the_env->nvalues = 0; return ECL_NIL;
         } ECL_CATCH_ALL_END;
 }
 
+void fuck() {printf("FUCK\n");}
+
 int
 main(int argc, char **args)
 {
 	cl_object top_level, features;
 
 	/* This should be always the first call */
-        printf("%s:%d\n", __FILE__, __LINE__);
+        nlogd(">>");
 	cl_boot(argc, args);
-        printf("%s:%d\n", __FILE__, __LINE__);
+        nlogd(">>");
+        nlogd("cl_boot ended");
 
 	/* We are computing unnormalized numbers at some point */
 	si_trap_fpe(ECL_T, ECL_NIL);
@@ -226,7 +234,9 @@ main(int argc, char **args)
 	ECL_SET(ECL_SYM("*FEATURES*",34), features);
 	top_level = _ecl_intern("TOP-LEVEL", cl_core.system_package);
 	ecl_def_c_function(top_level, si_simple_toplevel, 0);
+        nlogd(">>");
 	funcall(1, top_level);
+        nlogd(">>");
 	return(0);
 }
 

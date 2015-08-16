@@ -1418,20 +1418,20 @@ install_signal_handling_thread()
 #if defined(ECL_THREADS) && defined(HAVE_SIGPROCMASK)
         ecl_process_env()->default_sigmask = &main_thread_sigmask;
 	if (ecl_option_values[ECL_OPT_SIGNAL_HANDLING_THREAD]) {
+                nlogd("------------------------------ A");
 		cl_object fun =
 			ecl_make_cfun((cl_objectfn_fixed)
 				      asynchronous_signal_servicing_thread,
 				      ECL_SYM("SI::SIGNAL-SERVICING",1765),
 				      ECL_NIL,
 				      0);
-		cl_object process =
-			signal_thread_process =
-			mp_process_run_function_wait(2,
-                                                     ECL_SYM("SI::SIGNAL-SERVICING",1765),
-                                                     fun);
+                nlogd("------------------------------ B");
+		cl_object process = signal_thread_process = mp_process_run_function_wait(2, ECL_SYM("SI::SIGNAL-SERVICING",1765), fun); // this part call APPLY
+                nlogd("------------------------------ C");
 		if (Null(process)) {
 			ecl_internal_error("Unable to create signal "
 					   "servicing thread");
+                nlogd("------------------------------ D");
 		}
 	}
 #endif
@@ -1569,10 +1569,16 @@ init_unixint(int pass)
 		install_asynchronous_signal_handlers();
 		install_synchronous_signal_handlers();
 	} else {
+                nlogd(">>>>>>>1");
 		create_signal_code_constants();
+                nlogd(">>>>>>>2");
 		install_fpe_signal_handlers();
-		install_signal_handling_thread();
+                nlogd(">>>>>>>3");
+		install_signal_handling_thread(); ////////////////////////////// this part call apply
+                nlogd(">>>>>>>4");
 		ECL_SET(ECL_SYM("EXT::*INTERRUPTS-ENABLED*",1023), ECL_T);
+                nlogd(">>>>>>>5");
 		ecl_process_env()->disable_interrupts = 0;
+                nlogd(">>>>>>>6");
 	}
 }

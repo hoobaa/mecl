@@ -38,6 +38,7 @@ _ecl_va_sp(cl_narg narg)
 cl_object
 ecl_apply_from_stack_frame(cl_object frame, cl_object x)
 {
+        nlogd(">>ecl_apply_from_stack_frame");
 	cl_object *sp = frame->frame.base;
 	cl_index narg = frame->frame.size;
 	cl_object fun = x;

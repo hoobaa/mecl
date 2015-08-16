@@ -1,3 +1,0 @@
-static const char compiler_data_text[] = 
-"si::*requiring* si::require-error 0 ";
-#define compiler_data_text_size 36

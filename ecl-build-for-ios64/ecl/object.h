@@ -52,7 +52,7 @@ typedef enum {
 	t_longfloat,
 #endif
 	t_complex,
-	t_symbol,
+	t_symbol, // 10
 	t_package,
 	t_hashtable,
 	t_array,
@@ -60,9 +60,9 @@ typedef enum {
 #ifdef ECL_UNICODE
 	t_string,
 #endif
-	t_base_string,
+	t_base_string, // 16
 	t_bitvector,
-	t_stream,
+	t_stream, // 18
 	t_random,
 	t_readtable,
 	t_pathname,

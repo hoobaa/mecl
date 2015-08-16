@@ -31,18 +31,19 @@ cl_object cl_P(cl_narg narg, ...)
 #line 22
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(14));
 #line 22
+  nlogd("c_PL");
 	/* INV: type check is in ecl_plus() */
 	while (narg--)
 		sum = ecl_plus(sum, ecl_va_arg(nums));
 	{
-#line 25
-		#line 25
+#line 26
+		#line 26
 		cl_object __value0 = sum;
-#line 25
+#line 26
 		the_env->nvalues = 1;
-#line 25
+#line 26
 		return __value0;
-#line 25
+#line 26
 	}
 
 }

@@ -19,6 +19,7 @@
 @(defun + (&rest nums)
 	cl_object sum = ecl_make_fixnum(0);
 @
+  nlogd("c_PL");
 	/* INV: type check is in ecl_plus() */
 	while (narg--)
 		sum = ecl_plus(sum, ecl_va_arg(nums));

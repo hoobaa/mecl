@@ -473,26 +473,30 @@ cl_object mp_make_process(cl_narg narg, ...)
 }
 
 cl_object
-mp_process_preset(cl_narg narg, cl_object process, cl_object function, ...)
+//mp_process_preset(cl_narg narg, cl_object process, cl_object function, ...)
+mp_process_preset(cl_narg narg, ...)
 {
 	ecl_va_list args;
-	ecl_va_start(args, function, narg, 2);
-	if (narg < 2)
+	ecl_va_start(args, narg, narg, 0);
+	if (narg < 2) {
 		FEwrong_num_arguments(ecl_make_fixnum(/*MP::PROCESS-PRESET*/1407));
+        }
+        cl_object process = ecl_va_arg(args);
+        cl_object function = ecl_va_arg(args);
 	assert_type_process(process);
 	process->process.function = function;
 	process->process.args = cl_grab_rest_args(args);
 	{
-#line 439
+#line 443
 		const cl_env_ptr the_env = ecl_process_env();
-#line 439
-		#line 439
+#line 443
+		#line 443
 		cl_object __value0 = process;
-#line 439
+#line 443
 		the_env->nvalues = 1;
-#line 439
+#line 443
 		return __value0;
-#line 439
+#line 443
 	}
 
 }
@@ -504,16 +508,16 @@ mp_interrupt_process(cl_object process, cl_object function)
 		FEerror("Cannot interrupt the inactive process ~A", 1, process);
         ecl_interrupt_process(process, function);
 	{
-#line 448
+#line 452
 		const cl_env_ptr the_env = ecl_process_env();
-#line 448
-		#line 448
+#line 452
+		#line 452
 		cl_object __value0 = ECL_T;
-#line 448
+#line 452
 		the_env->nvalues = 1;
-#line 448
+#line 452
 		return __value0;
-#line 448
+#line 452
 	}
 
 }
@@ -563,10 +567,10 @@ mp_process_yield(void)
 {
 	ecl_process_yield();
 	{
-#line 495
+#line 499
 		const cl_env_ptr the_env = ecl_process_env();
 the_env->nvalues = 0; return ECL_NIL;
-#line 495
+#line 499
 	}
 
 }
@@ -658,16 +662,16 @@ mp_process_enable(cl_object process)
 	process->process.start_spinlock = ECL_NIL;
 
 	{
-#line 584
+#line 588
 		const cl_env_ptr the_env = ecl_process_env();
-#line 584
-		#line 584
+#line 588
+		#line 588
 		cl_object __value0 = (ok? process : ECL_NIL);
-#line 584
+#line 588
 		the_env->nvalues = 1;
-#line 584
+#line 588
 		return __value0;
-#line 584
+#line 588
 	}
 
 }
@@ -690,16 +694,16 @@ mp_all_processes(void)
 	/* No race condition here because this list is never destructively
 	 * modified. When we add or remove processes, we create new lists. */
 	{
-#line 604
+#line 608
 		const cl_env_ptr the_env = ecl_process_env();
-#line 604
-		#line 604
+#line 608
+		#line 608
 		cl_object __value0 = ecl_process_list();
-#line 604
+#line 608
 		the_env->nvalues = 1;
-#line 604
+#line 608
 		return __value0;
-#line 604
+#line 608
 	}
 
 }
@@ -709,16 +713,16 @@ mp_process_name(cl_object process)
 {
 	assert_type_process(process);
 	{
-#line 611
+#line 615
 		const cl_env_ptr the_env = ecl_process_env();
-#line 611
-		#line 611
+#line 615
+		#line 615
 		cl_object __value0 = process->process.name;
-#line 611
+#line 615
 		the_env->nvalues = 1;
-#line 611
+#line 615
 		return __value0;
-#line 611
+#line 615
 	}
 
 }
@@ -728,16 +732,16 @@ mp_process_active_p(cl_object process)
 {
 	assert_type_process(process);
 	{
-#line 618
+#line 622
 		const cl_env_ptr the_env = ecl_process_env();
-#line 618
-		#line 618
+#line 622
+		#line 622
 		cl_object __value0 = (process->process.phase? ECL_T : ECL_NIL);
-#line 618
+#line 622
 		the_env->nvalues = 1;
-#line 618
+#line 622
 		return __value0;
-#line 618
+#line 622
 	}
 
 }
@@ -747,16 +751,16 @@ mp_process_whostate(cl_object process)
 {
 	assert_type_process(process);
 	{
-#line 625
+#line 629
 		const cl_env_ptr the_env = ecl_process_env();
-#line 625
-		#line 625
+#line 629
+		#line 629
 		cl_object __value0 = (cl_core.null_string);
-#line 625
+#line 629
 		the_env->nvalues = 1;
-#line 625
+#line 629
 		return __value0;
-#line 625
+#line 629
 	}
 
 }
@@ -773,14 +777,36 @@ mp_process_join(cl_object process)
         return cl_values_list(process->process.exit_values);
 }
 
+// cl_object
+// mp_process_run_function(cl_narg narg, cl_object name, cl_object function, ...)
+// {
+// 	cl_object process;
+// 	ecl_va_list args;
+// 	ecl_va_start(args, function, narg, 2);
+// 	if (narg < 2)
+// 		FEwrong_num_arguments(ecl_make_fixnum(/*MP::PROCESS-RUN-FUNCTION*/1408));
+// 	if (CONSP(name)) {
+// 		process = cl_apply(2, ECL_SYM("MP::MAKE-PROCESS",1401), name);
+// 	} else {
+// 		process = mp_make_process(2, ECL_SYM(":NAME",1273), name);
+// 	}
+// 	cl_apply(4, ECL_SYM("MP::PROCESS-PRESET",1407), process, function,
+// 		 cl_grab_rest_args(args));
+// 	return mp_process_enable(process);
+// }
+
 cl_object
-mp_process_run_function(cl_narg narg, cl_object name, cl_object function, ...)
+mp_process_run_function(cl_narg narg, ...)
 {
 	cl_object process;
 	ecl_va_list args;
-	ecl_va_start(args, function, narg, 2);
-	if (narg < 2)
+	ecl_va_start(args, narg, narg, 0);
+	if (narg < 2) {
 		FEwrong_num_arguments(ecl_make_fixnum(/*MP::PROCESS-RUN-FUNCTION*/1408));
+        }
+        cl_object name = ecl_va_arg(args);
+        cl_object function = ecl_va_arg(args);
+
 	if (CONSP(name)) {
 		process = cl_apply(2, ECL_SYM("MP::MAKE-PROCESS",1401), name);
 	} else {
@@ -791,14 +817,17 @@ mp_process_run_function(cl_narg narg, cl_object name, cl_object function, ...)
 	return mp_process_enable(process);
 }
 
+#include <stdio.h>
 cl_object
 mp_process_run_function_wait(cl_narg narg, ...)
 {
 	cl_object process;
 	ecl_va_list args;
+        printf(">>>>>>>A\n");
 	ecl_va_start(args, narg, narg, 0);
-	process = cl_apply(2, ECL_SYM("MP::PROCESS-RUN-FUNCTION",1408),
-                           cl_grab_rest_args(args));
+        printf(">>>>>>>B\n");
+	process = cl_apply(2, ECL_SYM("MP::PROCESS-RUN-FUNCTION",1408), cl_grab_rest_args(args));
+        printf(">>>>>>>C\n");
         if (!Null(process)) {
                 ecl_def_ct_single_float(wait, 0.001, static, const);
                 while (process->process.phase < ECL_PROCESS_ACTIVE) {
@@ -806,16 +835,16 @@ mp_process_run_function_wait(cl_narg narg, ...)
                 }
         }
 	{
-#line 672
+#line 701
 		const cl_env_ptr the_env = ecl_process_env();
-#line 672
-		#line 672
+#line 701
+		#line 701
 		cl_object __value0 = process;
-#line 672
+#line 701
 		the_env->nvalues = 1;
-#line 672
+#line 701
 		return __value0;
-#line 672
+#line 701
 	}
 
 }
@@ -835,16 +864,16 @@ mp_get_sigmask(void)
         if (pthread_sigmask(SIG_BLOCK, &no_signals, mask_ptr))
                 FElibc_error("MP:GET-SIGMASK failed in a call to pthread_sigmask", 0);
         {
-#line 689
+#line 718
 	const cl_env_ptr the_env = ecl_process_env();
-#line 689
-	#line 689
+#line 718
+	#line 718
 	cl_object __value0 = data;
-#line 689
+#line 718
 	the_env->nvalues = 1;
-#line 689
+#line 718
 	return __value0;
-#line 689
+#line 718
 }
 
 }
@@ -856,16 +885,16 @@ mp_set_sigmask(cl_object data)
         if (pthread_sigmask(SIG_SETMASK, mask_ptr, NULL))
                 FElibc_error("MP:SET-SIGMASK failed in a call to pthread_sigmask", 0);
         {
-#line 698
+#line 727
 	const cl_env_ptr the_env = ecl_process_env();
-#line 698
-	#line 698
+#line 727
+	#line 727
 	cl_object __value0 = data;
-#line 698
+#line 727
 	the_env->nvalues = 1;
-#line 698
+#line 727
 	return __value0;
-#line 698
+#line 727
 }
 
 }
@@ -879,16 +908,16 @@ mp_block_signals(void)
         cl_object previous = ecl_symbol_value(ECL_SYM("EXT::*INTERRUPTS-ENABLED*",1023));
         ECL_SETQ(the_env, ECL_SYM("EXT::*INTERRUPTS-ENABLED*",1023), ECL_NIL);
         {
-#line 709
+#line 738
 	const cl_env_ptr the_env = ecl_process_env();
-#line 709
-	#line 709
+#line 738
+	#line 738
 	cl_object __value0 = previous;
-#line 709
+#line 738
 	the_env->nvalues = 1;
-#line 709
+#line 738
 	return __value0;
-#line 709
+#line 738
 }
 
 #else
@@ -898,16 +927,16 @@ mp_block_signals(void)
         if (pthread_sigmask(SIG_SETMASK, &all_signals, NULL))
                 FElibc_error("MP:BLOCK-SIGNALS failed in a call to pthread_sigmask",0);
         {
-#line 716
+#line 745
 	const cl_env_ptr the_env = ecl_process_env();
-#line 716
-	#line 716
+#line 745
+	#line 745
 	cl_object __value0 = previous;
-#line 716
+#line 745
 	the_env->nvalues = 1;
-#line 716
+#line 745
 	return __value0;
-#line 716
+#line 745
 }
 
 #endif
@@ -921,16 +950,16 @@ mp_restore_signals(cl_object sigmask)
         ECL_SETQ(the_env, ECL_SYM("EXT::*INTERRUPTS-ENABLED*",1023), sigmask);
         ecl_check_pending_interrupts(the_env);
         {
-#line 727
+#line 756
 	const cl_env_ptr the_env = ecl_process_env();
-#line 727
-	#line 727
+#line 756
+	#line 756
 	cl_object __value0 = sigmask;
-#line 727
+#line 756
 	the_env->nvalues = 1;
-#line 727
+#line 756
 	return __value0;
-#line 727
+#line 756
 }
 
 #else

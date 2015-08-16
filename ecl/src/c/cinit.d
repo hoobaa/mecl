@@ -107,14 +107,19 @@ si_string_to_object(cl_narg narg, cl_object string, ...)
 }
 
 extern cl_object
-si_signal_simple_error(cl_narg narg, cl_object condition, cl_object continuable, cl_object format, cl_object format_args, ...)
+//si_signal_simple_error(cl_narg narg, cl_object condition, cl_object continuable, cl_object format, cl_object format_args, ...)
+si_signal_simple_error(cl_narg narg, ...)
 {
 	ecl_va_list args;
 	cl_object rest;
-	ecl_va_start(args, format_args, narg, 4);
+	ecl_va_start(args, narg, narg, 0);
+        cl_object condition = ecl_va_arg(args);
+        cl_object continuable = ecl_va_arg(args);
+        cl_object format = ecl_va_arg(args);
+        cl_object format_args = ecl_va_arg(args);
+        
 	rest = cl_grab_rest_args(args);
-	return cl_apply(6, @'si::signal-simple-error', condition, continuable,
-			format, format_args, rest);
+	return cl_apply(6, @'si::signal-simple-error', condition, continuable, format, format_args, rest);
 }
 
 extern cl_object
@@ -169,15 +174,18 @@ static cl_object si_simple_toplevel ()
         } ECL_CATCH_ALL_END;
 }
 
+void fuck() {printf("FUCK\n");}
+
 int
 main(int argc, char **args)
 {
 	cl_object top_level, features;
 
 	/* This should be always the first call */
-        printf("%s:%d\n", __FILE__, __LINE__);
+        nlogd(">>");
 	cl_boot(argc, args);
-        printf("%s:%d\n", __FILE__, __LINE__);
+        nlogd(">>");
+        nlogd("cl_boot ended");
 
 	/* We are computing unnormalized numbers at some point */
 	si_trap_fpe(ECL_T, ECL_NIL);
@@ -195,7 +203,9 @@ main(int argc, char **args)
 	ECL_SET(@'*features*', features);
 	top_level = _ecl_intern("TOP-LEVEL", cl_core.system_package);
 	ecl_def_c_function(top_level, si_simple_toplevel, 0);
+        nlogd(">>");
 	funcall(1, top_level);
+        nlogd(">>");
 	return(0);
 }
 
