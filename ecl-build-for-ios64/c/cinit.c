@@ -1,5 +1,5 @@
 #line 1 "/Users/strobolights/dev/mecl/ecl/src/c/cinit.d"
-/* -*- mode: c; c-basic-offset: 4 -*- */
+/* -*- mode: c; c-basic-offset: 8 -*- */
 /*
     init.c  -- Lisp Initialization.
 */
@@ -28,13 +28,6 @@
  * actual initialization code, and the compiled function will be
  * called instead.
  */
-
-void objdump(cl_object obj){
-        nlogd("------------------------------");
-        int t = ecl_t_of(obj);
-        nlogd("objt(%d)", t);
-        nlogd("------------------------------");
-}
 
 extern cl_object
 cl_upgraded_array_element_type(cl_narg narg, cl_object type, ...)
@@ -129,16 +122,16 @@ extern cl_object
 cl_set_difference(cl_narg narg, cl_object l1, cl_object l2, ...)
 {
         {
-#line 130
+#line 123
 	const cl_env_ptr the_env = ecl_process_env();
-#line 130
-	#line 130
+#line 123
+	#line 123
 	cl_object __value0 = l1;
-#line 130
+#line 123
 	the_env->nvalues = 1;
-#line 130
+#line 123
 	return __value0;
-#line 130
+#line 123
 }
 
 }
@@ -153,16 +146,16 @@ extern cl_object
 si_find_relative_package(cl_narg narg, cl_object package, ...)
 {
 	{
-#line 142
+#line 135
 		const cl_env_ptr the_env = ecl_process_env();
-#line 142
-		#line 142
+#line 135
+		#line 135
 		cl_object __value0 = ECL_NIL;
-#line 142
+#line 135
 		the_env->nvalues = 1;
-#line 142
+#line 135
 		return __value0;
-#line 142
+#line 135
 	}
 ;
 }
@@ -182,8 +175,8 @@ static cl_object si_simple_toplevel ()
 
 	/* Simple minded top level loop */
         ECL_CATCH_ALL_BEGIN(env) {
-                writestr_stream(";*** Lisp core booted !! ****\n"
-                                "ECL (Embeddable Common Lisp aaaa )\n",
+                writestr_stream(";*** Lisp core booted ****\n"
+                                "ECL (Embeddable Common Lisp)\n",
                                 output);
                 ecl_force_output(output);
                 for (i = 1; i<ecl_fixnum(si_argc()); i++) {
@@ -191,18 +184,14 @@ static cl_object si_simple_toplevel ()
                         cl_load(1, arg);
                 }
                 while (1) {
-                        writestr_stream("\n>> ", output);
-                        nlogd("---- read befor");
+                        writestr_stream("\n> ", output);
                         sentence = cl_read(3, ECL_NIL, ECL_NIL, OBJNULL);
-                        nlogd("---- sentence");
-                        objdump(sentence);
-
                         if (sentence == OBJNULL)
                                 {
-#line 176
+#line 165
 	const cl_env_ptr the_env = ecl_process_env();
 the_env->nvalues = 0; return ECL_NIL;
-#line 176
+#line 165
 }
 ;
 			sentence = si_eval_with_env(1, sentence);
@@ -214,33 +203,6 @@ the_env->nvalues = 0; return ECL_NIL;
 int
 main(int argc, char **args)
 {
-        {
-                nlogd(">>1");
-                long sum=0;
-                long larg[] = {1,2,3};
-                nsuml(&sum, 2, &larg[0], &larg[1]);
-                nlogd(">>2");
-                printf(">>>>>FUCKSUM:%d\n", sum);
-        }
-        {
-                t_nsuml fn = &nsuml;
-                nlogd(">>1");
-                long sum=0;
-                long larg[] = {1,2,3};
-                fn(&sum, 2, &larg[0], &larg[1]);
-                nlogd(">>2");
-                printf(">>>>>FUCKSUM:%d\n", sum);
-        }
-        {
-                t_nsuml fn = &nsuml;
-                nlogd(">>1");
-                long sum=0;
-                long larg[] = {1,2,3};
-                ((void(*)(long*, long,long*,long*))(fn))(&sum, 2, &larg[0], &larg[1]);
-                nlogd(">>2");
-                printf(">>>>>FUCKSUM:%d\n", sum);
-        }
-
 	cl_object top_level, features;
 
 	/* This should be always the first call */
