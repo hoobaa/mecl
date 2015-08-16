@@ -25,12 +25,12 @@ PWD=`pwd`
 PREFIX=/Users/strobolights/dev/mecl/local-install/iPhoneOS-${ARC2}
 # PREFIX=/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/
 
-export CFLAGS=" -g -arch ${ARC2} -isysroot ${N_SDK_DIR} -DAPPLE -I$PREFIX/include"
+export CFLAGS=" -g -O0 -arch ${ARC2} -isysroot ${N_SDK_DIR} -DAPPLE -I$PREFIX/include"
 # export CFLAGS=" -arch ${ARC2} -isysroot ${N_SDK_DIR} -DAPPLE -I$PREFIX/include -DECL_THREAD=0 "
 # export LDFLAGS=" -L$PREFIX/lib "
 export LDFLAGS=" -isysroot ${N_SDK_DIR} -arch ${ARC2} -D__arm__ -L$PREFIX/lib  "
 
-env |sort > env.log
+set |sort > env.log
 
 # ecl_to_run=/Users/strobolights/dev/mecl/local-install/host64/bin/ecl
 

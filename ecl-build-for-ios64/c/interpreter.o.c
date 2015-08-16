@@ -269,6 +269,7 @@ unknown_keyword(register cl_object bytecodes, register cl_object frame)
 cl_object
 ecl_interpret(cl_object frame, cl_object env, cl_object bytecodes)
 {
+        nlogd(">>interpret");
 	ECL_OFFSET_TABLE
         const cl_env_ptr the_env = frame->frame.env;
         volatile cl_index frame_index = 0;
@@ -495,6 +496,7 @@ ecl_interpret(cl_object frame, cl_object env, cl_object bytecodes)
                                            frame_aux.base);
 			break;
 		case t_cfun:
+                        nlogd(">>t_cfun narg(%d)", narg);
 			reg0 = APPLY(narg, reg0->cfun.entry, frame_aux.base);
 			break;
 		case t_cclosure:
@@ -1272,25 +1274,25 @@ ecl_interpret(cl_object frame, cl_object env, cl_object bytecodes)
 	}
 }
 
-#line 1274
+#line 1276
 cl_object si_interpreter_stack(cl_narg narg)
 {
-#line 1274
+#line 1276
 
-#line 1276
+#line 1278
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1276
+#line 1278
 	if (ecl_unlikely(narg!=0))	   FEwrong_num_arguments(ecl_make_fixnum(1096));
-#line 1276
+#line 1278
 	{
-#line 1276
-		#line 1276
+#line 1278
+		#line 1278
 		cl_object __value0 = ECL_NIL;
-#line 1276
+#line 1278
 		the_env->nvalues = 1;
-#line 1276
+#line 1278
 		return __value0;
-#line 1276
+#line 1278
 	}
 
 }

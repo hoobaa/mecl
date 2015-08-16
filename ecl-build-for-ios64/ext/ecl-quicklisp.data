@@ -1,0 +1,6 @@
+static const char compiler_data_text[] = 
+":ecl-curl ecl-quicklisp::*quicklisp-url* ecl-quicklisp::*quicklisp-directory* ec"
+ "l-quicklisp::*quicklisp-setup* ecl-curl::download-error ecl-quicklisp::safe-down"
+ "load ecl-quicklisp::install-quicklisp si::dodefpackage 0 ecl-curl::download-url-"
+ "to-file 0 (\"CL\") ";
+#define compiler_data_text_size 257

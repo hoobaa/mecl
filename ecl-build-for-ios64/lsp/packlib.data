@@ -1,0 +1,6 @@
+static const char compiler_data_text[] = 
+"si::packages-iterator (:external :internal :inherited) 'funcall with-package-ite"
+ "rator (nil) (:inherited :internal :external) do-symbols (:external) do-external-"
+ "symbols (list-all-packages) (:internal :external) do-all-symbols si::print-symbo"
+ "l-apropos 0 0 0 0 0 0 :recurse ";
+#define compiler_data_text_size 271

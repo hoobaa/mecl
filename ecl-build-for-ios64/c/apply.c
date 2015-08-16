@@ -1,6 +1,8 @@
 #line 1 "/Users/strobolights/dev/mecl/ecl/src/c/apply.d"
 /* -*- mode: c; c-basic-offset: 4 -*- */
 #include <ecl/ecl.h>
+typedef cl_object (*t_f5_fuck)(cl_narg,...);
+
 typedef cl_object (*t_f0)(cl_narg);
 typedef cl_object (*t_f1)(cl_narg,cl_object);
 typedef cl_object (*t_f2)(cl_narg,cl_object,cl_object);
@@ -71,13 +73,15 @@ typedef cl_object (*t_f64)(cl_narg,cl_object,cl_object,cl_object,cl_object,cl_ob
 cl_object
 APPLY(cl_narg n, cl_objectfn fn, cl_object *x)
 {
+    nlogd(">>apply n(%ld)", n);
     switch (n) {
         case 0: return (*((t_f0)(fn)))(n);
         case 1: return (*((t_f1)(fn)))(n,x[0]);
         case 2: return (*((t_f2)(fn)))(n,x[0],x[1]);
         case 3: return (*((t_f3)(fn)))(n,x[0],x[1],x[2]);
         case 4: return (*((t_f4)(fn)))(n,x[0],x[1],x[2],x[3]);
-        case 5: return (*((t_f5)(fn)))(n,x[0],x[1],x[2],x[3],x[4]);
+        //case 5: return (*((t_f5)(fn)))(n,x[0],x[1],x[2],x[3],x[4]);
+        case 5: return (*((t_f5_fuck)(fn)))(n,x[0],x[1],x[2],x[3],x[4]);
         case 6: return (*((t_f6)(fn)))(n,x[0],x[1],x[2],x[3],x[4],x[5]);
         case 7: return (*((t_f7)(fn)))(n,x[0],x[1],x[2],x[3],x[4],x[5],x[6]);
         case 8: return (*((t_f8)(fn)))(n,x[0],x[1],x[2],x[3],x[4],x[5],x[6],x[7]);

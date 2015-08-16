@@ -1,0 +1,5 @@
+static const char compiler_data_text[] = 
+"lisp-implementation-type si::autoload proclaim with-compilation-unit ed room si:"
+ ":dump-help-file si::search-help-file si::help si::help 0 0 0 0 0 0 0 si::print-d"
+ "oc (si::help si::help* ext::gc si::autoload ext::quit) ";
+#define compiler_data_text_size 215

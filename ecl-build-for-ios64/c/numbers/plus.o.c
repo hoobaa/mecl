@@ -52,9 +52,13 @@ cl_object cl_P(cl_narg narg, ...)
 cl_object
 ecl_plus(cl_object x, cl_object y)
 {
+        nlogd(">fix plus1");
 MATH_DISPATCH2_BEGIN(x,y)
 {
+        nlogd(">fix plus2");
+
         CASE_FIXNUM_FIXNUM {
+                nlogd(">fix plus");
                 return ecl_make_integer(ecl_fixnum(x) + ecl_fixnum(y));
         }
         CASE_FIXNUM_BIGNUM {

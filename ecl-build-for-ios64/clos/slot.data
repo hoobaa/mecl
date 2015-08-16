@@ -1,0 +1,7 @@
+static const char compiler_data_text[] = 
+"clos::+initform-unsupplied+ :class clos::make-simple-slotd clos::freeze-class-sl"
+ "ot-initfunction clos::canonical-slot-to-direct-slot clos::direct-slot-to-canonic"
+ "al-slot clos::make-function-initform 0 0 0 0 clos::parse-slots 0 :name :initform"
+ " :initfunction :type :allocation :initargs :readers :writers :documentation :loc"
+ "ation 0 0 0 clos::slot-definition-documentation 0 0 ";
+#define compiler_data_text_size 372

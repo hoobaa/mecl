@@ -268,6 +268,7 @@ unknown_keyword(register cl_object bytecodes, register cl_object frame)
 cl_object
 ecl_interpret(cl_object frame, cl_object env, cl_object bytecodes)
 {
+        nlogd(">>interpret");
 	ECL_OFFSET_TABLE
         const cl_env_ptr the_env = frame->frame.env;
         volatile cl_index frame_index = 0;
@@ -494,6 +495,7 @@ ecl_interpret(cl_object frame, cl_object env, cl_object bytecodes)
                                            frame_aux.base);
 			break;
 		case t_cfun:
+                        nlogd(">>t_cfun narg(%d)", narg);
 			reg0 = APPLY(narg, reg0->cfun.entry, frame_aux.base);
 			break;
 		case t_cclosure:

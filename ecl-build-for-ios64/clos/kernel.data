@@ -1,0 +1,9 @@
+static const char compiler_data_text[] = 
+"clos::*clos-booted* 0 0 clos::setf-find-class clos::classp clos::install-method "
+ "clos::wrapped-method-function ensure-generic-function (setf clos::generic-functi"
+ "on-name) clos::default-dispatch clos::compute-discriminating-function clos::meth"
+ "ods clos::spec-list clos::set-generic-function-dispatch clos::std-compute-applic"
+ "able-methods-using-classes clos::sort-applicable-methods 0 (1 2 = nil) (clos::%l"
+ "ist) clos::%list clos::compute-g-f-spec-list print-object 0 0 0 0 0 :lambda-list"
+ " 0 0 0 clos::class-id 0 clos::no-applicable-methods 0 0 0 0 0 ";
+#define compiler_data_text_size 542

@@ -77,12 +77,17 @@ ecl_register_root(cl_object *p)
 cl_object
 si_gc(cl_object area)
 {
-	if (!GC_enabled())
+        nlogd(">>gc");
+	if (!GC_enabled()) {
 		ecl_internal_error("GC is not enabled");
-	if (Null(area))
+        }
+	if (Null(area)) {
+                nlogd(">>gc1");
 		ecl_gc(t_cons);
-	else
+        } else {
+                nlogd(">>gc2");
 		ecl_gc(t_contiguous);
+        }
 	@(return)
 }
 

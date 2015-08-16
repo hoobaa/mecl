@@ -1,0 +1,9 @@
+static const char compiler_data_text[] = 
+"0 'ext::lambda-block 0 (or function (satisfies si::valid-function-name-p)) ext::"
+ "bc-disassemble ext::gazonk ext::bc-compile :fasl 0 :fas 0 ext::bc-compile-file-p"
+ "athname :output-file ext::bc-compile-file :cl :ecl-bytecmp ext::install-bytecode"
+ "s-compiler :cmp ext::install-c-compiler ext::bytecmp si::dodefpackage 0 0 0 :out"
+ "put-file :type :verbose :print :c-file :h-file :data-file :shared-data-file :sys"
+ "tem-p :load :external-format 0 :verbose :print :load :external-format :output-fi"
+ "le 0 0 (\"CL\") (\"*SUPPRESS-COMPILER-WARNINGS*\" \"*SUPPRESS-COMPILER-NOTES*\") ";
+#define compiler_data_text_size 555

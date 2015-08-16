@@ -1,0 +1,5 @@
+static const char compiler_data_text[] = 
+"si::to-cdb-vector si::from-cdb-vector si::search-help-file si::dump-help-file 0 "
+ "0 0 ecl-cdb::lookup-cdb 0 ecl-cdb::%make-cdb ecl-cdb::add-record ecl-cdb::close-"
+ "cdb ";
+#define compiler_data_text_size 164

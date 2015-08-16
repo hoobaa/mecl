@@ -1,0 +1,9 @@
+static const char compiler_data_text[] = 
+"si::*inspect-level* si::*inspect-history* si::*inspect-mode* si::*old-print-leve"
+ "l* si::*old-print-length* si::inspect-read-line si::select-p si::select-e si::se"
+ "lect-u si::select-? si::*quit-tags* :report-function 0 0 0 0 0 0 0 0 0 0 si::abo"
+ "rt-inspect 0 0 0 0 0 0 si::quit-inspect 0 si::read-inspect-command si::inspect-i"
+ "ndent si::inspect-indent-1 si::compiler 0 0 0 0 0 0 0 0 0 0 si::inspect-instance"
+ " si::inspect-object (or stream t nil) si::deftype-form si::defstruct-form si::pr"
+ "int-doc si::help* 0 0 0 0 0 0 si::make-restart 0 0 0 clos::inspect-obj 0 0 0 ";
+#define compiler_data_text_size 557
