@@ -1,6 +1,0 @@
-static const char compiler_data_text[] = 
-"uname short-site-name long-site-name lisp-implementation-version ext::lisp-imple"
- "mentation-vcs-id machine-type machine-instance machine-version :darwin software-"
- "type software-version 0 0 0 0 0 0 0 0 0 0 ((\"**;*.*\" \"~/**/*.*\")) #P\"/Users/stro"
- "bolights/dev/mecl/ecl/src/\" ";
-#define compiler_data_text_size 268

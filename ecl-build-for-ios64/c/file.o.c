@@ -4876,11 +4876,11 @@ duplicate_dispatch_table(const struct ecl_file_ops *ops)
 const struct ecl_file_ops *
 stream_dispatch_table(cl_object strm)
 {
-    nlogd(">>stream_dispatch_table 1");
+    // nlogd(">>stream_dispatch_table 1");
 #ifdef ECL_CLOS_STREAMS
     // nlogd(">>CLOS-STREAM :YES");
     if (ECL_INSTANCEP(strm)) {
-        nlogd(">>stream_dispatch_table 2");
+        // nlogd(">>stream_dispatch_table 2");
         return &clos_stream_ops;
     }
 #endif
@@ -4888,7 +4888,7 @@ stream_dispatch_table(cl_object strm)
         nlogd(">>stream_dispatch_table 3<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< CANCER");
         FEwrong_type_argument(ecl_make_fixnum(/*STREAM*/799), strm);
     }
-    nlogd(">>stream_dispatch_table 4"); 
+    // nlogd(">>stream_dispatch_table 4"); 
     return (const struct ecl_file_ops *)strm->stream.ops;
 }
 
@@ -4945,7 +4945,7 @@ ecl_write_byte(cl_object c, cl_object strm)
 ecl_character
 ecl_write_char(ecl_character c, cl_object strm)
 {
-    nlogd(">>");
+    // nlogd(">>");
     return stream_dispatch_table(strm)->write_char(strm, c);
 }
 

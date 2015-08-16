@@ -1,4 +1,0 @@
-static const char compiler_data_text[] = 
-"si::dodefpackage (\"CL\" \"EXT\") ((\"SI\" \"UNBOUND\" \"GET-SYSPROP\" \"PUT-SYSPROP\" \"REM-"
- "SYSPROP\" \"SIMPLE-PROGRAM-ERROR\")) ";
-#define compiler_data_text_size 114

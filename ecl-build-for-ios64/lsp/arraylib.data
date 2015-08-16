@@ -1,6 +1,0 @@
-static const char compiler_data_text[] = 
-"(1) (satisfies array-has-fill-pointer-p) si::shrink-vector :element-type :initia"
- "l-element :initial-contents :adjustable :fill-pointer :displaced-to :displaced-i"
- "ndex-offset :element-type :initial-element :initial-contents :fill-pointer :disp"
- "laced-to :displaced-index-offset 0 si::simple-array-p ";
-#define compiler_data_text_size 294

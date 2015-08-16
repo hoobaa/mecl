@@ -1,6 +1,4 @@
-#include <stdio.h>
 #include <stdarg.h>
-
 void nsuml(long *sum , long argc , ... ) {
     va_list list;
     long i;

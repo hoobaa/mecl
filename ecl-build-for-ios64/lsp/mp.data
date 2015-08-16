@@ -1,8 +1,0 @@
-static const char compiler_data_text[] = 
-"(&body mp::allow-forms) 'let 'si::*allow-with-interrupts* mp::allow-forms mp::wi"
- "th-restored-interrupts (&body mp::with-forms) 'ext::*interrupts-enabled* mp::wit"
- "h-forms 'let* 'when '(si::check-pending-interrupts) (list* 'locally mp::with-for"
- "ms) (ext::*interrupts-enabled* nil) (si::*allow-with-interrupts* nil) (when ext:"
- ":*interrupts-enabled* (si::check-pending-interrupts)) mp::without-interrupts (si"
- "::check-pending-interrupts) mp::with-interrupts mp::with-lock 0 0 0 ";
-#define compiler_data_text_size 468

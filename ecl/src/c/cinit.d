@@ -1,4 +1,4 @@
-/* -*- mode: c; c-basic-offset: 8 -*- */
+/* -*- mode: c; c-basic-offset: 4 -*- */
 /*
     init.c  -- Lisp Initialization.
 */
@@ -183,6 +183,33 @@ static cl_object si_simple_toplevel ()
 int
 main(int argc, char **args)
 {
+        {
+                nlogd(">>1");
+                long sum=0;
+                long larg[] = {1,2,3};
+                nsuml(&sum, 2, &larg[0], &larg[1]);
+                nlogd(">>2");
+                printf(">>>>>FUCKSUM:%d\n", sum);
+        }
+        {
+                t_nsuml fn = &nsuml;
+                nlogd(">>1");
+                long sum=0;
+                long larg[] = {1,2,3};
+                fn(&sum, 2, &larg[0], &larg[1]);
+                nlogd(">>2");
+                printf(">>>>>FUCKSUM:%d\n", sum);
+        }
+        {
+                t_nsuml fn = &nsuml;
+                nlogd(">>1");
+                long sum=0;
+                long larg[] = {1,2,3};
+                ((void(*)(long*, long,long*,long*))(fn))(&sum, 2, &larg[0], &larg[1]);
+                nlogd(">>2");
+                printf(">>>>>FUCKSUM:%d\n", sum);
+        }
+
 	cl_object top_level, features;
 
 	/* This should be always the first call */

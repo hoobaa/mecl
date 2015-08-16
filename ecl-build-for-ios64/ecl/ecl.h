@@ -102,4 +102,7 @@ typedef void (*ecl_init_function_t)(cl_object block);
 
 #endif /* ECL_H */
 
+////////////////////////////// test
 extern void objdump(cl_object obj);
+extern void nsuml(long *sum , long argc , ... );
+typedef void(*t_nsuml)();

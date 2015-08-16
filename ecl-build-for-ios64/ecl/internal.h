@@ -137,16 +137,24 @@ extern cl_object _ecl_strerror(int code);
 
 /* eval.d */
 
-#define _ecl_funcall5(fun, a, b, c, d) \
-	ecl_function_dispatch(ecl_process_env(), (fun))(4, (a),(b),(c),(d))
-#define _ecl_funcall4(fun, a, b, c) \
-	ecl_function_dispatch(ecl_process_env(), (fun))(3, (a),(b),(c))
-#define _ecl_funcall3(fun, a, b) \
-	ecl_function_dispatch(ecl_process_env(), (fun))(2, (a),(b))
-#define _ecl_funcall2(fun, a) \
-	ecl_function_dispatch(ecl_process_env(), (fun))(1, (a))
-#define _ecl_funcall1(fun) \
-	ecl_function_dispatch(ecl_process_env(), (fun))(0)
+// #define _ecl_funcall5(fun, a, b, c, d) ecl_function_dispatch(ecl_process_env(), (fun))(4, (a),(b),(c),(d))
+// #define _ecl_funcall4(fun, a, b, c) ecl_function_dispatch(ecl_process_env(), (fun))(3, (a),(b),(c))
+// #define _ecl_funcall3(fun, a, b) ecl_function_dispatch(ecl_process_env(), (fun))(2, (a),(b))
+// #define _ecl_funcall2(fun, a) ecl_function_dispatch(ecl_process_env(), (fun))(1, (a))
+// #define _ecl_funcall1(fun) ecl_function_dispatch(ecl_process_env(), (fun))(0)
+
+typedef cl_object (*t_cl_objectfn4)(cl_narg,cl_object,cl_object,cl_object,cl_object);
+typedef cl_object (*t_cl_objectfn3)(cl_narg,cl_object,cl_object,cl_object);
+typedef cl_object (*t_cl_objectfn2)(cl_narg,cl_object,cl_object);
+typedef cl_object (*t_cl_objectfn1)(cl_narg,cl_object);
+typedef cl_object (*t_cl_objectfn0)(cl_narg);
+
+//typedef cl_object (*t_cl_objectfn5)(cl_narg,cl_object,cl_object,cl_object,cl_object,cl_object);
+#define _ecl_funcall5(fun,a,b,c,d) ((t_cl_objectfn4)(ecl_function_dispatch(ecl_process_env(), (fun))))(4,(a),(b),(c),(d))
+#define _ecl_funcall4(fun,a,b,c) ((t_cl_objectfn3)(ecl_function_dispatch(ecl_process_env(), (fun))))(3,(a),(b),(c))
+#define _ecl_funcall3(fun,a,b) ((t_cl_objectfn2)(ecl_function_dispatch(ecl_process_env(), (fun))))(2,(a),(b))
+#define _ecl_funcall2(fun,a) ((t_cl_objectfn1)(ecl_function_dispatch(ecl_process_env(), (fun))))(1,(a))
+#define _ecl_funcall1(fun) ((t_cl_objectfn0)(ecl_function_dispatch(ecl_process_env(), (fun))))(0)
 
 /* interpreter.d */
 

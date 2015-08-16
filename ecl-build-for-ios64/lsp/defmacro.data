@@ -1,6 +1,0 @@
-static const char compiler_data_text[] = 
-"si::search-keyword si::check-keyword si::dm-too-many-arguments si::dm-too-few-ar"
- "guments si::*dl* si::*arg-check* 'si::missing-keyword (t) si::find-documentation"
- " si::remove-documentation si::find-declarations si::expand-defmacro destructurin"
- "g-bind si::cmp-env-register-macrolet 0 0 0 0 0 0 0 0 0 0 ";
-#define compiler_data_text_size 297

@@ -1,4 +1,0 @@
-static const char compiler_data_text[] = 
-"clos::direct-superclasses clos::precedence-list clos::compute-clos-class-precede"
- "nce-list 0 ";
-#define compiler_data_text_size 91

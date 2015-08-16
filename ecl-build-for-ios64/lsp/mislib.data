@@ -1,5 +1,0 @@
-static const char compiler_data_text[] = 
-"si::*do-time-level* si::do-time time si::month-startdays 'funcall with-hash-tabl"
- "e-iterator si::sharp-!-reader 0 0 :verbose :mode 0 0 #A(t (13) (0 31 59 90 120 1"
- "51 181 212 243 273 304 334 365)) ";
-#define compiler_data_text_size 193
