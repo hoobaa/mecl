@@ -48,7 +48,7 @@ test_compare(struct cl_test *t, cl_object x)
 	x = KEY(t,x);
 	t->env->function = t->test_function;
         // printf("string tag 1st(%d) 2nd(%d)", t->item_compared->string.t, x->string.t);
-        return ((t_test_fn)t->test_fn)(2, t->item_compared, x) != ECL_NIL;
+        return (/*(t_test_fn)*/t->test_fn)(2, t->item_compared, x) != ECL_NIL; // PATCH. this cast is cancer.
 }
 
 static bool
@@ -56,7 +56,7 @@ test_compare_not(struct cl_test *t, cl_object x)
 {
 	x = KEY(t,x);
 	t->env->function = t->test_function;
-	return ((t_test_fn)t->test_fn)(2, t->item_compared, x) == ECL_NIL;
+	return (/*(t_test_fn)*/t->test_fn)(2, t->item_compared, x) == ECL_NIL; // PATCH.this cast is cancer
 }
 
 static bool
@@ -962,17 +962,17 @@ do_assoc(struct cl_test *t, cl_object a_list)
                                 nlogd(">>> do_assoc5");
 				FEtype_error_list(pair);
                         }
-                        nlogd(">>> do_assoc6");
-                        ECL_CONS_CAR(pair);
-                        nlogd(">>> do_assoc6.1");
-                        void *tmp = ((t)->test_c_function);
-                        nlogd(">>> do_assoc6.1.1");
-                        test_equal(t, ECL_CONS_CAR(pair));
-                        nlogd(">>> do_assoc6.1.2");
-                        // TEST(t, ECL_CONS_CAR(pair));
-                        nlogd(">>> do_assoc6.2");
-			//if (TEST(t, ECL_CONS_CAR(pair))) {
-                        if (test_equal(t, ECL_CONS_CAR(pair))) {
+                        // nlogd(">>> do_assoc6");
+                        // ECL_CONS_CAR(pair);
+                        // nlogd(">>> do_assoc6.1");
+                        // void *tmp = ((t)->test_c_function);
+                        // nlogd(">>> do_assoc6.1.1");
+                        // test_equal(t, ECL_CONS_CAR(pair));
+                        // nlogd(">>> do_assoc6.1.2");
+                        // // TEST(t, ECL_CONS_CAR(pair));
+                        // nlogd(">>> do_assoc6.2");
+			if (TEST(t, ECL_CONS_CAR(pair))) {
+                        //if (test_equal(t, ECL_CONS_CAR(pair))) { // patch . work tmporaly.
                                 nlogd(">>> do_assoc7");
 				return pair;
                         }
