@@ -44,10 +44,11 @@ typedef cl_object (*t_test_fn)(cl_narg narg, cl_object a, cl_object b);
 static bool
 test_compare(struct cl_test *t, cl_object x)
 {
+        nlogd(">>test_compare!!");
 	x = KEY(t,x);
 	t->env->function = t->test_function;
         // printf("string tag 1st(%d) 2nd(%d)", t->item_compared->string.t, x->string.t);
-	return ((t_test_fn)t->test_fn)(2, t->item_compared, x) != ECL_NIL;
+        return ((t_test_fn)t->test_fn)(2, t->item_compared, x) != ECL_NIL;
 }
 
 static bool
