@@ -735,25 +735,32 @@ ecl_extend_hashtable(cl_object hashtable)
         return new;
 }
 
+// ------------------------------1
 #line 741
 cl_object cl_make_hash_table(cl_narg narg, ...)
 {
 #line 741
-
-#line 743
+// ------------------------------2
+#line 741
 	const cl_env_ptr the_env = ecl_process_env();
-#line 743
+#line 741
 	static cl_object KEYS[5] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1947), (cl_object)(cl_symbols+1308), (cl_object)(cl_symbols+1297), (cl_object)(cl_symbols+1298)};
 	cl_object test;
 	cl_object weakness;
 	cl_object size;
 	cl_object rehash_size;
 	cl_object rehash_threshold;
-#line 743
+#line 741
 	cl_object KEY_VARS[10];
-#line 743
+#line 741
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, narg, narg, 0);
+#line 741
+// ------------------------------3
+
+#line 743
+// ------------------------------4
+#line 743
 #line 743
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(528));
 #line 743
@@ -799,6 +806,7 @@ cl_object cl_make_hash_table(cl_narg narg, ...)
 	  rehash_threshold = KEY_VARS[4];
 	}
 #line 743
+// ------------------------------5
 {
 	cl_object hash = cl__make_hash_table(test, size, rehash_size, rehash_threshold);
 #ifdef ECL_WEAK_HASH
@@ -1002,24 +1010,33 @@ si_hash_table_weakness(cl_object ht)
 
 }
 
+// ------------------------------1
 #line 912
-cl_object cl_gethash(cl_narg narg, cl_object key, cl_object ht, ...)
+cl_object cl_gethash(cl_narg narg, ...)
 {
 #line 912
+// ------------------------------2
+#line 912
+	const cl_env_ptr the_env = ecl_process_env();
+#line 912
+	cl_object no_value;
+#line 912
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object key = va_arg(ARGS,cl_object);  
+	cl_object ht = va_arg(ARGS,cl_object);  
+#line 912
+// ------------------------------3
 
 #line 914
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 914
-	cl_object no_value;
-#line 914
-	va_list ARGS;
-	va_start(ARGS, ht);
 #line 914
 	if (ecl_unlikely(narg < 2|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(413));
 #line 914
 	if (narg > 2) {
 #line 914
-		no_value = va_arg(ARGS,cl_object);
+		no_value = va_arg(ARGS,cl_object);  
 #line 914
 	} else {
 #line 914
@@ -1027,6 +1044,7 @@ cl_object cl_gethash(cl_narg narg, cl_object key, cl_object ht, ...)
 #line 914
 	}
 #line 914
+// ------------------------------5
 {
 	assert_type_hash_table(ecl_make_fixnum(/*GETHASH*/413), 2, ht);
 	{
@@ -1339,20 +1357,28 @@ cl_sxhash(cl_object key)
 
 }
 
+// ------------------------------1
 #line 1046
 cl_object si_hash_eql(cl_narg narg, ...)
 {
 #line 1046
+// ------------------------------2
+#line 1046
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1046
+	ecl_va_list args;
+	ecl_va_start(args, narg, narg, 0);
+#line 1046
+// ------------------------------3
 
 	cl_index h;
 #line 1049
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 1049
-	ecl_va_list args;
-	ecl_va_start(args, narg, narg, 0);
 #line 1049
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1660));
 #line 1049
+// ------------------------------5
 	for (h = 0; narg; narg--) {
 		cl_object o = ecl_va_arg(args);
 		h = _hash_eql(h, o);
@@ -1370,20 +1396,28 @@ cl_object si_hash_eql(cl_narg narg, ...)
 
 }
 
+// ------------------------------1
 #line 1056
 cl_object si_hash_equal(cl_narg narg, ...)
 {
 #line 1056
+// ------------------------------2
+#line 1056
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1056
+	ecl_va_list args;
+	ecl_va_start(args, narg, narg, 0);
+#line 1056
+// ------------------------------3
 
 	cl_index h;
 #line 1059
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 1059
-	ecl_va_list args;
-	ecl_va_start(args, narg, narg, 0);
 #line 1059
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1661));
 #line 1059
+// ------------------------------5
 	for (h = 0; narg; narg--) {
 		cl_object o = ecl_va_arg(args);
 		h = _hash_equal(3, h, o);
@@ -1401,20 +1435,28 @@ cl_object si_hash_equal(cl_narg narg, ...)
 
 }
 
+// ------------------------------1
 #line 1066
 cl_object si_hash_equalp(cl_narg narg, ...)
 {
 #line 1066
+// ------------------------------2
+#line 1066
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1066
+	ecl_va_list args;
+	ecl_va_start(args, narg, narg, 0);
+#line 1066
+// ------------------------------3
 
 	cl_index h;
 #line 1069
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 1069
-	ecl_va_list args;
-	ecl_va_start(args, narg, narg, 0);
 #line 1069
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1662));
 #line 1069
+// ------------------------------5
 	for (h = 0; narg; narg--) {
 		cl_object o = ecl_va_arg(args);
 		h = _hash_equalp(3, h, o);

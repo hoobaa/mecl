@@ -23,24 +23,32 @@
 #include <ecl/impl/math_dispatch2.h>
 #include <ecl/internal.h>
 
+// ------------------------------1
 #line 25
-cl_object cl_floor(cl_narg narg, cl_object x, ...)
+cl_object cl_floor(cl_narg narg, ...)
 {
 #line 25
+// ------------------------------2
+#line 25
+	const cl_env_ptr the_env = ecl_process_env();
+#line 25
+	cl_object y;
+#line 25
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object x = va_arg(ARGS,cl_object);  
+#line 25
+// ------------------------------3
 
 #line 27
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 27
-	cl_object y;
-#line 27
-	va_list ARGS;
-	va_start(ARGS, x);
 #line 27
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(384));
 #line 27
 	if (narg > 1) {
 #line 27
-		y = va_arg(ARGS,cl_object);
+		y = va_arg(ARGS,cl_object);  
 #line 27
 	} else {
 #line 27
@@ -48,6 +56,7 @@ cl_object cl_floor(cl_narg narg, cl_object x, ...)
 #line 27
 	}
 #line 27
+// ------------------------------5
 	if (narg == 1)
 		return ecl_floor1(x);
 	else

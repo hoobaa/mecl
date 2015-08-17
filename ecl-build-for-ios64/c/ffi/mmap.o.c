@@ -21,14 +21,15 @@
 #include <ecl/ecl-inl.h>
 #include <ecl/internal.h>
 
+// ------------------------------1
 #line 31
-cl_object si_mmap(cl_narg narg, cl_object filename, ...)
+cl_object si_mmap(cl_narg narg, ...)
 {
 #line 31
-
-#line 33
+// ------------------------------2
+#line 31
 	const cl_env_ptr the_env = ecl_process_env();
-#line 33
+#line 31
 	static cl_object KEYS[7] = {(cl_object)(cl_symbols+1263), (cl_object)(cl_symbols+1279), (cl_object)(cl_symbols+1218), (cl_object)(cl_symbols+1224), (cl_object)(cl_symbols+1245), (cl_object)(cl_symbols+1244), (cl_object)(cl_symbols+1236)};
 	cl_object length;
 	cl_object offset;
@@ -37,11 +38,18 @@ cl_object si_mmap(cl_narg narg, cl_object filename, ...)
 	cl_object if_exists;
 	cl_object if_does_not_exist;
 	cl_object external_format;
-#line 33
+#line 31
 	cl_object KEY_VARS[14];
-#line 33
+#line 31
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, filename, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object filename = ecl_va_arg(ARGS);  
+#line 31
+// ------------------------------3
+
+#line 33
+// ------------------------------4
+#line 33
 #line 33
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(1839));
 #line 33
@@ -103,6 +111,7 @@ cl_object si_mmap(cl_narg narg, cl_object filename, ...)
 	  external_format = KEY_VARS[6];
 	}
 #line 33
+// ------------------------------5
 #ifdef HAVE_SYS_MMAN_H
 {
         cl_object output, stream;

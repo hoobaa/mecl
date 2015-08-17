@@ -1942,19 +1942,29 @@ fmt_semicolon(format_stack fmt, bool colon, bool atsign)
 	fmt->line_length = ecl_to_fix(set_param(fmt, 1, INT, ecl_make_fixnum(72)));
 }
 
+// ------------------------------1
 #line 1944
-cl_object si::formatter-aux(cl_narg narg, cl_object strm, cl_object string, ...)
+cl_object si::formatter-aux(cl_narg narg, ...)
 {
 #line 1944
+// ------------------------------2
+#line 1944
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1944
+	ecl_va_list args;
+	ecl_va_start(args, narg, narg, 0);
+	cl_object strm = ecl_va_arg(args);  
+	cl_object string = ecl_va_arg(args);  
+#line 1944
+// ------------------------------3
 
 #line 1946
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 1946
-	ecl_va_list args;
-	ecl_va_start(args, string, narg, 2);
 #line 1946
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(1075));
 #line 1946
+// ------------------------------5
 	{
 #line 1946
 		#line 1946
@@ -2219,21 +2229,31 @@ DIRECTIVE:
 }
 #endif /* !ECL_CMU_FORMAT */
 
+// ------------------------------1
 #line 2200
-cl_object cl_format(cl_narg narg, cl_object strm, cl_object string, ...)
+cl_object cl_format(cl_narg narg, ...)
 {
 #line 2200
+// ------------------------------2
+#line 2200
+	const cl_env_ptr the_env = ecl_process_env();
+#line 2200
+	ecl_va_list args;
+	ecl_va_start(args, narg, narg, 0);
+	cl_object strm = ecl_va_arg(args);  
+	cl_object string = ecl_va_arg(args);  
+#line 2200
+// ------------------------------3
 
 	cl_object output = ECL_NIL;
 	int null_strm = 0;
 #line 2204
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 2204
-	ecl_va_list args;
-	ecl_va_start(args, string, narg, 2);
 #line 2204
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(387));
 #line 2204
+// ------------------------------5
 	if (Null(strm)) {
 #ifdef ECL_UNICODE
 		strm = ecl_alloc_adjustable_extended_string(64);

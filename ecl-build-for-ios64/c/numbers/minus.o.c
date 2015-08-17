@@ -17,20 +17,29 @@
 #include <ecl/ecl.h>
 #include <ecl/impl/math_dispatch2.h>
 
+// ------------------------------1
 #line 19
-cl_object cl_M(cl_narg narg, cl_object num, ...)
+cl_object cl_M(cl_narg narg, ...)
 {
 #line 19
+// ------------------------------2
+#line 19
+	const cl_env_ptr the_env = ecl_process_env();
+#line 19
+	ecl_va_list nums;
+	ecl_va_start(nums, narg, narg, 0);
+	cl_object num = ecl_va_arg(nums);  
+#line 19
+// ------------------------------3
 
 	cl_object diff;
 #line 22
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 22
-	ecl_va_list nums;
-	ecl_va_start(nums, num, narg, 1);
 #line 22
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(17));
 #line 22
+// ------------------------------5
 	/* INV: argument type check in number_{negate,minus}() */
 	if (narg == 1)
 		{

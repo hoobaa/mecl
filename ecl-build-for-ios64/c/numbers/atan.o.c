@@ -151,24 +151,32 @@ ecl_atan1(cl_object y)
 	}
 }
 
+// ------------------------------1
 #line 153
-cl_object cl_atan(cl_narg narg, cl_object x, ...)
+cl_object cl_atan(cl_narg narg, ...)
 {
 #line 153
+// ------------------------------2
+#line 153
+	const cl_env_ptr the_env = ecl_process_env();
+#line 153
+	cl_object y;
+#line 153
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object x = va_arg(ARGS,cl_object);  
+#line 153
+// ------------------------------3
 
 #line 154
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 154
-	cl_object y;
-#line 154
-	va_list ARGS;
-	va_start(ARGS, x);
 #line 154
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(117));
 #line 154
 	if (narg > 1) {
 #line 154
-		y = va_arg(ARGS,cl_object);
+		y = va_arg(ARGS,cl_object);  
 #line 154
 	} else {
 #line 154
@@ -176,6 +184,7 @@ cl_object cl_atan(cl_narg narg, cl_object x, ...)
 #line 154
 	}
 #line 154
+// ------------------------------5
 /* INV: type check in ecl_atan() & ecl_atan2() */
 	/* FIXME ecl_atan() and ecl_atan2() produce generic errors
 	   without recovery and function information. */

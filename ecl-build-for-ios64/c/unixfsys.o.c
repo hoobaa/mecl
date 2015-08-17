@@ -499,23 +499,32 @@ ecl_file_len(int f)
 	return ecl_make_integer(filestatus.st_size);
 }
 
+// ------------------------------1
 #line 461
-cl_object cl_rename_file(cl_narg narg, cl_object oldn, cl_object newn, ...)
+cl_object cl_rename_file(cl_narg narg, ...)
 {
 #line 461
+// ------------------------------2
+#line 461
+	const cl_env_ptr the_env = ecl_process_env();
+#line 461
+	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1245)};
+	cl_object if_exists;
+#line 461
+	cl_object KEY_VARS[2];
+#line 461
+	ecl_va_list ARGS;
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object oldn = ecl_va_arg(ARGS);  
+	cl_object newn = ecl_va_arg(ARGS);  
+#line 461
+// ------------------------------3
 
 	cl_object old_filename, new_filename, old_truename, new_truename;
 	int error;
 #line 465
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 465
-	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1245)};
-	cl_object if_exists;
-#line 465
-	cl_object KEY_VARS[2];
-#line 465
-	ecl_va_list ARGS;
-	ecl_va_start(ARGS, newn, narg, 2);
 #line 465
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(715));
 #line 465
@@ -529,6 +538,7 @@ cl_object cl_rename_file(cl_narg narg, cl_object oldn, cl_object newn, ...)
 	  if_exists = KEY_VARS[0];
 	}
 #line 465
+// ------------------------------5
 
 	/* 1) Get the old filename, and complain if it has wild components,
 	 *    or if it does not exist. Notice that the filename to be renamed
@@ -861,24 +871,31 @@ ecl_homedir_pathname(cl_object user)
 	return cl_parse_namestring(3, namestring, ECL_NIL, ECL_NIL);
 }
 
+// ------------------------------1
 #line 713
 cl_object cl_user_homedir_pathname(cl_narg narg, ...)
 {
 #line 713
-
-#line 715
+// ------------------------------2
+#line 713
 	const cl_env_ptr the_env = ecl_process_env();
-#line 715
+#line 713
 	cl_object host;
-#line 715
+#line 713
 	va_list ARGS;
 	va_start(ARGS, narg);
+#line 713
+// ------------------------------3
+
+#line 715
+// ------------------------------4
+#line 715
 #line 715
 	if (ecl_unlikely(narg < 0|| narg > 1)) FEwrong_num_arguments(ecl_make_fixnum(894));
 #line 715
 	if (narg > 0) {
 #line 715
-		host = va_arg(ARGS,cl_object);
+		host = va_arg(ARGS,cl_object);  
 #line 715
 	} else {
 #line 715
@@ -886,6 +903,7 @@ cl_object cl_user_homedir_pathname(cl_narg narg, ...)
 #line 715
 	}
 #line 715
+// ------------------------------5
 	/* Ignore optional host argument. */
 	{
 #line 716
@@ -1132,23 +1150,31 @@ dir_recursive(cl_object base_dir, cl_object directory, cl_object filemask, int f
 	return output;
 }
 
+// ------------------------------1
 #line 951
-cl_object cl_directory(cl_narg narg, cl_object mask, ...)
+cl_object cl_directory(cl_narg narg, ...)
 {
 #line 951
+// ------------------------------2
+#line 951
+	const cl_env_ptr the_env = ecl_process_env();
+#line 951
+	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1835)};
+	cl_object resolve_symlinks;
+#line 951
+	cl_object KEY_VARS[2];
+#line 951
+	ecl_va_list ARGS;
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object mask = ecl_va_arg(ARGS);  
+#line 951
+// ------------------------------3
 
         cl_object base_dir;
 	cl_object output;
 #line 955
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 955
-	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1835)};
-	cl_object resolve_symlinks;
-#line 955
-	cl_object KEY_VARS[2];
-#line 955
-	ecl_va_list ARGS;
-	ecl_va_start(ARGS, mask, narg, 1);
 #line 955
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(303));
 #line 955
@@ -1162,6 +1188,7 @@ cl_object cl_directory(cl_narg narg, cl_object mask, ...)
 	  resolve_symlinks = KEY_VARS[0];
 	}
 #line 955
+// ------------------------------5
         mask = coerce_to_file_pathname(mask);
         mask = make_absolute_pathname(mask);
         base_dir = make_base_pathname(mask);
@@ -1180,25 +1207,32 @@ cl_object cl_directory(cl_narg narg, cl_object mask, ...)
 
 }
 
+// ------------------------------1
 #line 963
 cl_object si_getcwd(cl_narg narg, ...)
 {
 #line 963
+// ------------------------------2
+#line 963
+	const cl_env_ptr the_env = ecl_process_env();
+#line 963
+	cl_object change_d_p_d;
+#line 963
+	va_list ARGS;
+	va_start(ARGS, narg);
+#line 963
+// ------------------------------3
 
 	cl_object output;
 #line 966
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 966
-	cl_object change_d_p_d;
-#line 966
-	va_list ARGS;
-	va_start(ARGS, narg);
 #line 966
 	if (ecl_unlikely(narg < 0|| narg > 1)) FEwrong_num_arguments(ecl_make_fixnum(1085));
 #line 966
 	if (narg > 0) {
 #line 966
-		change_d_p_d = va_arg(ARGS,cl_object);
+		change_d_p_d = va_arg(ARGS,cl_object);  
 #line 966
 	} else {
 #line 966
@@ -1206,6 +1240,7 @@ cl_object si_getcwd(cl_narg narg, ...)
 #line 966
 	}
 #line 966
+// ------------------------------5
 	output = cl_parse_namestring(3, current_dir(), ECL_NIL, ECL_NIL);
 	if (!Null(change_d_p_d)) {
 		ECL_SETQ(the_env, ECL_SYM("*DEFAULT-PATHNAME-DEFAULTS*",32), output);
@@ -1289,26 +1324,34 @@ si_get_library_pathname(void)
 ;
 }
 
+// ------------------------------1
 #line 1027
-cl_object si_chdir(cl_narg narg, cl_object directory, ...)
+cl_object si_chdir(cl_narg narg, ...)
 {
 #line 1027
+// ------------------------------2
+#line 1027
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1027
+	cl_object change_d_p_d;
+#line 1027
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object directory = va_arg(ARGS,cl_object);  
+#line 1027
+// ------------------------------3
 
 	cl_object previous = si_getcwd(0);
 	cl_object namestring;
 #line 1031
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 1031
-	cl_object change_d_p_d;
-#line 1031
-	va_list ARGS;
-	va_start(ARGS, directory);
 #line 1031
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(1053));
 #line 1031
 	if (narg > 1) {
 #line 1031
-		change_d_p_d = va_arg(ARGS,cl_object);
+		change_d_p_d = va_arg(ARGS,cl_object);  
 #line 1031
 	} else {
 #line 1031
@@ -1316,6 +1359,7 @@ cl_object si_chdir(cl_narg narg, cl_object directory, ...)
 #line 1031
 	}
 #line 1031
+// ------------------------------5
 	/* This will fail if the new directory does not exist */
 	directory = cl_truename(directory);
 	if (directory->pathname.name != ECL_NIL ||

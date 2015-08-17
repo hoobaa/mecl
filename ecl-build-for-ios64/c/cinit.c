@@ -30,14 +30,22 @@
  */
 
 extern cl_object
-cl_upgraded_array_element_type(cl_narg narg, cl_object type, ...)
+cl_upgraded_array_element_type(cl_narg narg, /*cl_object type, */...)
 {
+	ecl_va_list args;
+	ecl_va_start(args, narg, narg, 0);
+        cl_object type = ecl_va_arg(args);
 	return _ecl_funcall2(ECL_SYM("UPGRADED-ARRAY-ELEMENT-TYPE",889), type);
 }
 
 extern cl_object
-si_safe_eval(cl_narg narg, cl_object form, cl_object env, ...)
+si_safe_eval(cl_narg narg, /*cl_object form, cl_object env,*/ ...)
 {
+        ecl_va_list args;
+        ecl_va_start(args, narg, narg, 0);
+        cl_object form = ecl_va_arg(args);
+        cl_object env = ecl_va_arg(args);
+
         if (narg == 3) {
                 cl_object err_value;
                 va_list args; va_start(args, env);
@@ -96,8 +104,12 @@ clos_compute_effective_method_function(cl_object gf, cl_object combination, cl_o
 }
 
 extern cl_object
-si_string_to_object(cl_narg narg, cl_object string, ...)
+si_string_to_object(cl_narg narg, /*cl_object string, */...)
 {
+        ecl_va_list args;
+        ecl_va_start(args, narg, narg, 0);
+        cl_object string = ecl_va_arg(args);
+
         if (narg == 2) {
                 cl_object err_value;
                 va_list args; va_start(args, string);
@@ -124,19 +136,24 @@ si_signal_simple_error(cl_narg narg, ...)
 }
 
 extern cl_object
-cl_set_difference(cl_narg narg, cl_object l1, cl_object l2, ...)
+cl_set_difference(cl_narg narg, /*cl_object l1, cl_object l2, */...)
 {
+        ecl_va_list args;
+        ecl_va_start(args, narg, narg, 0);
+        cl_object l1 = ecl_va_arg(args);
+        cl_object l2 = ecl_va_arg(args);
+
         {
-#line 128
+#line 145
 	const cl_env_ptr the_env = ecl_process_env();
-#line 128
-	#line 128
+#line 145
+	#line 145
 	cl_object __value0 = l1;
-#line 128
+#line 145
 	the_env->nvalues = 1;
-#line 128
+#line 145
 	return __value0;
-#line 128
+#line 145
 }
 
 }
@@ -148,26 +165,35 @@ cl_array_dimensions(cl_object array)
 }
 
 extern cl_object
-si_find_relative_package(cl_narg narg, cl_object package, ...)
+si_find_relative_package(cl_narg narg, /*cl_object package, */...)
 {
+        ecl_va_list args;
+        ecl_va_start(args, narg, narg, 0);
+        cl_object package = ecl_va_arg(args);
+
 	{
-#line 140
+#line 161
 		const cl_env_ptr the_env = ecl_process_env();
-#line 140
-		#line 140
+#line 161
+		#line 161
 		cl_object __value0 = ECL_NIL;
-#line 140
+#line 161
 		the_env->nvalues = 1;
-#line 140
+#line 161
 		return __value0;
-#line 140
+#line 161
 	}
 ;
 }
 
 extern cl_object
-si_wrong_type_argument(cl_narg narg, cl_object object, cl_object type, ...)
+si_wrong_type_argument(cl_narg narg, /*cl_object object, cl_object type, */...)
 {
+        ecl_va_list args;
+        ecl_va_start(args, narg, narg, 0);
+        cl_object object = ecl_va_arg(args);
+        cl_object type = ecl_va_arg(args);
+
 	return _ecl_funcall3(ECL_SYM("SI::WRONG-TYPE-ARGUMENT",1611), object, type);
 }
 
@@ -193,10 +219,10 @@ static cl_object si_simple_toplevel ()
                         sentence = cl_read(3, ECL_NIL, ECL_NIL, OBJNULL);
                         if (sentence == OBJNULL)
                                 {
-#line 170
+#line 196
 	const cl_env_ptr the_env = ecl_process_env();
 the_env->nvalues = 0; return ECL_NIL;
-#line 170
+#line 196
 }
 ;
 			sentence = si_eval_with_env(1, sentence);

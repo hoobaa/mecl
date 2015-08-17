@@ -20,20 +20,29 @@
 #include <ecl/impl/math_dispatch2.h>
 #include "numbers/float_fix_compare.d"
 
+// ------------------------------1
 #line 22
-cl_object cl_E(cl_narg narg, cl_object num, ...)
+cl_object cl_E(cl_narg narg, ...)
 {
 #line 22
+// ------------------------------2
+#line 22
+	const cl_env_ptr the_env = ecl_process_env();
+#line 22
+	ecl_va_list nums;
+	ecl_va_start(nums, narg, narg, 0);
+	cl_object num = ecl_va_arg(nums);  
+#line 22
+// ------------------------------3
 
 	int i;
 #line 25
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 25
-	ecl_va_list nums;
-	ecl_va_start(nums, num, narg, 1);
 #line 25
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(74));
 #line 25
+// ------------------------------5
 	/* ANSI: Need not signal error for 1 argument */
 	/* INV: For >= 2 arguments, ecl_number_equalp() performs checks */
 	for (i = 1; i < narg; i++)
@@ -207,24 +216,32 @@ ecl_number_equalp(cl_object x, cl_object y)
 	}
 }
 
+// ------------------------------1
 #line 178
 cl_object cl_NE(cl_narg narg, ...)
 {
 #line 178
+// ------------------------------2
+#line 178
+	const cl_env_ptr the_env = ecl_process_env();
+#line 178
+	cl_object numi;
+#line 178
+	ecl_va_list nums;
+	ecl_va_start(nums, narg, narg, 0);
+#line 178
+// ------------------------------3
 
 	int i, j;
 #line 181
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 181
-	cl_object numi;
-#line 181
-	ecl_va_list nums;
-	ecl_va_start(nums, narg, narg, 0);
 #line 181
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(24));
 #line 181
 	numi = ECL_NIL;
 #line 181
+// ------------------------------5
 	if (narg == 0)
 		FEwrong_num_arguments_anonym();
 	numi = ecl_va_arg(nums);

@@ -17,20 +17,28 @@
 #include <ecl/ecl.h>
 #include <ecl/impl/math_dispatch2.h>
 
+// ------------------------------1
 #line 19
 cl_object cl_P(cl_narg narg, ...)
 {
 #line 19
+// ------------------------------2
+#line 19
+	const cl_env_ptr the_env = ecl_process_env();
+#line 19
+	ecl_va_list nums;
+	ecl_va_start(nums, narg, narg, 0);
+#line 19
+// ------------------------------3
 
 	cl_object sum = ecl_make_fixnum(0);
 #line 22
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 22
-	ecl_va_list nums;
-	ecl_va_start(nums, narg, narg, 0);
 #line 22
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(14));
 #line 22
+// ------------------------------5
   nlogd("c_PL");
 	/* INV: type check is in ecl_plus() */
 	while (narg--)

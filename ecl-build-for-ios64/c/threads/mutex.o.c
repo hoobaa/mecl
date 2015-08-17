@@ -57,22 +57,29 @@ ecl_make_lock(cl_object name, bool recursive)
         return output;
 }
 
+// ------------------------------1
 #line 59
 cl_object mp_make_lock(cl_narg narg, ...)
 {
 #line 59
-
-#line 61
+// ------------------------------2
+#line 59
 	const cl_env_ptr the_env = ecl_process_env();
-#line 61
+#line 59
 	static cl_object KEYS[2] = {(cl_object)(cl_symbols+1273), (cl_object)(cl_symbols+1412)};
 	cl_object name;
 	cl_object recursive;
-#line 61
+#line 59
 	cl_object KEY_VARS[4];
-#line 61
+#line 59
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, narg, narg, 0);
+#line 59
+// ------------------------------3
+
+#line 61
+// ------------------------------4
+#line 61
 #line 61
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1411));
 #line 61
@@ -94,6 +101,7 @@ cl_object mp_make_lock(cl_narg narg, ...)
 	  recursive = KEY_VARS[1];
 	}
 #line 61
+// ------------------------------5
 	{
 #line 61
 		#line 61
@@ -252,24 +260,32 @@ mp_get_lock_wait(cl_object lock)
 
 }
 
+// ------------------------------1
 #line 197
-cl_object mp_get_lock(cl_narg narg, cl_object lock, ...)
+cl_object mp_get_lock(cl_narg narg, ...)
 {
 #line 197
+// ------------------------------2
+#line 197
+	const cl_env_ptr the_env = ecl_process_env();
+#line 197
+	cl_object wait;
+#line 197
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object lock = va_arg(ARGS,cl_object);  
+#line 197
+// ------------------------------3
 
 #line 199
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 199
-	cl_object wait;
-#line 199
-	va_list ARGS;
-	va_start(ARGS, lock);
 #line 199
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(1417));
 #line 199
 	if (narg > 1) {
 #line 199
-		wait = va_arg(ARGS,cl_object);
+		wait = va_arg(ARGS,cl_object);  
 #line 199
 	} else {
 #line 199
@@ -277,6 +293,7 @@ cl_object mp_get_lock(cl_narg narg, cl_object lock, ...)
 #line 199
 	}
 #line 199
+// ------------------------------5
 	if (Null(wait))
         	return mp_get_lock_nowait(lock);
         else

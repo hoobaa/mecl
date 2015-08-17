@@ -49,20 +49,28 @@ ecl_integer_divide(cl_object x, cl_object y)
         FEwrong_type_nth_arg(ecl_make_fixnum(/*ROUND*/730), 1, x, ecl_make_fixnum(/*INTEGER*/437));
 }
 
+// ------------------------------1
 #line 51
 cl_object cl_gcd(cl_narg narg, ...)
 {
 #line 51
+// ------------------------------2
+#line 51
+	const cl_env_ptr the_env = ecl_process_env();
+#line 51
+	ecl_va_list nums;
+	ecl_va_start(nums, narg, narg, 0);
+#line 51
+// ------------------------------3
 
 	cl_object gcd;
 #line 54
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 54
-	ecl_va_list nums;
-	ecl_va_start(nums, narg, narg, 0);
 #line 54
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(399));
 #line 54
+// ------------------------------5
 	if (narg == 0)
 		{
 #line 55
@@ -133,20 +141,28 @@ ecl_gcd(cl_object x, cl_object y)
         return _ecl_big_gcd(x, y);
 }
 
+// ------------------------------1
 #line 94
 cl_object cl_lcm(cl_narg narg, ...)
 {
 #line 94
+// ------------------------------2
+#line 94
+	const cl_env_ptr the_env = ecl_process_env();
+#line 94
+	ecl_va_list nums;
+	ecl_va_start(nums, narg, narg, 0);
+#line 94
+// ------------------------------3
 
 	cl_object lcm;
 #line 97
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 97
-	ecl_va_list nums;
-	ecl_va_start(nums, narg, narg, 0);
 #line 97
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(456));
 #line 97
+// ------------------------------5
 	if (narg == 0)
 		{
 #line 98

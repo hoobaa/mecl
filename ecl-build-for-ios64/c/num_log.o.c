@@ -288,19 +288,27 @@ ecl_fixnum_bit_length(cl_fixnum i)
 	return count;
 }
 
+// ------------------------------1
 #line 290
 cl_object cl_logior(cl_narg narg, ...)
 {
 #line 290
-
-#line 292
+// ------------------------------2
+#line 290
 	const cl_env_ptr the_env = ecl_process_env();
-#line 292
+#line 290
 	ecl_va_list nums;
 	ecl_va_start(nums, narg, narg, 0);
+#line 290
+// ------------------------------3
+
+#line 292
+// ------------------------------4
+#line 292
 #line 292
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(500));
 #line 292
+// ------------------------------5
 	if (narg == 0)
 		{
 #line 293
@@ -327,19 +335,27 @@ cl_object cl_logior(cl_narg narg, ...)
 
 }
 
+// ------------------------------1
 #line 298
 cl_object cl_logxor(cl_narg narg, ...)
 {
 #line 298
-
-#line 300
+// ------------------------------2
+#line 298
 	const cl_env_ptr the_env = ecl_process_env();
-#line 300
+#line 298
 	ecl_va_list nums;
 	ecl_va_start(nums, narg, narg, 0);
+#line 298
+// ------------------------------3
+
+#line 300
+// ------------------------------4
+#line 300
 #line 300
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(507));
 #line 300
+// ------------------------------5
 	if (narg == 0)
 		{
 #line 301
@@ -366,19 +382,27 @@ cl_object cl_logxor(cl_narg narg, ...)
 
 }
 
+// ------------------------------1
 #line 306
 cl_object cl_logand(cl_narg narg, ...)
 {
 #line 306
-
-#line 308
+// ------------------------------2
+#line 306
 	const cl_env_ptr the_env = ecl_process_env();
-#line 308
+#line 306
 	ecl_va_list nums;
 	ecl_va_start(nums, narg, narg, 0);
+#line 306
+// ------------------------------3
+
+#line 308
+// ------------------------------4
+#line 308
 #line 308
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(492));
 #line 308
+// ------------------------------5
 	if (narg == 0)
 		{
 #line 309
@@ -405,19 +429,27 @@ cl_object cl_logand(cl_narg narg, ...)
 
 }
 
+// ------------------------------1
 #line 314
 cl_object cl_logeqv(cl_narg narg, ...)
 {
 #line 314
-
-#line 316
+// ------------------------------2
+#line 314
 	const cl_env_ptr the_env = ecl_process_env();
-#line 316
+#line 314
 	ecl_va_list nums;
 	ecl_va_start(nums, narg, narg, 0);
+#line 314
+// ------------------------------3
+
+#line 316
+// ------------------------------4
+#line 316
 #line 316
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(497));
 #line 316
+// ------------------------------5
 	if (narg == 0)
 		{
 #line 317

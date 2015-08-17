@@ -24,24 +24,32 @@
 #endif
 #include <ecl/internal.h>
 
+// ------------------------------1
 #line 26
-cl_object cl_round(cl_narg narg, cl_object x, ...)
+cl_object cl_round(cl_narg narg, ...)
 {
 #line 26
+// ------------------------------2
+#line 26
+	const cl_env_ptr the_env = ecl_process_env();
+#line 26
+	cl_object y;
+#line 26
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object x = va_arg(ARGS,cl_object);  
+#line 26
+// ------------------------------3
 
 #line 28
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 28
-	cl_object y;
-#line 28
-	va_list ARGS;
-	va_start(ARGS, x);
 #line 28
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(730));
 #line 28
 	if (narg > 1) {
 #line 28
-		y = va_arg(ARGS,cl_object);
+		y = va_arg(ARGS,cl_object);  
 #line 28
 	} else {
 #line 28
@@ -49,6 +57,7 @@ cl_object cl_round(cl_narg narg, cl_object x, ...)
 #line 28
 	}
 #line 28
+// ------------------------------5
 	if (narg == 1)
 		return ecl_round1(x);
 	else

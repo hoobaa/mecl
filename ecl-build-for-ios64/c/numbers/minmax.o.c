@@ -18,19 +18,28 @@
 
 #include <ecl/ecl.h>
 
+// ------------------------------1
 #line 20
-cl_object cl_max(cl_narg narg, cl_object max, ...)
+cl_object cl_max(cl_narg narg, ...)
 {
 #line 20
+// ------------------------------2
+#line 20
+	const cl_env_ptr the_env = ecl_process_env();
+#line 20
+	ecl_va_list nums;
+	ecl_va_start(nums, narg, narg, 0);
+	cl_object max = ecl_va_arg(nums);  
+#line 20
+// ------------------------------3
 
 #line 22
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 22
-	ecl_va_list nums;
-	ecl_va_start(nums, max, narg, 1);
 #line 22
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(551));
 #line 22
+// ------------------------------5
 	/* INV: type check occurs in ecl_number_compare() for the rest of
 	   numbers, but for the first argument it happens in ecl_zerop(). */
 	if (narg-- == 1) {
@@ -53,19 +62,28 @@ cl_object cl_max(cl_narg narg, cl_object max, ...)
 
 }
 
+// ------------------------------1
 #line 34
-cl_object cl_min(cl_narg narg, cl_object min, ...)
+cl_object cl_min(cl_narg narg, ...)
 {
 #line 34
+// ------------------------------2
+#line 34
+	const cl_env_ptr the_env = ecl_process_env();
+#line 34
+	ecl_va_list nums;
+	ecl_va_start(nums, narg, narg, 0);
+	cl_object min = ecl_va_arg(nums);  
+#line 34
+// ------------------------------3
 
 #line 36
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 36
-	ecl_va_list nums;
-	ecl_va_start(nums, min, narg, 1);
 #line 36
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(557));
 #line 36
+// ------------------------------5
 	/* INV: type check occurs in ecl_number_compare() for the rest of
 	   numbers, but for the first argument it happens in ecl_zerop(). */
 	if (narg-- == 1) {

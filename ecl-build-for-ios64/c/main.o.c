@@ -568,6 +568,8 @@ cl_boot(int argc, char **argv)
 	cl_core.path_max = MAXPATHLEN;
 #endif
 
+        nlogd(">>>");
+
         env->packages_to_be_created = ECL_NIL;
 	cl_core.lisp_package =
 		ecl_make_package(str_common_lisp,
@@ -591,6 +593,7 @@ cl_boot(int argc, char **argv)
 		ecl_make_package(str_c,
                                  ecl_list1(str_compiler),
 				 ecl_list1(cl_core.lisp_package));
+        nlogd(">>>");
 #ifdef CLOS
 	cl_core.clos_package =
 		ecl_make_package(str_clos, ECL_NIL, ecl_list1(cl_core.lisp_package));
@@ -618,11 +621,18 @@ cl_boot(int argc, char **argv)
 	cl_import2(ECL_T, cl_core.lisp_package);
 	cl_export2(ECL_T, cl_core.lisp_package);
 
+
+        nlogd(">>>");
+
 	/* At exit, clean up */
 	atexit(cl_shutdown);
 
+        nlogd(">>>");
+
 	/* These must come _after_ the packages and NIL/T have been created */
 	init_all_symbols();
+
+        nlogd(">>>");
 
 	/*
 	 * Initialize the per-thread data.
@@ -632,11 +642,16 @@ cl_boot(int argc, char **argv)
         init_big();
 	ecl_init_env(env);
 	ecl_cs_set_org(env);
+
+        nlogd(">>>");
+
 #if !defined(GBC_BOEHM)
 	/* We need this because a lot of stuff is to be created */
 	init_GC();
 #endif
 	GC_enable();
+
+        nlogd(">>>");
 
         /*
          * Initialize default pathnames
@@ -657,6 +672,8 @@ cl_boot(int argc, char **argv)
 	ECL_SET(ECL_SYM("MP::*CURRENT-PROCESS*",1398), env->own_process);
 #endif
 
+        nlogd(">>>");
+
 	/*
          * Load character names. The following hash table is a map
          * from names to character codes and viceversa. Note that we
@@ -672,6 +689,9 @@ cl_boot(int argc, char **argv)
 		ecl_sethash(name, aux, code);
 		ecl_sethash(code, aux, name);
 	}
+
+        nlogd(">>>");
+        
         /* Linefeed is redundant with one of the names given in
          * iso_latin_names.h, but it can not be associated to the code
          * 10, because the default name must be Newline. Similar to
@@ -681,14 +701,13 @@ cl_boot(int argc, char **argv)
         ecl_sethash(str_bell, aux, ecl_make_fixnum(7));
         ecl_sethash(str_escape, aux, ecl_make_fixnum(27));
 
+        nlogd(">>>");
+
         /*
          * Initialize logical pathname translations. This must come after
          * the character database has been filled.
          */
-	si_pathname_translations(2,str_sys,
-                                   ecl_list1(cl_list(2,str_star_dot_star,
-                                                     str_rel_star_dot_star)));
-        nlogd(">>");
+	si_pathname_translations(2,str_sys, ecl_list1(cl_list(2,str_star_dot_star, str_rel_star_dot_star))); ////////////////////////////// cancer after dpp patched.
 
 	/*
 	 * Initialize constants (strings, numbers and time).
@@ -826,43 +845,51 @@ cl_boot(int argc, char **argv)
 
 /************************* ENVIRONMENT ROUTINES ***********************/
 
-#line 828
+// ------------------------------1
+#line 847
 cl_object si_quit(cl_narg narg, ...)
 {
-#line 828
-
-#line 830
+#line 847
+// ------------------------------2
+#line 847
 	const cl_env_ptr the_env = ecl_process_env();
-#line 830
+#line 847
 	cl_object code;
-#line 830
+#line 847
 	cl_object kill_all_threads;
-#line 830
+#line 847
 	va_list ARGS;
 	va_start(ARGS, narg);
-#line 830
+#line 847
+// ------------------------------3
+
+#line 849
+// ------------------------------4
+#line 849
+#line 849
 	if (ecl_unlikely(narg < 0|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(1340));
-#line 830
+#line 849
 	if (narg > 0) {
-#line 830
-		code = va_arg(ARGS,cl_object);
-#line 830
+#line 849
+		code = va_arg(ARGS,cl_object);  
+#line 849
 	} else {
-#line 830
+#line 849
 		code = ecl_make_fixnum(0);
-#line 830
+#line 849
 	}
-#line 830
+#line 849
 	if (narg > 1) {
-#line 830
-		kill_all_threads = va_arg(ARGS,cl_object);
-#line 830
+#line 849
+		kill_all_threads = va_arg(ARGS,cl_object);  
+#line 849
 	} else {
-#line 830
+#line 849
 		kill_all_threads = ECL_T;
-#line 830
+#line 849
 	}
-#line 830
+#line 849
+// ------------------------------5
 {
 #ifdef ECL_THREADS
         if (!Null(kill_all_threads)) {
@@ -892,31 +919,39 @@ cl_object si_quit(cl_narg narg, ...)
 }
 }
 
-#line 859
+// ------------------------------1
+#line 878
 cl_object si_exit(cl_narg narg, ...)
 {
-#line 859
-
-#line 861
+#line 878
+// ------------------------------2
+#line 878
 	const cl_env_ptr the_env = ecl_process_env();
-#line 861
+#line 878
 	cl_object code;
-#line 861
+#line 878
 	va_list ARGS;
 	va_start(ARGS, narg);
-#line 861
+#line 878
+// ------------------------------3
+
+#line 880
+// ------------------------------4
+#line 880
+#line 880
 	if (ecl_unlikely(narg < 0|| narg > 1)) FEwrong_num_arguments(ecl_make_fixnum(1740));
-#line 861
+#line 880
 	if (narg > 0) {
-#line 861
-		code = va_arg(ARGS,cl_object);
-#line 861
+#line 880
+		code = va_arg(ARGS,cl_object);  
+#line 880
 	} else {
-#line 861
+#line 880
 		code = ECL_SYM_VAL(ecl_process_env(),ECL_SYM("EXT::*PROGRAM-EXIT-CODE*",1739));
-#line 861
+#line 880
 	}
-#line 861
+#line 880
+// ------------------------------5
         cl_shutdown();
         exit(ECL_FIXNUMP(code)? ecl_fixnum(code) : 0);
 }
@@ -925,16 +960,16 @@ cl_object
 si_argc()
 {
 	{
-#line 868
+#line 887
 		const cl_env_ptr the_env = ecl_process_env();
-#line 868
-		#line 868
+#line 887
+		#line 887
 		cl_object __value0 = ecl_make_fixnum(ARGC);
-#line 868
+#line 887
 		the_env->nvalues = 1;
-#line 868
+#line 887
 		return __value0;
-#line 868
+#line 887
 	}
 
 }
@@ -946,16 +981,16 @@ si_argv(cl_object index)
 		cl_fixnum i = ecl_fixnum(index);
 		if (i >= 0 && i < ARGC)
 			{
-#line 877
+#line 896
 				const cl_env_ptr the_env = ecl_process_env();
-#line 877
-				#line 877
+#line 896
+				#line 896
 				cl_object __value0 = make_base_string_copy(ARGV[i]);
-#line 877
+#line 896
 				the_env->nvalues = 1;
-#line 877
+#line 896
 				return __value0;
-#line 877
+#line 896
 			}
 ;
 	}
@@ -971,16 +1006,16 @@ si_getenv(cl_object var)
 	var = si_copy_to_simple_base_string(var);
 	value = getenv((char*)var->base_string.self);
 	{
-#line 890
+#line 909
 		const cl_env_ptr the_env = ecl_process_env();
-#line 890
-		#line 890
+#line 909
+		#line 909
 		cl_object __value0 = ((value == NULL)? ECL_NIL : make_base_string_copy(value));
-#line 890
+#line 909
 		the_env->nvalues = 1;
-#line 890
+#line 909
 		return __value0;
-#line 890
+#line 909
 	}
 
 }
@@ -1049,16 +1084,16 @@ si_environ(void)
 # endif
 #endif /* HAVE_ENVIRON */
         {
-#line 956
+#line 975
 	const cl_env_ptr the_env = ecl_process_env();
-#line 956
-	#line 956
+#line 975
+	#line 975
 	cl_object __value0 = output;
-#line 956
+#line 975
 	the_env->nvalues = 1;
-#line 956
+#line 975
 	return __value0;
-#line 956
+#line 975
 }
 
 }

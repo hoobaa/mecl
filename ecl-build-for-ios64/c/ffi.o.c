@@ -1031,28 +1031,39 @@ ecl_fficall_align(int data)
 	}
 }
 
+// ------------------------------1
 #line 811
-cl_object si_call_cfun(cl_narg narg, cl_object fun, cl_object return_type, cl_object arg_types, cl_object args, ...)
+cl_object si::call-cfun(cl_narg narg, ...)
 {
 #line 811
+// ------------------------------2
+#line 811
+	const cl_env_ptr the_env = ecl_process_env();
+#line 811
+	cl_object cc_type;
+#line 811
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object fun = va_arg(ARGS,cl_object);  
+	cl_object return_type = va_arg(ARGS,cl_object);  
+	cl_object arg_types = va_arg(ARGS,cl_object);  
+	cl_object args = va_arg(ARGS,cl_object);  
+#line 811
+// ------------------------------3
 
 	struct ecl_fficall *fficall = cl_env.fficall;
 	void *cfun = ecl_foreign_data_pointer_safe(fun);
 	cl_object object;
 	enum ecl_ffi_tag return_type_tag = ecl_foreign_type_code(return_type);
 #line 817
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 817
-	cl_object cc_type;
-#line 817
-	va_list ARGS;
-	va_start(ARGS, args);
 #line 817
 	if (ecl_unlikely(narg < 4|| narg > 5)) FEwrong_num_arguments(ecl_make_fixnum(1589));
 #line 817
 	if (narg > 4) {
 #line 817
-		cc_type = va_arg(ARGS,cl_object);
+		cc_type = va_arg(ARGS,cl_object);  
 #line 817
 	} else {
 #line 817
@@ -1060,6 +1071,7 @@ cl_object si_call_cfun(cl_narg narg, cl_object fun, cl_object return_type, cl_ob
 #line 817
 	}
 #line 817
+// ------------------------------5
 
 	ecl_fficall_prepare(return_type, arg_types, cc_type);
 	while (CONSP(arg_types)) {
@@ -1101,26 +1113,37 @@ cl_object si_call_cfun(cl_narg narg, cl_object fun, cl_object return_type, cl_ob
 
 }
 
+// ------------------------------1
 #line 848
-cl_object si_make_dynamic_callback(cl_narg narg, cl_object fun, cl_object sym, cl_object rtype, cl_object argtypes, ...)
+cl_object si::make-dynamic-callback(cl_narg narg, ...)
 {
 #line 848
+// ------------------------------2
+#line 848
+	const cl_env_ptr the_env = ecl_process_env();
+#line 848
+	cl_object cctype;
+#line 848
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object fun = va_arg(ARGS,cl_object);  
+	cl_object sym = va_arg(ARGS,cl_object);  
+	cl_object rtype = va_arg(ARGS,cl_object);  
+	cl_object argtypes = va_arg(ARGS,cl_object);  
+#line 848
+// ------------------------------3
 
 	cl_object data;
 	cl_object cbk;
 #line 852
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 852
-	cl_object cctype;
-#line 852
-	va_list ARGS;
-	va_start(ARGS, argtypes);
 #line 852
 	if (ecl_unlikely(narg < 4|| narg > 5)) FEwrong_num_arguments(ecl_make_fixnum(1591));
 #line 852
 	if (narg > 4) {
 #line 852
-		cctype = va_arg(ARGS,cl_object);
+		cctype = va_arg(ARGS,cl_object);  
 #line 852
 	} else {
 #line 852
@@ -1128,6 +1151,7 @@ cl_object si_make_dynamic_callback(cl_narg narg, cl_object fun, cl_object sym, c
 #line 852
 	}
 #line 852
+// ------------------------------5
 	data = cl_list(3, fun, rtype, argtypes);
 	cbk  = ecl_make_foreign_data(ECL_SYM(":POINTER-VOID",1377), 0, ecl_dynamic_callback_make(data, ecl_foreign_cc_code(cctype)));
 
@@ -1226,28 +1250,39 @@ prepare_cif(cl_env_ptr the_env, ffi_cif *cif, cl_object return_type,
         return n;
 }
 
+// ------------------------------1
 #line 940
-cl_object si_call_cfun(cl_narg narg, cl_object fun, cl_object return_type, cl_object arg_types, cl_object args, ...)
+cl_object si::call-cfun(cl_narg narg, ...)
 {
 #line 940
+// ------------------------------2
+#line 940
+	const cl_env_ptr the_env = ecl_process_env();
+#line 940
+	cl_object cc_type;
+#line 940
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object fun = va_arg(ARGS,cl_object);  
+	cl_object return_type = va_arg(ARGS,cl_object);  
+	cl_object arg_types = va_arg(ARGS,cl_object);  
+	cl_object args = va_arg(ARGS,cl_object);  
+#line 940
+// ------------------------------3
 
 	void *cfun = ecl_foreign_data_pointer_safe(fun);
 	cl_object object;
         volatile cl_index sp;
         ffi_cif cif;
 #line 946
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 946
-	cl_object cc_type;
-#line 946
-	va_list ARGS;
-	va_start(ARGS, args);
 #line 946
 	if (ecl_unlikely(narg < 4|| narg > 5)) FEwrong_num_arguments(ecl_make_fixnum(1589));
 #line 946
 	if (narg > 4) {
 #line 946
-		cc_type = va_arg(ARGS,cl_object);
+		cc_type = va_arg(ARGS,cl_object);  
 #line 946
 	} else {
 #line 946
@@ -1255,6 +1290,7 @@ cl_object si_call_cfun(cl_narg narg, cl_object fun, cl_object return_type, cl_ob
 #line 946
 	}
 #line 946
+// ------------------------------5
 {
 	sp = ECL_STACK_INDEX(the_env);
 	prepare_cif(the_env, &cif, return_type, arg_types, args, cc_type, NULL);
@@ -1313,24 +1349,35 @@ the_env->nvalues = 0; return ECL_NIL;
 ;
 }
 
+// ------------------------------1
 #line 989
-cl_object si_make_dynamic_callback(cl_narg narg, cl_object fun, cl_object sym, cl_object return_type, cl_object arg_types, ...)
+cl_object si::make-dynamic-callback(cl_narg narg, ...)
 {
 #line 989
+// ------------------------------2
+#line 989
+	const cl_env_ptr the_env = ecl_process_env();
+#line 989
+	cl_object cc_type;
+#line 989
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object fun = va_arg(ARGS,cl_object);  
+	cl_object sym = va_arg(ARGS,cl_object);  
+	cl_object return_type = va_arg(ARGS,cl_object);  
+	cl_object arg_types = va_arg(ARGS,cl_object);  
+#line 989
+// ------------------------------3
 
 #line 991
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 991
-	cl_object cc_type;
-#line 991
-	va_list ARGS;
-	va_start(ARGS, arg_types);
 #line 991
 	if (ecl_unlikely(narg < 4|| narg > 5)) FEwrong_num_arguments(ecl_make_fixnum(1591));
 #line 991
 	if (narg > 4) {
 #line 991
-		cc_type = va_arg(ARGS,cl_object);
+		cc_type = va_arg(ARGS,cl_object);  
 #line 991
 	} else {
 #line 991
@@ -1338,6 +1385,7 @@ cl_object si_make_dynamic_callback(cl_narg narg, cl_object fun, cl_object sym, c
 #line 991
 	}
 #line 991
+// ------------------------------5
 {
         ffi_cif *cif = ecl_alloc(sizeof(ffi_cif));
         ffi_type **types;

@@ -420,23 +420,30 @@ ecl_release_current_thread(void)
 #endif
 }
 
+// ------------------------------1
 #line 422
 cl_object mp_make_process(cl_narg narg, ...)
 {
 #line 422
-
-	cl_object process;
-#line 425
+// ------------------------------2
+#line 422
 	const cl_env_ptr the_env = ecl_process_env();
-#line 425
+#line 422
 	static cl_object KEYS[2] = {(cl_object)(cl_symbols+1273), (cl_object)(cl_symbols+1424)};
 	cl_object name;
 	cl_object initial_bindings;
-#line 425
+#line 422
 	cl_object KEY_VARS[4];
-#line 425
+#line 422
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, narg, narg, 0);
+#line 422
+// ------------------------------3
+
+	cl_object process;
+#line 425
+// ------------------------------4
+#line 425
 #line 425
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1401));
 #line 425
@@ -458,6 +465,7 @@ cl_object mp_make_process(cl_narg narg, ...)
 	  initial_bindings = KEY_VARS[1];
 	}
 #line 425
+// ------------------------------5
 	process = alloc_process(name, initial_bindings);
 	{
 #line 426

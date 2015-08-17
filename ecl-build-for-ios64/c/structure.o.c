@@ -75,21 +75,30 @@ si_structure_subtype_p(cl_object x, cl_object y)
 
 }
 
+// ------------------------------1
 #line 65
-cl_object si_make_structure(cl_narg narg, cl_object type, ...)
+cl_object si_make_structure(cl_narg narg, ...)
 {
 #line 65
+// ------------------------------2
+#line 65
+	const cl_env_ptr the_env = ecl_process_env();
+#line 65
+	ecl_va_list args;
+	ecl_va_start(args, narg, narg, 0);
+	cl_object type = ecl_va_arg(args);  
+#line 65
+// ------------------------------3
 
 	cl_object x;
 	int i;
 #line 69
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 69
-	ecl_va_list args;
-	ecl_va_start(args, type, narg, 1);
 #line 69
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(1105));
 #line 69
+// ------------------------------5
 	x = ecl_alloc_object(T_STRUCTURE);
 	ECL_STRUCT_TYPE(x) = type;
 	ECL_STRUCT_SLOTS(x) = NULL;	/* for GC sake */

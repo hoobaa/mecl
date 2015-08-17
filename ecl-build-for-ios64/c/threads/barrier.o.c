@@ -37,21 +37,29 @@ ecl_make_barrier(cl_object name, cl_index count)
         return output;
 }
 
+// ------------------------------1
 #line 39
-cl_object mp_make_barrier(cl_narg narg, cl_object count, ...)
+cl_object mp_make_barrier(cl_narg narg, ...)
 {
 #line 39
-
-#line 41
+// ------------------------------2
+#line 39
 	const cl_env_ptr the_env = ecl_process_env();
-#line 41
+#line 39
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1273)};
 	cl_object name;
-#line 41
+#line 39
 	cl_object KEY_VARS[2];
-#line 41
+#line 39
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, count, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object count = ecl_va_arg(ARGS);  
+#line 39
+// ------------------------------3
+
+#line 41
+// ------------------------------4
+#line 41
 #line 41
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(1452));
 #line 41
@@ -65,6 +73,7 @@ cl_object mp_make_barrier(cl_narg narg, cl_object count, ...)
 	  name = KEY_VARS[0];
 	}
 #line 41
+// ------------------------------5
 	if (count == ECL_T)
 		count = ecl_make_fixnum(MOST_POSITIVE_FIXNUM);
 	{
@@ -117,25 +126,33 @@ mp_barrier_arrivers_count(cl_object barrier)
 	ecl_return1(env, ecl_make_fixnum(arrivers));
 }
 
+// ------------------------------1
 #line 83
-cl_object mp_barrier_unblock(cl_narg narg, cl_object barrier, ...)
+cl_object mp_barrier_unblock(cl_narg narg, ...)
 {
 #line 83
-
-	int ping_flags = ECL_WAKEUP_RESET_FLAG | ECL_WAKEUP_ALL;
-	int kill_flags = ECL_WAKEUP_RESET_FLAG | ECL_WAKEUP_KILL | ECL_WAKEUP_ALL;
-#line 87
+// ------------------------------2
+#line 83
 	const cl_env_ptr the_env = ecl_process_env();
-#line 87
+#line 83
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1459), (cl_object)(cl_symbols+1458), (cl_object)(cl_symbols+1460)};
 	cl_object reset_count;
 	cl_object disable;
 	cl_object kill_waiting;
-#line 87
+#line 83
 	cl_object KEY_VARS[6];
-#line 87
+#line 83
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, barrier, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object barrier = ecl_va_arg(ARGS);  
+#line 83
+// ------------------------------3
+
+	int ping_flags = ECL_WAKEUP_RESET_FLAG | ECL_WAKEUP_ALL;
+	int kill_flags = ECL_WAKEUP_RESET_FLAG | ECL_WAKEUP_KILL | ECL_WAKEUP_ALL;
+#line 87
+// ------------------------------4
+#line 87
 #line 87
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(1453));
 #line 87
@@ -165,6 +182,7 @@ cl_object mp_barrier_unblock(cl_narg narg, cl_object barrier, ...)
 	  kill_waiting = KEY_VARS[2];
 	}
 #line 87
+// ------------------------------5
 	unlikely_if (ecl_t_of(barrier) != t_barrier) {
 		FEerror_not_a_barrier(barrier);
 	}
@@ -219,27 +237,36 @@ decrement_counter(cl_fixnum *counter)
 	} while (1);
 }
 
+// ------------------------------1
 #line 137
-cl_object mp_barrier_wait(cl_narg narg, cl_object barrier, ...)
+cl_object mp_barrier_wait(cl_narg narg, ...)
 {
 #line 137
+// ------------------------------2
+#line 137
+	const cl_env_ptr the_env = ecl_process_env();
+#line 137
+	cl_object *KEYS = NULL;
+#line 137
+	cl_object *KEY_VARS = NULL;
+#line 137
+	ecl_va_list ARGS;
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object barrier = ecl_va_arg(ARGS);  
+#line 137
+// ------------------------------3
 
 	cl_object output;
 	cl_fixnum counter;
 #line 141
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 141
-	cl_object *KEYS = NULL;
-#line 141
-	cl_object *KEY_VARS = NULL;
-#line 141
-	ecl_va_list ARGS;
-	ecl_va_start(ARGS, barrier, narg, 1);
 #line 141
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(1454));
 #line 141
 	cl_parse_key(ARGS, 0, KEYS, KEY_VARS, NULL, 0);
 #line 141
+// ------------------------------5
 {
 	cl_object own_process = the_env->own_process;
 

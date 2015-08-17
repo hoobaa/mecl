@@ -125,8 +125,12 @@ ecl_function_dispatch(cl_env_ptr env, cl_object x)
 }
 
 cl_object
-cl_funcall(cl_narg narg, cl_object function, ...)
+cl_funcall(cl_narg narg, /*cl_object function, */...)
 {
+        ecl_va_list args;
+        ecl_va_start(args, narg, narg, 0);
+        cl_object function = ecl_va_arg(args);
+
         cl_object output;
         --narg;
         {
@@ -137,19 +141,29 @@ cl_funcall(cl_narg narg, cl_object function, ...)
         return output;
 }
 
-#line 139
-cl_object cl_apply(cl_narg narg, cl_object fun, cl_object lastarg, ...)
+// ------------------------------1
+#line 143
+cl_object cl_apply(cl_narg narg, ...)
 {
-#line 139
-
-#line 141
+#line 143
+// ------------------------------2
+#line 143
 	const cl_env_ptr the_env = ecl_process_env();
-#line 141
+#line 143
 	ecl_va_list args;
-	ecl_va_start(args, lastarg, narg, 2);
-#line 141
+	ecl_va_start(args, narg, narg, 0);
+	cl_object fun = ecl_va_arg(args);  
+	cl_object lastarg = ecl_va_arg(args);  
+#line 143
+// ------------------------------3
+
+#line 145
+// ------------------------------4
+#line 145
+#line 145
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(89));
-#line 141
+#line 145
+// ------------------------------5
 	if (narg == 2 && ecl_t_of(lastarg) == t_frame) {
 		return ecl_apply_from_stack_frame(lastarg, fun);
 	} else {
@@ -188,32 +202,41 @@ cl_eval(cl_object form)
 	return si_eval_with_env(1, form);
 }
 
-#line 179
-cl_object cl_constantp(cl_narg narg, cl_object arg, ...)
+// ------------------------------1
+#line 183
+cl_object cl_constantp(cl_narg narg, ...)
 {
-#line 179
+#line 183
+// ------------------------------2
+#line 183
+	const cl_env_ptr the_env = ecl_process_env();
+#line 183
+	cl_object env;
+#line 183
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object arg = va_arg(ARGS,cl_object);  
+#line 183
+// ------------------------------3
 
 	cl_object flag;
-#line 182
-	const cl_env_ptr the_env = ecl_process_env();
-#line 182
-	cl_object env;
-#line 182
-	va_list ARGS;
-	va_start(ARGS, arg);
-#line 182
+#line 186
+// ------------------------------4
+#line 186
+#line 186
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(254));
-#line 182
+#line 186
 	if (narg > 1) {
-#line 182
-		env = va_arg(ARGS,cl_object);
-#line 182
+#line 186
+		env = va_arg(ARGS,cl_object);  
+#line 186
 	} else {
-#line 182
+#line 186
 		env = ECL_NIL;
-#line 182
+#line 186
 	}
-#line 182
+#line 186
+// ------------------------------5
 	switch (ecl_t_of(arg)) {
 	case t_list:
 		if (Null(arg)) {
@@ -231,14 +254,14 @@ cl_object cl_constantp(cl_narg narg, cl_object arg, ...)
 		flag = ECL_T;
 	}
 	{
-#line 198
-		#line 198
+#line 202
+		#line 202
 		cl_object __value0 = flag;
-#line 198
+#line 202
 		the_env->nvalues = 1;
-#line 198
+#line 202
 		return __value0;
-#line 198
+#line 202
 	}
 
 }

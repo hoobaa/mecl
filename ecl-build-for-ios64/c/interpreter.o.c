@@ -1274,16 +1274,24 @@ ecl_interpret(cl_object frame, cl_object env, cl_object bytecodes)
 	}
 }
 
+// ------------------------------1
 #line 1276
-cl_object si_interpreter_stack(cl_narg narg)
+cl_object si_interpreter_stack(cl_narg narg, ...)
 {
 #line 1276
+// ------------------------------2
+#line 1276
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1276
+	if (ecl_unlikely(narg!=0))	   FEwrong_num_arguments(ecl_make_fixnum(1096));
+#line 1276
+// ------------------------------3
 
 #line 1278
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 1278
-	if (ecl_unlikely(narg!=0))	   FEwrong_num_arguments(ecl_make_fixnum(1096));
 #line 1278
+// ------------------------------5
 	{
 #line 1278
 		#line 1278

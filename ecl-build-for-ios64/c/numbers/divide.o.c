@@ -17,19 +17,28 @@
 #include <ecl/ecl.h>
 #include <ecl/impl/math_dispatch2.h>
 
+// ------------------------------1
 #line 19
-cl_object cl_N(cl_narg narg, cl_object num, ...)
+cl_object cl_N(cl_narg narg, ...)
 {
 #line 19
+// ------------------------------2
+#line 19
+	const cl_env_ptr the_env = ecl_process_env();
+#line 19
+	ecl_va_list nums;
+	ecl_va_start(nums, narg, narg, 0);
+	cl_object num = ecl_va_arg(nums);  
+#line 19
+// ------------------------------3
 
 #line 21
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 21
-	ecl_va_list nums;
-	ecl_va_start(nums, num, narg, 1);
 #line 21
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(21));
 #line 21
+// ------------------------------5
 	/* INV: type check is in ecl_divide() */
 	if (narg == 0)
 		FEwrong_num_arguments(ecl_make_fixnum(/*/*/21));

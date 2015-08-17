@@ -144,19 +144,28 @@ si_row_major_aset(cl_object x, cl_object indx, cl_object val)
 
 }
 
+// ------------------------------1
 #line 122
-cl_object cl_aref(cl_narg narg, cl_object x, ...)
+cl_object cl_aref(cl_narg narg, ...)
 {
 #line 122
+// ------------------------------2
+#line 122
+	const cl_env_ptr the_env = ecl_process_env();
+#line 122
+	ecl_va_list indx;
+	ecl_va_start(indx, narg, narg, 0);
+	cl_object x = ecl_va_arg(indx);  
+#line 122
+// ------------------------------3
 
 #line 123
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 123
-	ecl_va_list indx;
-	ecl_va_start(indx, x, narg, 1);
 #line 123
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(92));
 #line 123
+// ------------------------------5
 {
 	cl_index i, j;
 	cl_index r = narg - 1;
@@ -308,19 +317,28 @@ ecl_row_major_ptr(cl_object x, cl_index index, cl_index bytes)
 
 		(si:aset value array dim0 ... dimN)
 */
+// ------------------------------1
 #line 264
-cl_object si_aset(cl_narg narg, cl_object x, ...)
+cl_object si_aset(cl_narg narg, ...)
 {
 #line 264
+// ------------------------------2
+#line 264
+	const cl_env_ptr the_env = ecl_process_env();
+#line 264
+	ecl_va_list dims;
+	ecl_va_start(dims, narg, narg, 0);
+	cl_object x = ecl_va_arg(dims);  
+#line 264
+// ------------------------------3
 
 #line 265
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 265
-	ecl_va_list dims;
-	ecl_va_start(dims, x, narg, 1);
 #line 265
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(1041));
 #line 265
+// ------------------------------5
 {
 	cl_index i, j;
 	cl_index r = narg - 2;

@@ -2626,25 +2626,33 @@ c_listA(cl_env_ptr env, cl_object args, int flags)
 /*
   Handles special declarations, removes declarations from body
  */
+// ------------------------------1
 #line 2628
-cl_object si_process_declarations(cl_narg narg, cl_object body, ...)
+cl_object si_process_declarations(cl_narg narg, ...)
 {
 #line 2628
+// ------------------------------2
+#line 2628
+	const cl_env_ptr the_env = ecl_process_env();
+#line 2628
+	cl_object doc;
+#line 2628
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object body = va_arg(ARGS,cl_object);  
+#line 2628
+// ------------------------------3
 
 	cl_object documentation = ECL_NIL, declarations = ECL_NIL, specials = ECL_NIL;
 #line 2631
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 2631
-	cl_object doc;
-#line 2631
-	va_list ARGS;
-	va_start(ARGS, body);
 #line 2631
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(1119));
 #line 2631
 	if (narg > 1) {
 #line 2631
-		doc = va_arg(ARGS,cl_object);
+		doc = va_arg(ARGS,cl_object);  
 #line 2631
 	} else {
 #line 2631
@@ -2652,6 +2660,7 @@ cl_object si_process_declarations(cl_narg narg, cl_object body, ...)
 #line 2631
 	}
 #line 2631
+// ------------------------------5
 	for (; !Null(body); body = ECL_CONS_CDR(body)) {
                 cl_object form;
                 unlikely_if (!ECL_LISTP(body))
@@ -3199,33 +3208,41 @@ si_make_lambda(cl_object name, cl_object rest)
 
 }
 
+// ------------------------------1
 #line 3091
-cl_object si_eval_with_env(cl_narg narg, cl_object form, ...)
+cl_object si_eval_with_env(cl_narg narg, ...)
 {
 #line 3091
+// ------------------------------2
+#line 3091
+	const cl_env_ptr the_env = ecl_process_env();
+#line 3091
+	cl_object env;
+#line 3091
+	cl_object stepping;
+#line 3091
+	cl_object compiler_env_p;
+#line 3091
+	cl_object execute;
+#line 3091
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object form = va_arg(ARGS,cl_object);  
+#line 3091
+// ------------------------------3
 
 	volatile cl_compiler_env_ptr old_c_env;
 	struct cl_compiler_env new_c_env;
 	cl_object interpreter_env, compiler_env;
 #line 3096
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 3096
-	cl_object env;
-#line 3096
-	cl_object stepping;
-#line 3096
-	cl_object compiler_env_p;
-#line 3096
-	cl_object execute;
-#line 3096
-	va_list ARGS;
-	va_start(ARGS, form);
 #line 3096
 	if (ecl_unlikely(narg < 1|| narg > 5)) FEwrong_num_arguments(ecl_make_fixnum(1067));
 #line 3096
 	if (narg > 1) {
 #line 3096
-		env = va_arg(ARGS,cl_object);
+		env = va_arg(ARGS,cl_object);  
 #line 3096
 	} else {
 #line 3096
@@ -3235,7 +3252,7 @@ cl_object si_eval_with_env(cl_narg narg, cl_object form, ...)
 #line 3096
 	if (narg > 2) {
 #line 3096
-		stepping = va_arg(ARGS,cl_object);
+		stepping = va_arg(ARGS,cl_object);  
 #line 3096
 	} else {
 #line 3096
@@ -3245,7 +3262,7 @@ cl_object si_eval_with_env(cl_narg narg, cl_object form, ...)
 #line 3096
 	if (narg > 3) {
 #line 3096
-		compiler_env_p = va_arg(ARGS,cl_object);
+		compiler_env_p = va_arg(ARGS,cl_object);  
 #line 3096
 	} else {
 #line 3096
@@ -3255,7 +3272,7 @@ cl_object si_eval_with_env(cl_narg narg, cl_object form, ...)
 #line 3096
 	if (narg > 4) {
 #line 3096
-		execute = va_arg(ARGS,cl_object);
+		execute = va_arg(ARGS,cl_object);  
 #line 3096
 	} else {
 #line 3096
@@ -3263,6 +3280,7 @@ cl_object si_eval_with_env(cl_narg narg, cl_object form, ...)
 #line 3096
 	}
 #line 3096
+// ------------------------------5
 	/*
 	 * Compile to bytecodes.
 	 */

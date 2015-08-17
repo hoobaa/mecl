@@ -930,21 +930,30 @@ si_set_signal_handler(cl_object code, cl_object handler)
 
 }
 
+// ------------------------------1
 #line 896
-cl_object si_catch_signal(cl_narg narg, cl_object code, cl_object flag, ...)
+cl_object si_catch_signal(cl_narg narg, ...)
 {
 #line 896
-
-#line 898
+// ------------------------------2
+#line 896
 	const cl_env_ptr the_env = ecl_process_env();
-#line 898
+#line 896
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1294)};
 	cl_object process;
-#line 898
+#line 896
 	cl_object KEY_VARS[2];
-#line 898
+#line 896
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, flag, narg, 2);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object code = ecl_va_arg(ARGS);  
+	cl_object flag = ecl_va_arg(ARGS);  
+#line 896
+// ------------------------------3
+
+#line 898
+// ------------------------------4
+#line 898
 #line 898
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(1191));
 #line 898
@@ -958,6 +967,7 @@ cl_object si_catch_signal(cl_narg narg, cl_object code, cl_object flag, ...)
 	  process = KEY_VARS[0];
 	}
 #line 898
+// ------------------------------5
 {
 	int code_int;
 	unlikely_if (ecl_gethash_safe(code, cl_core.known_signals, OBJNULL) == OBJNULL) {

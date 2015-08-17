@@ -1,0 +1,3 @@
+#!/bin/sh
+
+clang dpp.c -I ~/dev/mecl/local-install/host/include/ -o dpp

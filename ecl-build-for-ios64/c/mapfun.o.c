@@ -31,20 +31,29 @@
 		FEprogram_error_noreturn("MAP*: Too few arguments", 0); \
 	}
 
+// ------------------------------1
 #line 33
-cl_object cl_mapcar(cl_narg narg, cl_object fun, ...)
+cl_object cl_mapcar(cl_narg narg, ...)
 {
 #line 33
+// ------------------------------2
+#line 33
+	const cl_env_ptr the_env = ecl_process_env();
+#line 33
+	ecl_va_list lists;
+	ecl_va_start(lists, narg, narg, 0);
+	cl_object fun = ecl_va_arg(lists);  
+#line 33
+// ------------------------------3
 
 	cl_object res, *val = &res;
 #line 35
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 35
-	ecl_va_list lists;
-	ecl_va_start(lists, fun, narg, 1);
 #line 35
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(545));
 #line 35
+// ------------------------------5
 {
 	PREPARE_MAP(the_env, lists, cdrs_frame, cars_frame, narg);
 	res = ECL_NIL;
@@ -77,20 +86,29 @@ cl_object cl_mapcar(cl_narg narg, cl_object fun, ...)
 	}
 } }
 
+// ------------------------------1
 #line 57
-cl_object cl_maplist(cl_narg narg, cl_object fun, ...)
+cl_object cl_maplist(cl_narg narg, ...)
 {
 #line 57
+// ------------------------------2
+#line 57
+	const cl_env_ptr the_env = ecl_process_env();
+#line 57
+	ecl_va_list lists;
+	ecl_va_start(lists, narg, narg, 0);
+	cl_object fun = ecl_va_arg(lists);  
+#line 57
+// ------------------------------3
 
 	cl_object res, *val = &res;
 #line 59
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 59
-	ecl_va_list lists;
-	ecl_va_start(lists, fun, narg, 1);
 #line 59
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(549));
 #line 59
+// ------------------------------5
 {
 	PREPARE_MAP(the_env, lists, cdrs_frame, cars_frame, narg);
 	res = ECL_NIL;
@@ -123,20 +141,29 @@ cl_object cl_maplist(cl_narg narg, cl_object fun, ...)
 	}
 } }
 
+// ------------------------------1
 #line 81
-cl_object cl_mapc(cl_narg narg, cl_object fun, ...)
+cl_object cl_mapc(cl_narg narg, ...)
 {
 #line 81
+// ------------------------------2
+#line 81
+	const cl_env_ptr the_env = ecl_process_env();
+#line 81
+	ecl_va_list lists;
+	ecl_va_start(lists, narg, narg, 0);
+	cl_object fun = ecl_va_arg(lists);  
+#line 81
+// ------------------------------3
 
 	cl_object onelist;
 #line 83
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 83
-	ecl_va_list lists;
-	ecl_va_start(lists, fun, narg, 1);
 #line 83
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(543));
 #line 83
+// ------------------------------5
 {
 	PREPARE_MAP(the_env, lists, cdrs_frame, cars_frame, narg);
 	onelist = ECL_STACK_FRAME_REF(cdrs_frame, 0);
@@ -168,20 +195,29 @@ cl_object cl_mapc(cl_narg narg, cl_object fun, ...)
 	}
 } }
 
+// ------------------------------1
 #line 104
-cl_object cl_mapl(cl_narg narg, cl_object fun, ...)
+cl_object cl_mapl(cl_narg narg, ...)
 {
 #line 104
+// ------------------------------2
+#line 104
+	const cl_env_ptr the_env = ecl_process_env();
+#line 104
+	ecl_va_list lists;
+	ecl_va_start(lists, narg, narg, 0);
+	cl_object fun = ecl_va_arg(lists);  
+#line 104
+// ------------------------------3
 
 	cl_object onelist;
 #line 106
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 106
-	ecl_va_list lists;
-	ecl_va_start(lists, fun, narg, 1);
 #line 106
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(548));
 #line 106
+// ------------------------------5
 {
 	PREPARE_MAP(the_env, lists, cdrs_frame, cars_frame, narg);
 	onelist = ECL_STACK_FRAME_REF(cdrs_frame, 0);
@@ -213,20 +249,29 @@ cl_object cl_mapl(cl_narg narg, cl_object fun, ...)
 	}
 } }
 
+// ------------------------------1
 #line 127
-cl_object cl_mapcan(cl_narg narg, cl_object fun, ...)
+cl_object cl_mapcan(cl_narg narg, ...)
 {
 #line 127
+// ------------------------------2
+#line 127
+	const cl_env_ptr the_env = ecl_process_env();
+#line 127
+	ecl_va_list lists;
+	ecl_va_start(lists, narg, narg, 0);
+	cl_object fun = ecl_va_arg(lists);  
+#line 127
+// ------------------------------3
 
 	cl_object res, *val = &res;
 #line 129
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 129
-	ecl_va_list lists;
-	ecl_va_start(lists, fun, narg, 1);
 #line 129
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(544));
 #line 129
+// ------------------------------5
 {
 	PREPARE_MAP(the_env, lists, cdrs_frame, cars_frame, narg);
 	res = ECL_NIL;
@@ -260,20 +305,29 @@ cl_object cl_mapcan(cl_narg narg, cl_object fun, ...)
 	}
 } }
 
+// ------------------------------1
 #line 152
-cl_object cl_mapcon(cl_narg narg, cl_object fun, ...)
+cl_object cl_mapcon(cl_narg narg, ...)
 {
 #line 152
+// ------------------------------2
+#line 152
+	const cl_env_ptr the_env = ecl_process_env();
+#line 152
+	ecl_va_list lists;
+	ecl_va_start(lists, narg, narg, 0);
+	cl_object fun = ecl_va_arg(lists);  
+#line 152
+// ------------------------------3
 
 	cl_object res, *val = &res;
 #line 154
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 154
-	ecl_va_list lists;
-	ecl_va_start(lists, fun, narg, 1);
 #line 154
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(546));
 #line 154
+// ------------------------------5
 {
 	PREPARE_MAP(the_env, lists, cdrs_frame, cars_frame, narg);
 	res = ECL_NIL;

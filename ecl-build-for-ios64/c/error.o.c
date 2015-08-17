@@ -107,6 +107,7 @@ ecl_unrecoverable_error(cl_env_ptr the_env, const char *message)
 void
 FEerror(const char *s, int narg, ...)
 {
+        nlogd(">>FEerror (%s)", s);
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
 	ecl_enable_interrupts();
@@ -526,43 +527,62 @@ FEwin32_error(const char *msg, int narg, ...)
  * Higher level interface to errors *
  ************************************/
 
-#line 528
-cl_object cl_error(cl_narg narg, cl_object eformat, ...)
+// ------------------------------1
+#line 529
+cl_object cl_error(cl_narg narg, ...)
 {
-#line 528
-
-#line 530
+#line 529
+// ------------------------------2
+#line 529
 	const cl_env_ptr the_env = ecl_process_env();
-#line 530
+#line 529
 	ecl_va_list args;
-	ecl_va_start(args, eformat, narg, 1);
-#line 530
+	ecl_va_start(args, narg, narg, 0);
+	cl_object eformat = ecl_va_arg(args);  
+#line 529
+// ------------------------------3
+
+#line 531
+// ------------------------------4
+#line 531
+#line 531
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(337));
-#line 530
+#line 531
+// ------------------------------5
 	ecl_enable_interrupts();
 	funcall(4, ECL_SYM("SI::UNIVERSAL-ERROR-HANDLER",1163), ECL_NIL, eformat,
                 cl_grab_rest_args(args));
 	_ecl_unexpected_return();
 	{
 the_env->nvalues = 0; return ECL_NIL;
-#line 534
+#line 535
 	}
 ;
 }
 
-#line 537
-cl_object cl_cerror(cl_narg narg, cl_object cformat, cl_object eformat, ...)
+// ------------------------------1
+#line 538
+cl_object cl_cerror(cl_narg narg, ...)
 {
-#line 537
-
-#line 539
+#line 538
+// ------------------------------2
+#line 538
 	const cl_env_ptr the_env = ecl_process_env();
-#line 539
+#line 538
 	ecl_va_list args;
-	ecl_va_start(args, eformat, narg, 2);
-#line 539
+	ecl_va_start(args, narg, narg, 0);
+	cl_object cformat = ecl_va_arg(args);  
+	cl_object eformat = ecl_va_arg(args);  
+#line 538
+// ------------------------------3
+
+#line 540
+// ------------------------------4
+#line 540
+#line 540
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(202));
-#line 539
+#line 540
+// ------------------------------5
 	ecl_enable_interrupts();
 	return funcall(4, ECL_SYM("SI::UNIVERSAL-ERROR-HANDLER",1163), cformat, eformat,
 		       cl_grab_rest_args(args));

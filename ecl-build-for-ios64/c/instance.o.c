@@ -353,27 +353,35 @@ si_copy_instance(cl_object x)
 
 }
 
+// ------------------------------1
 #line 199
-cl_object cl_find_class(cl_narg narg, cl_object name, ...)
+cl_object cl_find_class(cl_narg narg, ...)
 {
 #line 199
+// ------------------------------2
+#line 199
+	const cl_env_ptr the_env = ecl_process_env();
+#line 199
+	cl_object errorp;
+#line 199
+	cl_object env;
+#line 199
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object name = va_arg(ARGS,cl_object);  
+#line 199
+// ------------------------------3
 
 	cl_object class, hash;
 #line 202
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 202
-	cl_object errorp;
-#line 202
-	cl_object env;
-#line 202
-	va_list ARGS;
-	va_start(ARGS, name);
 #line 202
 	if (ecl_unlikely(narg < 1|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(943));
 #line 202
 	if (narg > 1) {
 #line 202
-		errorp = va_arg(ARGS,cl_object);
+		errorp = va_arg(ARGS,cl_object);  
 #line 202
 	} else {
 #line 202
@@ -383,7 +391,7 @@ cl_object cl_find_class(cl_narg narg, cl_object name, ...)
 #line 202
 	if (narg > 2) {
 #line 202
-		env = va_arg(ARGS,cl_object);
+		env = va_arg(ARGS,cl_object);  
 #line 202
 	} else {
 #line 202
@@ -391,6 +399,7 @@ cl_object cl_find_class(cl_narg narg, cl_object name, ...)
 #line 202
 	}
 #line 202
+// ------------------------------5
 	hash = ECL_SYM_VAL(the_env, ECL_SYM("SI::*CLASS-NAME-HASH-TABLE*",1016));
 	class = ecl_gethash_safe(name, hash, ECL_NIL);
 	if (class == ECL_NIL) {

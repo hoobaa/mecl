@@ -236,24 +236,32 @@ ecl_make_random_state(cl_object rs)
 	return(z);
 }
 
+// ------------------------------1
 #line 238
-cl_object cl_random(cl_narg narg, cl_object x, ...)
+cl_object cl_random(cl_narg narg, ...)
 {
 #line 238
+// ------------------------------2
+#line 238
+	const cl_env_ptr the_env = ecl_process_env();
+#line 238
+	cl_object rs;
+#line 238
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object x = va_arg(ARGS,cl_object);  
+#line 238
+// ------------------------------3
 
 #line 240
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 240
-	cl_object rs;
-#line 240
-	va_list ARGS;
-	va_start(ARGS, x);
 #line 240
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(680));
 #line 240
 	if (narg > 1) {
 #line 240
-		rs = va_arg(ARGS,cl_object);
+		rs = va_arg(ARGS,cl_object);  
 #line 240
 	} else {
 #line 240
@@ -261,6 +269,7 @@ cl_object cl_random(cl_narg narg, cl_object x, ...)
 #line 240
 	}
 #line 240
+// ------------------------------5
 	rs = ecl_check_cl_type(ECL_SYM("RANDOM",680), rs, t_random);
 	{
 #line 241
@@ -275,24 +284,31 @@ cl_object cl_random(cl_narg narg, cl_object x, ...)
 ;
 }
 
+// ------------------------------1
 #line 244
 cl_object cl_make_random_state(cl_narg narg, ...)
 {
 #line 244
-
-#line 246
+// ------------------------------2
+#line 244
 	const cl_env_ptr the_env = ecl_process_env();
-#line 246
+#line 244
 	cl_object rs;
-#line 246
+#line 244
 	va_list ARGS;
 	va_start(ARGS, narg);
+#line 244
+// ------------------------------3
+
+#line 246
+// ------------------------------4
+#line 246
 #line 246
 	if (ecl_unlikely(narg < 0|| narg > 1)) FEwrong_num_arguments(ecl_make_fixnum(532));
 #line 246
 	if (narg > 0) {
 #line 246
-		rs = va_arg(ARGS,cl_object);
+		rs = va_arg(ARGS,cl_object);  
 #line 246
 	} else {
 #line 246
@@ -300,6 +316,7 @@ cl_object cl_make_random_state(cl_narg narg, ...)
 #line 246
 	}
 #line 246
+// ------------------------------5
 	{
 #line 246
 		#line 246

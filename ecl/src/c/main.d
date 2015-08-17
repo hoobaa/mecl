@@ -567,6 +567,8 @@ cl_boot(int argc, char **argv)
 	cl_core.path_max = MAXPATHLEN;
 #endif
 
+        nlogd(">>>");
+
         env->packages_to_be_created = ECL_NIL;
 	cl_core.lisp_package =
 		ecl_make_package(str_common_lisp,
@@ -590,6 +592,7 @@ cl_boot(int argc, char **argv)
 		ecl_make_package(str_c,
                                  ecl_list1(str_compiler),
 				 ecl_list1(cl_core.lisp_package));
+        nlogd(">>>");
 #ifdef CLOS
 	cl_core.clos_package =
 		ecl_make_package(str_clos, ECL_NIL, ecl_list1(cl_core.lisp_package));
@@ -617,11 +620,18 @@ cl_boot(int argc, char **argv)
 	cl_import2(ECL_T, cl_core.lisp_package);
 	cl_export2(ECL_T, cl_core.lisp_package);
 
+
+        nlogd(">>>");
+
 	/* At exit, clean up */
 	atexit(cl_shutdown);
 
+        nlogd(">>>");
+
 	/* These must come _after_ the packages and NIL/T have been created */
 	init_all_symbols();
+
+        nlogd(">>>");
 
 	/*
 	 * Initialize the per-thread data.
@@ -631,11 +641,16 @@ cl_boot(int argc, char **argv)
         init_big();
 	ecl_init_env(env);
 	ecl_cs_set_org(env);
+
+        nlogd(">>>");
+
 #if !defined(GBC_BOEHM)
 	/* We need this because a lot of stuff is to be created */
 	init_GC();
 #endif
 	GC_enable();
+
+        nlogd(">>>");
 
         /*
          * Initialize default pathnames
@@ -656,6 +671,8 @@ cl_boot(int argc, char **argv)
 	ECL_SET(@'mp::*current-process*', env->own_process);
 #endif
 
+        nlogd(">>>");
+
 	/*
          * Load character names. The following hash table is a map
          * from names to character codes and viceversa. Note that we
@@ -671,6 +688,9 @@ cl_boot(int argc, char **argv)
 		ecl_sethash(name, aux, code);
 		ecl_sethash(code, aux, name);
 	}
+
+        nlogd(">>>");
+        
         /* Linefeed is redundant with one of the names given in
          * iso_latin_names.h, but it can not be associated to the code
          * 10, because the default name must be Newline. Similar to
@@ -680,14 +700,13 @@ cl_boot(int argc, char **argv)
         ecl_sethash(str_bell, aux, ecl_make_fixnum(7));
         ecl_sethash(str_escape, aux, ecl_make_fixnum(27));
 
+        nlogd(">>>");
+
         /*
          * Initialize logical pathname translations. This must come after
          * the character database has been filled.
          */
-	@si::pathname-translations(2,str_sys,
-                                   ecl_list1(cl_list(2,str_star_dot_star,
-                                                     str_rel_star_dot_star)));
-        nlogd(">>");
+	@si::pathname-translations(2,str_sys, ecl_list1(cl_list(2,str_star_dot_star, str_rel_star_dot_star))); ////////////////////////////// cancer after dpp patched.
 
 	/*
 	 * Initialize constants (strings, numbers and time).

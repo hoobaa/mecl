@@ -58,28 +58,36 @@ ecl_parse_integer(cl_object str, cl_index start, cl_index end,
 	return (i == start)? OBJNULL : output;
 }
 
+// ------------------------------1
 #line 65
-cl_object cl_parse_integer(cl_narg narg, cl_object strng, ...)
+cl_object cl_parse_integer(cl_narg narg, ...)
 {
 #line 65
-
-	cl_index s, e, ep;
-	cl_object rtbl = ecl_current_readtable();
-#line 68
+// ------------------------------2
+#line 65
 	const cl_env_ptr the_env = ecl_process_env();
-#line 68
+#line 65
 	static cl_object KEYS[4] = {(cl_object)(cl_symbols+1310), (cl_object)(cl_symbols+1225), (cl_object)(cl_symbols+1295), (cl_object)(cl_symbols+1261)};
 	cl_object start;
 	cl_object end;
 	cl_object radix;
 	cl_object junk_allowed;
-#line 68
+#line 65
 	cl_object x;
-#line 68
+#line 65
 	cl_object KEY_VARS[8];
-#line 68
+#line 65
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, strng, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object strng = ecl_va_arg(ARGS);  
+#line 65
+// ------------------------------3
+
+	cl_index s, e, ep;
+	cl_object rtbl = ecl_current_readtable();
+#line 68
+// ------------------------------4
+#line 68
 #line 68
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(628));
 #line 68
@@ -119,6 +127,7 @@ cl_object cl_parse_integer(cl_narg narg, cl_object strng, ...)
 #line 68
 	x = ECL_NIL;
 #line 68
+// ------------------------------5
 {
         unlikely_if (!ECL_STRINGP(strng)) {
                 FEwrong_type_nth_arg(ecl_make_fixnum(/*PARSE-INTEGER*/628), 1, strng, ecl_make_fixnum(/*STRING*/805));

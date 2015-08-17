@@ -102,24 +102,33 @@ cl_vector_push(cl_object value, cl_object v)
 	}
 }
 
+// ------------------------------1
 #line 80
-cl_object cl_vector_push_extend(cl_narg narg, cl_object value, cl_object v, ...)
+cl_object cl_vector_push_extend(cl_narg narg, ...)
 {
 #line 80
+// ------------------------------2
+#line 80
+	const cl_env_ptr the_env = ecl_process_env();
+#line 80
+	cl_object extent;
+#line 80
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object value = va_arg(ARGS,cl_object);  
+	cl_object v = va_arg(ARGS,cl_object);  
+#line 80
+// ------------------------------3
 
 #line 82
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 82
-	cl_object extent;
-#line 82
-	va_list ARGS;
-	va_start(ARGS, v);
 #line 82
 	if (ecl_unlikely(narg < 2|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(901));
 #line 82
 	if (narg > 2) {
 #line 82
-		extent = va_arg(ARGS,cl_object);
+		extent = va_arg(ARGS,cl_object);  
 #line 82
 	} else {
 #line 82
@@ -127,6 +136,7 @@ cl_object cl_vector_push_extend(cl_narg narg, cl_object value, cl_object v, ...)
 #line 82
 	}
 #line 82
+// ------------------------------5
 {
 	cl_index f = ecl_fixnum(cl_fill_pointer(v));
 	if (f >= v->vector.dim) {

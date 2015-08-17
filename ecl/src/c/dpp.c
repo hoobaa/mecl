@@ -1,4 +1,4 @@
-/* -*- mode: c; c-basic-offset: 8 -*- */
+/* -*- mode: c; c-basic-offset: 4 -*- */
 /*
     dpp.c -- Defun preprocessor.
 */
@@ -644,11 +644,177 @@ put_fhead(void)
 
 	put_lineno();
 	fprintf(out, "cl_object %s(cl_narg narg", function_c_name);
-	for (i = 0; i < nreq; i++)
-		fprintf(out, ", cl_object %s", required[i]);
-	if (nopt > 0 || rest_flag || key_flag)
-		fprintf(out, ", ...");
+	// for (i = 0; i < nreq; i++) {
+	// 	fprintf(out, ", cl_object %s", required[i]);
+        // }
+	// if (nopt > 0 || rest_flag || key_flag) {
+	// 	fprintf(out, ", ...");
+        // }
+        fprintf(out, ", ...");
 	fprintf(out, ")\n{\n");
+}
+
+void
+put_declaration_1(void)
+{
+  int i;
+  int simple_varargs;
+
+  put_lineno();
+  the_env_defined = 1;
+  fprintf(out, "\tconst cl_env_ptr the_env = ecl_process_env();\n");
+  for (i = 0;  i < nopt;  i++) {
+    put_lineno();
+    fprintf(out, "\tcl_object %s;\n", optional[i].o_var);
+  }
+  for (i = 0;  i < nopt;  i++)
+    if (optional[i].o_svar != NULL) {
+      put_lineno();
+      fprintf(out, "\tbool %s;\n", optional[i].o_svar);
+    }
+  if (key_flag) {
+    put_lineno();
+    if (nkey) {
+      fprintf(out, "\tstatic cl_object KEYS[%d] = {", nkey);
+      for (i = 0; i < nkey; i++) {
+	if (i > 0)
+	  fprintf(out, ", ");
+	fprintf(out, "(cl_object)(cl_symbols+%d)", search_keyword(keyword[i].k_key));
+      }
+      fprintf(out, "};\n");
+    } else {
+      fprintf(out, "\tcl_object *KEYS = NULL;\n");
+    }
+  }
+  for (i = 0;  i < nkey;  i++) {
+    fprintf(out, "\tcl_object %s;\n", keyword[i].k_var);
+    if (keyword[i].k_svar != NULL)
+      fprintf(out, "\tbool %s;\n", keyword[i].k_svar);
+  }
+  for (i = 0;  i < naux;  i++) {
+    put_lineno();
+    fprintf(out, "\tcl_object %s;\n", aux[i].a_var);
+  }
+  if (nopt == 0 && !rest_flag && !key_flag) {
+    put_lineno();
+    fprintf(out, "\tif (ecl_unlikely(narg!=%d))", nreq);
+    fprintf(out, "\t   FEwrong_num_arguments(ecl_make_fixnum(%d));\n",
+            function_code);
+  } else {
+    simple_varargs = !rest_flag && !key_flag && ((nreq + nopt) < 32);
+    if (key_flag) {
+      put_lineno();
+      /* We do this because Microsoft VC++ does not support arrays of zero size */
+      if (nkey) {
+	fprintf(out, "\tcl_object KEY_VARS[%d];\n", 2*nkey);
+      } else {
+	fprintf(out, "\tcl_object *KEY_VARS = NULL;\n");
+      }
+    }
+    put_lineno();
+    if (simple_varargs) {
+        //fprintf(out,"\tva_list %s;\n\tva_start(%s, %s);\n", rest_var, rest_var, ((nreq > 0) ? required[nreq-1] : "narg"));
+        fprintf(out,"\tva_list %s;\n\tva_start(%s, %s);\n", rest_var, rest_var, "narg");
+    } else {
+        //fprintf(out,"\tecl_va_list %s;\n\tecl_va_start(%s, %s, narg, %d);\n", rest_var, rest_var, ((nreq > 0) ? required[nreq-1] : "narg"), nreq);
+        fprintf(out,"\tecl_va_list %s;\n\tecl_va_start(%s, %s, narg, %d);\n", rest_var, rest_var, "narg", 0);
+    }
+
+    for (i = 0;  i < nreq;  i++) {
+      if (simple_varargs) {
+          fprintf(out, "\tcl_object %s = va_arg(%s,cl_object);  \n", required[i], rest_var);
+      } else {
+          fprintf(out, "\tcl_object %s = ecl_va_arg(%s);  \n", required[i], rest_var);
+      }
+    }
+  }
+}
+
+void
+put_declaration_2(void)
+{
+  int i;
+  int simple_varargs;
+
+  put_lineno();
+  the_env_defined = 1;
+  // fprintf(out, "\tconst cl_env_ptr the_env = ecl_process_env();\n");
+  if (nopt == 0 && !rest_flag && !key_flag) {
+  } else {
+    simple_varargs = !rest_flag && !key_flag && ((nreq + nopt) < 32);
+
+    put_lineno();
+    fprintf(out, "\tif (ecl_unlikely(narg < %d", nreq);
+    if (nopt > 0 && !rest_flag && !key_flag) {
+      fprintf(out, "|| narg > %d", nreq + nopt);
+    }
+    fprintf(out, ")) FEwrong_num_arguments(ecl_make_fixnum(%d));\n", function_code);
+    for (i = 0;  i < nopt;  i++) {
+      put_lineno();
+      fprintf(out, "\tif (narg > %d) {\n", nreq+i);
+      put_lineno();
+      
+      if (simple_varargs) {
+          fprintf(out, "\t\t%s = va_arg(%s,cl_object);  \n", optional[i].o_var, rest_var);
+      } else {
+          fprintf(out, "\t\t%s = ecl_va_arg(%s);  \n", optional[i].o_var, rest_var);
+      }
+
+//       fprintf(out, simple_varargs?
+// 	      "\t\t%s = va_arg(%s,cl_object);\n":
+// 	      "\t\t%s = ecl_va_arg(%s);\n",
+// 	      optional[i].o_var, rest_var);
+
+      if (optional[i].o_svar) {
+	put_lineno();
+	fprintf(out, "\t\t%s = TRUE;\n", optional[i].o_svar);
+      }
+      put_lineno();
+      fprintf(out, "\t} else {\n");
+      put_lineno();
+      fprintf(out, "\t\t%s = %s;\n",
+	      optional[i].o_var,
+	      optional[i].o_init == NULL ? "ECL_NIL" : optional[i].o_init);
+      if (optional[i].o_svar) {
+	put_lineno();
+	fprintf(out, "\t\t%s = FALSE;\n", optional[i].o_svar);
+      }
+      put_lineno();
+      fprintf(out, "\t}\n");
+    }
+    if (key_flag) {
+      put_lineno();
+      fprintf(out, "\tcl_parse_key(ARGS, %d, KEYS, KEY_VARS, NULL, %d);\n",
+	      nkey, allow_other_keys_flag);
+      for (i = 0;  i < nkey;  i++) {
+	put_lineno();
+	fprintf(out, "\tif (KEY_VARS[%d]==ECL_NIL) {\n", nkey+i);
+	if (keyword[i].k_init != NULL) {
+	  put_lineno();
+	  fprintf(out, "\t  %s = %s;\n", keyword[i].k_var, keyword[i].k_init);
+	} else {
+	  put_lineno();
+	  fprintf(out, "\t  %s = ECL_NIL;\n", keyword[i].k_var);
+	}
+	if (keyword[i].k_svar != NULL) {
+	  put_lineno();
+	  fprintf(out, "\t  %s = FALSE;\n", keyword[i].k_svar);
+	}
+	fprintf(out, "\t} else {\n");
+	if (keyword[i].k_svar != NULL) {
+	  put_lineno();
+	  fprintf(out, "\t  %s = TRUE;\n", keyword[i].k_svar);
+	}
+	put_lineno();
+	fprintf(out, "\t  %s = KEY_VARS[%d];\n\t}\n", keyword[i].k_var, i);
+      }
+    }
+  }
+  for (i = 0;  i < naux;  i++) {
+    put_lineno();
+    fprintf(out, "\t%s = %s;\n", aux[i].a_var,
+	    aux[i].a_init == NULL ? "ECL_NIL" : aux[i].a_init);
+  }
 }
 
 void
@@ -709,13 +875,23 @@ put_declaration(void)
       }
     }
     put_lineno();
-    if (simple_varargs)
-	fprintf(out,"\tva_list %s;\n\tva_start(%s, %s);\n",
-		rest_var, rest_var, ((nreq > 0) ? required[nreq-1] : "narg"));
-    else
-	fprintf(out,"\tecl_va_list %s;\n\tecl_va_start(%s, %s, narg, %d);\n",
-		rest_var, rest_var, ((nreq > 0) ? required[nreq-1] : "narg"),
-		nreq);
+    if (simple_varargs) {
+        //fprintf(out,"\tva_list %s;\n\tva_start(%s, %s);\n", rest_var, rest_var, ((nreq > 0) ? required[nreq-1] : "narg"));
+        fprintf(out,"\tva_list %s;\n\tva_start(%s, %s);\n", rest_var, rest_var, "narg");
+    } else {
+        //fprintf(out,"\tecl_va_list %s;\n\tecl_va_start(%s, %s, narg, %d);\n", rest_var, rest_var, ((nreq > 0) ? required[nreq-1] : "narg"), nreq);
+        fprintf(out,"\tecl_va_list %s;\n\tecl_va_start(%s, %s, narg, %d);\n", rest_var, rest_var, "narg", 0);
+    }
+    for (i = 0;  i < nreq;  i++) {
+      if (simple_varargs) {
+          fprintf(out, "\tcl_object %s = va_arg(%s,cl_object);  \n", required[i], rest_var);
+      } else {
+          fprintf(out, "\tcl_object %s = ecl_va_arg(%s);  \n", required[i], rest_var);
+      }
+    }
+
+    fprintf(out, "// ------------------------------\n");
+
     put_lineno();
     fprintf(out, "\tif (ecl_unlikely(narg < %d", nreq);
     if (nopt > 0 && !rest_flag && !key_flag) {
@@ -726,10 +902,18 @@ put_declaration(void)
       put_lineno();
       fprintf(out, "\tif (narg > %d) {\n", nreq+i);
       put_lineno();
-      fprintf(out, simple_varargs?
-	      "\t\t%s = va_arg(%s,cl_object);\n":
-	      "\t\t%s = ecl_va_arg(%s);\n",
-	      optional[i].o_var, rest_var);
+      
+      if (simple_varargs) {
+          fprintf(out, "\t\t%s = va_arg(%s,cl_object);  \n", optional[i].o_var, rest_var);
+      } else {
+          fprintf(out, "\t\t%s = ecl_va_arg(%s);  \n", optional[i].o_var, rest_var);
+      }
+
+//       fprintf(out, simple_varargs?
+// 	      "\t\t%s = va_arg(%s,cl_object);\n":
+// 	      "\t\t%s = ecl_va_arg(%s);\n",
+// 	      optional[i].o_var, rest_var);
+
       if (optional[i].o_svar) {
 	put_lineno();
 	fprintf(out, "\t\t%s = TRUE;\n", optional[i].o_svar);
@@ -878,11 +1062,19 @@ LOOP:
 		in_defun = 1;
 		get_function();
 		get_lambda_list();
+                fprintf(out, "// ------------------------------1\n");
 		put_fhead();
 		put_lineno();
-		c = jump_to_at();
-		put_declaration();
+                fprintf(out, "// ------------------------------2\n");
+		put_declaration_1();
 		put_lineno();
+                fprintf(out, "// ------------------------------3\n");
+		c = jump_to_at();
+		put_lineno();
+                fprintf(out, "// ------------------------------4\n");
+		put_declaration_2();
+		put_lineno();
+                fprintf(out, "// ------------------------------5\n");
 	} else if (strcmp(p, "return") == 0) {
 		tab_save = tab;
 		get_return();

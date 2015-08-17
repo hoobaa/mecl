@@ -299,25 +299,34 @@ ecl_keywordp(cl_object s)
 	return (ecl_t_of(s) == t_symbol) && (s->symbol.hpack == cl_core.keyword_package);
 }
 
+// ------------------------------1
 #line 265
-cl_object cl_get(cl_narg narg, cl_object sym, cl_object indicator, ...)
+cl_object cl_get(cl_narg narg, ...)
 {
 #line 265
+// ------------------------------2
+#line 265
+	const cl_env_ptr the_env = ecl_process_env();
+#line 265
+	cl_object deflt;
+#line 265
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object sym = va_arg(ARGS,cl_object);  
+	cl_object indicator = va_arg(ARGS,cl_object);  
+#line 265
+// ------------------------------3
 
 	cl_object *plist;
 #line 268
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 268
-	cl_object deflt;
-#line 268
-	va_list ARGS;
-	va_start(ARGS, indicator);
 #line 268
 	if (ecl_unlikely(narg < 2|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(402));
 #line 268
 	if (narg > 2) {
 #line 268
-		deflt = va_arg(ARGS,cl_object);
+		deflt = va_arg(ARGS,cl_object);  
 #line 268
 	} else {
 #line 268
@@ -325,6 +334,7 @@ cl_object cl_get(cl_narg narg, cl_object sym, cl_object indicator, ...)
 #line 268
 	}
 #line 268
+// ------------------------------5
 	plist = ecl_symbol_plist(sym);
 	{
 #line 269
@@ -376,24 +386,33 @@ cl_symbol_plist(cl_object sym)
 
 }
 
+// ------------------------------1
 #line 285
-cl_object cl_getf(cl_narg narg, cl_object place, cl_object indicator, ...)
+cl_object cl_getf(cl_narg narg, ...)
 {
 #line 285
+// ------------------------------2
+#line 285
+	const cl_env_ptr the_env = ecl_process_env();
+#line 285
+	cl_object deflt;
+#line 285
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object place = va_arg(ARGS,cl_object);  
+	cl_object indicator = va_arg(ARGS,cl_object);  
+#line 285
+// ------------------------------3
 
 #line 287
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 287
-	cl_object deflt;
-#line 287
-	va_list ARGS;
-	va_start(ARGS, indicator);
 #line 287
 	if (ecl_unlikely(narg < 2|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(412));
 #line 287
 	if (narg > 2) {
 #line 287
-		deflt = va_arg(ARGS,cl_object);
+		deflt = va_arg(ARGS,cl_object);  
 #line 287
 	} else {
 #line 287
@@ -401,6 +420,7 @@ cl_object cl_getf(cl_narg narg, cl_object place, cl_object indicator, ...)
 #line 287
 	}
 #line 287
+// ------------------------------5
 	{
 #line 287
 		#line 287
@@ -442,26 +462,34 @@ cl_symbol_name(cl_object x)
 	ecl_return1(ecl_process_env(), ecl_symbol_name(x));
 }
 
+// ------------------------------1
 #line 318
-cl_object cl_copy_symbol(cl_narg narg, cl_object sym, ...)
+cl_object cl_copy_symbol(cl_narg narg, ...)
 {
 #line 318
+// ------------------------------2
+#line 318
+	const cl_env_ptr the_env = ecl_process_env();
+#line 318
+	cl_object cp;
+#line 318
+	cl_object x;
+#line 318
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object sym = va_arg(ARGS,cl_object);  
+#line 318
+// ------------------------------3
 
 #line 320
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 320
-	cl_object cp;
-#line 320
-	cl_object x;
-#line 320
-	va_list ARGS;
-	va_start(ARGS, sym);
 #line 320
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(262));
 #line 320
 	if (narg > 1) {
 #line 320
-		cp = va_arg(ARGS,cl_object);
+		cp = va_arg(ARGS,cl_object);  
 #line 320
 	} else {
 #line 320
@@ -471,6 +499,7 @@ cl_object cl_copy_symbol(cl_narg narg, cl_object sym, ...)
 #line 320
 	x = ECL_NIL;
 #line 320
+// ------------------------------5
 	if (Null(sym))
 		sym = ECL_NIL_SYMBOL;
 	x = cl_make_symbol(ecl_symbol_name(sym));
@@ -498,27 +527,34 @@ cl_object cl_copy_symbol(cl_narg narg, cl_object sym, ...)
 
 }
 
+// ------------------------------1
 #line 337
 cl_object cl_gensym(cl_narg narg, ...)
 {
 #line 337
+// ------------------------------2
+#line 337
+	const cl_env_ptr the_env = ecl_process_env();
+#line 337
+	cl_object prefix;
+#line 337
+	va_list ARGS;
+	va_start(ARGS, narg);
+#line 337
+// ------------------------------3
 
 	cl_type t;
 	cl_object counter, output;
 	bool increment;
 #line 341
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 341
-	cl_object prefix;
-#line 341
-	va_list ARGS;
-	va_start(ARGS, narg);
 #line 341
 	if (ecl_unlikely(narg < 0|| narg > 1)) FEwrong_num_arguments(ecl_make_fixnum(400));
 #line 341
 	if (narg > 0) {
 #line 341
-		prefix = va_arg(ARGS,cl_object);
+		prefix = va_arg(ARGS,cl_object);  
 #line 341
 	} else {
 #line 341
@@ -526,6 +562,7 @@ cl_object cl_gensym(cl_narg narg, ...)
 #line 341
 	}
 #line 341
+// ------------------------------5
 {
 	if (ecl_stringp(prefix)) {
 		counter = ECL_SYM_VAL(the_env, ECL_SYM("*GENSYM-COUNTER*",35));
@@ -562,28 +599,35 @@ cl_object cl_gensym(cl_narg narg, ...)
 ;
 } }
 
+// ------------------------------1
 #line 367
 cl_object cl_gentemp(cl_narg narg, ...)
 {
 #line 367
+// ------------------------------2
+#line 367
+	const cl_env_ptr the_env = ecl_process_env();
+#line 367
+	cl_object prefix;
+#line 367
+	cl_object pack;
+#line 367
+	va_list ARGS;
+	va_start(ARGS, narg);
+#line 367
+// ------------------------------3
 
 	cl_object output, s;
 	int intern_flag;
 #line 371
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 371
-	cl_object prefix;
-#line 371
-	cl_object pack;
-#line 371
-	va_list ARGS;
-	va_start(ARGS, narg);
 #line 371
 	if (ecl_unlikely(narg < 0|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(401));
 #line 371
 	if (narg > 0) {
 #line 371
-		prefix = va_arg(ARGS,cl_object);
+		prefix = va_arg(ARGS,cl_object);  
 #line 371
 	} else {
 #line 371
@@ -593,7 +637,7 @@ cl_object cl_gentemp(cl_narg narg, ...)
 #line 371
 	if (narg > 1) {
 #line 371
-		pack = va_arg(ARGS,cl_object);
+		pack = va_arg(ARGS,cl_object);  
 #line 371
 	} else {
 #line 371
@@ -601,6 +645,7 @@ cl_object cl_gentemp(cl_narg narg, ...)
 #line 371
 	}
 #line 371
+// ------------------------------5
         unlikely_if (!ECL_STRINGP(prefix))
                 FEwrong_type_nth_arg(ecl_make_fixnum(/*GENTEMP*/401), 1, prefix, ecl_make_fixnum(/*STRING*/805));
 	pack = si_coerce_to_package(pack);
@@ -725,19 +770,28 @@ si_putprop(cl_object sym, cl_object value, cl_object indicator)
 }
 
 /* Added for defstruct. Beppe */
+// ------------------------------1
 #line 437
-cl_object si_put_properties(cl_narg narg, cl_object sym, ...)
+cl_object si_put_properties(cl_narg narg, ...)
 {
 #line 437
+// ------------------------------2
+#line 437
+	const cl_env_ptr the_env = ecl_process_env();
+#line 437
+	ecl_va_list ind_values;
+	ecl_va_start(ind_values, narg, narg, 0);
+	cl_object sym = ecl_va_arg(ind_values);  
+#line 437
+// ------------------------------3
 
 #line 439
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 439
-	ecl_va_list ind_values;
-	ecl_va_start(ind_values, sym, narg, 1);
 #line 439
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(1123));
 #line 439
+// ------------------------------5
 	while (--narg >= 2) {
 		cl_object prop = ecl_va_arg(ind_values);
 		si_putprop(sym, ecl_va_arg(ind_values), prop);

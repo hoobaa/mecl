@@ -416,9 +416,9 @@ static int is_null(int c) { return c == '\0'; }
  *	5) A non empty string
  */
 static cl_object
-parse_word(cl_object s, delim_fn delim, int flags, cl_index start,
-	   cl_index end, cl_index *end_of_word)
+parse_word(cl_object s, delim_fn delim, int flags, cl_index start, cl_index end, cl_index *end_of_word)
 {
+        nlogd(">>parse_word");
 	cl_index i, j, last_delim = end;
 	bool wild_inferiors = FALSE;
 
@@ -536,9 +536,13 @@ parse_directories(cl_object s, int flags, cl_index start, cl_index end,
 bool
 ecl_logical_hostname_p(cl_object host)
 {
-	if (!ecl_stringp(host))
-		return FALSE;
-	return !Null(@assoc(4, host, cl_core.pathname_translations, @':test', @'string-equal'));
+        nlogd("------------------------------ ecl_logical_hostname_p");
+	if (!ecl_stringp(host)) return FALSE;
+        nlogd("------------------------------ ecl_logical_hostname_p");
+        //boot rv = !Null(@assoc(4, host, cl_core.pathname_translations, @':test', @'string-equal'));
+        bool rv = !Null(@assoc(4, host, cl_core.pathname_translations, @':test', @'string-equal'));
+        nlogd("------------------------------ ecl_logical_hostname_p");
+	return rv;
 }
 
 /*
@@ -568,30 +572,39 @@ ecl_logical_hostname_p(cl_object host)
  *
  */
 cl_object
-ecl_parse_namestring(cl_object s, cl_index start, cl_index end, cl_index *ep,
-		     cl_object default_host)
+ecl_parse_namestring(cl_object s, cl_index start, cl_index end, cl_index *ep, cl_object default_host)
 {
 	cl_object host, device, path, name, type, aux, version;
 	bool logical;
+
+        nlogd(">>parse_namestring");
 
 	if (start == end) {
 		host = device = path = name = type = aux = version = @'nil';
 		logical = 0;
 		goto make_it;
 	}
+
+        nlogd(">>parse_namestring");
 	/* We first try parsing as logical-pathname. In case of
 	 * failure, physical-pathname parsing is performed only when
 	 * there is no supplied *logical* host name. All other failures
 	 * result in ECL_NIL as output.
 	 */
-	host = parse_word(s, is_colon, WORD_LOGICAL | WORD_INCLUDE_DELIM |
-			  WORD_DISALLOW_SEMICOLON, start, end, ep);
+	host = parse_word(s, is_colon, WORD_LOGICAL | WORD_INCLUDE_DELIM | WORD_DISALLOW_SEMICOLON, start, end, ep);
+        nlogd(">>parse_namestring");
 	if (default_host != ECL_NIL) {
-		if (host == ECL_NIL || host == @':error')
+		if (host == ECL_NIL || host == @':error'){
 			host = default_host;
+                }
 	}
-	if (!ecl_logical_hostname_p(host))
+        nlogd(">>parse_namestring -- fr");
+	if (!ecl_logical_hostname_p(host)) { ////////////////////////////// cancer
+                nlogd(">>parse_namestring. goto physical");
 		goto physical;
+        }
+
+        nlogd(">>parse_namestring -- to");
 	/*
 	 * Logical pathname format:
 	 *	[logical-hostname:][;][logical-directory-component;][pathname-name][.pathname-type]
@@ -607,22 +620,23 @@ ecl_parse_namestring(cl_object s, cl_index start, cl_index end, cl_index *ep,
 	} else {
 		path = CONS(@':absolute', path);
 	}
-	if (path == @':error')
-		return ECL_NIL;
-	name = parse_word(s, is_dot, WORD_LOGICAL | WORD_ALLOW_ASTERISK |
-			  WORD_EMPTY_IS_NIL, *ep, end, ep);
-	if (name == @':error')
-		return ECL_NIL;
+
+        nlogd(">>parse_namestring");
+
+	if (path == @':error') return ECL_NIL;
+
+	name = parse_word(s, is_dot, WORD_LOGICAL | WORD_ALLOW_ASTERISK | WORD_EMPTY_IS_NIL, *ep, end, ep);
+	if (name == @':error') return ECL_NIL;
+
+        nlogd(">>parse_namestring");
+
 	type = ECL_NIL;
 	version = ECL_NIL;
-	if (*ep == start || ecl_char(s, *ep-1) != '.')
-		goto make_it;
+	if (*ep == start || ecl_char(s, *ep-1) != '.') goto make_it;
 	type = parse_word(s, is_dot, WORD_LOGICAL | WORD_ALLOW_ASTERISK |
 			  WORD_EMPTY_IS_NIL, *ep, end, ep);
-	if (type == @':error')
-		return ECL_NIL;
-	if (*ep == start || ecl_char(s, *ep-1) != '.')
-		goto make_it;
+	if (type == @':error') return ECL_NIL;
+	if (*ep == start || ecl_char(s, *ep-1) != '.') goto make_it;
 	aux = parse_word(s, is_null, WORD_LOGICAL | WORD_ALLOW_ASTERISK |
 			 WORD_EMPTY_IS_NIL, *ep, end, ep);
 	if (aux == @':error') {
@@ -720,6 +734,7 @@ ecl_parse_namestring(cl_object s, cl_index start, cl_index end, cl_index *ep,
 	}
 	version = (name != ECL_NIL || type != ECL_NIL) ? @':newest' : ECL_NIL;
  make_it:
+        nlogd(">>make_it");
 	if (*ep >= end) *ep = end;
 	path = ecl_make_pathname(host, device, path, name, type, version,
                                  @':local');
@@ -784,14 +799,18 @@ L:
 cl_object
 cl_logical_pathname(cl_object x)
 {
+        nlogd("cl_logical_pathname ------------------------------");
 	x = cl_pathname(x);
+        nlogd("cl_logical_pathname ------------------------------");
 	if (!x->pathname.logical) {
+                nlogd("cl_logical_pathname ------------------------------");
 		cl_error(9, @'simple-type-error', @':format-control',
 			 make_constant_base_string("~S cannot be coerced to a logical pathname."),
 			 @':format-arguments', cl_list(1, x),
 			 @':expected-type', @'logical-pathname',
 			 @':datum', x);
 	}
+        nlogd("cl_logical_pathname ------------------------------");
 	@(return x);
 }
 
@@ -1180,7 +1199,9 @@ cl_namestring(cl_object x)
 		thing = si_coerce_to_base_string(thing);
 #endif
 		p = ecl_vector_start_end(@[parse-namestring], thing, start, end);
-		output = ecl_parse_namestring(thing, p.start, p.end, &ee, default_host);
+                nlogd(">>>>> here? from");
+		output = ecl_parse_namestring(thing, p.start, p.end, &ee, default_host); ////////////////////////////// cancer?
+                nlogd(">>>>> here? to");
 		start = ecl_make_fixnum(ee);
 		if (output == ECL_NIL || ee != p.end) {
 			if (Null(junk_allowed)) {

@@ -46,25 +46,33 @@
 /* Coerce X to single-float if one arg,
    otherwise coerce to same float type as second arg */
 
+// ------------------------------1
 #line 48
-cl_object cl_float(cl_narg narg, cl_object x, ...)
+cl_object cl_float(cl_narg narg, ...)
 {
 #line 48
+// ------------------------------2
+#line 48
+	const cl_env_ptr the_env = ecl_process_env();
+#line 48
+	cl_object y;
+#line 48
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object x = va_arg(ARGS,cl_object);  
+#line 48
+// ------------------------------3
 
 	cl_type ty, tx;
 #line 51
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 51
-	cl_object y;
-#line 51
-	va_list ARGS;
-	va_start(ARGS, x);
 #line 51
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(374));
 #line 51
 	if (narg > 1) {
 #line 51
-		y = va_arg(ARGS,cl_object);
+		y = va_arg(ARGS,cl_object);  
 #line 51
 	} else {
 #line 51
@@ -72,6 +80,7 @@ cl_object cl_float(cl_narg narg, cl_object x, ...)
 #line 51
 	}
 #line 51
+// ------------------------------5
 	if (y != OBJNULL) {
 		ty = ecl_t_of(y);
 	} else {
@@ -300,27 +309,35 @@ ecl_signbit(cl_object x)
 	}
 }
 
+// ------------------------------1
 #line 245
-cl_object cl_float_sign(cl_narg narg, cl_object x, ...)
+cl_object cl_float_sign(cl_narg narg, ...)
 {
 #line 245
+// ------------------------------2
+#line 245
+	const cl_env_ptr the_env = ecl_process_env();
+#line 245
+	cl_object y;
+#line 245
+	bool yp;
+#line 245
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object x = va_arg(ARGS,cl_object);  
+#line 245
+// ------------------------------3
 
 	int negativep;
 #line 248
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 248
-	cl_object y;
-#line 248
-	bool yp;
-#line 248
-	va_list ARGS;
-	va_start(ARGS, x);
 #line 248
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(378));
 #line 248
 	if (narg > 1) {
 #line 248
-		y = va_arg(ARGS,cl_object);
+		y = va_arg(ARGS,cl_object);  
 #line 248
 		yp = TRUE;
 #line 248
@@ -332,6 +349,7 @@ cl_object cl_float_sign(cl_narg narg, cl_object x, ...)
 #line 248
 	}
 #line 248
+// ------------------------------5
 	if (!yp) {
 		y = cl_float(2, ecl_make_fixnum(1), x);
 	}
@@ -515,24 +533,32 @@ cl_integer_decode_float(cl_object x)
 }
 
 
+// ------------------------------1
 #line 421
-cl_object cl_complex(cl_narg narg, cl_object r, ...)
+cl_object cl_complex(cl_narg narg, ...)
 {
 #line 421
+// ------------------------------2
+#line 421
+	const cl_env_ptr the_env = ecl_process_env();
+#line 421
+	cl_object i;
+#line 421
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object r = va_arg(ARGS,cl_object);  
+#line 421
+// ------------------------------3
 
 #line 422
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 422
-	cl_object i;
-#line 422
-	va_list ARGS;
-	va_start(ARGS, r);
 #line 422
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(241));
 #line 422
 	if (narg > 1) {
 #line 422
-		i = va_arg(ARGS,cl_object);
+		i = va_arg(ARGS,cl_object);  
 #line 422
 	} else {
 #line 422
@@ -540,6 +566,7 @@ cl_object cl_complex(cl_narg narg, cl_object r, ...)
 #line 422
 	}
 #line 422
+// ------------------------------5
 /* INV: ecl_make_complex() checks types */
 	{
 #line 423

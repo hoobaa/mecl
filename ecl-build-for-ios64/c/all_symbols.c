@@ -79,10 +79,22 @@ mangle_name(cl_object output, unsigned char *source, int l)
 	return &output->base_string.self[output->base_string.fillp];
 }
 
+// ------------------------------1
 #line 81
-cl_object si_mangle_name(cl_narg narg, cl_object symbol, ...)
+cl_object si_mangle_name(cl_narg narg, ...)
 {
 #line 81
+// ------------------------------2
+#line 81
+	const cl_env_ptr the_env = ecl_process_env();
+#line 81
+	cl_object as_function;
+#line 81
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object symbol = va_arg(ARGS,cl_object);  
+#line 81
+// ------------------------------3
 
 	cl_index l;
 	unsigned char c, *source, *dest;
@@ -94,18 +106,14 @@ cl_object si_mangle_name(cl_narg narg, cl_object symbol, ...)
 	bool is_symbol;
 	cl_object name;
 #line 92
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 92
-	cl_object as_function;
-#line 92
-	va_list ARGS;
-	va_start(ARGS, symbol);
 #line 92
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(1107));
 #line 92
 	if (narg > 1) {
 #line 92
-		as_function = va_arg(ARGS,cl_object);
+		as_function = va_arg(ARGS,cl_object);  
 #line 92
 	} else {
 #line 92
@@ -113,6 +121,7 @@ cl_object si_mangle_name(cl_narg narg, cl_object symbol, ...)
 #line 92
 	}
 #line 92
+// ------------------------------5
 	name = ecl_symbol_name(symbol);
 	is_symbol = Null(as_function);
 	if (is_symbol) {

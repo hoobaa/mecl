@@ -1,0 +1,10 @@
+#!/bin/sh
+
+cd c
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -DECLDIR="\"/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/lib/ecl-12.12.1\"" -I. -I/Users/strobolights/dev/mecl/ecl-build-for-ios64 -I/Users/strobolights/dev/mecl/ecl/src/c -I../ecl/gc -DECL_API -DECL_NO_LEGACY     -g -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.4.sdk/ -DAPPLE -I/Users/strobolights/dev/mecl/local-install/iPhoneOS-arm64/include -D_THREAD_SAFE -Ddarwin -c -o list.o list.o.c
+
+cd ..
+
+rm ecl_min
+
+make ecl_min

@@ -6,7 +6,8 @@
 extern "C" {
 #endif
 
-#define _ECL_ARGS(x) x
+//#define _ECL_ARGS(x) x
+#define _ECL_ARGS(x) (cl_narg narg, ...)
 
 /*
  * Per-thread data.
@@ -522,13 +523,13 @@ extern ECL_API cl_object si_process_lambda(cl_object lambda);
 extern ECL_API cl_object si_make_lambda(cl_object name, cl_object body);
 extern ECL_API cl_object si_function_block_name(cl_object name);
 extern ECL_API cl_object si_valid_function_name_p(cl_object name);
-extern ECL_API cl_object si_process_declarations _ECL_ARGS((cl_narg narg, cl_object body, ...));
+extern ECL_API cl_object si_process_declarations _ECL_ARGS((cl_narg narg, ...));
 
 extern ECL_API cl_object si_eval_with_env _ECL_ARGS((cl_narg narg, cl_object form, ...));
 
 /* interpreter.c */
 
-extern ECL_API cl_object si_interpreter_stack _ECL_ARGS((cl_narg narg));
+extern ECL_API cl_object si_interpreter_stack _ECL_ARGS((cl_narg narg, ...));
 extern ECL_API cl_object ecl_stack_frame_open(cl_env_ptr env, cl_object f, cl_index size);
 extern ECL_API void ecl_stack_frame_push(cl_object f, cl_object o);
 extern ECL_API void ecl_stack_frame_push_values(cl_object f);
@@ -595,13 +596,13 @@ extern ECL_API cl_object si_signal_type_error(cl_object value, cl_object type) e
 /* eval.c */
 
 extern ECL_API cl_object cl_funcall _ECL_ARGS((cl_narg narg, cl_object fun, ...));
-extern ECL_API cl_object cl_apply _ECL_ARGS((cl_narg narg, cl_object fun, cl_object arg, ...));
+extern ECL_API cl_object cl_apply _ECL_ARGS((cl_narg narg, ...));
 extern ECL_API cl_object si_safe_eval _ECL_ARGS((cl_narg narg, cl_object form, cl_object env, ...));
 #define cl_safe_eval(form,env,value) si_safe_eval(3,form,env,value)
 extern ECL_API cl_object *_ecl_va_sp(cl_narg narg);
 extern ECL_API cl_object si_unlink_symbol(cl_object s);
 extern ECL_API cl_object cl_eval(cl_object form);
-extern ECL_API cl_object cl_constantp(cl_narg narg, cl_object arg, ...);
+extern ECL_API cl_object cl_constantp(cl_narg narg, ...);
 
 #define funcall cl_funcall
 extern ECL_API cl_object cl_apply_from_stack(cl_index narg, cl_object fun);
@@ -651,8 +652,8 @@ extern ECL_API cl_object si_size_of_foreign_elt_type(cl_object tag);
 extern ECL_API cl_object si_alignment_of_foreign_elt_type(cl_object tag);
 extern ECL_API cl_object si_load_foreign_module(cl_object module);
 extern ECL_API cl_object si_find_foreign_symbol(cl_object var, cl_object module, cl_object type, cl_object size);
-extern ECL_API cl_object si_call_cfun(cl_narg, cl_object fun, cl_object return_type, cl_object arg_types, cl_object args, ...);
-extern ECL_API cl_object si_make_dynamic_callback(cl_narg, cl_object fun, cl_object sym, cl_object return_type, cl_object arg_types, ...);
+extern ECL_API cl_object si_call_cfun _ECL_ARGS((cl_narg, cl_object fun, cl_object return_type, cl_object arg_types, cl_object args, ...));
+extern ECL_API cl_object si_make_dynamic_callback _ECL_ARGS((cl_narg, cl_object fun, cl_object sym, cl_object return_type, cl_object arg_types, ...));
 extern ECL_API cl_object si_free_ffi_closure(cl_object closure);
 
 /* Only foreign data types can be coerced to a pointer */
@@ -877,22 +878,22 @@ extern ECL_API cl_object cl_acons(cl_object x, cl_object y, cl_object z);
 extern ECL_API cl_object cl_list _ECL_ARGS((cl_narg narg, ...));
 extern ECL_API cl_object cl_listX _ECL_ARGS((cl_narg narg, ...));
 extern ECL_API cl_object cl_append _ECL_ARGS((cl_narg narg, ...));
-extern ECL_API cl_object cl_tree_equal _ECL_ARGS((cl_narg narg, cl_object x, cl_object y, ...));
-extern ECL_API cl_object cl_last _ECL_ARGS((cl_narg narg, cl_object x, ...));
-extern ECL_API cl_object cl_make_list _ECL_ARGS((cl_narg narg, cl_object size, ...));
+extern ECL_API cl_object cl_tree_equal _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_last _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_make_list _ECL_ARGS((cl_narg narg, ...));
 extern ECL_API cl_object cl_nconc _ECL_ARGS((cl_narg narg, ...));
-extern ECL_API cl_object cl_butlast _ECL_ARGS((cl_narg narg, cl_object lis, ...));
-extern ECL_API cl_object cl_nbutlast _ECL_ARGS((cl_narg narg, cl_object lis, ...));
-extern ECL_API cl_object cl_subst _ECL_ARGS((cl_narg narg, cl_object new_obj, cl_object old_obj, cl_object tree, ...));
-extern ECL_API cl_object cl_nsubst _ECL_ARGS((cl_narg narg, cl_object new_obj, cl_object old_obj, cl_object tree, ...));
-extern ECL_API cl_object cl_sublis _ECL_ARGS((cl_narg narg, cl_object alist, cl_object tree, ...));
-extern ECL_API cl_object cl_nsublis _ECL_ARGS((cl_narg narg, cl_object alist, cl_object tree, ...));
-extern ECL_API cl_object cl_member _ECL_ARGS((cl_narg narg, cl_object item, cl_object list, ...));
+extern ECL_API cl_object cl_butlast _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_nbutlast _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_subst _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_nsubst _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_sublis _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_nsublis _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_member _ECL_ARGS((cl_narg narg, ...));
 extern ECL_API cl_object si_member1 (cl_object item, cl_object list, cl_object test, cl_object test_not, cl_object key);
-extern ECL_API cl_object cl_adjoin _ECL_ARGS((cl_narg narg, cl_object item, cl_object list, ...));
-extern ECL_API cl_object cl_pairlis _ECL_ARGS((cl_narg narg, cl_object keys, cl_object data, ...));
-extern ECL_API cl_object cl_rassoc _ECL_ARGS((cl_narg narg, cl_object item, cl_object alist, ...));
-extern ECL_API cl_object cl_assoc _ECL_ARGS((cl_narg narg, cl_object item, cl_object alist, ...));
+extern ECL_API cl_object cl_adjoin _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_pairlis _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_rassoc _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_assoc _ECL_ARGS((cl_narg narg, ...));
 extern ECL_API cl_object si_proper_list_p(cl_object V1);
 
 extern ECL_API cl_object ecl_last(cl_object x, cl_index n);
@@ -1291,18 +1292,30 @@ extern ECL_API cl_object cl_list_all_packages(void);
 extern ECL_API cl_object si_package_hash_tables(cl_object p);
 extern ECL_API cl_object si_package_lock(cl_object p, cl_object t);
 extern ECL_API cl_object cl_delete_package(cl_object p);
-extern ECL_API cl_object cl_make_package _ECL_ARGS((cl_narg narg, cl_object pack_name, ...));
-extern ECL_API cl_object cl_intern _ECL_ARGS((cl_narg narg, cl_object strng, ...));
-extern ECL_API cl_object cl_find_symbol _ECL_ARGS((cl_narg narg, cl_object strng, ...));
-extern ECL_API cl_object cl_unintern _ECL_ARGS((cl_narg narg, cl_object symbl, ...));
-extern ECL_API cl_object cl_export _ECL_ARGS((cl_narg narg, cl_object symbols, ...));
-extern ECL_API cl_object cl_unexport _ECL_ARGS((cl_narg narg, cl_object symbols, ...));
-extern ECL_API cl_object cl_import _ECL_ARGS((cl_narg narg, cl_object symbols, ...));
+//extern ECL_API cl_object cl_make_package _ECL_ARGS((cl_narg narg, cl_object pack_name, ...));
+extern ECL_API cl_object cl_make_package _ECL_ARGS((cl_narg narg, ...));
+//extern ECL_API cl_object cl_intern _ECL_ARGS((cl_narg narg, cl_object strng, ...));
+extern ECL_API cl_object cl_intern _ECL_ARGS((cl_narg narg, ...));
+//extern ECL_API cl_object cl_find_symbol _ECL_ARGS((cl_narg narg, cl_object strng, ...));
+extern ECL_API cl_object cl_find_symbol _ECL_ARGS((cl_narg narg, ...));
+//extern ECL_API cl_object cl_unintern _ECL_ARGS((cl_narg narg, cl_object symbl, ...));
+extern ECL_API cl_object cl_unintern _ECL_ARGS((cl_narg narg, ...));
+//extern ECL_API cl_object cl_export _ECL_ARGS((cl_narg narg, cl_object symbols, ...));
+extern ECL_API cl_object cl_export _ECL_ARGS((cl_narg narg, ...));
+//extern ECL_API cl_object cl_unexport _ECL_ARGS((cl_narg narg, cl_object symbols, ...));
+extern ECL_API cl_object cl_unexport _ECL_ARGS((cl_narg narg, ...));
+//extern ECL_API cl_object cl_import _ECL_ARGS((cl_narg narg, cl_object symbols, ...));
+extern ECL_API cl_object cl_import _ECL_ARGS((cl_narg narg, ...));
 extern ECL_API cl_object cl_rename_package _ECL_ARGS((cl_narg narg, cl_object pack, cl_object new_name, ...));
-extern ECL_API cl_object cl_shadowing_import _ECL_ARGS((cl_narg narg, cl_object symbols, ...));
-extern ECL_API cl_object cl_shadow _ECL_ARGS((cl_narg narg, cl_object symbols, ...));
-extern ECL_API cl_object cl_use_package _ECL_ARGS((cl_narg narg, cl_object pack, ...));
-extern ECL_API cl_object cl_unuse_package _ECL_ARGS((cl_narg narg, cl_object pack, ...));
+//extern ECL_API cl_object cl_rename_package _ECL_ARGS((cl_narg narg, ...));
+//extern ECL_API cl_object cl_shadowing_import _ECL_ARGS((cl_narg narg, cl_object symbols, ...));
+//extern ECL_API cl_object cl_shadow _ECL_ARGS((cl_narg narg, cl_object symbols, ...));
+//extern ECL_API cl_object cl_use_package _ECL_ARGS((cl_narg narg, cl_object pack, ...));
+//extern ECL_API cl_object cl_unuse_package _ECL_ARGS((cl_narg narg, cl_object pack, ...));
+extern ECL_API cl_object cl_shadowing_import _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_shadow _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_use_package _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_unuse_package _ECL_ARGS((cl_narg narg, ...));
 
 extern ECL_API cl_object ecl_make_package(cl_object n, cl_object ns, cl_object ul);
 extern ECL_API cl_object ecl_rename_package(cl_object x, cl_object n, cl_object ns);
@@ -1448,7 +1461,7 @@ extern ECL_API bool ecl_print_circle(void);
 extern ECL_API cl_object si_integer_to_string(cl_object buffer, cl_object integer, cl_object base, cl_object radix, cl_object decimalp);
 
 /* printer/float_string.d */
-extern ECL_API cl_object si_float_string(cl_narg narg, cl_object string, cl_object x, ...);
+extern ECL_API cl_object si_float_string(cl_narg narg, cl_object string, cl_object x, ...); // ??
 
 /* printer/float_to_digits.d */
 extern ECL_API cl_object si_float_to_digits(cl_object digits, cl_object number, cl_object position, cl_object relativep);
@@ -1668,12 +1681,15 @@ extern ECL_API cl_object si_set_symbol_plist(cl_object sym, cl_object plist);
 extern ECL_API cl_object si_putprop(cl_object sym, cl_object value, cl_object indicator);
 extern ECL_API cl_object si_Xmake_special(cl_object sym);
 extern ECL_API cl_object si_Xmake_constant(cl_object sym, cl_object val);
-extern ECL_API cl_object cl_get _ECL_ARGS((cl_narg narg, cl_object sym, cl_object indicator, ...));
-extern ECL_API cl_object cl_getf _ECL_ARGS((cl_narg narg, cl_object place, cl_object indicator, ...));
-extern ECL_API cl_object cl_copy_symbol _ECL_ARGS((cl_narg narg, cl_object sym, ...));
+//extern ECL_API cl_object cl_get _ECL_ARGS((cl_narg narg, cl_object sym, cl_object indicator, ...));
+extern ECL_API cl_object cl_get _ECL_ARGS((cl_narg narg, ...));
+extern ECL_API cl_object cl_getf _ECL_ARGS((cl_narg narg, ...));
+//extern ECL_API cl_object cl_copy_symbol _ECL_ARGS((cl_narg narg, cl_object sym, ...));
+extern ECL_API cl_object cl_copy_symbol _ECL_ARGS((cl_narg narg, ...));
 extern ECL_API cl_object cl_gensym _ECL_ARGS((cl_narg narg, ...));
 extern ECL_API cl_object cl_gentemp _ECL_ARGS((cl_narg narg, ...));
-extern ECL_API cl_object si_put_properties _ECL_ARGS((cl_narg narg, cl_object sym, ...));
+//extern ECL_API cl_object si_put_properties _ECL_ARGS((cl_narg narg, cl_object sym, ...));
+extern ECL_API cl_object si_put_properties _ECL_ARGS((cl_narg narg, ...));
 
 extern ECL_API void ecl_defvar(cl_object s, cl_object v);
 extern ECL_API void ecl_defparameter(cl_object s, cl_object v);
@@ -1875,7 +1891,7 @@ extern ECL_API cl_object si_copy_file(cl_object orig, cl_object end);
 extern ECL_API cl_object si_handle_signal(cl_object signal, cl_object process);
 extern ECL_API cl_object si_get_signal_handler(cl_object signal);
 extern ECL_API cl_object si_set_signal_handler(cl_object signal, cl_object handler);
-extern ECL_API cl_object si_catch_signal(cl_narg narg, cl_object signal, cl_object state, ...);
+extern ECL_API cl_object si_catch_signal _ECL_ARGS((cl_narg narg, cl_object signal, cl_object state, ...));
 extern ECL_API cl_object si_check_pending_interrupts(void);
 extern ECL_API cl_object si_disable_interrupts(void);
 extern ECL_API cl_object si_enable_interrupts(void);
@@ -1913,7 +1929,8 @@ extern ECL_API cl_object ecl_alloc_adjustable_extended_string(cl_index l);
 /* vector_push.d  */
 
 extern ECL_API ecl_character ecl_string_push_extend(cl_object s, ecl_character c);
-extern ECL_API cl_object cl_vector_push _ECL_ARGS((cl_object V1, cl_object V2));
+//extern ECL_API cl_object cl_vector_push _ECL_ARGS((cl_object V1, cl_object V2));
+extern ECL_API cl_object cl_vector_push (cl_object V1, cl_object V2);
 extern ECL_API cl_object cl_vector_push_extend _ECL_ARGS((cl_narg narg, cl_object V1, cl_object V2, ...));
 
 

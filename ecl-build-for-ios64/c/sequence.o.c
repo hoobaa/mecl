@@ -236,27 +236,36 @@ ecl_copy_seq(cl_object sequence)
 	return ecl_subseq(sequence, 0, MOST_POSITIVE_FIXNUM);
 }
 
+// ------------------------------1
 #line 195
-cl_object cl_subseq(cl_narg narg, cl_object sequence, cl_object start, ...)
+cl_object cl_subseq(cl_narg narg, ...)
 {
 #line 195
+// ------------------------------2
+#line 195
+	const cl_env_ptr the_env = ecl_process_env();
+#line 195
+	cl_object end;
+#line 195
+	cl_object x;
+#line 195
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object sequence = va_arg(ARGS,cl_object);  
+	cl_object start = va_arg(ARGS,cl_object);  
+#line 195
+// ------------------------------3
 
 	cl_index_pair p;
 #line 198
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 198
-	cl_object end;
-#line 198
-	cl_object x;
-#line 198
-	va_list ARGS;
-	va_start(ARGS, start);
 #line 198
 	if (ecl_unlikely(narg < 2|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(829));
 #line 198
 	if (narg > 2) {
 #line 198
-		end = va_arg(ARGS,cl_object);
+		end = va_arg(ARGS,cl_object);  
 #line 198
 	} else {
 #line 198
@@ -266,6 +275,7 @@ cl_object cl_subseq(cl_narg narg, cl_object sequence, cl_object start, ...)
 #line 198
 	x = ECL_NIL;
 #line 198
+// ------------------------------5
 	p = ecl_sequence_start_end(ecl_make_fixnum(/*SUBSEQ*/829), sequence, start, end);
 	sequence = ecl_subseq(sequence, p.start, p.end - p.start);
 	{

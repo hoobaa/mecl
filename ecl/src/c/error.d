@@ -106,6 +106,7 @@ ecl_unrecoverable_error(cl_env_ptr the_env, const char *message)
 void
 FEerror(const char *s, int narg, ...)
 {
+        nlogd(">>FEerror (%s)", s);
 	ecl_va_list args;
 	ecl_va_start(args, narg, narg, 0);
 	ecl_enable_interrupts();

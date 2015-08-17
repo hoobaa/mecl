@@ -137,20 +137,28 @@ setup_test(struct cl_test *t, cl_object item, cl_object test,
 	}
 }
 
+// ------------------------------1
 #line 139
 cl_object cl_list(cl_narg narg, ...)
 {
 #line 139
+// ------------------------------2
+#line 139
+	const cl_env_ptr the_env = ecl_process_env();
+#line 139
+	ecl_va_list args;
+	ecl_va_start(args, narg, narg, 0);
+#line 139
+// ------------------------------3
 
 	cl_object head = ECL_NIL;
 #line 142
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 142
-	ecl_va_list args;
-	ecl_va_start(args, narg, narg, 0);
 #line 142
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(481));
 #line 142
+// ------------------------------5
 	if (narg--) {
 		cl_object tail = head = ecl_list1(ecl_va_arg(args));
 		while (narg--) {
@@ -172,20 +180,28 @@ cl_object cl_list(cl_narg narg, ...)
 
 }
 
+// ------------------------------1
 #line 153
 cl_object cl_listX(cl_narg narg, ...)
 {
 #line 153
+// ------------------------------2
+#line 153
+	const cl_env_ptr the_env = ecl_process_env();
+#line 153
+	ecl_va_list args;
+	ecl_va_start(args, narg, narg, 0);
+#line 153
+// ------------------------------3
 
 	cl_object head;
 #line 156
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 156
-	ecl_va_list args;
-	ecl_va_start(args, narg, narg, 0);
 #line 156
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(482));
 #line 156
+// ------------------------------5
 	if (narg == 0)
 		FEwrong_num_arguments(ecl_make_fixnum(/*LIST**/482));
 	head = ecl_va_arg(args);
@@ -228,20 +244,28 @@ append_into(cl_object head, cl_object *tail, cl_object l)
 	return tail;
 }
 
+// ------------------------------1
 #line 188
 cl_object cl_append(cl_narg narg, ...)
 {
 #line 188
+// ------------------------------2
+#line 188
+	const cl_env_ptr the_env = ecl_process_env();
+#line 188
+	ecl_va_list rest;
+	ecl_va_start(rest, narg, narg, 0);
+#line 188
+// ------------------------------3
 
 	cl_object head = ECL_NIL, *tail = &head;
 #line 191
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 191
-	ecl_va_list rest;
-	ecl_va_start(rest, narg, narg, 0);
 #line 191
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(88));
 #line 191
+// ------------------------------5
 	for (; narg > 1; narg--) {
 		cl_object other = ecl_va_arg(rest);
                 tail = append_into(head, tail, other);
@@ -319,24 +343,33 @@ BEGIN:
 	}
 }
 
+// ------------------------------1
 #line 258
-cl_object cl_tree_equal(cl_narg narg, cl_object x, cl_object y, ...)
+cl_object cl_tree_equal(cl_narg narg, ...)
 {
 #line 258
+// ------------------------------2
+#line 258
+	const cl_env_ptr the_env = ecl_process_env();
+#line 258
+	static cl_object KEYS[2] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317)};
+	cl_object test;
+	cl_object test_not;
+#line 258
+	cl_object KEY_VARS[4];
+#line 258
+	ecl_va_list ARGS;
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object x = ecl_va_arg(ARGS);  
+	cl_object y = ecl_va_arg(ARGS);  
+#line 258
+// ------------------------------3
 
 	struct cl_test t;
 	cl_object output;
 #line 262
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 262
-	static cl_object KEYS[2] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317)};
-	cl_object test;
-	cl_object test_not;
-#line 262
-	cl_object KEY_VARS[4];
-#line 262
-	ecl_va_list ARGS;
-	ecl_va_start(ARGS, y, narg, 2);
 #line 262
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(863));
 #line 262
@@ -358,6 +391,7 @@ cl_object cl_tree_equal(cl_narg narg, cl_object x, cl_object y, ...)
 	  test_not = KEY_VARS[1];
 	}
 #line 262
+// ------------------------------5
 	setup_test(&t, ECL_NIL, test, test_not, ECL_NIL);
 	output = tree_equal(&t, x, y)? ECL_T : ECL_NIL;
 	close_test(&t);
@@ -584,24 +618,32 @@ ecl_last(cl_object l, cl_index n)
 	}
 }
 
+// ------------------------------1
 #line 406
-cl_object cl_last(cl_narg narg, cl_object l, ...)
+cl_object cl_last(cl_narg narg, ...)
 {
 #line 406
+// ------------------------------2
+#line 406
+	const cl_env_ptr the_env = ecl_process_env();
+#line 406
+	cl_object k;
+#line 406
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object l = va_arg(ARGS,cl_object);  
+#line 406
+// ------------------------------3
 
 #line 408
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 408
-	cl_object k;
-#line 408
-	va_list ARGS;
-	va_start(ARGS, l);
 #line 408
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(455));
 #line 408
 	if (narg > 1) {
 #line 408
-		k = va_arg(ARGS,cl_object);
+		k = va_arg(ARGS,cl_object);  
 #line 408
 	} else {
 #line 408
@@ -609,6 +651,7 @@ cl_object cl_last(cl_narg narg, cl_object l, ...)
 #line 408
 	}
 #line 408
+// ------------------------------5
 	if (ecl_t_of(k) == t_bignum)
 		{
 #line 409
@@ -634,24 +677,32 @@ cl_object cl_last(cl_narg narg, cl_object l, ...)
 
 }
 
+// ------------------------------1
 #line 413
-cl_object cl_make_list(cl_narg narg, cl_object size, ...)
+cl_object cl_make_list(cl_narg narg, ...)
 {
 #line 413
+// ------------------------------2
+#line 413
+	const cl_env_ptr the_env = ecl_process_env();
+#line 413
+	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1251)};
+	cl_object initial_element;
+#line 413
+	cl_object x;
+#line 413
+	cl_object KEY_VARS[2];
+#line 413
+	ecl_va_list ARGS;
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object size = ecl_va_arg(ARGS);  
+#line 413
+// ------------------------------3
 
 	cl_fixnum i;
 #line 416
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 416
-	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1251)};
-	cl_object initial_element;
-#line 416
-	cl_object x;
-#line 416
-	cl_object KEY_VARS[2];
-#line 416
-	ecl_va_list ARGS;
-	ecl_va_start(ARGS, size, narg, 1);
 #line 416
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(529));
 #line 416
@@ -667,6 +718,7 @@ cl_object cl_make_list(cl_narg narg, cl_object size, ...)
 #line 416
 	x = ECL_NIL;
 #line 416
+// ------------------------------5
 	/* INV: ecl_to_size() signals a type-error if SIZE is not a integer >=0 */
 	i = ecl_to_size(size);
 	while (i-- > 0)
@@ -809,20 +861,28 @@ cl_revappend(cl_object x, cl_object y)
 
 }
 
+// ------------------------------1
 #line 500
 cl_object cl_nconc(cl_narg narg, ...)
 {
 #line 500
+// ------------------------------2
+#line 500
+	const cl_env_ptr the_env = ecl_process_env();
+#line 500
+	ecl_va_list lists;
+	ecl_va_start(lists, narg, narg, 0);
+#line 500
+// ------------------------------3
 
 	cl_object head = ECL_NIL, tail = ECL_NIL;
 #line 502
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 502
-	ecl_va_list lists;
-	ecl_va_start(lists, narg, narg, 0);
 #line 502
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(581));
 #line 502
+// ------------------------------5
 
 	while (narg--) {
 		cl_object new_tail, other = ecl_va_arg(lists);
@@ -923,24 +983,32 @@ ecl_butlast(cl_object l, cl_index n)
 	}
 }
 
+// ------------------------------1
 #line 580
-cl_object cl_butlast(cl_narg narg, cl_object lis, ...)
+cl_object cl_butlast(cl_narg narg, ...)
 {
 #line 580
+// ------------------------------2
+#line 580
+	const cl_env_ptr the_env = ecl_process_env();
+#line 580
+	cl_object nn;
+#line 580
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object lis = va_arg(ARGS,cl_object);  
+#line 580
+// ------------------------------3
 
 #line 582
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 582
-	cl_object nn;
-#line 582
-	va_list ARGS;
-	va_start(ARGS, lis);
 #line 582
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(161));
 #line 582
 	if (narg > 1) {
 #line 582
-		nn = va_arg(ARGS,cl_object);
+		nn = va_arg(ARGS,cl_object);  
 #line 582
 	} else {
 #line 582
@@ -948,6 +1016,7 @@ cl_object cl_butlast(cl_narg narg, cl_object lis, ...)
 #line 582
 	}
 #line 582
+// ------------------------------5
 	/* INV: No list has more than MOST_POSITIVE_FIXNUM elements */
 	if (ecl_t_of(nn) == t_bignum)
 		{
@@ -995,24 +1064,32 @@ ecl_nbutlast(cl_object l, cl_index n)
 	return ECL_NIL;
 }
 
+// ------------------------------1
 #line 609
-cl_object cl_nbutlast(cl_narg narg, cl_object lis, ...)
+cl_object cl_nbutlast(cl_narg narg, ...)
 {
 #line 609
+// ------------------------------2
+#line 609
+	const cl_env_ptr the_env = ecl_process_env();
+#line 609
+	cl_object nn;
+#line 609
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object lis = va_arg(ARGS,cl_object);  
+#line 609
+// ------------------------------3
 
 #line 611
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 611
-	cl_object nn;
-#line 611
-	va_list ARGS;
-	va_start(ARGS, lis);
 #line 611
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(580));
 #line 611
 	if (narg > 1) {
 #line 611
-		nn = va_arg(ARGS,cl_object);
+		nn = va_arg(ARGS,cl_object);  
 #line 611
 	} else {
 #line 611
@@ -1020,6 +1097,7 @@ cl_object cl_nbutlast(cl_narg narg, cl_object lis, ...)
 #line 611
 	}
 #line 611
+// ------------------------------5
 	/* INV: No list has more than MOST_POSITIVE_FIXNUM elements */
 	if (ecl_t_of(nn) == t_bignum)
 		{
@@ -1131,25 +1209,35 @@ cl_rplacd(cl_object x, cl_object v)
 
 }
 
+// ------------------------------1
 #line 666
-cl_object cl_subst(cl_narg narg, cl_object new_obj, cl_object old_obj, cl_object tree, ...)
+cl_object cl_subst(cl_narg narg, ...)
 {
 #line 666
-
-	struct cl_test t;
-	cl_object output;
-#line 670
+// ------------------------------2
+#line 666
 	const cl_env_ptr the_env = ecl_process_env();
-#line 670
+#line 666
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 670
+#line 666
 	cl_object KEY_VARS[6];
-#line 670
+#line 666
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, tree, narg, 3);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object new_obj = ecl_va_arg(ARGS);  
+	cl_object old_obj = ecl_va_arg(ARGS);  
+	cl_object tree = ecl_va_arg(ARGS);  
+#line 666
+// ------------------------------3
+
+	struct cl_test t;
+	cl_object output;
+#line 670
+// ------------------------------4
+#line 670
 #line 670
 	if (ecl_unlikely(narg < 3)) FEwrong_num_arguments(ecl_make_fixnum(831));
 #line 670
@@ -1179,6 +1267,7 @@ cl_object cl_subst(cl_narg narg, cl_object new_obj, cl_object old_obj, cl_object
 	  key = KEY_VARS[2];
 	}
 #line 670
+// ------------------------------5
 	setup_test(&t, old_obj, test, test_not, key);
 	output = subst(&t, new_obj, tree);
 	close_test(&t);
@@ -1223,24 +1312,34 @@ subst(struct cl_test *t, cl_object new_obj, cl_object tree)
 	}
 }
 
+// ------------------------------1
 #line 704
-cl_object cl_nsubst(cl_narg narg, cl_object new_obj, cl_object old_obj, cl_object tree, ...)
+cl_object cl_nsubst(cl_narg narg, ...)
 {
 #line 704
-
-	struct cl_test t;
-#line 707
+// ------------------------------2
+#line 704
 	const cl_env_ptr the_env = ecl_process_env();
-#line 707
+#line 704
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 707
+#line 704
 	cl_object KEY_VARS[6];
-#line 707
+#line 704
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, tree, narg, 3);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object new_obj = ecl_va_arg(ARGS);  
+	cl_object old_obj = ecl_va_arg(ARGS);  
+	cl_object tree = ecl_va_arg(ARGS);  
+#line 704
+// ------------------------------3
+
+	struct cl_test t;
+#line 707
+// ------------------------------4
+#line 707
 #line 707
 	if (ecl_unlikely(narg < 3)) FEwrong_num_arguments(ecl_make_fixnum(596));
 #line 707
@@ -1270,6 +1369,7 @@ cl_object cl_nsubst(cl_narg narg, cl_object new_obj, cl_object old_obj, cl_objec
 	  key = KEY_VARS[2];
 	}
 #line 707
+// ------------------------------5
 	setup_test(&t, old_obj, test, test_not, key);
 	tree = nsubst(&t, new_obj, tree);
 	close_test(&t);
@@ -1317,10 +1417,28 @@ nsubst(struct cl_test *t, cl_object new_obj, cl_object tree)
 	return tree;
 }
 
+// ------------------------------1
 #line 744
-cl_object cl_sublis(cl_narg narg, cl_object alist, cl_object tree, ...)
+cl_object cl_sublis(cl_narg narg, ...)
 {
 #line 744
+// ------------------------------2
+#line 744
+	const cl_env_ptr the_env = ecl_process_env();
+#line 744
+	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
+	cl_object test;
+	cl_object test_not;
+	cl_object key;
+#line 744
+	cl_object KEY_VARS[6];
+#line 744
+	ecl_va_list ARGS;
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object alist = ecl_va_arg(ARGS);  
+	cl_object tree = ecl_va_arg(ARGS);  
+#line 744
+// ------------------------------3
 
 	/* t[0] is the test for the objects in the tree, configured
 	   with test, test_not and key. t[1] is the test for searching
@@ -1328,17 +1446,8 @@ cl_object cl_sublis(cl_narg narg, cl_object alist, cl_object tree, ...)
 	 */
 	struct cl_test t[2];
 #line 751
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 751
-	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
-	cl_object test;
-	cl_object test_not;
-	cl_object key;
-#line 751
-	cl_object KEY_VARS[6];
-#line 751
-	ecl_va_list ARGS;
-	ecl_va_start(ARGS, tree, narg, 2);
 #line 751
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(828));
 #line 751
@@ -1368,6 +1477,7 @@ cl_object cl_sublis(cl_narg narg, cl_object alist, cl_object tree, ...)
 	  key = KEY_VARS[2];
 	}
 #line 751
+// ------------------------------5
 	setup_test(t, ECL_NIL, ECL_NIL, ECL_NIL, key);
 	setup_test(t+1, ECL_NIL, test, test_not, ECL_NIL);
 	tree = sublis(t, alist, tree);
@@ -1406,10 +1516,28 @@ sublis(struct cl_test *t, cl_object alist, cl_object tree)
 	return tree;
 }
 
+// ------------------------------1
 #line 779
-cl_object cl_nsublis(cl_narg narg, cl_object alist, cl_object tree, ...)
+cl_object cl_nsublis(cl_narg narg, ...)
 {
 #line 779
+// ------------------------------2
+#line 779
+	const cl_env_ptr the_env = ecl_process_env();
+#line 779
+	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
+	cl_object test;
+	cl_object test_not;
+	cl_object key;
+#line 779
+	cl_object KEY_VARS[6];
+#line 779
+	ecl_va_list ARGS;
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object alist = ecl_va_arg(ARGS);  
+	cl_object tree = ecl_va_arg(ARGS);  
+#line 779
+// ------------------------------3
 
 	/* t[0] is the test for the objects in the tree, configured
 	   with test, test_not and key. t[1] is the test for searching
@@ -1417,17 +1545,8 @@ cl_object cl_nsublis(cl_narg narg, cl_object alist, cl_object tree, ...)
 	 */
 	struct cl_test t[2];
 #line 786
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 786
-	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
-	cl_object test;
-	cl_object test_not;
-	cl_object key;
-#line 786
-	cl_object KEY_VARS[6];
-#line 786
-	ecl_va_list ARGS;
-	ecl_va_start(ARGS, tree, narg, 2);
 #line 786
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(595));
 #line 786
@@ -1457,6 +1576,7 @@ cl_object cl_nsublis(cl_narg narg, cl_object alist, cl_object tree, ...)
 	  key = KEY_VARS[2];
 	}
 #line 786
+// ------------------------------5
 	setup_test(t, ECL_NIL, ECL_NIL, ECL_NIL, key);
 	setup_test(t+1, ECL_NIL, test, test_not, ECL_NIL);
 	tree = nsublis(t, alist, tree);
@@ -1496,24 +1616,33 @@ nsublis(struct cl_test *t, cl_object alist, cl_object tree)
 	return tree;
 }
 
+// ------------------------------1
 #line 815
-cl_object cl_member(cl_narg narg, cl_object item, cl_object list, ...)
+cl_object cl_member(cl_narg narg, ...)
 {
 #line 815
-
-	struct cl_test t;
-#line 818
+// ------------------------------2
+#line 815
 	const cl_env_ptr the_env = ecl_process_env();
-#line 818
+#line 815
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 818
+#line 815
 	cl_object KEY_VARS[6];
-#line 818
+#line 815
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, list, narg, 2);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object item = ecl_va_arg(ARGS);  
+	cl_object list = ecl_va_arg(ARGS);  
+#line 815
+// ------------------------------3
+
+	struct cl_test t;
+#line 818
+// ------------------------------4
+#line 818
 #line 818
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(552));
 #line 818
@@ -1543,6 +1672,7 @@ cl_object cl_member(cl_narg narg, cl_object item, cl_object list, ...)
 	  key = KEY_VARS[2];
 	}
 #line 818
+// ------------------------------5
 	setup_test(&t, item, test, test_not, key);
 	loop_for_in(list) {
 		if (TEST(&t, ECL_CONS_CAR(list)))
@@ -1677,24 +1807,33 @@ cl_tailp(cl_object y, cl_object x)
 	return cl_eql(x, y);
 }
 
+// ------------------------------1
 #line 894
-cl_object cl_adjoin(cl_narg narg, cl_object item, cl_object list, ...)
+cl_object cl_adjoin(cl_narg narg, ...)
 {
 #line 894
-
-	cl_object output;
-#line 897
+// ------------------------------2
+#line 894
 	const cl_env_ptr the_env = ecl_process_env();
-#line 897
+#line 894
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 897
+#line 894
 	cl_object KEY_VARS[6];
-#line 897
+#line 894
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, list, narg, 2);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object item = ecl_va_arg(ARGS);  
+	cl_object list = ecl_va_arg(ARGS);  
+#line 894
+// ------------------------------3
+
+	cl_object output;
+#line 897
+// ------------------------------4
+#line 897
 #line 897
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(82));
 #line 897
@@ -1724,6 +1863,7 @@ cl_object cl_adjoin(cl_narg narg, cl_object item, cl_object list, ...)
 	  key = KEY_VARS[2];
 	}
 #line 897
+// ------------------------------5
 	if (narg < 2)
 		FEwrong_num_arguments(ecl_make_fixnum(/*ADJOIN*/82));
 	output = si_member1(item, list, test, test_not, key);
@@ -1780,25 +1920,34 @@ cl_acons(cl_object x, cl_object y, cl_object z)
 
 }
 
+// ------------------------------1
 #line 919
-cl_object cl_pairlis(cl_narg narg, cl_object keys, cl_object data, ...)
+cl_object cl_pairlis(cl_narg narg, ...)
 {
 #line 919
+// ------------------------------2
+#line 919
+	const cl_env_ptr the_env = ecl_process_env();
+#line 919
+	cl_object a_list;
+#line 919
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object keys = va_arg(ARGS,cl_object);  
+	cl_object data = va_arg(ARGS,cl_object);  
+#line 919
+// ------------------------------3
 
 	cl_object k, d;
 #line 922
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 922
-	cl_object a_list;
-#line 922
-	va_list ARGS;
-	va_start(ARGS, data);
 #line 922
 	if (ecl_unlikely(narg < 2|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(626));
 #line 922
 	if (narg > 2) {
 #line 922
-		a_list = va_arg(ARGS,cl_object);
+		a_list = va_arg(ARGS,cl_object);  
 #line 922
 	} else {
 #line 922
@@ -1806,6 +1955,7 @@ cl_object cl_pairlis(cl_narg narg, cl_object keys, cl_object data, ...)
 #line 922
 	}
 #line 922
+// ------------------------------5
 	k = keys;
 	d = data;
 	loop_for_in(k) {
@@ -1831,24 +1981,33 @@ error:	    FEerror("The keys ~S and the data ~S are not of the same length",
 }
 
 
+// ------------------------------1
 #line 937
-cl_object cl_assoc(cl_narg narg, cl_object item, cl_object a_list, ...)
+cl_object cl_assoc(cl_narg narg, ...)
 {
 #line 937
-
-	struct cl_test t;
-#line 940
+// ------------------------------2
+#line 937
 	const cl_env_ptr the_env = ecl_process_env();
-#line 940
+#line 937
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 940
+#line 937
 	cl_object KEY_VARS[6];
-#line 940
+#line 937
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, a_list, narg, 2);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object item = ecl_va_arg(ARGS);  
+	cl_object a_list = ecl_va_arg(ARGS);  
+#line 937
+// ------------------------------3
+
+	struct cl_test t;
+#line 940
+// ------------------------------4
+#line 940
 #line 940
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(114));
 #line 940
@@ -1878,84 +2037,118 @@ cl_object cl_assoc(cl_narg narg, cl_object item, cl_object a_list, ...)
 	  key = KEY_VARS[2];
 	}
 #line 940
-	setup_test(&t, item, test, test_not, key);
-	a_list = do_assoc(&t, a_list);
-	close_test(&t);
-	{
-#line 943
-		#line 943
-		cl_object __value0 = a_list;
-#line 943
-		the_env->nvalues = 1;
-#line 943
-		return __value0;
-#line 943
-	}
+// ------------------------------5
+  nlogd("---assoc");
+  setup_test(&t, item, test, test_not, key);
+  nlogd("---assoc");
+  a_list = do_assoc(&t, a_list);
+  nlogd("---assoc");
+  close_test(&t);
+  nlogd("---assoc");
+  {
+#line 947
+	#line 947
+	cl_object __value0 = a_list;
+#line 947
+	the_env->nvalues = 1;
+#line 947
+	return __value0;
+#line 947
+}
 
 }
 
 static cl_object
 do_assoc(struct cl_test *t, cl_object a_list)
 {
+        nlogd(">>> do_assoc1");
 	loop_for_in(a_list) {
+                nlogd(">>> do_assoc2");
 		cl_object pair = ECL_CONS_CAR(a_list);
+                nlogd(">>> do_assoc3");
 		if (!Null(pair)) {
-			if (!LISTP(pair))
+                        nlogd(">>> do_assoc4");
+			if (!LISTP(pair)) {
+                                nlogd(">>> do_assoc5");
 				FEtype_error_list(pair);
-			if (TEST(t, ECL_CONS_CAR(pair)))
+                        }
+                        nlogd(">>> do_assoc6");
+                        ECL_CONS_CAR(pair);
+                        nlogd(">>> do_assoc6.1");
+                        void *tmp = ((t)->test_c_function);
+                        nlogd(">>> do_assoc6.1.1");
+                        test_equal(t, ECL_CONS_CAR(pair));
+                        nlogd(">>> do_assoc6.1.2");
+                        // TEST(t, ECL_CONS_CAR(pair));
+                        nlogd(">>> do_assoc6.2");
+			//if (TEST(t, ECL_CONS_CAR(pair))) {
+                        if (test_equal(t, ECL_CONS_CAR(pair))) {
+                                nlogd(">>> do_assoc7");
 				return pair;
+                        }
+                        nlogd(">>> do_assoc8");
 		}
 	} end_loop_for_in;
 	return ECL_NIL;
 }
 
-#line 961
-cl_object cl_rassoc(cl_narg narg, cl_object item, cl_object a_list, ...)
+// ------------------------------1
+#line 984
+cl_object cl_rassoc(cl_narg narg, ...)
 {
-#line 961
-
-	struct cl_test t;
-#line 964
+#line 984
+// ------------------------------2
+#line 984
 	const cl_env_ptr the_env = ecl_process_env();
-#line 964
+#line 984
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1316), (cl_object)(cl_symbols+1317), (cl_object)(cl_symbols+1262)};
 	cl_object test;
 	cl_object test_not;
 	cl_object key;
-#line 964
+#line 984
 	cl_object KEY_VARS[6];
-#line 964
+#line 984
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, a_list, narg, 2);
-#line 964
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object item = ecl_va_arg(ARGS);  
+	cl_object a_list = ecl_va_arg(ARGS);  
+#line 984
+// ------------------------------3
+
+	struct cl_test t;
+#line 987
+// ------------------------------4
+#line 987
+#line 987
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(683));
-#line 964
+#line 987
 	cl_parse_key(ARGS, 3, KEYS, KEY_VARS, NULL, 0);
-#line 964
+#line 987
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 964
+#line 987
 	  test = ECL_NIL;
 	} else {
-#line 964
+#line 987
 	  test = KEY_VARS[0];
 	}
-#line 964
+#line 987
 	if (KEY_VARS[4]==ECL_NIL) {
-#line 964
+#line 987
 	  test_not = ECL_NIL;
 	} else {
-#line 964
+#line 987
 	  test_not = KEY_VARS[1];
 	}
-#line 964
+#line 987
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 964
+#line 987
 	  key = ECL_NIL;
 	} else {
-#line 964
+#line 987
 	  key = KEY_VARS[2];
 	}
-#line 964
+#line 987
+// ------------------------------5
 	setup_test(&t, item, test, test_not, key);
 	loop_for_in(a_list) {
 		cl_object pair = ECL_CONS_CAR(a_list);
@@ -1970,14 +2163,14 @@ cl_object cl_rassoc(cl_narg narg, cl_object item, cl_object a_list, ...)
 	} end_loop_for_in;
 	close_test(&t);
 	{
-#line 977
-		#line 977
+#line 1000
+		#line 1000
 		cl_object __value0 = a_list;
-#line 977
+#line 1000
 		the_env->nvalues = 1;
-#line 977
+#line 1000
 		return __value0;
-#line 977
+#line 1000
 	}
 
 }

@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# clang dpp.c -I ~/dev/mecl/local-install/host/include/ -o dpp
+cp dpp ../../../local-install/host/lib/ecl-12.12.1/
+cp dpp ../../../local-install/host64/lib/ecl-12.12.1/

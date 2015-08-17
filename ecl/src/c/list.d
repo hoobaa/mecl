@@ -937,22 +937,45 @@ error:	    FEerror("The keys ~S and the data ~S are not of the same length",
 @(defun assoc (item a_list &key test test_not key)
 	struct cl_test t;
 @
-	setup_test(&t, item, test, test_not, key);
-	a_list = do_assoc(&t, a_list);
-	close_test(&t);
-	@(return a_list)
+  nlogd("---assoc");
+  setup_test(&t, item, test, test_not, key);
+  nlogd("---assoc");
+  a_list = do_assoc(&t, a_list);
+  nlogd("---assoc");
+  close_test(&t);
+  nlogd("---assoc");
+  @(return a_list)
 @)
 
 static cl_object
 do_assoc(struct cl_test *t, cl_object a_list)
 {
+        nlogd(">>> do_assoc1");
 	loop_for_in(a_list) {
+                nlogd(">>> do_assoc2");
 		cl_object pair = ECL_CONS_CAR(a_list);
+                nlogd(">>> do_assoc3");
 		if (!Null(pair)) {
-			if (!LISTP(pair))
+                        nlogd(">>> do_assoc4");
+			if (!LISTP(pair)) {
+                                nlogd(">>> do_assoc5");
 				FEtype_error_list(pair);
-			if (TEST(t, ECL_CONS_CAR(pair)))
+                        }
+                        nlogd(">>> do_assoc6");
+                        ECL_CONS_CAR(pair);
+                        nlogd(">>> do_assoc6.1");
+                        void *tmp = ((t)->test_c_function);
+                        nlogd(">>> do_assoc6.1.1");
+                        test_equal(t, ECL_CONS_CAR(pair));
+                        nlogd(">>> do_assoc6.1.2");
+                        // TEST(t, ECL_CONS_CAR(pair));
+                        nlogd(">>> do_assoc6.2");
+			//if (TEST(t, ECL_CONS_CAR(pair))) {
+                        if (test_equal(t, ECL_CONS_CAR(pair))) {
+                                nlogd(">>> do_assoc7");
 				return pair;
+                        }
+                        nlogd(">>> do_assoc8");
 		}
 	} end_loop_for_in;
 	return ECL_NIL;

@@ -19,20 +19,28 @@
 #include <ecl/ecl.h>
 #include <ecl/internal.h>
 
+// ------------------------------1
 #line 21
 cl_object cl_values(cl_narg narg, ...)
 {
 #line 21
+// ------------------------------2
+#line 21
+	const cl_env_ptr the_env = ecl_process_env();
+#line 21
+	ecl_va_list args;
+	ecl_va_start(args, narg, narg, 0);
+#line 21
+// ------------------------------3
 
 	cl_object output;
 #line 24
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 24
-	ecl_va_list args;
-	ecl_va_start(args, narg, narg, 0);
 #line 24
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(895));
 #line 24
+// ------------------------------5
 	unlikely_if (narg > ECL_MULTIPLE_VALUES_LIMIT)
 		FEerror("Too many values in VALUES",0);
 	the_env->nvalues = narg;

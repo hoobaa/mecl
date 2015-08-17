@@ -118,24 +118,32 @@ ecl_log2(cl_object x, cl_object y)
 	return ecl_divide(ecl_log1(y), ecl_log1(x));
 }
 
+// ------------------------------1
 #line 120
-cl_object cl_log(cl_narg narg, cl_object x, ...)
+cl_object cl_log(cl_narg narg, ...)
 {
 #line 120
+// ------------------------------2
+#line 120
+	const cl_env_ptr the_env = ecl_process_env();
+#line 120
+	cl_object y;
+#line 120
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object x = va_arg(ARGS,cl_object);  
+#line 120
+// ------------------------------3
 
 #line 121
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 121
-	cl_object y;
-#line 121
-	va_list ARGS;
-	va_start(ARGS, x);
 #line 121
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(491));
 #line 121
 	if (narg > 1) {
 #line 121
-		y = va_arg(ARGS,cl_object);
+		y = va_arg(ARGS,cl_object);  
 #line 121
 	} else {
 #line 121
@@ -143,6 +151,7 @@ cl_object cl_log(cl_narg narg, cl_object x, ...)
 #line 121
 	}
 #line 121
+// ------------------------------5
 /* INV: type check in ecl_log1() and ecl_log2() */
 	if (y == OBJNULL)
 		{

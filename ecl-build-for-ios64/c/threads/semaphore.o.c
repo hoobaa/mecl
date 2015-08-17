@@ -39,22 +39,29 @@ ecl_make_semaphore(cl_object name, cl_fixnum count)
         return output;
 }
 
+// ------------------------------1
 #line 41
 cl_object mp_make_semaphore(cl_narg narg, ...)
 {
 #line 41
-
-#line 43
+// ------------------------------2
+#line 41
 	const cl_env_ptr the_env = ecl_process_env();
-#line 43
+#line 41
 	static cl_object KEYS[2] = {(cl_object)(cl_symbols+1273), (cl_object)(cl_symbols+1450)};
 	cl_object name;
 	cl_object count;
-#line 43
+#line 41
 	cl_object KEY_VARS[4];
-#line 43
+#line 41
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, narg, narg, 0);
+#line 41
+// ------------------------------3
+
+#line 43
+// ------------------------------4
+#line 43
 #line 43
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1444));
 #line 43
@@ -76,6 +83,7 @@ cl_object mp_make_semaphore(cl_narg narg, ...)
 	  count = KEY_VARS[1];
 	}
 #line 43
+// ------------------------------5
 {
 	{
 #line 44
@@ -121,24 +129,32 @@ mp_semaphore_wait_count(cl_object semaphore)
 	ecl_return1(env, cl_length(semaphore->semaphore.queue_list));
 }
 
+// ------------------------------1
 #line 78
-cl_object mp_signal_semaphore(cl_narg narg, cl_object semaphore, ...)
+cl_object mp_signal_semaphore(cl_narg narg, ...)
 {
 #line 78
+// ------------------------------2
+#line 78
+	const cl_env_ptr the_env = ecl_process_env();
+#line 78
+	cl_object count;
+#line 78
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object semaphore = va_arg(ARGS,cl_object);  
+#line 78
+// ------------------------------3
 
 #line 80
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 80
-	cl_object count;
-#line 80
-	va_list ARGS;
-	va_start(ARGS, semaphore);
 #line 80
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(1445));
 #line 80
 	if (narg > 1) {
 #line 80
-		count = va_arg(ARGS,cl_object);
+		count = va_arg(ARGS,cl_object);  
 #line 80
 	} else {
 #line 80
@@ -146,6 +162,7 @@ cl_object mp_signal_semaphore(cl_narg narg, cl_object semaphore, ...)
 #line 80
 	}
 #line 80
+// ------------------------------5
 {
 	cl_fixnum n = fixnnint(count);
         cl_env_ptr env = ecl_process_env();

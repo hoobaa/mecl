@@ -358,21 +358,28 @@ ecl_waitpid(cl_object pid, cl_object wait)
 
 }
 
+// ------------------------------1
 #line 292
 cl_object si_wait_for_all_processes(cl_narg narg, ...)
 {
 #line 292
-
-#line 294
+// ------------------------------2
+#line 292
 	const cl_env_ptr the_env = ecl_process_env();
-#line 294
+#line 292
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1294)};
 	cl_object process;
-#line 294
+#line 292
 	cl_object KEY_VARS[2];
-#line 294
+#line 292
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, narg, narg, 0);
+#line 292
+// ------------------------------3
+
+#line 294
+// ------------------------------4
+#line 294
 #line 294
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1132));
 #line 294
@@ -386,6 +393,7 @@ cl_object si_wait_for_all_processes(cl_narg narg, ...)
 	  process = KEY_VARS[0];
 	}
 #line 294
+// ------------------------------5
 {
         const cl_env_ptr env = ecl_process_env();
 #if defined(SIGCHLD) && !defined(ECL_WINDOWS_HOST)
@@ -434,24 +442,32 @@ make_windows_handle(HANDLE h)
 }
 #endif
 
+// ------------------------------1
 #line 342
-cl_object si_external_process_wait(cl_narg narg, cl_object process, ...)
+cl_object si_external_process_wait(cl_narg narg, ...)
 {
 #line 342
+// ------------------------------2
+#line 342
+	const cl_env_ptr the_env = ecl_process_env();
+#line 342
+	cl_object wait;
+#line 342
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object process = va_arg(ARGS,cl_object);  
+#line 342
+// ------------------------------3
 
 #line 344
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 344
-	cl_object wait;
-#line 344
-	va_list ARGS;
-	va_start(ARGS, process);
 #line 344
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(1753));
 #line 344
 	if (narg > 1) {
 #line 344
-		wait = va_arg(ARGS,cl_object);
+		wait = va_arg(ARGS,cl_object);  
 #line 344
 	} else {
 #line 344
@@ -459,6 +475,7 @@ cl_object si_external_process_wait(cl_narg narg, cl_object process, ...)
 #line 344
 	}
 #line 344
+// ------------------------------5
 {
         cl_object status, code, pid;
  AGAIN:
@@ -534,10 +551,31 @@ ecl_stream_to_HANDLE(cl_object s, bool output)
 }
 #endif
 
+// ------------------------------1
 #line 407
-cl_object si_run_program(cl_narg narg, cl_object command, cl_object argv, ...)
+cl_object si_run_program(cl_narg narg, ...)
 {
 #line 407
+// ------------------------------2
+#line 407
+	const cl_env_ptr the_env = ecl_process_env();
+#line 407
+	static cl_object KEYS[6] = {(cl_object)(cl_symbols+1254), (cl_object)(cl_symbols+1282), (cl_object)(cl_symbols+1229), (cl_object)(cl_symbols+1329), (cl_object)(cl_symbols+1742), (cl_object)(cl_symbols+1246)};
+	cl_object input;
+	cl_object output;
+	cl_object error;
+	cl_object wait;
+	cl_object environ;
+	cl_object if_output_exists;
+#line 407
+	cl_object KEY_VARS[12];
+#line 407
+	ecl_va_list ARGS;
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object command = ecl_va_arg(ARGS);  
+	cl_object argv = ecl_va_arg(ARGS);  
+#line 407
+// ------------------------------3
 
 	int parent_write = 0, parent_read = 0;
 	int child_pid;
@@ -546,20 +584,8 @@ cl_object si_run_program(cl_narg narg, cl_object command, cl_object argv, ...)
 	cl_object stream_read;
 	cl_object exit_status = ECL_NIL;
 #line 415
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 415
-	static cl_object KEYS[6] = {(cl_object)(cl_symbols+1254), (cl_object)(cl_symbols+1282), (cl_object)(cl_symbols+1229), (cl_object)(cl_symbols+1329), (cl_object)(cl_symbols+1742), (cl_object)(cl_symbols+1246)};
-	cl_object input;
-	cl_object output;
-	cl_object error;
-	cl_object wait;
-	cl_object environ;
-	cl_object if_output_exists;
-#line 415
-	cl_object KEY_VARS[12];
-#line 415
-	ecl_va_list ARGS;
-	ecl_va_start(ARGS, argv, narg, 2);
 #line 415
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(1131));
 #line 415
@@ -613,6 +639,7 @@ cl_object si_run_program(cl_narg narg, cl_object command, cl_object argv, ...)
 	  if_output_exists = KEY_VARS[5];
 	}
 #line 415
+// ------------------------------5
 	command = si_copy_to_simple_base_string(command);
 	argv = cl_mapcar(2, ECL_SYM("SI::COPY-TO-SIMPLE-BASE-STRING",1060), argv);
 	process = make_external_process();

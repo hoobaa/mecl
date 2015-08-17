@@ -879,22 +879,30 @@ ecl_unuse_package(cl_object x, cl_object p)
         } ECL_WITH_GLOBAL_ENV_WRLOCK_END;
 }
 
+// ------------------------------1
 #line 833
-cl_object cl_make_package(cl_narg narg, cl_object pack_name, ...)
+cl_object cl_make_package(cl_narg narg, ...)
 {
 #line 833
-
-#line 835
+// ------------------------------2
+#line 833
 	const cl_env_ptr the_env = ecl_process_env();
-#line 835
+#line 833
 	static cl_object KEYS[2] = {(cl_object)(cl_symbols+1277), (cl_object)(cl_symbols+1323)};
 	cl_object nicknames;
 	cl_object use;
-#line 835
+#line 833
 	cl_object KEY_VARS[4];
-#line 835
+#line 833
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, pack_name, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object pack_name = ecl_va_arg(ARGS);  
+#line 833
+// ------------------------------3
+
+#line 835
+// ------------------------------4
+#line 835
 #line 835
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(530));
 #line 835
@@ -916,6 +924,7 @@ cl_object cl_make_package(cl_narg narg, cl_object pack_name, ...)
 	  use = KEY_VARS[1];
 	}
 #line 835
+// ------------------------------5
 	/* INV: ecl_make_package() performs type checking */
 	{
 #line 836
@@ -996,24 +1005,33 @@ cl_package_nicknames(cl_object p)
 
 }
 
+// ------------------------------1
 #line 869
-cl_object cl_rename_package(cl_narg narg, cl_object pack, cl_object new_name, ...)
+cl_object cl_rename_package(cl_narg narg, ...)
 {
 #line 869
+// ------------------------------2
+#line 869
+	const cl_env_ptr the_env = ecl_process_env();
+#line 869
+	cl_object new_nicknames;
+#line 869
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object pack = va_arg(ARGS,cl_object);  
+	cl_object new_name = va_arg(ARGS,cl_object);  
+#line 869
+// ------------------------------3
 
 #line 871
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 871
-	cl_object new_nicknames;
-#line 871
-	va_list ARGS;
-	va_start(ARGS, new_name);
 #line 871
 	if (ecl_unlikely(narg < 2|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(716));
 #line 871
 	if (narg > 2) {
 #line 871
-		new_nicknames = va_arg(ARGS,cl_object);
+		new_nicknames = va_arg(ARGS,cl_object);  
 #line 871
 	} else {
 #line 871
@@ -1021,6 +1039,7 @@ cl_object cl_rename_package(cl_narg narg, cl_object pack, cl_object new_name, ..
 #line 871
 	}
 #line 871
+// ------------------------------5
 	/* INV: ecl_rename_package() type checks and coerces pack to package */
 	{
 #line 872
@@ -1080,27 +1099,35 @@ cl_list_all_packages()
 	return cl_copy_list(cl_core.packages);
 }
 
+// ------------------------------1
 #line 908
-cl_object cl_intern(cl_narg narg, cl_object strng, ...)
+cl_object cl_intern(cl_narg narg, ...)
 {
 #line 908
+// ------------------------------2
+#line 908
+	const cl_env_ptr the_env = ecl_process_env();
+#line 908
+	cl_object p;
+#line 908
+	cl_object sym;
+#line 908
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object strng = va_arg(ARGS,cl_object);  
+#line 908
+// ------------------------------3
 
 	int intern_flag;
 #line 911
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 911
-	cl_object p;
-#line 911
-	cl_object sym;
-#line 911
-	va_list ARGS;
-	va_start(ARGS, strng);
 #line 911
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(442));
 #line 911
 	if (narg > 1) {
 #line 911
-		p = va_arg(ARGS,cl_object);
+		p = va_arg(ARGS,cl_object);  
 #line 911
 	} else {
 #line 911
@@ -1110,6 +1137,7 @@ cl_object cl_intern(cl_narg narg, cl_object strng, ...)
 #line 911
 	sym = ECL_NIL;
 #line 911
+// ------------------------------5
 	sym = ecl_intern(strng, p, &intern_flag);
 	if (intern_flag == ECL_INTERNAL)
 		{
@@ -1176,26 +1204,34 @@ cl_object cl_intern(cl_narg narg, cl_object strng, ...)
 
 }
 
+// ------------------------------1
 #line 921
-cl_object cl_find_symbol(cl_narg narg, cl_object strng, ...)
+cl_object cl_find_symbol(cl_narg narg, ...)
 {
 #line 921
+// ------------------------------2
+#line 921
+	const cl_env_ptr the_env = ecl_process_env();
+#line 921
+	cl_object p;
+#line 921
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object strng = va_arg(ARGS,cl_object);  
+#line 921
+// ------------------------------3
 
 	cl_object x;
 	int intern_flag;
 #line 925
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 925
-	cl_object p;
-#line 925
-	va_list ARGS;
-	va_start(ARGS, strng);
 #line 925
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(369));
 #line 925
 	if (narg > 1) {
 #line 925
-		p = va_arg(ARGS,cl_object);
+		p = va_arg(ARGS,cl_object);  
 #line 925
 	} else {
 #line 925
@@ -1203,6 +1239,7 @@ cl_object cl_find_symbol(cl_narg narg, cl_object strng, ...)
 #line 925
 	}
 #line 925
+// ------------------------------5
 	x = ecl_find_symbol(strng, p, &intern_flag);
 	if (intern_flag == ECL_INTERNAL)
 		{
@@ -1269,24 +1306,32 @@ cl_object cl_find_symbol(cl_narg narg, cl_object strng, ...)
 
 }
 
+// ------------------------------1
 #line 935
-cl_object cl_unintern(cl_narg narg, cl_object symbl, ...)
+cl_object cl_unintern(cl_narg narg, ...)
 {
 #line 935
+// ------------------------------2
+#line 935
+	const cl_env_ptr the_env = ecl_process_env();
+#line 935
+	cl_object p;
+#line 935
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object symbl = va_arg(ARGS,cl_object);  
+#line 935
+// ------------------------------3
 
 #line 937
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 937
-	cl_object p;
-#line 937
-	va_list ARGS;
-	va_start(ARGS, symbl);
 #line 937
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(881));
 #line 937
 	if (narg > 1) {
 #line 937
-		p = va_arg(ARGS,cl_object);
+		p = va_arg(ARGS,cl_object);  
 #line 937
 	} else {
 #line 937
@@ -1294,6 +1339,7 @@ cl_object cl_unintern(cl_narg narg, cl_object symbl, ...)
 #line 937
 	}
 #line 937
+// ------------------------------5
 	{
 #line 937
 		#line 937
@@ -1307,24 +1353,32 @@ cl_object cl_unintern(cl_narg narg, cl_object symbl, ...)
 
 }
 
+// ------------------------------1
 #line 940
-cl_object cl_export(cl_narg narg, cl_object symbols, ...)
+cl_object cl_export(cl_narg narg, ...)
 {
 #line 940
+// ------------------------------2
+#line 940
+	const cl_env_ptr the_env = ecl_process_env();
+#line 940
+	cl_object pack;
+#line 940
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object symbols = va_arg(ARGS,cl_object);  
+#line 940
+// ------------------------------3
 
 #line 942
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 942
-	cl_object pack;
-#line 942
-	va_list ARGS;
-	va_start(ARGS, symbols);
 #line 942
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(344));
 #line 942
 	if (narg > 1) {
 #line 942
-		pack = va_arg(ARGS,cl_object);
+		pack = va_arg(ARGS,cl_object);  
 #line 942
 	} else {
 #line 942
@@ -1332,6 +1386,7 @@ cl_object cl_export(cl_narg narg, cl_object symbols, ...)
 #line 942
 	}
 #line 942
+// ------------------------------5
 	switch (ecl_t_of(symbols)) {
 	case t_symbol:
 		cl_export2(symbols, pack);
@@ -1359,24 +1414,32 @@ cl_object cl_export(cl_narg narg, cl_object symbols, ...)
 
 }
 
+// ------------------------------1
 #line 959
-cl_object cl_unexport(cl_narg narg, cl_object symbols, ...)
+cl_object cl_unexport(cl_narg narg, ...)
 {
 #line 959
+// ------------------------------2
+#line 959
+	const cl_env_ptr the_env = ecl_process_env();
+#line 959
+	cl_object pack;
+#line 959
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object symbols = va_arg(ARGS,cl_object);  
+#line 959
+// ------------------------------3
 
 #line 961
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 961
-	cl_object pack;
-#line 961
-	va_list ARGS;
-	va_start(ARGS, symbols);
 #line 961
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(880));
 #line 961
 	if (narg > 1) {
 #line 961
-		pack = va_arg(ARGS,cl_object);
+		pack = va_arg(ARGS,cl_object);  
 #line 961
 	} else {
 #line 961
@@ -1384,6 +1447,7 @@ cl_object cl_unexport(cl_narg narg, cl_object symbols, ...)
 #line 961
 	}
 #line 961
+// ------------------------------5
 	switch (ecl_t_of(symbols)) {
 	case t_symbol:
 		cl_unexport2(symbols, pack);
@@ -1411,24 +1475,32 @@ cl_object cl_unexport(cl_narg narg, cl_object symbols, ...)
 
 }
 
+// ------------------------------1
 #line 978
-cl_object cl_import(cl_narg narg, cl_object symbols, ...)
+cl_object cl_import(cl_narg narg, ...)
 {
 #line 978
+// ------------------------------2
+#line 978
+	const cl_env_ptr the_env = ecl_process_env();
+#line 978
+	cl_object pack;
+#line 978
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object symbols = va_arg(ARGS,cl_object);  
+#line 978
+// ------------------------------3
 
 #line 980
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 980
-	cl_object pack;
-#line 980
-	va_list ARGS;
-	va_start(ARGS, symbols);
 #line 980
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(431));
 #line 980
 	if (narg > 1) {
 #line 980
-		pack = va_arg(ARGS,cl_object);
+		pack = va_arg(ARGS,cl_object);  
 #line 980
 	} else {
 #line 980
@@ -1436,6 +1508,7 @@ cl_object cl_import(cl_narg narg, cl_object symbols, ...)
 #line 980
 	}
 #line 980
+// ------------------------------5
 	switch (ecl_t_of(symbols)) {
 	case t_symbol:
 		cl_import2(symbols, pack);
@@ -1463,24 +1536,32 @@ cl_object cl_import(cl_narg narg, cl_object symbols, ...)
 
 }
 
+// ------------------------------1
 #line 997
-cl_object cl_shadowing_import(cl_narg narg, cl_object symbols, ...)
+cl_object cl_shadowing_import(cl_narg narg, ...)
 {
 #line 997
+// ------------------------------2
+#line 997
+	const cl_env_ptr the_env = ecl_process_env();
+#line 997
+	cl_object pack;
+#line 997
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object symbols = va_arg(ARGS,cl_object);  
+#line 997
+// ------------------------------3
 
 #line 999
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 999
-	cl_object pack;
-#line 999
-	va_list ARGS;
-	va_start(ARGS, symbols);
 #line 999
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(754));
 #line 999
 	if (narg > 1) {
 #line 999
-		pack = va_arg(ARGS,cl_object);
+		pack = va_arg(ARGS,cl_object);  
 #line 999
 	} else {
 #line 999
@@ -1488,6 +1569,7 @@ cl_object cl_shadowing_import(cl_narg narg, cl_object symbols, ...)
 #line 999
 	}
 #line 999
+// ------------------------------5
 	switch (ecl_t_of(symbols)) {
 	case t_symbol:
 		ecl_shadowing_import(symbols, pack);
@@ -1515,24 +1597,32 @@ cl_object cl_shadowing_import(cl_narg narg, cl_object symbols, ...)
 
 }
 
+// ------------------------------1
 #line 1016
-cl_object cl_shadow(cl_narg narg, cl_object symbols, ...)
+cl_object cl_shadow(cl_narg narg, ...)
 {
 #line 1016
+// ------------------------------2
+#line 1016
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1016
+	cl_object pack;
+#line 1016
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object symbols = va_arg(ARGS,cl_object);  
+#line 1016
+// ------------------------------3
 
 #line 1018
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 1018
-	cl_object pack;
-#line 1018
-	va_list ARGS;
-	va_start(ARGS, symbols);
 #line 1018
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(753));
 #line 1018
 	if (narg > 1) {
 #line 1018
-		pack = va_arg(ARGS,cl_object);
+		pack = va_arg(ARGS,cl_object);  
 #line 1018
 	} else {
 #line 1018
@@ -1540,6 +1630,7 @@ cl_object cl_shadow(cl_narg narg, cl_object symbols, ...)
 #line 1018
 	}
 #line 1018
+// ------------------------------5
 	switch (ecl_t_of(symbols)) {
 #ifdef ECL_UNICODE
 	case t_string:
@@ -1574,24 +1665,32 @@ cl_object cl_shadow(cl_narg narg, cl_object symbols, ...)
 
 }
 
+// ------------------------------1
 #line 1042
-cl_object cl_use_package(cl_narg narg, cl_object pack, ...)
+cl_object cl_use_package(cl_narg narg, ...)
 {
 #line 1042
+// ------------------------------2
+#line 1042
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1042
+	cl_object pa;
+#line 1042
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object pack = va_arg(ARGS,cl_object);  
+#line 1042
+// ------------------------------3
 
 #line 1044
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 1044
-	cl_object pa;
-#line 1044
-	va_list ARGS;
-	va_start(ARGS, pack);
 #line 1044
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(892));
 #line 1044
 	if (narg > 1) {
 #line 1044
-		pa = va_arg(ARGS,cl_object);
+		pa = va_arg(ARGS,cl_object);  
 #line 1044
 	} else {
 #line 1044
@@ -1599,6 +1698,7 @@ cl_object cl_use_package(cl_narg narg, cl_object pack, ...)
 #line 1044
 	}
 #line 1044
+// ------------------------------5
 	switch (ecl_t_of(pack)) {
 	case t_symbol:
 	case t_character:
@@ -1629,24 +1729,32 @@ cl_object cl_use_package(cl_narg narg, cl_object pack, ...)
 
 }
 
+// ------------------------------1
 #line 1064
-cl_object cl_unuse_package(cl_narg narg, cl_object pack, ...)
+cl_object cl_unuse_package(cl_narg narg, ...)
 {
 #line 1064
+// ------------------------------2
+#line 1064
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1064
+	cl_object pa;
+#line 1064
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object pack = va_arg(ARGS,cl_object);  
+#line 1064
+// ------------------------------3
 
 #line 1066
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 1066
-	cl_object pa;
-#line 1066
-	va_list ARGS;
-	va_start(ARGS, pack);
 #line 1066
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(887));
 #line 1066
 	if (narg > 1) {
 #line 1066
-		pa = va_arg(ARGS,cl_object);
+		pa = va_arg(ARGS,cl_object);  
 #line 1066
 	} else {
 #line 1066
@@ -1654,6 +1762,7 @@ cl_object cl_unuse_package(cl_narg narg, cl_object pack, ...)
 #line 1066
 	}
 #line 1066
+// ------------------------------5
 	switch (ecl_t_of(pack)) {
 	case t_symbol:
 	case t_character:

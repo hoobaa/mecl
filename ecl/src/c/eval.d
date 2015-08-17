@@ -124,8 +124,12 @@ ecl_function_dispatch(cl_env_ptr env, cl_object x)
 }
 
 cl_object
-cl_funcall(cl_narg narg, cl_object function, ...)
+cl_funcall(cl_narg narg, /*cl_object function, */...)
 {
+        ecl_va_list args;
+        ecl_va_start(args, narg, narg, 0);
+        cl_object function = ecl_va_arg(args);
+
         cl_object output;
         --narg;
         {

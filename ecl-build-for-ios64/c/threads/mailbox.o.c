@@ -52,22 +52,29 @@ ecl_make_mailbox(cl_object name, cl_fixnum count)
         return output;
 }
 
+// ------------------------------1
 #line 54
 cl_object mp_make_mailbox(cl_narg narg, ...)
 {
 #line 54
-
-#line 56
+// ------------------------------2
+#line 54
 	const cl_env_ptr the_env = ecl_process_env();
-#line 56
+#line 54
 	static cl_object KEYS[2] = {(cl_object)(cl_symbols+1273), (cl_object)(cl_symbols+1450)};
 	cl_object name;
 	cl_object count;
-#line 56
+#line 54
 	cl_object KEY_VARS[4];
-#line 56
+#line 54
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, narg, narg, 0);
+#line 54
+// ------------------------------3
+
+#line 56
+// ------------------------------4
+#line 56
 #line 56
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1463));
 #line 56
@@ -89,6 +96,7 @@ cl_object mp_make_mailbox(cl_narg narg, ...)
 	  count = KEY_VARS[1];
 	}
 #line 56
+// ------------------------------5
 {
 	{
 #line 57

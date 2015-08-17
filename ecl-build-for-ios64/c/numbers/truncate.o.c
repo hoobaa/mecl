@@ -79,24 +79,32 @@ ecl_truncate2(cl_object x, cl_object y)
 		return ecl_floor2(x, y);
 }
 
+// ------------------------------1
 #line 81
-cl_object cl_truncate(cl_narg narg, cl_object x, ...)
+cl_object cl_truncate(cl_narg narg, ...)
 {
 #line 81
+// ------------------------------2
+#line 81
+	const cl_env_ptr the_env = ecl_process_env();
+#line 81
+	cl_object y;
+#line 81
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object x = va_arg(ARGS,cl_object);  
+#line 81
+// ------------------------------3
 
 #line 83
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 83
-	cl_object y;
-#line 83
-	va_list ARGS;
-	va_start(ARGS, x);
 #line 83
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(865));
 #line 83
 	if (narg > 1) {
 #line 83
-		y = va_arg(ARGS,cl_object);
+		y = va_arg(ARGS,cl_object);  
 #line 83
 	} else {
 #line 83
@@ -104,6 +112,7 @@ cl_object cl_truncate(cl_narg narg, cl_object x, ...)
 #line 83
 	}
 #line 83
+// ------------------------------5
 	if (narg == 1)
 		return ecl_truncate1(x);
 	else

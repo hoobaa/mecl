@@ -245,38 +245,46 @@ si_load_bytecodes(cl_object source, cl_object verbose, cl_object print, cl_objec
 
 }
 
+// ------------------------------1
 #line 205
-cl_object cl_load(cl_narg narg, cl_object source, ...)
+cl_object cl_load(cl_narg narg, ...)
 {
 #line 205
-
-	bool not_a_filename = 0;
-#line 208
+// ------------------------------2
+#line 205
 	const cl_env_ptr the_env = ecl_process_env();
-#line 208
+#line 205
 	static cl_object KEYS[5] = {(cl_object)(cl_symbols+1325), (cl_object)(cl_symbols+1290), (cl_object)(cl_symbols+1244), (cl_object)(cl_symbols+1236), (cl_object)(cl_symbols+1305)};
 	cl_object verbose;
 	cl_object print;
 	cl_object if_does_not_exist;
 	cl_object external_format;
 	cl_object search_list;
-#line 208
+#line 205
 	cl_object pathname;
-#line 208
+#line 205
 	cl_object pntype;
-#line 208
+#line 205
 	cl_object hooks;
-#line 208
+#line 205
 	cl_object filename;
-#line 208
+#line 205
 	cl_object function;
-#line 208
+#line 205
 	cl_object ok;
-#line 208
+#line 205
 	cl_object KEY_VARS[10];
-#line 208
+#line 205
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, source, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object source = ecl_va_arg(ARGS);  
+#line 205
+// ------------------------------3
+
+	bool not_a_filename = 0;
+#line 208
+// ------------------------------4
+#line 208
 #line 208
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(487));
 #line 208
@@ -334,6 +342,7 @@ cl_object cl_load(cl_narg narg, cl_object source, ...)
 #line 208
 	ok = ECL_NIL;
 #line 208
+// ------------------------------5
 	/* If source is a stream, read conventional lisp code from it */
 	if (ecl_t_of(source) != t_pathname && !ecl_stringp(source)) {
 		/* INV: if "source" is not a valid stream, file.d will complain */

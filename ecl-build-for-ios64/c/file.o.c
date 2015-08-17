@@ -1478,22 +1478,29 @@ ecl_make_string_output_stream(cl_index line_length, int extended)
 	return si_make_string_output_stream_from_string(s);
 }
 
+// ------------------------------1
 #line 1468
 cl_object cl_make_string_output_stream(cl_narg narg, ...)
 {
 #line 1468
+// ------------------------------2
+#line 1468
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1468
+	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1224)};
+	cl_object element_type;
+#line 1468
+	cl_object KEY_VARS[2];
+#line 1468
+	ecl_va_list ARGS;
+	ecl_va_start(ARGS, narg, narg, 0);
+#line 1468
+// ------------------------------3
 
 	int extended = 0;
 #line 1471
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 1471
-	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1224)};
-	cl_object element_type;
-#line 1471
-	cl_object KEY_VARS[2];
-#line 1471
-	ecl_va_list ARGS;
-	ecl_va_start(ARGS, narg, narg, 0);
 #line 1471
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(536));
 #line 1471
@@ -1507,6 +1514,7 @@ cl_object cl_make_string_output_stream(cl_narg narg, ...)
 	  element_type = KEY_VARS[0];
 	}
 #line 1471
+// ------------------------------5
 	if (element_type == ECL_SYM("BASE-CHAR",120)) {
 		(void)0;
 	} else if (element_type == ECL_SYM("CHARACTER",222)) {
@@ -1701,27 +1709,35 @@ ecl_make_string_input_stream(cl_object strng, cl_index istart, cl_index iend)
 	return strm;
 }
 
+// ------------------------------1
 #line 1643
-cl_object cl_make_string_input_stream(cl_narg narg, cl_object strng, ...)
+cl_object cl_make_string_input_stream(cl_narg narg, ...)
 {
 #line 1643
+// ------------------------------2
+#line 1643
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1643
+	cl_object istart;
+#line 1643
+	cl_object iend;
+#line 1643
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object strng = va_arg(ARGS,cl_object);  
+#line 1643
+// ------------------------------3
 
         cl_index_pair p;
 #line 1646
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 1646
-	cl_object istart;
-#line 1646
-	cl_object iend;
-#line 1646
-	va_list ARGS;
-	va_start(ARGS, strng);
 #line 1646
 	if (ecl_unlikely(narg < 1|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(535));
 #line 1646
 	if (narg > 1) {
 #line 1646
-		istart = va_arg(ARGS,cl_object);
+		istart = va_arg(ARGS,cl_object);  
 #line 1646
 	} else {
 #line 1646
@@ -1731,7 +1747,7 @@ cl_object cl_make_string_input_stream(cl_narg narg, cl_object strng, ...)
 #line 1646
 	if (narg > 2) {
 #line 1646
-		iend = va_arg(ARGS,cl_object);
+		iend = va_arg(ARGS,cl_object);  
 #line 1646
 	} else {
 #line 1646
@@ -1739,6 +1755,7 @@ cl_object cl_make_string_input_stream(cl_narg narg, cl_object strng, ...)
 #line 1646
 	}
 #line 1646
+// ------------------------------5
 	strng = cl_string(strng);
         p = ecl_vector_start_end(ecl_make_fixnum(/*MAKE-STRING-INPUT-STREAM*/535), strng, istart, iend);
 	{
@@ -2133,21 +2150,29 @@ const struct ecl_file_ops broadcast_ops = {
 	broadcast_close
 };
 
+// ------------------------------1
 #line 1994
 cl_object cl_make_broadcast_stream(cl_narg narg, ...)
 {
 #line 1994
+// ------------------------------2
+#line 1994
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1994
+	ecl_va_list ap;
+	ecl_va_start(ap, narg, narg, 0);
+#line 1994
+// ------------------------------3
 
 	cl_object x, streams;
 	int i;
 #line 1998
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 1998
-	ecl_va_list ap;
-	ecl_va_start(ap, narg, narg, 0);
 #line 1998
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(523));
 #line 1998
+// ------------------------------5
 	streams = ECL_NIL;
 	for (i = 0; i < narg; i++) {
 		x = ecl_va_arg(ap);
@@ -2521,21 +2546,29 @@ const struct ecl_file_ops concatenated_ops = {
 	concatenated_close
 };
 
+// ------------------------------1
 #line 2325
 cl_object cl_make_concatenated_stream(cl_narg narg, ...)
 {
 #line 2325
+// ------------------------------2
+#line 2325
+	const cl_env_ptr the_env = ecl_process_env();
+#line 2325
+	ecl_va_list ap;
+	ecl_va_start(ap, narg, narg, 0);
+#line 2325
+// ------------------------------3
 
 	cl_object x, streams;
 	int i;
 #line 2329
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 2329
-	ecl_va_list ap;
-	ecl_va_start(ap, narg, narg, 0);
 #line 2329
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(525));
 #line 2329
+// ------------------------------5
 	streams = ECL_NIL;
 	for (i = 0; i < narg; i++) {
 		x = ecl_va_arg(ap);
@@ -4626,24 +4659,32 @@ make_sequence_input_stream(cl_object vector, cl_index istart, cl_index iend,
 	return strm;
 }
 
+// ------------------------------1
 #line 4358
-cl_object si_make_sequence_input_stream(cl_narg narg, cl_object vector, ...)
+cl_object si_make_sequence_input_stream(cl_narg narg, ...)
 {
 #line 4358
-
-        cl_index_pair p;
-#line 4361
+// ------------------------------2
+#line 4358
 	const cl_env_ptr the_env = ecl_process_env();
-#line 4361
+#line 4358
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1310), (cl_object)(cl_symbols+1225), (cl_object)(cl_symbols+1236)};
 	cl_object start;
 	cl_object end;
 	cl_object external_format;
-#line 4361
+#line 4358
 	cl_object KEY_VARS[6];
-#line 4361
+#line 4358
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, vector, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object vector = ecl_va_arg(ARGS);  
+#line 4358
+// ------------------------------3
+
+        cl_index_pair p;
+#line 4361
+// ------------------------------4
+#line 4361
 #line 4361
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(1926));
 #line 4361
@@ -4673,6 +4714,7 @@ cl_object si_make_sequence_input_stream(cl_narg narg, cl_object vector, ...)
 	  external_format = KEY_VARS[2];
 	}
 #line 4361
+// ------------------------------5
         p = ecl_vector_start_end(ecl_make_fixnum(/*EXT::MAKE-SEQUENCE-INPUT-STREAM*/1926),
                                  vector, start, end);
 	{
@@ -4823,21 +4865,29 @@ make_sequence_output_stream(cl_object vector, cl_object external_format)
 	return strm;
 }
 
+// ------------------------------1
 #line 4501
-cl_object si_make_sequence_output_stream(cl_narg narg, cl_object vector, ...)
+cl_object si_make_sequence_output_stream(cl_narg narg, ...)
 {
 #line 4501
-
-#line 4503
+// ------------------------------2
+#line 4501
 	const cl_env_ptr the_env = ecl_process_env();
-#line 4503
+#line 4501
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1236)};
 	cl_object external_format;
-#line 4503
+#line 4501
 	cl_object KEY_VARS[2];
-#line 4503
+#line 4501
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, vector, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object vector = ecl_va_arg(ARGS);  
+#line 4501
+// ------------------------------3
+
+#line 4503
+// ------------------------------4
+#line 4503
 #line 4503
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(1927));
 #line 4503
@@ -4851,6 +4901,7 @@ cl_object si_make_sequence_output_stream(cl_narg narg, cl_object vector, ...)
 	  external_format = KEY_VARS[0];
 	}
 #line 4503
+// ------------------------------5
 	{
 #line 4503
 		#line 4503
@@ -5324,25 +5375,33 @@ cl_file_length(cl_object strm)
 
 }
 
+// ------------------------------1
 #line 4882
-cl_object cl_file_position(cl_narg narg, cl_object file_stream, ...)
+cl_object cl_file_position(cl_narg narg, ...)
 {
 #line 4882
+// ------------------------------2
+#line 4882
+	const cl_env_ptr the_env = ecl_process_env();
+#line 4882
+	cl_object position;
+#line 4882
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object file_stream = va_arg(ARGS,cl_object);  
+#line 4882
+// ------------------------------3
 
 	cl_object output;
 #line 4885
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 4885
-	cl_object position;
-#line 4885
-	va_list ARGS;
-	va_start(ARGS, file_stream);
 #line 4885
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(357));
 #line 4885
 	if (narg > 1) {
 #line 4885
-		position = va_arg(ARGS,cl_object);
+		position = va_arg(ARGS,cl_object);  
 #line 4885
 	} else {
 #line 4885
@@ -5350,6 +5409,7 @@ cl_object cl_file_position(cl_narg narg, cl_object file_stream, ...)
 #line 4885
 	}
 #line 4885
+// ------------------------------5
 	if (Null(position)) {
 		output = ecl_file_position(file_stream);
 	} else {
@@ -5715,17 +5775,15 @@ ecl_open_stream(cl_object fn, enum ecl_smmode smm, cl_object if_exists,
 	return output;
 }
 
+// ------------------------------1
 #line 5151
-cl_object cl_open(cl_narg narg, cl_object filename, ...)
+cl_object cl_open(cl_narg narg, ...)
 {
 #line 5151
-
-	enum ecl_smmode smm;
-	int flags = 0;
-	cl_fixnum byte_size;
-#line 5156
+// ------------------------------2
+#line 5151
 	const cl_env_ptr the_env = ecl_process_env();
-#line 5156
+#line 5151
 	static cl_object KEYS[6] = {(cl_object)(cl_symbols+1218), (cl_object)(cl_symbols+1224), (cl_object)(cl_symbols+1245), (cl_object)(cl_symbols+1244), (cl_object)(cl_symbols+1236), (cl_object)(cl_symbols+1324)};
 	cl_object direction;
 	cl_object element_type;
@@ -5735,13 +5793,23 @@ cl_object cl_open(cl_narg narg, cl_object filename, ...)
 	bool idnesp;
 	cl_object external_format;
 	cl_object cstream;
-#line 5156
+#line 5151
 	cl_object strm;
-#line 5156
+#line 5151
 	cl_object KEY_VARS[12];
-#line 5156
+#line 5151
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, filename, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object filename = ecl_va_arg(ARGS);  
+#line 5151
+// ------------------------------3
+
+	enum ecl_smmode smm;
+	int flags = 0;
+	cl_fixnum byte_size;
+#line 5156
+// ------------------------------4
+#line 5156
 #line 5156
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(611));
 #line 5156
@@ -5805,6 +5873,7 @@ cl_object cl_open(cl_narg narg, cl_object filename, ...)
 #line 5156
 	strm = ECL_NIL;
 #line 5156
+// ------------------------------5
 	/* INV: ecl_open_stream() checks types */
 	if (direction == ECL_SYM(":INPUT",1254)) {
 		smm = ecl_smm_input;
@@ -5863,21 +5932,29 @@ cl_object cl_open(cl_narg narg, cl_object filename, ...)
 }
 
 
+// ------------------------------1
 #line 5204
-cl_object cl_close(cl_narg narg, cl_object strm, ...)
+cl_object cl_close(cl_narg narg, ...)
 {
 #line 5204
-
-#line 5206
+// ------------------------------2
+#line 5204
 	const cl_env_ptr the_env = ecl_process_env();
-#line 5206
+#line 5204
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1195)};
 	cl_object abort;
-#line 5206
+#line 5204
 	cl_object KEY_VARS[2];
-#line 5206
+#line 5204
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, strm, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object strm = ecl_va_arg(ARGS);  
+#line 5204
+// ------------------------------3
+
+#line 5206
+// ------------------------------4
+#line 5206
 #line 5206
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(228));
 #line 5206
@@ -5891,6 +5968,7 @@ cl_object cl_close(cl_narg narg, cl_object strm, ...)
 	  abort = KEY_VARS[0];
 	}
 #line 5206
+// ------------------------------5
 	{
 #line 5206
 		#line 5206

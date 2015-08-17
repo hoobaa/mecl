@@ -22,24 +22,32 @@
 #endif
 #include <ecl/internal.h>
 
+// ------------------------------1
 #line 24
-cl_object cl_ceiling(cl_narg narg, cl_object x, ...)
+cl_object cl_ceiling(cl_narg narg, ...)
 {
 #line 24
+// ------------------------------2
+#line 24
+	const cl_env_ptr the_env = ecl_process_env();
+#line 24
+	cl_object y;
+#line 24
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object x = va_arg(ARGS,cl_object);  
+#line 24
+// ------------------------------3
 
 #line 26
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 26
-	cl_object y;
-#line 26
-	va_list ARGS;
-	va_start(ARGS, x);
 #line 26
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(199));
 #line 26
 	if (narg > 1) {
 #line 26
-		y = va_arg(ARGS,cl_object);
+		y = va_arg(ARGS,cl_object);  
 #line 26
 	} else {
 #line 26
@@ -47,6 +55,7 @@ cl_object cl_ceiling(cl_narg narg, cl_object x, ...)
 #line 26
 	}
 #line 26
+// ------------------------------5
 	if (narg == 1)
 		return ecl_ceiling1(x);
 	else

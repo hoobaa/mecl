@@ -417,9 +417,9 @@ static int is_null(int c) { return c == '\0'; }
  *	5) A non empty string
  */
 static cl_object
-parse_word(cl_object s, delim_fn delim, int flags, cl_index start,
-	   cl_index end, cl_index *end_of_word)
+parse_word(cl_object s, delim_fn delim, int flags, cl_index start, cl_index end, cl_index *end_of_word)
 {
+        nlogd(">>parse_word");
 	cl_index i, j, last_delim = end;
 	bool wild_inferiors = FALSE;
 
@@ -537,9 +537,13 @@ parse_directories(cl_object s, int flags, cl_index start, cl_index end,
 bool
 ecl_logical_hostname_p(cl_object host)
 {
-	if (!ecl_stringp(host))
-		return FALSE;
-	return !Null(cl_assoc(4, host, cl_core.pathname_translations, ECL_SYM(":TEST",1316), ECL_SYM("STRING-EQUAL",808)));
+        nlogd("------------------------------ ecl_logical_hostname_p");
+	if (!ecl_stringp(host)) return FALSE;
+        nlogd("------------------------------ ecl_logical_hostname_p");
+        //boot rv = !Null(cl_assoc(4, host, cl_core.pathname_translations, ECL_SYM(":TEST",1316), ECL_SYM("STRING-EQUAL",808)));
+        bool rv = !Null(cl_assoc(4, host, cl_core.pathname_translations, ECL_SYM(":TEST",1316), ECL_SYM("STRING-EQUAL",808)));
+        nlogd("------------------------------ ecl_logical_hostname_p");
+	return rv;
 }
 
 /*
@@ -569,30 +573,39 @@ ecl_logical_hostname_p(cl_object host)
  *
  */
 cl_object
-ecl_parse_namestring(cl_object s, cl_index start, cl_index end, cl_index *ep,
-		     cl_object default_host)
+ecl_parse_namestring(cl_object s, cl_index start, cl_index end, cl_index *ep, cl_object default_host)
 {
 	cl_object host, device, path, name, type, aux, version;
 	bool logical;
+
+        nlogd(">>parse_namestring");
 
 	if (start == end) {
 		host = device = path = name = type = aux = version = ECL_NIL;
 		logical = 0;
 		goto make_it;
 	}
+
+        nlogd(">>parse_namestring");
 	/* We first try parsing as logical-pathname. In case of
 	 * failure, physical-pathname parsing is performed only when
 	 * there is no supplied *logical* host name. All other failures
 	 * result in ECL_NIL as output.
 	 */
-	host = parse_word(s, is_colon, WORD_LOGICAL | WORD_INCLUDE_DELIM |
-			  WORD_DISALLOW_SEMICOLON, start, end, ep);
+	host = parse_word(s, is_colon, WORD_LOGICAL | WORD_INCLUDE_DELIM | WORD_DISALLOW_SEMICOLON, start, end, ep);
+        nlogd(">>parse_namestring");
 	if (default_host != ECL_NIL) {
-		if (host == ECL_NIL || host == ECL_SYM(":ERROR",1229))
+		if (host == ECL_NIL || host == ECL_SYM(":ERROR",1229)){
 			host = default_host;
+                }
 	}
-	if (!ecl_logical_hostname_p(host))
+        nlogd(">>parse_namestring -- fr");
+	if (!ecl_logical_hostname_p(host)) { ////////////////////////////// cancer
+                nlogd(">>parse_namestring. goto physical");
 		goto physical;
+        }
+
+        nlogd(">>parse_namestring -- to");
 	/*
 	 * Logical pathname format:
 	 *	[logical-hostname:][;][logical-directory-component;][pathname-name][.pathname-type]
@@ -608,22 +621,23 @@ ecl_parse_namestring(cl_object s, cl_index start, cl_index end, cl_index *ep,
 	} else {
 		path = CONS(ECL_SYM(":ABSOLUTE",1196), path);
 	}
-	if (path == ECL_SYM(":ERROR",1229))
-		return ECL_NIL;
-	name = parse_word(s, is_dot, WORD_LOGICAL | WORD_ALLOW_ASTERISK |
-			  WORD_EMPTY_IS_NIL, *ep, end, ep);
-	if (name == ECL_SYM(":ERROR",1229))
-		return ECL_NIL;
+
+        nlogd(">>parse_namestring");
+
+	if (path == ECL_SYM(":ERROR",1229)) return ECL_NIL;
+
+	name = parse_word(s, is_dot, WORD_LOGICAL | WORD_ALLOW_ASTERISK | WORD_EMPTY_IS_NIL, *ep, end, ep);
+	if (name == ECL_SYM(":ERROR",1229)) return ECL_NIL;
+
+        nlogd(">>parse_namestring");
+
 	type = ECL_NIL;
 	version = ECL_NIL;
-	if (*ep == start || ecl_char(s, *ep-1) != '.')
-		goto make_it;
+	if (*ep == start || ecl_char(s, *ep-1) != '.') goto make_it;
 	type = parse_word(s, is_dot, WORD_LOGICAL | WORD_ALLOW_ASTERISK |
 			  WORD_EMPTY_IS_NIL, *ep, end, ep);
-	if (type == ECL_SYM(":ERROR",1229))
-		return ECL_NIL;
-	if (*ep == start || ecl_char(s, *ep-1) != '.')
-		goto make_it;
+	if (type == ECL_SYM(":ERROR",1229)) return ECL_NIL;
+	if (*ep == start || ecl_char(s, *ep-1) != '.') goto make_it;
 	aux = parse_word(s, is_null, WORD_LOGICAL | WORD_ALLOW_ASTERISK |
 			 WORD_EMPTY_IS_NIL, *ep, end, ep);
 	if (aux == ECL_SYM(":ERROR",1229)) {
@@ -721,6 +735,7 @@ ecl_parse_namestring(cl_object s, cl_index start, cl_index end, cl_index *ep,
 	}
 	version = (name != ECL_NIL || type != ECL_NIL) ? ECL_SYM(":NEWEST",1276) : ECL_NIL;
  make_it:
+        nlogd(">>make_it");
 	if (*ep >= end) *ep = end;
 	path = ecl_make_pathname(host, device, path, name, type, version,
                                  ECL_SYM(":LOCAL",1268));
@@ -743,16 +758,16 @@ si_default_pathname_defaults(void)
                                      path, ECL_SYM("PATHNAME",630));
 	}
 	{
-#line 744
+#line 759
 		const cl_env_ptr the_env = ecl_process_env();
-#line 744
-		#line 744
+#line 759
+		#line 759
 		cl_object __value0 = path;
-#line 744
+#line 759
 		the_env->nvalues = 1;
-#line 744
+#line 759
 		return __value0;
-#line 744
+#line 759
 	}
 
 }
@@ -792,16 +807,16 @@ L:
         }
 	}
 	{
-#line 781
+#line 796
 		const cl_env_ptr the_env = ecl_process_env();
-#line 781
-		#line 781
+#line 796
+		#line 796
 		cl_object __value0 = x;
-#line 781
+#line 796
 		the_env->nvalues = 1;
-#line 781
+#line 796
 		return __value0;
-#line 781
+#line 796
 	}
 
 }
@@ -809,123 +824,87 @@ L:
 cl_object
 cl_logical_pathname(cl_object x)
 {
+        nlogd("cl_logical_pathname ------------------------------");
 	x = cl_pathname(x);
+        nlogd("cl_logical_pathname ------------------------------");
 	if (!x->pathname.logical) {
+                nlogd("cl_logical_pathname ------------------------------");
 		cl_error(9, ECL_SYM("SIMPLE-TYPE-ERROR",773), ECL_SYM(":FORMAT-CONTROL",1240),
 			 make_constant_base_string("~S cannot be coerced to a logical pathname."),
 			 ECL_SYM(":FORMAT-ARGUMENTS",1239), cl_list(1, x),
 			 ECL_SYM(":EXPECTED-TYPE",1232), ECL_SYM("LOGICAL-PATHNAME",498),
 			 ECL_SYM(":DATUM",1214), x);
 	}
+        nlogd("cl_logical_pathname ------------------------------");
 	{
-#line 795
+#line 814
 		const cl_env_ptr the_env = ecl_process_env();
-#line 795
-		#line 795
+#line 814
+		#line 814
 		cl_object __value0 = x;
-#line 795
+#line 814
 		the_env->nvalues = 1;
-#line 795
+#line 814
 		return __value0;
-#line 795
+#line 814
 	}
 ;
 }
 
 /* FIXME! WILD-PATHNAME-P is missing! */
-#line 799
-cl_object cl_wild_pathname_p(cl_narg narg, cl_object pathname, ...)
+// ------------------------------1
+#line 818
+cl_object cl_wild_pathname_p(cl_narg narg, ...)
 {
-#line 799
+#line 818
+// ------------------------------2
+#line 818
+	const cl_env_ptr the_env = ecl_process_env();
+#line 818
+	cl_object component;
+#line 818
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object pathname = va_arg(ARGS,cl_object);  
+#line 818
+// ------------------------------3
 
 	bool checked = 0;
-#line 802
-	const cl_env_ptr the_env = ecl_process_env();
-#line 802
-	cl_object component;
-#line 802
-	va_list ARGS;
-	va_start(ARGS, pathname);
-#line 802
+#line 821
+// ------------------------------4
+#line 821
+#line 821
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(906));
-#line 802
+#line 821
 	if (narg > 1) {
-#line 802
-		component = va_arg(ARGS,cl_object);
-#line 802
+#line 821
+		component = va_arg(ARGS,cl_object);  
+#line 821
 	} else {
-#line 802
+#line 821
 		component = ECL_NIL;
-#line 802
+#line 821
 	}
-#line 802
+#line 821
+// ------------------------------5
 	pathname = cl_pathname(pathname);
 	if (component == ECL_NIL || component == ECL_SYM(":HOST",1243)) {
 		if (pathname->pathname.host == ECL_SYM(":WILD",1327))
 			{
-#line 805
-				#line 805
+#line 824
+				#line 824
 				cl_object __value0 = ECL_T;
-#line 805
+#line 824
 				the_env->nvalues = 1;
-#line 805
+#line 824
 				return __value0;
-#line 805
+#line 824
 			}
 ;
 		checked = 1;
 	}
 	if (component == ECL_NIL || component == ECL_SYM(":DEVICE",1217)) {
 		if (pathname->pathname.device == ECL_SYM(":WILD",1327))
-			{
-#line 810
-				#line 810
-				cl_object __value0 = ECL_T;
-#line 810
-				the_env->nvalues = 1;
-#line 810
-				return __value0;
-#line 810
-			}
-;
-		checked = 1;
-	}
-	if (component == ECL_NIL || component == ECL_SYM(":VERSION",1326)) {
-		if (pathname->pathname.version == ECL_SYM(":WILD",1327))
-			{
-#line 815
-				#line 815
-				cl_object __value0 = ECL_T;
-#line 815
-				the_env->nvalues = 1;
-#line 815
-				return __value0;
-#line 815
-			}
-;
-		checked = 1;
-	}
-	if (component == ECL_NIL || component == ECL_SYM(":NAME",1273)) {
-		cl_object name = pathname->pathname.name;
-		if (name != ECL_NIL &&
-		    (name == ECL_SYM(":WILD",1327) || ecl_wild_string_p(name)))
-			{
-#line 822
-				#line 822
-				cl_object __value0 = ECL_T;
-#line 822
-				the_env->nvalues = 1;
-#line 822
-				return __value0;
-#line 822
-			}
-;
-		checked = 1;
-	}
-	if (component == ECL_NIL || component == ECL_SYM(":TYPE",1318)) {
-		cl_object name = pathname->pathname.type;
-		if (name != ECL_NIL &&
-		    (name == ECL_SYM(":WILD",1327) || ecl_wild_string_p(name)))
 			{
 #line 829
 				#line 829
@@ -935,6 +914,55 @@ cl_object cl_wild_pathname_p(cl_narg narg, cl_object pathname, ...)
 #line 829
 				return __value0;
 #line 829
+			}
+;
+		checked = 1;
+	}
+	if (component == ECL_NIL || component == ECL_SYM(":VERSION",1326)) {
+		if (pathname->pathname.version == ECL_SYM(":WILD",1327))
+			{
+#line 834
+				#line 834
+				cl_object __value0 = ECL_T;
+#line 834
+				the_env->nvalues = 1;
+#line 834
+				return __value0;
+#line 834
+			}
+;
+		checked = 1;
+	}
+	if (component == ECL_NIL || component == ECL_SYM(":NAME",1273)) {
+		cl_object name = pathname->pathname.name;
+		if (name != ECL_NIL &&
+		    (name == ECL_SYM(":WILD",1327) || ecl_wild_string_p(name)))
+			{
+#line 841
+				#line 841
+				cl_object __value0 = ECL_T;
+#line 841
+				the_env->nvalues = 1;
+#line 841
+				return __value0;
+#line 841
+			}
+;
+		checked = 1;
+	}
+	if (component == ECL_NIL || component == ECL_SYM(":TYPE",1318)) {
+		cl_object name = pathname->pathname.type;
+		if (name != ECL_NIL &&
+		    (name == ECL_SYM(":WILD",1327) || ecl_wild_string_p(name)))
+			{
+#line 848
+				#line 848
+				cl_object __value0 = ECL_T;
+#line 848
+				the_env->nvalues = 1;
+#line 848
+				return __value0;
+#line 848
 			}
 ;
 		checked = 1;
@@ -949,14 +977,14 @@ cl_object cl_wild_pathname_p(cl_narg narg, cl_object pathname, ...)
 			     ecl_wild_string_p(name)))
 			{
 				{
-#line 841
-					#line 841
+#line 860
+					#line 860
 					cl_object __value0 = ECL_T;
-#line 841
+#line 860
 					the_env->nvalues = 1;
-#line 841
+#line 860
 					return __value0;
-#line 841
+#line 860
 				}
 
 			}
@@ -966,14 +994,14 @@ cl_object cl_wild_pathname_p(cl_narg narg, cl_object pathname, ...)
 		FEerror("~A is not a valid pathname component", 1, component);
 	}
 	{
-#line 848
-		#line 848
+#line 867
+		#line 867
 		cl_object __value0 = ECL_NIL;
-#line 848
+#line 867
 		the_env->nvalues = 1;
-#line 848
+#line 867
 		return __value0;
-#line 848
+#line 867
 	}
 
 }
@@ -1286,94 +1314,103 @@ cl_object
 cl_namestring(cl_object x)
 {
 	{
-#line 1158
+#line 1177
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1158
-		#line 1158
+#line 1177
+		#line 1177
 		cl_object __value0 = ecl_namestring(x, ECL_NAMESTRING_TRUNCATE_IF_ERROR);
-#line 1158
+#line 1177
 		the_env->nvalues = 1;
-#line 1158
+#line 1177
 		return __value0;
-#line 1158
+#line 1177
 	}
 
 }
 
-#line 1164
-cl_object cl_parse_namestring(cl_narg narg, cl_object thing, ...)
+// ------------------------------1
+#line 1183
+cl_object cl_parse_namestring(cl_narg narg, ...)
 {
-#line 1164
-
-#line 1166
+#line 1183
+// ------------------------------2
+#line 1183
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1166
+#line 1183
 	cl_object host;
-#line 1166
+#line 1183
 	cl_object defaults;
-#line 1166
+#line 1183
 	static cl_object KEYS[3] = {(cl_object)(cl_symbols+1310), (cl_object)(cl_symbols+1225), (cl_object)(cl_symbols+1261)};
 	cl_object start;
 	cl_object end;
 	cl_object junk_allowed;
-#line 1166
+#line 1183
 	cl_object output;
-#line 1166
+#line 1183
 	cl_object KEY_VARS[6];
-#line 1166
+#line 1183
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, thing, narg, 1);
-#line 1166
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object thing = ecl_va_arg(ARGS);  
+#line 1183
+// ------------------------------3
+
+#line 1185
+// ------------------------------4
+#line 1185
+#line 1185
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(629));
-#line 1166
+#line 1185
 	if (narg > 1) {
-#line 1166
-		host = ecl_va_arg(ARGS);
-#line 1166
+#line 1185
+		host = ecl_va_arg(ARGS);  
+#line 1185
 	} else {
-#line 1166
+#line 1185
 		host = ECL_NIL;
-#line 1166
+#line 1185
 	}
-#line 1166
+#line 1185
 	if (narg > 2) {
-#line 1166
-		defaults = ecl_va_arg(ARGS);
-#line 1166
+#line 1185
+		defaults = ecl_va_arg(ARGS);  
+#line 1185
 	} else {
-#line 1166
+#line 1185
 		defaults = si_default_pathname_defaults();
-#line 1166
+#line 1185
 	}
-#line 1166
+#line 1185
 	cl_parse_key(ARGS, 3, KEYS, KEY_VARS, NULL, 0);
-#line 1166
+#line 1185
 	if (KEY_VARS[3]==ECL_NIL) {
-#line 1166
+#line 1185
 	  start = ecl_make_fixnum(0);
 	} else {
-#line 1166
+#line 1185
 	  start = KEY_VARS[0];
 	}
-#line 1166
+#line 1185
 	if (KEY_VARS[4]==ECL_NIL) {
-#line 1166
+#line 1185
 	  end = ECL_NIL;
 	} else {
-#line 1166
+#line 1185
 	  end = KEY_VARS[1];
 	}
-#line 1166
+#line 1185
 	if (KEY_VARS[5]==ECL_NIL) {
-#line 1166
+#line 1185
 	  junk_allowed = ECL_NIL;
 	} else {
-#line 1166
+#line 1185
 	  junk_allowed = KEY_VARS[2];
 	}
-#line 1166
+#line 1185
 	output = ECL_NIL;
-#line 1166
+#line 1185
+// ------------------------------5
 	if (host != ECL_NIL) {
 		host = cl_string(host);
 	}
@@ -1391,7 +1428,9 @@ cl_object cl_parse_namestring(cl_narg narg, cl_object thing, ...)
 		thing = si_coerce_to_base_string(thing);
 #endif
 		p = ecl_vector_start_end(ecl_make_fixnum(/*PARSE-NAMESTRING*/629), thing, start, end);
-		output = ecl_parse_namestring(thing, p.start, p.end, &ee, default_host);
+                nlogd(">>>>> here? from");
+		output = ecl_parse_namestring(thing, p.start, p.end, &ee, default_host); ////////////////////////////// cancer?
+                nlogd(">>>>> here? to");
 		start = ecl_make_fixnum(ee);
 		if (output == ECL_NIL || ee != p.end) {
 			if (Null(junk_allowed)) {
@@ -1408,82 +1447,92 @@ cl_object cl_parse_namestring(cl_narg narg, cl_object thing, ...)
 	}
   OUTPUT:
 	{
-#line 1199
-		#line 1199
+#line 1220
+		#line 1220
 		cl_object __value0 = output;
-#line 1199
+#line 1220
 		cl_object __value1 = start;
-#line 1199
+#line 1220
 		the_env->nvalues = 2;
-#line 1199
+#line 1220
 		the_env->values[1] = __value1;
-#line 1199
+#line 1220
 		return __value0;
-#line 1199
+#line 1220
 	}
 
 }
 
-#line 1204
-cl_object cl_merge_pathnames(cl_narg narg, cl_object path, ...)
+// ------------------------------1
+#line 1225
+cl_object cl_merge_pathnames(cl_narg narg, ...)
 {
-#line 1204
-
-#line 1206
+#line 1225
+// ------------------------------2
+#line 1225
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1206
+#line 1225
 	cl_object defaults;
-#line 1206
+#line 1225
 	cl_object default_version;
-#line 1206
+#line 1225
 	va_list ARGS;
-	va_start(ARGS, path);
-#line 1206
+	va_start(ARGS, narg);
+	cl_object path = va_arg(ARGS,cl_object);  
+#line 1225
+// ------------------------------3
+
+#line 1227
+// ------------------------------4
+#line 1227
+#line 1227
 	if (ecl_unlikely(narg < 1|| narg > 3)) FEwrong_num_arguments(ecl_make_fixnum(556));
-#line 1206
+#line 1227
 	if (narg > 1) {
-#line 1206
-		defaults = va_arg(ARGS,cl_object);
-#line 1206
+#line 1227
+		defaults = va_arg(ARGS,cl_object);  
+#line 1227
 	} else {
-#line 1206
+#line 1227
 		defaults = si_default_pathname_defaults();
-#line 1206
+#line 1227
 	}
-#line 1206
+#line 1227
 	if (narg > 2) {
-#line 1206
-		default_version = va_arg(ARGS,cl_object);
-#line 1206
+#line 1227
+		default_version = va_arg(ARGS,cl_object);  
+#line 1227
 	} else {
-#line 1206
+#line 1227
 		default_version = ECL_SYM(":NEWEST",1276);
-#line 1206
+#line 1227
 	}
-#line 1206
+#line 1227
+// ------------------------------5
 	path = cl_pathname(path);
 	defaults = cl_pathname(defaults);
 	{
-#line 1208
-		#line 1208
+#line 1229
+		#line 1229
 		cl_object __value0 = ecl_merge_pathnames(path, defaults, default_version);
-#line 1208
+#line 1229
 		the_env->nvalues = 1;
-#line 1208
+#line 1229
 		return __value0;
-#line 1208
+#line 1229
 	}
 
 }
 
-#line 1216
+// ------------------------------1
+#line 1237
 cl_object cl_make_pathname(cl_narg narg, ...)
 {
-#line 1216
-
-#line 1218
+#line 1237
+// ------------------------------2
+#line 1237
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1218
+#line 1237
 	static cl_object KEYS[8] = {(cl_object)(cl_symbols+1243), (cl_object)(cl_symbols+1217), (cl_object)(cl_symbols+1219), (cl_object)(cl_symbols+1273), (cl_object)(cl_symbols+1318), (cl_object)(cl_symbols+1326), (cl_object)(cl_symbols+1205), (cl_object)(cl_symbols+1216)};
 	cl_object host;
 	bool hostp;
@@ -1499,108 +1548,115 @@ cl_object cl_make_pathname(cl_narg narg, ...)
 	bool versionp;
 	cl_object scase;
 	cl_object defaults;
-#line 1218
+#line 1237
 	cl_object x;
-#line 1218
+#line 1237
 	cl_object KEY_VARS[16];
-#line 1218
+#line 1237
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, narg, narg, 0);
-#line 1218
+#line 1237
+// ------------------------------3
+
+#line 1239
+// ------------------------------4
+#line 1239
+#line 1239
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(531));
-#line 1218
+#line 1239
 	cl_parse_key(ARGS, 8, KEYS, KEY_VARS, NULL, 0);
-#line 1218
+#line 1239
 	if (KEY_VARS[8]==ECL_NIL) {
-#line 1218
+#line 1239
 	  host = ECL_NIL;
-#line 1218
+#line 1239
 	  hostp = FALSE;
 	} else {
-#line 1218
+#line 1239
 	  hostp = TRUE;
-#line 1218
+#line 1239
 	  host = KEY_VARS[0];
 	}
-#line 1218
+#line 1239
 	if (KEY_VARS[9]==ECL_NIL) {
-#line 1218
+#line 1239
 	  device = ECL_NIL;
-#line 1218
+#line 1239
 	  devicep = FALSE;
 	} else {
-#line 1218
+#line 1239
 	  devicep = TRUE;
-#line 1218
+#line 1239
 	  device = KEY_VARS[1];
 	}
-#line 1218
+#line 1239
 	if (KEY_VARS[10]==ECL_NIL) {
-#line 1218
+#line 1239
 	  directory = ECL_NIL;
-#line 1218
+#line 1239
 	  directoryp = FALSE;
 	} else {
-#line 1218
+#line 1239
 	  directoryp = TRUE;
-#line 1218
+#line 1239
 	  directory = KEY_VARS[2];
 	}
-#line 1218
+#line 1239
 	if (KEY_VARS[11]==ECL_NIL) {
-#line 1218
+#line 1239
 	  name = ECL_NIL;
-#line 1218
+#line 1239
 	  namep = FALSE;
 	} else {
-#line 1218
+#line 1239
 	  namep = TRUE;
-#line 1218
+#line 1239
 	  name = KEY_VARS[3];
 	}
-#line 1218
+#line 1239
 	if (KEY_VARS[12]==ECL_NIL) {
-#line 1218
+#line 1239
 	  type = ECL_NIL;
-#line 1218
+#line 1239
 	  typep = FALSE;
 	} else {
-#line 1218
+#line 1239
 	  typep = TRUE;
-#line 1218
+#line 1239
 	  type = KEY_VARS[4];
 	}
-#line 1218
+#line 1239
 	if (KEY_VARS[13]==ECL_NIL) {
-#line 1218
+#line 1239
 	  version = ECL_NIL;
-#line 1218
+#line 1239
 	  versionp = FALSE;
 	} else {
-#line 1218
+#line 1239
 	  versionp = TRUE;
-#line 1218
+#line 1239
 	  version = KEY_VARS[5];
 	}
-#line 1218
+#line 1239
 	if (KEY_VARS[14]==ECL_NIL) {
-#line 1218
+#line 1239
 	  scase = ECL_SYM(":LOCAL",1268);
 	} else {
-#line 1218
+#line 1239
 	  scase = KEY_VARS[6];
 	}
-#line 1218
+#line 1239
 	if (KEY_VARS[15]==ECL_NIL) {
-#line 1218
+#line 1239
 	  defaults = ECL_NIL;
 	} else {
-#line 1218
+#line 1239
 	  defaults = KEY_VARS[7];
 	}
-#line 1218
+#line 1239
 	x = ECL_NIL;
-#line 1218
+#line 1239
+// ------------------------------5
 	if (Null(defaults)) {
 		defaults = si_default_pathname_defaults();
 		defaults = ecl_make_pathname(defaults->pathname.host,
@@ -1618,14 +1674,14 @@ cl_object cl_make_pathname(cl_narg narg, ...)
 	if (!versionp) x->pathname.version = defaults->pathname.version;
 
 	{
-#line 1234
-		#line 1234
+#line 1255
+		#line 1255
 		cl_object __value0 = x;
-#line 1234
+#line 1255
 		the_env->nvalues = 1;
-#line 1234
+#line 1255
 		return __value0;
-#line 1234
+#line 1255
 	}
 
 }
@@ -1634,16 +1690,16 @@ cl_object
 cl_pathnamep(cl_object pname)
 {
 	{
-#line 1240
+#line 1261
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1240
-		#line 1240
+#line 1261
+		#line 1261
 		cl_object __value0 = (ECL_PATHNAMEP(pname) ? ECL_T : ECL_NIL);
-#line 1240
+#line 1261
 		the_env->nvalues = 1;
-#line 1240
+#line 1261
 		return __value0;
-#line 1240
+#line 1261
 	}
 
 }
@@ -1652,237 +1708,282 @@ cl_object
 si_logical_pathname_p(cl_object pname)
 {
 	{
-#line 1247
+#line 1268
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1247
-		#line 1247
+#line 1268
+		#line 1268
 		cl_object __value0 = ((ECL_PATHNAMEP(pname) && pname->pathname.logical)?
 		  ECL_T : ECL_NIL);
-#line 1247
+#line 1268
 		the_env->nvalues = 1;
-#line 1247
+#line 1268
 		return __value0;
-#line 1247
+#line 1268
 	}
 
 }
 
-#line 1250
-cl_object cl_pathname_host(cl_narg narg, cl_object pname, ...)
+// ------------------------------1
+#line 1271
+cl_object cl_pathname_host(cl_narg narg, ...)
 {
-#line 1250
-
-#line 1252
+#line 1271
+// ------------------------------2
+#line 1271
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1252
+#line 1271
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1205)};
 	cl_object scase;
-#line 1252
+#line 1271
 	cl_object KEY_VARS[2];
-#line 1252
+#line 1271
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, pname, narg, 1);
-#line 1252
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object pname = ecl_va_arg(ARGS);  
+#line 1271
+// ------------------------------3
+
+#line 1273
+// ------------------------------4
+#line 1273
+#line 1273
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(633));
-#line 1252
+#line 1273
 	cl_parse_key(ARGS, 1, KEYS, KEY_VARS, NULL, 0);
-#line 1252
+#line 1273
 	if (KEY_VARS[1]==ECL_NIL) {
-#line 1252
+#line 1273
 	  scase = ECL_SYM(":LOCAL",1268);
 	} else {
-#line 1252
+#line 1273
 	  scase = KEY_VARS[0];
 	}
-#line 1252
+#line 1273
+// ------------------------------5
 	pname = cl_pathname(pname);
 	{
-#line 1255
-		#line 1255
+#line 1276
+		#line 1276
 		cl_object __value0 = translate_component_case(pname->pathname.host,
                                           normalize_case(pname, ECL_SYM(":LOCAL",1268)),
                                           normalize_case(pname, scase));
-#line 1255
+#line 1276
 		the_env->nvalues = 1;
-#line 1255
+#line 1276
 		return __value0;
-#line 1255
+#line 1276
 	}
 
 }
 
-#line 1258
-cl_object cl_pathname_device(cl_narg narg, cl_object pname, ...)
+// ------------------------------1
+#line 1279
+cl_object cl_pathname_device(cl_narg narg, ...)
 {
-#line 1258
-
-#line 1260
+#line 1279
+// ------------------------------2
+#line 1279
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1260
+#line 1279
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1205)};
 	cl_object scase;
-#line 1260
+#line 1279
 	cl_object KEY_VARS[2];
-#line 1260
+#line 1279
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, pname, narg, 1);
-#line 1260
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object pname = ecl_va_arg(ARGS);  
+#line 1279
+// ------------------------------3
+
+#line 1281
+// ------------------------------4
+#line 1281
+#line 1281
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(631));
-#line 1260
+#line 1281
 	cl_parse_key(ARGS, 1, KEYS, KEY_VARS, NULL, 0);
-#line 1260
+#line 1281
 	if (KEY_VARS[1]==ECL_NIL) {
-#line 1260
+#line 1281
 	  scase = ECL_SYM(":LOCAL",1268);
 	} else {
-#line 1260
+#line 1281
 	  scase = KEY_VARS[0];
 	}
-#line 1260
+#line 1281
+// ------------------------------5
 	pname = cl_pathname(pname);
 	{
-#line 1263
-		#line 1263
+#line 1284
+		#line 1284
 		cl_object __value0 = translate_component_case(pname->pathname.device,
                                           normalize_case(pname, ECL_SYM(":LOCAL",1268)),
                                           normalize_case(pname, scase));
-#line 1263
+#line 1284
 		the_env->nvalues = 1;
-#line 1263
+#line 1284
 		return __value0;
-#line 1263
+#line 1284
 	}
 
 }
 
-#line 1266
-cl_object cl_pathname_directory(cl_narg narg, cl_object pname, ...)
+// ------------------------------1
+#line 1287
+cl_object cl_pathname_directory(cl_narg narg, ...)
 {
-#line 1266
-
-#line 1268
+#line 1287
+// ------------------------------2
+#line 1287
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1268
+#line 1287
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1205)};
 	cl_object scase;
-#line 1268
+#line 1287
 	cl_object KEY_VARS[2];
-#line 1268
+#line 1287
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, pname, narg, 1);
-#line 1268
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object pname = ecl_va_arg(ARGS);  
+#line 1287
+// ------------------------------3
+
+#line 1289
+// ------------------------------4
+#line 1289
+#line 1289
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(632));
-#line 1268
+#line 1289
 	cl_parse_key(ARGS, 1, KEYS, KEY_VARS, NULL, 0);
-#line 1268
+#line 1289
 	if (KEY_VARS[1]==ECL_NIL) {
-#line 1268
+#line 1289
 	  scase = ECL_SYM(":LOCAL",1268);
 	} else {
-#line 1268
+#line 1289
 	  scase = KEY_VARS[0];
 	}
-#line 1268
+#line 1289
+// ------------------------------5
 	pname = cl_pathname(pname);
         {
-#line 1271
-	#line 1271
+#line 1292
+	#line 1292
 	cl_object __value0 = translate_list_case(pname->pathname.directory,
                                      normalize_case(pname, ECL_SYM(":LOCAL",1268)),
                                      normalize_case(pname, scase));
-#line 1271
+#line 1292
 	the_env->nvalues = 1;
-#line 1271
+#line 1292
 	return __value0;
-#line 1271
+#line 1292
 }
 
 }
 
-#line 1274
-cl_object cl_pathname_name(cl_narg narg, cl_object pname, ...)
+// ------------------------------1
+#line 1295
+cl_object cl_pathname_name(cl_narg narg, ...)
 {
-#line 1274
-
-#line 1276
+#line 1295
+// ------------------------------2
+#line 1295
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1276
+#line 1295
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1205)};
 	cl_object scase;
-#line 1276
+#line 1295
 	cl_object KEY_VARS[2];
-#line 1276
+#line 1295
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, pname, narg, 1);
-#line 1276
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object pname = ecl_va_arg(ARGS);  
+#line 1295
+// ------------------------------3
+
+#line 1297
+// ------------------------------4
+#line 1297
+#line 1297
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(635));
-#line 1276
+#line 1297
 	cl_parse_key(ARGS, 1, KEYS, KEY_VARS, NULL, 0);
-#line 1276
+#line 1297
 	if (KEY_VARS[1]==ECL_NIL) {
-#line 1276
+#line 1297
 	  scase = ECL_SYM(":LOCAL",1268);
 	} else {
-#line 1276
+#line 1297
 	  scase = KEY_VARS[0];
 	}
-#line 1276
+#line 1297
+// ------------------------------5
 	pname = cl_pathname(pname);
 	{
-#line 1279
-		#line 1279
+#line 1300
+		#line 1300
 		cl_object __value0 = translate_component_case(pname->pathname.name,
                                           normalize_case(pname, ECL_SYM(":LOCAL",1268)),
                                           normalize_case(pname, scase));
-#line 1279
+#line 1300
 		the_env->nvalues = 1;
-#line 1279
+#line 1300
 		return __value0;
-#line 1279
+#line 1300
 	}
 
 }
 
-#line 1282
-cl_object cl_pathname_type(cl_narg narg, cl_object pname, ...)
+// ------------------------------1
+#line 1303
+cl_object cl_pathname_type(cl_narg narg, ...)
 {
-#line 1282
-
-#line 1284
+#line 1303
+// ------------------------------2
+#line 1303
 	const cl_env_ptr the_env = ecl_process_env();
-#line 1284
+#line 1303
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1205)};
 	cl_object scase;
-#line 1284
+#line 1303
 	cl_object KEY_VARS[2];
-#line 1284
+#line 1303
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, pname, narg, 1);
-#line 1284
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object pname = ecl_va_arg(ARGS);  
+#line 1303
+// ------------------------------3
+
+#line 1305
+// ------------------------------4
+#line 1305
+#line 1305
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(636));
-#line 1284
+#line 1305
 	cl_parse_key(ARGS, 1, KEYS, KEY_VARS, NULL, 0);
-#line 1284
+#line 1305
 	if (KEY_VARS[1]==ECL_NIL) {
-#line 1284
+#line 1305
 	  scase = ECL_SYM(":LOCAL",1268);
 	} else {
-#line 1284
+#line 1305
 	  scase = KEY_VARS[0];
 	}
-#line 1284
+#line 1305
+// ------------------------------5
 	pname = cl_pathname(pname);
         {
-#line 1287
-	#line 1287
+#line 1308
+	#line 1308
 	cl_object __value0 = translate_component_case(pname->pathname.type,
                                           normalize_case(pname, ECL_SYM(":LOCAL",1268)),
                                           normalize_case(pname, scase));
-#line 1287
+#line 1308
 	the_env->nvalues = 1;
-#line 1287
+#line 1308
 	return __value0;
-#line 1287
+#line 1308
 }
 
 }
@@ -1892,16 +1993,16 @@ cl_pathname_version(cl_object pname)
 {
 	pname = cl_pathname(pname);
 	{
-#line 1294
+#line 1315
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1294
-		#line 1294
+#line 1315
+		#line 1315
 		cl_object __value0 = pname->pathname.version;
-#line 1294
+#line 1315
 		the_env->nvalues = 1;
-#line 1294
+#line 1315
 		return __value0;
-#line 1294
+#line 1315
 	}
 
 }
@@ -1911,21 +2012,21 @@ cl_file_namestring(cl_object pname)
 {
 	pname = cl_pathname(pname);
 	{
-#line 1306
+#line 1327
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1306
-		#line 1306
+#line 1327
+		#line 1327
 		cl_object __value0 = ecl_namestring(ecl_make_pathname(ECL_NIL, ECL_NIL, ECL_NIL,
 						  pname->pathname.name,
 						  pname->pathname.type,
 						  pname->pathname.version,
                                                   ECL_SYM(":LOCAL",1268)),
 				ECL_NAMESTRING_TRUNCATE_IF_ERROR);
-#line 1306
+#line 1327
 		the_env->nvalues = 1;
-#line 1306
+#line 1327
 		return __value0;
-#line 1306
+#line 1327
 	}
 
 }
@@ -1935,20 +2036,20 @@ cl_directory_namestring(cl_object pname)
 {
 	pname = cl_pathname(pname);
 	{
-#line 1317
+#line 1338
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1317
-		#line 1317
+#line 1338
+		#line 1338
 		cl_object __value0 = ecl_namestring(ecl_make_pathname(ECL_NIL, ECL_NIL,
 						  pname->pathname.directory,
 						  ECL_NIL, ECL_NIL, ECL_NIL,
                                                   ECL_SYM(":LOCAL",1268)),
 				ECL_NAMESTRING_TRUNCATE_IF_ERROR);
-#line 1317
+#line 1338
 		the_env->nvalues = 1;
-#line 1317
+#line 1338
 		return __value0;
-#line 1317
+#line 1338
 	}
 
 }
@@ -1961,48 +2062,57 @@ cl_host_namestring(cl_object pname)
 	if (Null(pname) || pname == ECL_SYM(":WILD",1327))
 		pname = cl_core.null_string;
 	{
-#line 1327
+#line 1348
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1327
-		#line 1327
+#line 1348
+		#line 1348
 		cl_object __value0 = pname;
-#line 1327
+#line 1348
 		the_env->nvalues = 1;
-#line 1327
+#line 1348
 		return __value0;
-#line 1327
+#line 1348
 	}
 
 }
 
 #define EN_MATCH(p1,p2,el) (ecl_equalp(p1->pathname.el, p2->pathname.el)? ECL_NIL : p1->pathname.el)
 
-#line 1333
-cl_object cl_enough_namestring(cl_narg narg, cl_object path, ...)
+// ------------------------------1
+#line 1354
+cl_object cl_enough_namestring(cl_narg narg, ...)
 {
-#line 1333
+#line 1354
+// ------------------------------2
+#line 1354
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1354
+	cl_object defaults;
+#line 1354
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object path = va_arg(ARGS,cl_object);  
+#line 1354
+// ------------------------------3
 
 	cl_object newpath, pathdir, defaultdir, fname;
-#line 1336
-	const cl_env_ptr the_env = ecl_process_env();
-#line 1336
-	cl_object defaults;
-#line 1336
-	va_list ARGS;
-	va_start(ARGS, path);
-#line 1336
+#line 1357
+// ------------------------------4
+#line 1357
+#line 1357
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(331));
-#line 1336
+#line 1357
 	if (narg > 1) {
-#line 1336
-		defaults = va_arg(ARGS,cl_object);
-#line 1336
+#line 1357
+		defaults = va_arg(ARGS,cl_object);  
+#line 1357
 	} else {
-#line 1336
+#line 1357
 		defaults = si_default_pathname_defaults();
-#line 1336
+#line 1357
 	}
-#line 1336
+#line 1357
+// ------------------------------5
 	defaults = cl_pathname(defaults);
 	path = cl_pathname(path);
 	pathdir = path->pathname.directory;
@@ -2038,14 +2148,14 @@ cl_object cl_enough_namestring(cl_narg narg, cl_object path, ...)
                             ECL_SYM(":LOCAL",1268));
 	newpath->pathname.logical = path->pathname.logical;
 	{
-#line 1370
-		#line 1370
+#line 1391
+		#line 1391
 		cl_object __value0 = ecl_namestring(newpath, ECL_NAMESTRING_TRUNCATE_IF_ERROR);
-#line 1370
+#line 1391
 		the_env->nvalues = 1;
-#line 1370
+#line 1391
 		return __value0;
-#line 1370
+#line 1391
 	}
 
 }
@@ -2193,16 +2303,16 @@ cl_pathname_match_p(cl_object path, cl_object mask)
 		output = ECL_T;
  OUTPUT:
 	{
-#line 1515
+#line 1536
 		const cl_env_ptr the_env = ecl_process_env();
-#line 1515
-		#line 1515
+#line 1536
+		#line 1536
 		cl_object __value0 = output;
-#line 1515
+#line 1536
 		the_env->nvalues = 1;
-#line 1515
+#line 1536
 		return __value0;
-#line 1515
+#line 1536
 	}
 
 }
@@ -2226,33 +2336,42 @@ coerce_to_from_pathname(cl_object x, cl_object host)
 	}
 }
 
-#line 1537
-cl_object si_pathname_translations(cl_narg narg, cl_object host, ...)
+// ------------------------------1
+#line 1558
+cl_object si_pathname_translations(cl_narg narg, ...)
 {
-#line 1537
+#line 1558
+// ------------------------------2
+#line 1558
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1558
+	cl_object set;
+#line 1558
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object host = va_arg(ARGS,cl_object);  
+#line 1558
+// ------------------------------3
 
 	cl_index parsed_len, len;
 	cl_object pair, l;
-#line 1541
-	const cl_env_ptr the_env = ecl_process_env();
-#line 1541
-	cl_object set;
-#line 1541
-	va_list ARGS;
-	va_start(ARGS, host);
-#line 1541
+#line 1562
+// ------------------------------4
+#line 1562
+#line 1562
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(1116));
-#line 1541
+#line 1562
 	if (narg > 1) {
-#line 1541
-		set = va_arg(ARGS,cl_object);
-#line 1541
+#line 1562
+		set = va_arg(ARGS,cl_object);  
+#line 1562
 	} else {
-#line 1541
+#line 1562
 		set = OBJNULL;
-#line 1541
+#line 1562
 	}
-#line 1541
+#line 1562
+// ------------------------------5
 	/* Check that host is a valid host name */
         if (ecl_unlikely(!ECL_STRINGP(host)))
                 FEwrong_type_nth_arg(ecl_make_fixnum(/*SI::PATHNAME-TRANSLATIONS*/1116), 1, host, ecl_make_fixnum(/*STRING*/805));
@@ -2266,14 +2385,14 @@ cl_object si_pathname_translations(cl_narg narg, cl_object host, ...)
 	pair = cl_assoc(4, host, cl_core.pathname_translations, ECL_SYM(":TEST",1316), ECL_SYM("STRING-EQUAL",808));
 	if (set == OBJNULL) {
 		{
-#line 1553
-			#line 1553
+#line 1574
+			#line 1574
 			cl_object __value0 = ((pair == ECL_NIL)? ECL_NIL : CADR(pair));
-#line 1553
+#line 1574
 			the_env->nvalues = 1;
-#line 1553
+#line 1574
 			return __value0;
-#line 1553
+#line 1574
 		}
 ;
 	}
@@ -2294,14 +2413,14 @@ cl_object si_pathname_translations(cl_narg narg, cl_object host, ...)
 	set = cl_nreverse(set);
 	ECL_RPLACA(ECL_CONS_CDR(pair), set);
 	{
-#line 1571
-		#line 1571
+#line 1592
+		#line 1592
 		cl_object __value0 = set;
-#line 1571
+#line 1592
 		the_env->nvalues = 1;
-#line 1571
+#line 1592
 		return __value0;
-#line 1571
+#line 1592
 	}
 
 }
@@ -2458,37 +2577,48 @@ copy_list_wildcards(cl_object *wilds, cl_object to)
 	return l;
 }
 
-#line 1726
-cl_object cl_translate_pathname(cl_narg narg, cl_object source, cl_object from, cl_object to, ...)
+// ------------------------------1
+#line 1747
+cl_object cl_translate_pathname(cl_narg narg, ...)
 {
-#line 1726
+#line 1747
+// ------------------------------2
+#line 1747
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1747
+	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1205)};
+	cl_object scase;
+#line 1747
+	cl_object KEY_VARS[2];
+#line 1747
+	ecl_va_list ARGS;
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object source = ecl_va_arg(ARGS);  
+	cl_object from = ecl_va_arg(ARGS);  
+	cl_object to = ecl_va_arg(ARGS);  
+#line 1747
+// ------------------------------3
 
 	cl_object wilds, d;
 	cl_object host, device, directory, name, type, version;
 	cl_object fromcase, tocase;
-#line 1731
-	const cl_env_ptr the_env = ecl_process_env();
-#line 1731
-	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1205)};
-	cl_object scase;
-#line 1731
-	cl_object KEY_VARS[2];
-#line 1731
-	ecl_va_list ARGS;
-	ecl_va_start(ARGS, to, narg, 3);
-#line 1731
+#line 1752
+// ------------------------------4
+#line 1752
+#line 1752
 	if (ecl_unlikely(narg < 3)) FEwrong_num_arguments(ecl_make_fixnum(862));
-#line 1731
+#line 1752
 	cl_parse_key(ARGS, 1, KEYS, KEY_VARS, NULL, 0);
-#line 1731
+#line 1752
 	if (KEY_VARS[1]==ECL_NIL) {
-#line 1731
+#line 1752
 	  scase = ECL_SYM(":LOCAL",1268);
 	} else {
-#line 1731
+#line 1752
 	  scase = KEY_VARS[0];
 	}
-#line 1731
+#line 1752
+// ------------------------------5
 	/* The pathname from which we get the data */
 	source = cl_pathname(source);
 	/* The mask applied to the source pathname */
@@ -2558,15 +2688,15 @@ cl_object cl_translate_pathname(cl_narg narg, cl_object source, cl_object from, 
 		}
 	}
 	{
-#line 1800
-		#line 1800
+#line 1821
+		#line 1821
 		cl_object __value0 = ecl_make_pathname(host, device, directory, name, type,
 				   version, tocase);
-#line 1800
+#line 1821
 		the_env->nvalues = 1;
-#line 1800
+#line 1821
 		return __value0;
-#line 1800
+#line 1821
 	}
 ;
  error:
@@ -2575,39 +2705,48 @@ cl_object cl_translate_pathname(cl_narg narg, cl_object source, cl_object from, 
 	FEerror("Number of wildcards in ~S do not match  ~S", 2, from, to);
 }
 
-#line 1807
-cl_object cl_translate_logical_pathname(cl_narg narg, cl_object source, ...)
+// ------------------------------1
+#line 1828
+cl_object cl_translate_logical_pathname(cl_narg narg, ...)
 {
-#line 1807
+#line 1828
+// ------------------------------2
+#line 1828
+	const cl_env_ptr the_env = ecl_process_env();
+#line 1828
+	cl_object *KEYS = NULL;
+#line 1828
+	cl_object *KEY_VARS = NULL;
+#line 1828
+	ecl_va_list ARGS;
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object source = ecl_va_arg(ARGS);  
+#line 1828
+// ------------------------------3
 
 	cl_object l, pair;
 	cl_object pathname;
-#line 1811
-	const cl_env_ptr the_env = ecl_process_env();
-#line 1811
-	cl_object *KEYS = NULL;
-#line 1811
-	cl_object *KEY_VARS = NULL;
-#line 1811
-	ecl_va_list ARGS;
-	ecl_va_start(ARGS, source, narg, 1);
-#line 1811
+#line 1832
+// ------------------------------4
+#line 1832
+#line 1832
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(861));
-#line 1811
+#line 1832
 	cl_parse_key(ARGS, 0, KEYS, KEY_VARS, NULL, 0);
-#line 1811
+#line 1832
+// ------------------------------5
 	pathname = cl_pathname(source);
  begin:
 	if (!pathname->pathname.logical) {
 		{
-#line 1814
-			#line 1814
+#line 1835
+			#line 1835
 			cl_object __value0 = pathname;
-#line 1814
+#line 1835
 			the_env->nvalues = 1;
-#line 1814
+#line 1835
 			return __value0;
-#line 1814
+#line 1835
 		}
 
 	}

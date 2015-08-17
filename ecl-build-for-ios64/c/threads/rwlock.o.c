@@ -86,21 +86,28 @@ ecl_make_rwlock(cl_object name)
         return output;
 }
 
+// ------------------------------1
 #line 88
 cl_object mp_make_rwlock(cl_narg narg, ...)
 {
 #line 88
-
-#line 90
+// ------------------------------2
+#line 88
 	const cl_env_ptr the_env = ecl_process_env();
-#line 90
+#line 88
 	static cl_object KEYS[1] = {(cl_object)(cl_symbols+1273)};
 	cl_object name;
-#line 90
+#line 88
 	cl_object KEY_VARS[2];
-#line 90
+#line 88
 	ecl_va_list ARGS;
 	ecl_va_start(ARGS, narg, narg, 0);
+#line 88
+// ------------------------------3
+
+#line 90
+// ------------------------------4
+#line 90
 #line 90
 	if (ecl_unlikely(narg < 0)) FEwrong_num_arguments(ecl_make_fixnum(1434));
 #line 90
@@ -114,6 +121,7 @@ cl_object mp_make_rwlock(cl_narg narg, ...)
 	  name = KEY_VARS[0];
 	}
 #line 90
+// ------------------------------5
 	{
 #line 90
 		#line 90
@@ -215,24 +223,32 @@ mp_get_rwlock_read_wait(cl_object lock)
 #endif
 }
 
+// ------------------------------1
 #line 169
-cl_object mp_get_rwlock_read(cl_narg narg, cl_object lock, ...)
+cl_object mp_get_rwlock_read(cl_narg narg, ...)
 {
 #line 169
+// ------------------------------2
+#line 169
+	const cl_env_ptr the_env = ecl_process_env();
+#line 169
+	cl_object wait;
+#line 169
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object lock = va_arg(ARGS,cl_object);  
+#line 169
+// ------------------------------3
 
 #line 171
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 171
-	cl_object wait;
-#line 171
-	va_list ARGS;
-	va_start(ARGS, lock);
 #line 171
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(1437));
 #line 171
 	if (narg > 1) {
 #line 171
-		wait = va_arg(ARGS,cl_object);
+		wait = va_arg(ARGS,cl_object);  
 #line 171
 	} else {
 #line 171
@@ -240,6 +256,7 @@ cl_object mp_get_rwlock_read(cl_narg narg, cl_object lock, ...)
 #line 171
 	}
 #line 171
+// ------------------------------5
 	if (Null(wait))
         	return mp_get_rwlock_read_nowait(lock);
         else
@@ -301,24 +318,32 @@ mp_get_rwlock_write_wait(cl_object lock)
 #endif
 }
 
+// ------------------------------1
 #line 220
-cl_object mp_get_rwlock_write(cl_narg narg, cl_object lock, ...)
+cl_object mp_get_rwlock_write(cl_narg narg, ...)
 {
 #line 220
+// ------------------------------2
+#line 220
+	const cl_env_ptr the_env = ecl_process_env();
+#line 220
+	cl_object wait;
+#line 220
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object lock = va_arg(ARGS,cl_object);  
+#line 220
+// ------------------------------3
 
 #line 222
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 222
-	cl_object wait;
-#line 222
-	va_list ARGS;
-	va_start(ARGS, lock);
 #line 222
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(1438));
 #line 222
 	if (narg > 1) {
 #line 222
-		wait = va_arg(ARGS,cl_object);
+		wait = va_arg(ARGS,cl_object);  
 #line 222
 	} else {
 #line 222
@@ -326,6 +351,7 @@ cl_object mp_get_rwlock_write(cl_narg narg, cl_object lock, ...)
 #line 222
 	}
 #line 222
+// ------------------------------5
 	if (Null(wait))
         	return mp_get_rwlock_write_nowait(lock);
         else

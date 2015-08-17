@@ -84,24 +84,32 @@ search_macro_function(cl_object name, cl_object env)
 	}
 }
 
+// ------------------------------1
 #line 86
-cl_object cl_macro_function(cl_narg narg, cl_object sym, ...)
+cl_object cl_macro_function(cl_narg narg, ...)
 {
 #line 86
+// ------------------------------2
+#line 86
+	const cl_env_ptr the_env = ecl_process_env();
+#line 86
+	cl_object env;
+#line 86
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object sym = va_arg(ARGS,cl_object);  
+#line 86
+// ------------------------------3
 
 #line 88
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 88
-	cl_object env;
-#line 88
-	va_list ARGS;
-	va_start(ARGS, sym);
 #line 88
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(518));
 #line 88
 	if (narg > 1) {
 #line 88
-		env = va_arg(ARGS,cl_object);
+		env = va_arg(ARGS,cl_object);  
 #line 88
 	} else {
 #line 88
@@ -109,6 +117,7 @@ cl_object cl_macro_function(cl_narg narg, cl_object sym, ...)
 #line 88
 	}
 #line 88
+// ------------------------------5
 	{
 #line 88
 		#line 88
@@ -128,25 +137,33 @@ cl_object cl_macro_function(cl_narg narg, cl_object sym, ...)
 	VALUES(1) is true when there was a macroexpansion.
 */
 
+// ------------------------------1
 #line 97
-cl_object cl_macroexpand_1(cl_narg narg, cl_object form, ...)
+cl_object cl_macroexpand_1(cl_narg narg, ...)
 {
 #line 97
+// ------------------------------2
+#line 97
+	const cl_env_ptr the_env = ecl_process_env();
+#line 97
+	cl_object env;
+#line 97
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object form = va_arg(ARGS,cl_object);  
+#line 97
+// ------------------------------3
 
 	cl_object exp_fun = ECL_NIL;
 #line 100
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 100
-	cl_object env;
-#line 100
-	va_list ARGS;
-	va_start(ARGS, form);
 #line 100
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(520));
 #line 100
 	if (narg > 1) {
 #line 100
-		env = va_arg(ARGS,cl_object);
+		env = va_arg(ARGS,cl_object);  
 #line 100
 	} else {
 #line 100
@@ -154,6 +171,7 @@ cl_object cl_macroexpand_1(cl_narg narg, cl_object form, ...)
 #line 100
 	}
 #line 100
+// ------------------------------5
 	if (ECL_ATOM(form)) {
 		if (ECL_SYMBOLP(form))
 			exp_fun = search_symbol_macro(form, env);
@@ -190,25 +208,33 @@ cl_object cl_macroexpand_1(cl_narg narg, cl_object form, ...)
 	Expands a form as many times as possible and returns the
 	finally expanded form.
 */
+// ------------------------------1
 #line 122
-cl_object cl_macroexpand(cl_narg narg, cl_object form, ...)
+cl_object cl_macroexpand(cl_narg narg, ...)
 {
 #line 122
+// ------------------------------2
+#line 122
+	const cl_env_ptr the_env = ecl_process_env();
+#line 122
+	cl_object env;
+#line 122
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object form = va_arg(ARGS,cl_object);  
+#line 122
+// ------------------------------3
 
 	cl_object done, old_form;
 #line 125
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 125
-	cl_object env;
-#line 125
-	va_list ARGS;
-	va_start(ARGS, form);
 #line 125
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(519));
 #line 125
 	if (narg > 1) {
 #line 125
-		env = va_arg(ARGS,cl_object);
+		env = va_arg(ARGS,cl_object);  
 #line 125
 	} else {
 #line 125
@@ -216,6 +242,7 @@ cl_object cl_macroexpand(cl_narg narg, cl_object form, ...)
 #line 125
 	}
 #line 125
+// ------------------------------5
 	done = ECL_NIL;
 	do {
 		form = cl_macroexpand_1(2, old_form = form, env);

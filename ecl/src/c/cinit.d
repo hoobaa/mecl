@@ -29,14 +29,22 @@
  */
 
 extern cl_object
-cl_upgraded_array_element_type(cl_narg narg, cl_object type, ...)
+cl_upgraded_array_element_type(cl_narg narg, /*cl_object type, */...)
 {
+	ecl_va_list args;
+	ecl_va_start(args, narg, narg, 0);
+        cl_object type = ecl_va_arg(args);
 	return _ecl_funcall2(@'upgraded-array-element-type', type);
 }
 
 extern cl_object
-si_safe_eval(cl_narg narg, cl_object form, cl_object env, ...)
+si_safe_eval(cl_narg narg, /*cl_object form, cl_object env,*/ ...)
 {
+        ecl_va_list args;
+        ecl_va_start(args, narg, narg, 0);
+        cl_object form = ecl_va_arg(args);
+        cl_object env = ecl_va_arg(args);
+
         if (narg == 3) {
                 cl_object err_value;
                 va_list args; va_start(args, env);
@@ -95,8 +103,12 @@ clos_compute_effective_method_function(cl_object gf, cl_object combination, cl_o
 }
 
 extern cl_object
-si_string_to_object(cl_narg narg, cl_object string, ...)
+si_string_to_object(cl_narg narg, /*cl_object string, */...)
 {
+        ecl_va_list args;
+        ecl_va_start(args, narg, narg, 0);
+        cl_object string = ecl_va_arg(args);
+
         if (narg == 2) {
                 cl_object err_value;
                 va_list args; va_start(args, string);
@@ -123,8 +135,13 @@ si_signal_simple_error(cl_narg narg, ...)
 }
 
 extern cl_object
-cl_set_difference(cl_narg narg, cl_object l1, cl_object l2, ...)
+cl_set_difference(cl_narg narg, /*cl_object l1, cl_object l2, */...)
 {
+        ecl_va_list args;
+        ecl_va_start(args, narg, narg, 0);
+        cl_object l1 = ecl_va_arg(args);
+        cl_object l2 = ecl_va_arg(args);
+
         @(return l1)
 }
 
@@ -135,14 +152,23 @@ cl_array_dimensions(cl_object array)
 }
 
 extern cl_object
-si_find_relative_package(cl_narg narg, cl_object package, ...)
+si_find_relative_package(cl_narg narg, /*cl_object package, */...)
 {
+        ecl_va_list args;
+        ecl_va_start(args, narg, narg, 0);
+        cl_object package = ecl_va_arg(args);
+
 	@(return ECL_NIL);
 }
 
 extern cl_object
-si_wrong_type_argument(cl_narg narg, cl_object object, cl_object type, ...)
+si_wrong_type_argument(cl_narg narg, /*cl_object object, cl_object type, */...)
 {
+        ecl_va_list args;
+        ecl_va_start(args, narg, narg, 0);
+        cl_object object = ecl_va_arg(args);
+        cl_object type = ecl_va_arg(args);
+
 	return _ecl_funcall3(@'si::wrong-type-argument', object, type);
 }
 

@@ -140,14 +140,15 @@ ecl_print_circle(void)
 	return ecl_symbol_value(ECL_SYM("*PRINT-CIRCLE*",47)) != ECL_NIL;
 }
 
+// ------------------------------1
 #line 158
-cl_object cl_write(cl_narg narg, cl_object x, ...)
+cl_object cl_write(cl_narg narg, ...)
 {
 #line 158
-
-#line 159
+// ------------------------------2
+#line 158
 	const cl_env_ptr the_env = ecl_process_env();
-#line 159
+#line 158
 	static cl_object KEYS[16] = {(cl_object)(cl_symbols+1313), (cl_object)(cl_symbols+1199), (cl_object)(cl_symbols+1201), (cl_object)(cl_symbols+1205), (cl_object)(cl_symbols+1206), (cl_object)(cl_symbols+1230), (cl_object)(cl_symbols+1242), (cl_object)(cl_symbols+1263), (cl_object)(cl_symbols+1264), (cl_object)(cl_symbols+1265), (cl_object)(cl_symbols+1272), (cl_object)(cl_symbols+1286), (cl_object)(cl_symbols+1289), (cl_object)(cl_symbols+1295), (cl_object)(cl_symbols+1296), (cl_object)(cl_symbols+1303)};
 	cl_object strm;
 	cl_object array;
@@ -165,11 +166,18 @@ cl_object cl_write(cl_narg narg, cl_object x, ...)
 	cl_object radix;
 	cl_object readably;
 	cl_object right_margin;
-#line 159
+#line 158
 	cl_object KEY_VARS[32];
-#line 159
+#line 158
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, x, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object x = ecl_va_arg(ARGS);  
+#line 158
+// ------------------------------3
+
+#line 159
+// ------------------------------4
+#line 159
 #line 159
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(917));
 #line 159
@@ -303,6 +311,7 @@ cl_object cl_write(cl_narg narg, cl_object x, ...)
 	  right_margin = KEY_VARS[15];
 	}
 #line 159
+// ------------------------------5
 
 	ecl_bds_bind(the_env, ECL_SYM("*PRINT-ARRAY*",44), array);
 	ecl_bds_bind(the_env, ECL_SYM("*PRINT-BASE*",45), base);
@@ -338,24 +347,32 @@ cl_object cl_write(cl_narg narg, cl_object x, ...)
 
 }
 
+// ------------------------------1
 #line 184
-cl_object cl_prin1(cl_narg narg, cl_object obj, ...)
+cl_object cl_prin1(cl_narg narg, ...)
 {
 #line 184
+// ------------------------------2
+#line 184
+	const cl_env_ptr the_env = ecl_process_env();
+#line 184
+	cl_object strm;
+#line 184
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object obj = va_arg(ARGS,cl_object);  
+#line 184
+// ------------------------------3
 
 #line 186
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 186
-	cl_object strm;
-#line 186
-	va_list ARGS;
-	va_start(ARGS, obj);
 #line 186
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(658));
 #line 186
 	if (narg > 1) {
 #line 186
-		strm = va_arg(ARGS,cl_object);
+		strm = va_arg(ARGS,cl_object);  
 #line 186
 	} else {
 #line 186
@@ -363,6 +380,7 @@ cl_object cl_prin1(cl_narg narg, cl_object obj, ...)
 #line 186
 	}
 #line 186
+// ------------------------------5
 	ecl_prin1(obj, strm);
 	{
 #line 187
@@ -377,24 +395,32 @@ cl_object cl_prin1(cl_narg narg, cl_object obj, ...)
 
 }
 
+// ------------------------------1
 #line 190
-cl_object cl_print(cl_narg narg, cl_object obj, ...)
+cl_object cl_print(cl_narg narg, ...)
 {
 #line 190
+// ------------------------------2
+#line 190
+	const cl_env_ptr the_env = ecl_process_env();
+#line 190
+	cl_object strm;
+#line 190
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object obj = va_arg(ARGS,cl_object);  
+#line 190
+// ------------------------------3
 
 #line 192
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 192
-	cl_object strm;
-#line 192
-	va_list ARGS;
-	va_start(ARGS, obj);
 #line 192
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(662));
 #line 192
 	if (narg > 1) {
 #line 192
-		strm = va_arg(ARGS,cl_object);
+		strm = va_arg(ARGS,cl_object);  
 #line 192
 	} else {
 #line 192
@@ -402,6 +428,7 @@ cl_object cl_print(cl_narg narg, cl_object obj, ...)
 #line 192
 	}
 #line 192
+// ------------------------------5
 	ecl_print(obj, strm);
 	{
 #line 193
@@ -416,24 +443,32 @@ cl_object cl_print(cl_narg narg, cl_object obj, ...)
 
 }
 
+// ------------------------------1
 #line 196
-cl_object cl_pprint(cl_narg narg, cl_object obj, ...)
+cl_object cl_pprint(cl_narg narg, ...)
 {
 #line 196
+// ------------------------------2
+#line 196
+	const cl_env_ptr the_env = ecl_process_env();
+#line 196
+	cl_object strm;
+#line 196
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object obj = va_arg(ARGS,cl_object);  
+#line 196
+// ------------------------------3
 
 #line 198
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 198
-	cl_object strm;
-#line 198
-	va_list ARGS;
-	va_start(ARGS, obj);
 #line 198
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(647));
 #line 198
 	if (narg > 1) {
 #line 198
-		strm = va_arg(ARGS,cl_object);
+		strm = va_arg(ARGS,cl_object);  
 #line 198
 	} else {
 #line 198
@@ -441,6 +476,7 @@ cl_object cl_pprint(cl_narg narg, cl_object obj, ...)
 #line 198
 	}
 #line 198
+// ------------------------------5
 	strm = _ecl_stream_or_default_output(strm);
 	ecl_bds_bind(the_env, ECL_SYM("*PRINT-ESCAPE*",48), ECL_T);
 	ecl_bds_bind(the_env, ECL_SYM("*PRINT-PRETTY*",55), ECL_T);
@@ -455,24 +491,32 @@ the_env->nvalues = 0; return ECL_NIL;
 
 }
 
+// ------------------------------1
 #line 208
-cl_object cl_princ(cl_narg narg, cl_object obj, ...)
+cl_object cl_princ(cl_narg narg, ...)
 {
 #line 208
+// ------------------------------2
+#line 208
+	const cl_env_ptr the_env = ecl_process_env();
+#line 208
+	cl_object strm;
+#line 208
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object obj = va_arg(ARGS,cl_object);  
+#line 208
+// ------------------------------3
 
 #line 210
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 210
-	cl_object strm;
-#line 210
-	va_list ARGS;
-	va_start(ARGS, obj);
 #line 210
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(660));
 #line 210
 	if (narg > 1) {
 #line 210
-		strm = va_arg(ARGS,cl_object);
+		strm = va_arg(ARGS,cl_object);  
 #line 210
 	} else {
 #line 210
@@ -480,6 +524,7 @@ cl_object cl_princ(cl_narg narg, cl_object obj, ...)
 #line 210
 	}
 #line 210
+// ------------------------------5
 	ecl_princ(obj, strm);
 	{
 #line 211
@@ -494,24 +539,32 @@ cl_object cl_princ(cl_narg narg, cl_object obj, ...)
 
 }
 
+// ------------------------------1
 #line 214
-cl_object cl_write_char(cl_narg narg, cl_object c, ...)
+cl_object cl_write_char(cl_narg narg, ...)
 {
 #line 214
+// ------------------------------2
+#line 214
+	const cl_env_ptr the_env = ecl_process_env();
+#line 214
+	cl_object strm;
+#line 214
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object c = va_arg(ARGS,cl_object);  
+#line 214
+// ------------------------------3
 
 #line 216
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 216
-	cl_object strm;
-#line 216
-	va_list ARGS;
-	va_start(ARGS, c);
 #line 216
 	if (ecl_unlikely(narg < 1|| narg > 2)) FEwrong_num_arguments(ecl_make_fixnum(919));
 #line 216
 	if (narg > 1) {
 #line 216
-		strm = va_arg(ARGS,cl_object);
+		strm = va_arg(ARGS,cl_object);  
 #line 216
 	} else {
 #line 216
@@ -519,6 +572,7 @@ cl_object cl_write_char(cl_narg narg, cl_object c, ...)
 #line 216
 	}
 #line 216
+// ------------------------------5
 	/* INV: ecl_char_code() checks the type of `c' */
  	strm = _ecl_stream_or_default_output(strm);
 	c = ECL_CODE_CHAR(ecl_write_char(ecl_char_code(c), strm));
@@ -535,30 +589,38 @@ cl_object cl_write_char(cl_narg narg, cl_object c, ...)
 
 }
 
+// ------------------------------1
 #line 222
-cl_object cl_write_string(cl_narg narg, cl_object strng, ...)
+cl_object cl_write_string(cl_narg narg, ...)
 {
 #line 222
-
-#line 224
+// ------------------------------2
+#line 222
 	const cl_env_ptr the_env = ecl_process_env();
-#line 224
+#line 222
 	cl_object strm;
-#line 224
+#line 222
 	static cl_object KEYS[2] = {(cl_object)(cl_symbols+1310), (cl_object)(cl_symbols+1225)};
 	cl_object start;
 	cl_object end;
-#line 224
+#line 222
 	cl_object KEY_VARS[4];
-#line 224
+#line 222
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, strng, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object strng = ecl_va_arg(ARGS);  
+#line 222
+// ------------------------------3
+
+#line 224
+// ------------------------------4
+#line 224
 #line 224
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(922));
 #line 224
 	if (narg > 1) {
 #line 224
-		strm = ecl_va_arg(ARGS);
+		strm = ecl_va_arg(ARGS);  
 #line 224
 	} else {
 #line 224
@@ -584,6 +646,7 @@ cl_object cl_write_string(cl_narg narg, cl_object strng, ...)
 	  end = KEY_VARS[1];
 	}
 #line 224
+// ------------------------------5
         unlikely_if (!ECL_STRINGP(strng))
                 FEwrong_type_nth_arg(ecl_make_fixnum(/*WRITE-STRING*/922), 1, strng, ecl_make_fixnum(/*STRING*/805));
 	strm = _ecl_stream_or_default_output(strm);
@@ -606,30 +669,38 @@ cl_object cl_write_string(cl_narg narg, cl_object strng, ...)
 
 }
 
+// ------------------------------1
 #line 236
-cl_object cl_write_line(cl_narg narg, cl_object strng, ...)
+cl_object cl_write_line(cl_narg narg, ...)
 {
 #line 236
-
-#line 238
+// ------------------------------2
+#line 236
 	const cl_env_ptr the_env = ecl_process_env();
-#line 238
+#line 236
 	cl_object strm;
-#line 238
+#line 236
 	static cl_object KEYS[2] = {(cl_object)(cl_symbols+1310), (cl_object)(cl_symbols+1225)};
 	cl_object start;
 	cl_object end;
-#line 238
+#line 236
 	cl_object KEY_VARS[4];
-#line 238
+#line 236
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, strng, narg, 1);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object strng = ecl_va_arg(ARGS);  
+#line 236
+// ------------------------------3
+
+#line 238
+// ------------------------------4
+#line 238
 #line 238
 	if (ecl_unlikely(narg < 1)) FEwrong_num_arguments(ecl_make_fixnum(920));
 #line 238
 	if (narg > 1) {
 #line 238
-		strm = ecl_va_arg(ARGS);
+		strm = ecl_va_arg(ARGS);  
 #line 238
 	} else {
 #line 238
@@ -655,6 +726,7 @@ cl_object cl_write_line(cl_narg narg, cl_object strng, ...)
 	  end = KEY_VARS[1];
 	}
 #line 238
+// ------------------------------5
         unlikely_if (!ECL_STRINGP(strng))
                 FEwrong_type_nth_arg(ecl_make_fixnum(/*WRITE-LINE*/920), 1, strng, ecl_make_fixnum(/*STRING*/805));
 	strm = _ecl_stream_or_default_output(strm);
@@ -679,24 +751,31 @@ cl_object cl_write_line(cl_narg narg, cl_object strng, ...)
 
 }
 
+// ------------------------------1
 #line 252
 cl_object cl_terpri(cl_narg narg, ...)
 {
 #line 252
-
-#line 254
+// ------------------------------2
+#line 252
 	const cl_env_ptr the_env = ecl_process_env();
-#line 254
+#line 252
 	cl_object strm;
-#line 254
+#line 252
 	va_list ARGS;
 	va_start(ARGS, narg);
+#line 252
+// ------------------------------3
+
+#line 254
+// ------------------------------4
+#line 254
 #line 254
 	if (ecl_unlikely(narg < 0|| narg > 1)) FEwrong_num_arguments(ecl_make_fixnum(855));
 #line 254
 	if (narg > 0) {
 #line 254
-		strm = va_arg(ARGS,cl_object);
+		strm = va_arg(ARGS,cl_object);  
 #line 254
 	} else {
 #line 254
@@ -704,6 +783,7 @@ cl_object cl_terpri(cl_narg narg, ...)
 #line 254
 	}
 #line 254
+// ------------------------------5
 	ecl_terpri(strm);
 	{
 #line 255
@@ -718,24 +798,31 @@ cl_object cl_terpri(cl_narg narg, ...)
 
 }
 
+// ------------------------------1
 #line 258
 cl_object cl_fresh_line(cl_narg narg, ...)
 {
 #line 258
-
-#line 260
+// ------------------------------2
+#line 258
 	const cl_env_ptr the_env = ecl_process_env();
-#line 260
+#line 258
 	cl_object strm;
-#line 260
+#line 258
 	va_list ARGS;
 	va_start(ARGS, narg);
+#line 258
+// ------------------------------3
+
+#line 260
+// ------------------------------4
+#line 260
 #line 260
 	if (ecl_unlikely(narg < 0|| narg > 1)) FEwrong_num_arguments(ecl_make_fixnum(390));
 #line 260
 	if (narg > 0) {
 #line 260
-		strm = va_arg(ARGS,cl_object);
+		strm = va_arg(ARGS,cl_object);  
 #line 260
 	} else {
 #line 260
@@ -743,6 +830,7 @@ cl_object cl_fresh_line(cl_narg narg, ...)
 #line 260
 	}
 #line 260
+// ------------------------------5
  	strm = _ecl_stream_or_default_output(strm);
 #ifdef ECL_CLOS_STREAMS
 	if (!ECL_ANSI_STREAM_P(strm)) {
@@ -776,24 +864,31 @@ cl_object cl_fresh_line(cl_narg narg, ...)
 
 }
 
+// ------------------------------1
 #line 273
 cl_object cl_finish_output(cl_narg narg, ...)
 {
 #line 273
-
-#line 275
+// ------------------------------2
+#line 273
 	const cl_env_ptr the_env = ecl_process_env();
-#line 275
+#line 273
 	cl_object strm;
-#line 275
+#line 273
 	va_list ARGS;
 	va_start(ARGS, narg);
+#line 273
+// ------------------------------3
+
+#line 275
+// ------------------------------4
+#line 275
 #line 275
 	if (ecl_unlikely(narg < 0|| narg > 1)) FEwrong_num_arguments(ecl_make_fixnum(370));
 #line 275
 	if (narg > 0) {
 #line 275
-		strm = va_arg(ARGS,cl_object);
+		strm = va_arg(ARGS,cl_object);  
 #line 275
 	} else {
 #line 275
@@ -801,6 +896,7 @@ cl_object cl_finish_output(cl_narg narg, ...)
 #line 275
 	}
 #line 275
+// ------------------------------5
  	strm = _ecl_stream_or_default_output(strm);
 #ifdef ECL_CLOS_STREAMS
         if (!ECL_ANSI_STREAM_P(strm)) {
@@ -821,24 +917,31 @@ cl_object cl_finish_output(cl_narg narg, ...)
 
 }
 
+// ------------------------------1
 #line 285
 cl_object cl_force_output(cl_narg narg, ...)
 {
 #line 285
-
-#line 287
+// ------------------------------2
+#line 285
 	const cl_env_ptr the_env = ecl_process_env();
-#line 287
+#line 285
 	cl_object strm;
-#line 287
+#line 285
 	va_list ARGS;
 	va_start(ARGS, narg);
+#line 285
+// ------------------------------3
+
+#line 287
+// ------------------------------4
+#line 287
 #line 287
 	if (ecl_unlikely(narg < 0|| narg > 1)) FEwrong_num_arguments(ecl_make_fixnum(386));
 #line 287
 	if (narg > 0) {
 #line 287
-		strm = va_arg(ARGS,cl_object);
+		strm = va_arg(ARGS,cl_object);  
 #line 287
 	} else {
 #line 287
@@ -846,6 +949,7 @@ cl_object cl_force_output(cl_narg narg, ...)
 #line 287
 	}
 #line 287
+// ------------------------------5
  	strm = _ecl_stream_or_default_output(strm);
 	ecl_force_output(strm);
 	{
@@ -861,24 +965,31 @@ cl_object cl_force_output(cl_narg narg, ...)
 
 }
 
+// ------------------------------1
 #line 292
 cl_object cl_clear_output(cl_narg narg, ...)
 {
 #line 292
-
-#line 294
+// ------------------------------2
+#line 292
 	const cl_env_ptr the_env = ecl_process_env();
-#line 294
+#line 292
 	cl_object strm;
-#line 294
+#line 292
 	va_list ARGS;
 	va_start(ARGS, narg);
+#line 292
+// ------------------------------3
+
+#line 294
+// ------------------------------4
+#line 294
 #line 294
 	if (ecl_unlikely(narg < 0|| narg > 1)) FEwrong_num_arguments(ecl_make_fixnum(227));
 #line 294
 	if (narg > 0) {
 #line 294
-		strm = va_arg(ARGS,cl_object);
+		strm = va_arg(ARGS,cl_object);  
 #line 294
 	} else {
 #line 294
@@ -886,6 +997,7 @@ cl_object cl_clear_output(cl_narg narg, ...)
 #line 294
 	}
 #line 294
+// ------------------------------5
  	strm = _ecl_stream_or_default_output(strm);
 	ecl_clear_output(strm);
 	{
@@ -920,22 +1032,31 @@ cl_write_byte(cl_object integer, cl_object binary_output_stream)
 
 }
 
+// ------------------------------1
 #line 306
-cl_object cl_write_sequence(cl_narg narg, cl_object sequence, cl_object stream, ...)
+cl_object cl_write_sequence(cl_narg narg, ...)
 {
 #line 306
-
-#line 308
+// ------------------------------2
+#line 306
 	const cl_env_ptr the_env = ecl_process_env();
-#line 308
+#line 306
 	static cl_object KEYS[2] = {(cl_object)(cl_symbols+1310), (cl_object)(cl_symbols+1225)};
 	cl_object start;
 	cl_object end;
-#line 308
+#line 306
 	cl_object KEY_VARS[4];
-#line 308
+#line 306
 	ecl_va_list ARGS;
-	ecl_va_start(ARGS, stream, narg, 2);
+	ecl_va_start(ARGS, narg, narg, 0);
+	cl_object sequence = ecl_va_arg(ARGS);  
+	cl_object stream = ecl_va_arg(ARGS);  
+#line 306
+// ------------------------------3
+
+#line 308
+// ------------------------------4
+#line 308
 #line 308
 	if (ecl_unlikely(narg < 2)) FEwrong_num_arguments(ecl_make_fixnum(921));
 #line 308
@@ -957,6 +1078,7 @@ cl_object cl_write_sequence(cl_narg narg, cl_object sequence, cl_object stream, 
 	  end = KEY_VARS[1];
 	}
 #line 308
+// ------------------------------5
 #ifdef ECL_CLOS_STREAMS
 	if (!ECL_ANSI_STREAM_P(stream)) {
 		return _ecl_funcall5(ECL_SYM("GRAY::STREAM-WRITE-SEQUENCE",1644),

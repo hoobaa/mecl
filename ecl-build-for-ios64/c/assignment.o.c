@@ -123,30 +123,39 @@ ecl_rem_setf_definition(cl_object sym)
         } ECL_WITH_GLOBAL_ENV_WRLOCK_END;
 }
 
+// ------------------------------1
 #line 113
-cl_object si_fset(cl_narg narg, cl_object fname, cl_object def, ...)
+cl_object si_fset(cl_narg narg, ...)
 {
 #line 113
+// ------------------------------2
+#line 113
+	const cl_env_ptr the_env = ecl_process_env();
+#line 113
+	cl_object macro;
+#line 113
+	cl_object pprint;
+#line 113
+	va_list ARGS;
+	va_start(ARGS, narg);
+	cl_object fname = va_arg(ARGS,cl_object);  
+	cl_object def = va_arg(ARGS,cl_object);  
+#line 113
+// ------------------------------3
 
 	cl_object sym = si_function_block_name(fname);
 	cl_object pack;
 	bool mflag;
 	int type;
 #line 119
-	const cl_env_ptr the_env = ecl_process_env();
+// ------------------------------4
 #line 119
-	cl_object macro;
-#line 119
-	cl_object pprint;
-#line 119
-	va_list ARGS;
-	va_start(ARGS, def);
 #line 119
 	if (ecl_unlikely(narg < 2|| narg > 4)) FEwrong_num_arguments(ecl_make_fixnum(1080));
 #line 119
 	if (narg > 2) {
 #line 119
-		macro = va_arg(ARGS,cl_object);
+		macro = va_arg(ARGS,cl_object);  
 #line 119
 	} else {
 #line 119
@@ -156,7 +165,7 @@ cl_object si_fset(cl_narg narg, cl_object fname, cl_object def, ...)
 #line 119
 	if (narg > 3) {
 #line 119
-		pprint = va_arg(ARGS,cl_object);
+		pprint = va_arg(ARGS,cl_object);  
 #line 119
 	} else {
 #line 119
@@ -164,6 +173,7 @@ cl_object si_fset(cl_narg narg, cl_object fname, cl_object def, ...)
 #line 119
 	}
 #line 119
+// ------------------------------5
 	if (Null(cl_functionp(def)))
 		FEinvalid_function(def);
 	pack = ecl_symbol_package(sym);
